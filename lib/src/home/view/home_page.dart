@@ -1,20 +1,8 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:scrollytell/scrollytell.dart';
+// Copyright 2021 Grey & Ivy Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
-  }
-}
+import 'package:playhouse/src/view.dart';
 
 List<Widget> panelList;
 
@@ -25,7 +13,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends StateMVC<HomePage> {
   List<Image> images;
   int index = 0;
   int direction = 0;
@@ -66,12 +54,12 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.black,
           title: const Center(
               child: Text(
-            'Grey & Ivy Playhouse',
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'ProductSans'),
-          )),
+                'Grey & Ivy Playhouse',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'ProductSans'),
+              )),
         ),
         body: ScrollyWidget(
           showDebugConsole: !kIsWeb,
@@ -101,7 +89,7 @@ class _HomePageState extends State<HomePage> {
 
             widget = Center(
                 child: images[
-                    index]); //Opacity(opacity: 1, child: Center(child: images[index]));
+                index]); //Opacity(opacity: 1, child: Center(child: images[index]));
 
             func(widget);
           },
@@ -119,15 +107,15 @@ void buildPanelList(BuildContext context) {
   panelList.add(const MuskWidget(text: 'Elon Musk'));
   panelList.add(const MuskWidget(
       text:
-          'In 1995, Mr. Musk launched his first million-dollar company with his brother'));
+      'In 1995, Mr. Musk launched his first million-dollar company with his brother'));
   panelList.add(const MuskWidget(
       text:
-          'In 1999, Musk Zip2 to compaq and start X.com which later became paypal'));
+      'In 1999, Musk Zip2 to compaq and start X.com which later became paypal'));
   panelList.add(const MuskWidget(
       text: r'In 2002, He poured $100 million into founding SpaceX'));
   panelList.add(const MuskWidget(
       text:
-          'In Dec 2016, He was ranked 21st on Forbes Most Influential People List'));
+      'In Dec 2016, He was ranked 21st on Forbes Most Influential People List'));
 }
 
 class MuskWidget extends StatelessWidget {

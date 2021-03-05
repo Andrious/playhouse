@@ -1,5 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.greyandivy.playhouse">
+
+    <!-- The INTERNET permission is required for development. Specifically,
+     flutter needs it to communicate with the running application
+     to allow setting breakpoints, to provide hot reload, etc.
+-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- flutter_local_notifications -->
+    <!-- Start an Alarm When the Device Boots if past due -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- application needs to have the device stay on -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
