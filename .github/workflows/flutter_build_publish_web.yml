@@ -20,10 +20,8 @@ jobs:
           cd build/web
           git init
           # type configurations: your user.email and user.name followed lines 
-          # git config --global user.email your_email 
-          # git config --global user.name your_name 
-          git config --global user.email onatcipli@outlook.com
-          git config --global user.name onatcipli
+          git config --global user.email greg.perry@andrioussolutions.com
+          git config --global user.name andrious
           git status
           git remote add origin https://${{secrets.ALLOW_COMMIT_OF_FLUTTER_WEB_APP}}@github.com/Andrious/playhouse.git
           git checkout -b gh-pages
