@@ -1,0 +1,30 @@
+name: Flutter Web
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build Web
+    env:
+      my_secret: ${{secrets.ALLOW_COMMIT_OF_FLUTTER_WEB_APP}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+#      - run: flutter pub get
+      - run: flutter build web --release
+      - run: |
+          cd build/web
+          git init
+          # type configurations: your user.email and user.name followed lines 
+          git config --global user.email greg.perry@andrioussolutions.com
+          git config --global user.name andrious
+          git status
+          git remote add origin https://${{secrets.ALLOW_COMMIT_OF_FLUTTER_WEB_APP}}@github.com/Andrious/playhouse.git
+          git checkout -b gh-pages
+          git add --all
+          git commit -m "update"
+          git push origin gh-pages -f
