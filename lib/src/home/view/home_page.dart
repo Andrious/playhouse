@@ -113,81 +113,71 @@ void buildPanelList(BuildContext context) {
   panelList = [];
 
   panelList.add(const MuskWidget(text: '''
-I went wandering in the woods
-Where the tallest trees have grown
-When I came upon an old abandoned house
-With tall, ivy covered walls of stone.
-
-The windows had long since broken
-The shards of glass scattered on the floor
-and rust had crusted all the iron 
-upon the beautiful, thick, wooden door.
-
-I walked through the garden
-With it's flowers long since overgrown 
-And when I pulled upon the door
-It issued a load and anguished moan.
-
-My feet left trails amid the dust
-The walls were yellowed and bare
-And in the room not a single thing
-Except an old, broken, wooden, chair.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+Mid pleasures and palaces though we may roam,
+Be it ever so humble, there's no place like home;
+A charm from the sky seems to hallow us there,
+Which, seek through the world, is ne'er met with elsewhere.
+Home, home, sweet, sweet home!
+There's no place like home, oh, there's no place like home!
 '''));
 
   panelList.add(const MuskWidget(text: '''
-I meandered from the main room
-And upon the kitchen stumbled
-Next to the old cast iron stove
-Part of the wall had crumbled. ​
 
-I made my way up the stairs
-That creaked and groaned with every step
-In the first room I found nothing
-But a small nest where a bird once slept.
+An exile from home, splendor dazzles in vain;
+Oh, give me my lowly thatched cottage again!
+The birds singing gayly, that come at my call --
+Give me them -- and the peace of mind, dearer than all!
+Home, home, sweet, sweet home!
+There's no place like home, oh, there's no place like home!
 
-Upon the landing I paused
-With only one room left to see
-And I thought about the other rooms 
-And wondered if empty it would be 
 
-My hand grasped the copper knob
-It turned and opened with ease
-And I stood shocked in the doorway
-For what I saw made me freeze.
+
+
+
+
+
+
+
+
+I gaze on the moon as I tread the drear wild,
+And feel that my mother now thinks of her child,
+As she looks on that moon from our own cottage door
+Thro' the woodbine, whose fragrance shall cheer me no more.
+Home, home, sweet, sweet home!
+There's no place like home, oh, there's no place like home!
 '''));
 
   panelList.add(const MuskWidget(text: '''
-A little bed sat in the corner
-The fabric all rotted away
-And on the floor, covered by dust
-Lay dolls ready for play.
-
-And upon a tiny table
-Sat a cute porcelain tea set
-Cups and plates, set for four
-One of which was a stuffed toy pet.
-
-I left the room without entering
-Not wishing to disturb the scene
-For though the sight was very sad
-It was also peaceful and serene.
-
-I walked away through the woods
-Leaving the abandoned house behind
-Trying to think of other things
-To drive it from my mind.
+  
+  
+  
+How sweet 'tis to sit 'neath a fond father's smile,
+And the caress of a mother to soothe and beguile!
+Let others delight mid new pleasures to roam,
+But give me, oh, give me, the pleasures of home.
+Home, home, sweet, sweet home!
+There's no place like home, oh, there's no place like home!
 '''));
 
   panelList.add(const MuskWidget(text: '''
-But I couldn't help but wonder
-Who left the house so bare
-Emptied every room but one
-As though the child still lived there.
+To thee I'll return, overburdened with care;
+The heart's dearest solace will smile on me there;
+No more from that cottage again will I roam;
+Be it ever so humble, there's no place like home.
+Home, home, sweet, sweet, home!
+There's no place like home, oh, there's no place like home!
 
-I walked straight, not looking back 
-Until the house was blocked by trees
-And until those last few moments
-I felt someone watching me.
+John Howard Payne
 '''));
 }
 
@@ -253,8 +243,8 @@ class MuskWidget extends StatelessWidget {
   final String text;
   TextStyle get style => const TextStyle(
       color: Colors.white,
-      fontSize: 14,
-//      fontWeight: FontWeight.bold,
+      fontSize: 13,
+      fontWeight: FontWeight.bold,
       fontFamily: 'ProductSans');
 
   @override
