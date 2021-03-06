@@ -243,7 +243,7 @@ class MuskWidget extends StatelessWidget {
   final String text;
   TextStyle get style => const TextStyle(
       color: Colors.white,
-      fontSize: 13,
+      fontSize: kIsWeb ? 24 : 13,
       fontWeight: FontWeight.bold,
       fontFamily: 'ProductSans');
 

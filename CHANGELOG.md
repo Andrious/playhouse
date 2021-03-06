@@ -1,5 +1,5 @@
 
-## 0.3.0+2
+## 0.3.0+3
  March 06, 2021
 - progress.toStringAsFixed(2)
 - pedantic: ^1.11.0
