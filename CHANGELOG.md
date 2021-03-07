@@ -1,4 +1,8 @@
 
+## 0.4.0
+ March 07, 2021
+- activePanelIndex + double.parse(progress.toStringAsFixed(2));
+
 ## 0.3.0+3
  March 06, 2021
 - progress.toStringAsFixed(2)

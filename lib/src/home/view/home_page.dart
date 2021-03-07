@@ -18,6 +18,7 @@ class _HomePageState extends StateMVC<HomePage> {
   int index = 0;
   int direction = 0;
   num lastProgress = 0;
+  int length = 0;
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _HomePageState extends StateMVC<HomePage> {
         gaplessPlayback: true,
       ));
     }
+    length = images.length;
   }
 
   @override
@@ -64,44 +66,43 @@ class _HomePageState extends StateMVC<HomePage> {
         body: ScrollyWidget(
           showDebugConsole: App.inDebugger,
           initialOverlayWidget: Center(
-            child: images[70],
+            child: images[0],
           ),
           guidelinePosition: GuidelinePosition.center,
           panels: panelList,
           panelProgressCallback: (activePanelIndex, progress, func) {
             Widget widget;
 
-            final panel = activePanelIndex - 1;
+            final currentProgress = activePanelIndex +
+                double.parse(progress.toStringAsFixed(2));
 
-            final currentIndex = (panel > 0 ? panel * 100 : 0) +
-                (double.parse(progress.toStringAsFixed(2)) * 100).toInt();
+            // final panel = activePanelIndex - 1;
+            //
+            // final currentIndex = (panel > 0 ? panel * 100 : 0) +
+            //     (double.parse(progress.toStringAsFixed(2)) * 100).toInt();
+            //
+            // if (index == currentIndex) {
+            //   return;
+            // }
+            if (currentProgress != lastProgress) {
+              if (currentProgress > lastProgress) {
+                direction = 1;
+              } else if (currentProgress < lastProgress) {
+                direction = -1;
+              }
+              lastProgress = currentProgress;
 
-            if (index == currentIndex) {
-              return;
+              //           index = currentIndex;
+
+              index = index + direction;
+
+              if (index < 0) {
+                index = 0;
+              } else if (index > length) {
+                index = length;
+              }
             }
-
-            if (progress > lastProgress) {
-              direction = 1;
-            } else if (progress < lastProgress) {
-              direction = -1;
-            }
-            lastProgress = progress;
-
-            index = currentIndex;
-
-            index = index + direction;
-
-            if (index < 0) {
-              index = 0;
-            }
-
-            if (index >= images.length) {
-              index = images.length;
-            }
-
-            widget = Center(
-                child: images[
-                    index]); //Opacity(opacity: 1, child: Center(child: images[index]));
+            widget = Center(child: images[index]);
 
             func(widget);
           },
