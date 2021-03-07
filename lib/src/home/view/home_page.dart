@@ -116,7 +116,7 @@ void buildPanelList(BuildContext context) {
 
   panelList.add(const MuskWidget(text: '''
   
-  
+   
   
   
   
@@ -127,16 +127,25 @@ A charm from the sky seems to hallow us there,
 Which, seek through the world, is ne'er met with elsewhere.
 Home, home, sweet, sweet home!
 There's no place like home, oh, there's no place like home!
+
+
+
+
+
+
+
+
 '''));
 
   panelList.add(const MuskWidget(text: '''
-
 An exile from home, splendor dazzles in vain;
 Oh, give me my lowly thatched cottage again!
 The birds singing gayly, that come at my call --
 Give me them -- and the peace of mind, dearer than all!
 Home, home, sweet, sweet home!
 There's no place like home, oh, there's no place like home!
+
+
 
 
 
@@ -152,18 +161,35 @@ There's no place like home, oh, there's no place like home!
 '''));
 
   panelList.add(const MuskWidget(text: '''
+
+
+
+
   
-  
-  
+
+ 
 How sweet 'tis to sit 'neath a fond father's smile,
 And the caress of a mother to soothe and beguile!
 Let others delight mid new pleasures to roam,
 But give me, oh, give me, the pleasures of home.
 Home, home, sweet, sweet home!
 There's no place like home, oh, there's no place like home!
+
+
+
+
+
+
+
 '''));
 
   panelList.add(const MuskWidget(text: '''
+
+
+
+
+
+
 To thee I'll return, overburdened with care;
 The heart's dearest solace will smile on me there;
 No more from that cottage again will I roam;
@@ -172,6 +198,12 @@ Home, home, sweet, sweet, home!
 There's no place like home, oh, there's no place like home!
 
 John Howard Payne
+
+
+
+
+
+
 '''));
 }
 
