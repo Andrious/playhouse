@@ -1,4 +1,8 @@
 
+## 0.5.1
+ March 07, 2021
+- Corrected text
+
 ## 0.5.0
  March 07, 2021
 - currentIndex = (panel > 0 ? panel * 100 : 0) +

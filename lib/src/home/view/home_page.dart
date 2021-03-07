@@ -121,10 +121,6 @@ void buildPanelList(BuildContext context) {
   
   
   
-  
-  
-  
-  
 Mid pleasures and palaces though we may roam,
 Be it ever so humble, there's no place like home;
 A charm from the sky seems to hallow us there,
@@ -141,10 +137,6 @@ The birds singing gayly, that come at my call --
 Give me them -- and the peace of mind, dearer than all!
 Home, home, sweet, sweet home!
 There's no place like home, oh, there's no place like home!
-
-
-
-
 
 
 
