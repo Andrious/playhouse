@@ -1,4 +1,8 @@
 
+## 0.5.0
+ March 07, 2021
+- currentIndex = (panel > 0 ? panel * 100 : 0) +
+
 ## 0.4.0
  March 07, 2021
 - activePanelIndex + double.parse(progress.toStringAsFixed(2));

@@ -66,42 +66,43 @@ class _HomePageState extends StateMVC<HomePage> {
         body: ScrollyWidget(
           showDebugConsole: App.inDebugger,
           initialOverlayWidget: Center(
-            child: images[0],
+            child: images[70],
           ),
           guidelinePosition: GuidelinePosition.center,
           panels: panelList,
           panelProgressCallback: (activePanelIndex, progress, func) {
             Widget widget;
 
-            final currentProgress = activePanelIndex +
-                double.parse(progress.toStringAsFixed(2));
+            final panel = activePanelIndex - 1;
 
-            // final panel = activePanelIndex - 1;
-            //
-            // final currentIndex = (panel > 0 ? panel * 100 : 0) +
-            //     (double.parse(progress.toStringAsFixed(2)) * 100).toInt();
-            //
-            // if (index == currentIndex) {
-            //   return;
-            // }
-            if (currentProgress != lastProgress) {
-              if (currentProgress > lastProgress) {
+            final currentIndex = (panel > 0 ? panel * 100 : 0) +
+                (double.parse(progress.toStringAsFixed(2)) * 100).toInt();
+
+            if (index != currentIndex) {
+              //
+              if (progress > lastProgress) {
+                //
                 direction = 1;
-              } else if (currentProgress < lastProgress) {
+              } else if (progress < lastProgress) {
+                //
                 direction = -1;
               }
-              lastProgress = currentProgress;
 
-              //           index = currentIndex;
+              lastProgress = progress;
+
+              index = currentIndex;
 
               index = index + direction;
 
               if (index < 0) {
                 index = 0;
-              } else if (index > length) {
+              }
+
+              if (index >= length) {
                 index = length;
               }
             }
+
             widget = Center(child: images[index]);
 
             func(widget);
