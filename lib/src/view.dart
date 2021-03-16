@@ -4,9 +4,11 @@
 
 
 /// MVC framework
-export 'package:mvc_application/view.dart';
+export 'package:mvc_application/view.dart' hide Card, runApp;
 
 ///  https://pub.dev/packages/scrollytell
 export 'package:scrollytell/scrollytell.dart';
 
 export 'package:playhouse/src/home/view/home_page.dart';
+
+export 'package:playhouse/src/home/view/scrapbook.dart';

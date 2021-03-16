@@ -1,4 +1,15 @@
 
+## 0.6.0
+ March 16, 2021
+- Transferred to Grey-and-Ivy Github
+- Firebase Firestore
+- <!-- images_picker --> <uses-permission android:name="android.permission.CAMERA" />
+- app_controller.dart
+- Firebase Crashlytics
+- gradle-6.5-all.zip
+- firebase-firestore.js for Flutter Web
+- BSD 4-Clause "Original" or "Old" License
+
 ## 0.5.1+3
  March 07, 2021
 - Corrected text

@@ -93,7 +93,8 @@ unused.txt
 obfuscate/
 
 # Android related
-#google-services.json
+## It's a private repo and so we store the google-services.json
+google-services.json
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
 **/android/captures/

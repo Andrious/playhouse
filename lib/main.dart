@@ -4,6 +4,8 @@
 
 import 'package:playhouse/src/view.dart';
 
+import 'package:playhouse/src/controller.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends AppStatefulWidget {
@@ -13,7 +15,8 @@ class MyApp extends AppStatefulWidget {
   AppState createView() => AppState(
         debugShowCheckedModeBanner: false,
         title: 'Grey & Ivy Playhouse',
-        home: const HomePage(),
+        home: ScrapBookApp(), //const HomePage(),
+        con: AppController(),
         localizationsDelegates: [
           I10nDelegate(),
           GlobalWidgetsLocalizations.delegate,
@@ -21,7 +24,7 @@ class MyApp extends AppStatefulWidget {
           GlobalMaterialLocalizations.delegate,
         ],
         inTheme: () => ThemeData(
-          primarySwatch: Colors.yellow,
+          primaryColor: Colors.white,
           textTheme: const TextTheme(
             headline1: TextStyle(
               fontFamily: 'Corben',

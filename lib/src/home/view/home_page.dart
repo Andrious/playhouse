@@ -101,11 +101,11 @@ class _HomePageState extends StateMVC<HomePage> {
               if (index >= length) {
                 index = length;
               }
+
+              widget = Center(child: images[index]);
+
+              func(widget);
             }
-
-            widget = Center(child: images[index]);
-
-            func(widget);
           },
         ));
   }
