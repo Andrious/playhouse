@@ -1,4 +1,8 @@
 
+## 0.7.0
+ March 17, 2021
+- Developed database: database.dart
+
 ## 0.6.0
  March 16, 2021
 - Transferred to Grey-and-Ivy Github

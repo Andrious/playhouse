@@ -1,6 +1,7 @@
 # Article: https://medium.com/podiihq/setting-up-lint-rules-in-dart-flutter-1ebbed0418a6
 
 # include: package:pedantic/analysis_options.1.11.0.yaml
+# include: package:pedantic/analysis_options.yaml
 
 #          OR
 

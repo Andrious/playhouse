@@ -2,147 +2,117 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:playhouse/src/model.dart';
-
 ///todo: place this as an export in dbUtil's FireStoreDB
 ///todo:  _ex = ex as Exception in dbUtils in a try-catch
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:playhouse/src/model.dart';
+
+import 'package:playhouse/src/controller.dart' show Auth;
+
 class PlayhouseDB {
-  FireStoreDB db;
+  factory PlayhouseDB() => _this ??= PlayhouseDB._();
 
-  void createDB() {
-    bool createDB = true;
+  PlayhouseDB._()
+      : _auth = Auth(),
+        model = AppModel();
+  static PlayhouseDB _this;
 
-    db = FireStoreDB('Modules');
+  //
+  FireStoreCollection db;
+  final AppModel model;
+  final Auth _auth;
 
-    if (db.uid.isEmpty) {
-      return;
-    }
+  Future<bool> downloadDB() {
+    final table = FireStoreCollection('Modules');
 
-    final _timeStamp = FieldValue.serverTimestamp();
-
-    // final module = <String, dynamic>{};
-    // module['type'] = 'Design';
-    // module['nextMod'] = '';
-    // module['name'] = 'Mod01';
-    // module['short'] = 'A short description.';
-    // module['long'] = 'A much longer description with more detail.';
-    // module['complete'] = false;
-    // module['timestamp'] = _timeStamp;
-    //
-    // var ref = db.collection.doc();
-    //
-    // ref.set(module).onError((error, stackTrace) {
-    //   createDB = false;
-    //   db.getError(error);
-    // });
-    //
-    // if (!createDB) {
-    //   return;
-    // }
-
-    final submodule = <String, dynamic>{};
-//    submodule['moduleId'] = 'PvBT1E1l1IAttClPpXXU';
-    submodule['nextSubId'] = '';
-    submodule['name'] = 'Sub01';
-    submodule['short'] = 'A short description.';
-    submodule['long'] = 'A much longer description with more detail.';
-    submodule['locked'] = false;
-    submodule['complete'] = false;
-    submodule['keyArt'] = infoIcon;
-    submodule['timestamp'] = _timeStamp;
-
-// Modules/P6YXgJLmhQyxmExsXvn2
-    var ref = FireStoreDB('Modules/PvBT1E1l1IAttClPpXXU/Submodules').collection.doc();
-
-    ref.set(submodule).onError((error, stackTrace) {
-      createDB = false;
-      db.getError(error);
-    });
-
-    if (!createDB) {
-      return;
-    }
-
-    final task = <String, dynamic>{};
-//    task['submoduleId'] = ref.id;
-    task['name'] = 'Task01';
-    task['short'] = 'A short description.';
-    task['long'] = 'A much longer description with more detail.';
-    task['type'] = 'DeviceImage';
-    task['locked'] = false;
-    task['complete'] = false;
-    task['keyArt'] = rocket;
-    task['timestamp'] = _timeStamp;
-
-    ref = FireStoreDB('${ref.path}/Tasks').collection.doc();
-
-    ref.set(task).onError((error, stackTrace) {
-      createDB = false;
-      db.getError(error);
-    });
+    return _populateData(table.collection, 'Modules, Submodules, Tasks');
   }
-}
 
-class Module {
-  Module({
-    @required this.type,
-    @required this.nextModId,
-    @required this.name,
-    @required this.short,
-    @required this.long,
-    @required this.complete,
-  });
+  Future<bool> _populateData(
+    CollectionReference collectionRef,
+    String collections,
+  ) async {
+    //
+    bool populated = true;
 
-  final String type; // Design | Build
-  final String nextModId;
-  final String name;
-  final String short;
-  final String long;
-  final bool complete;
-}
+    if (collections == null || collections.isEmpty) {
+      return populated;
+    }
 
-class Submodule {
-  Submodule({
-    @required this.moduleId,
-    @required this.nextSubId,
-    @required this.name,
-    @required this.short,
-    @required this.long,
-    @required this.locked,
-    @required this.complete,
-    @required this.keyArt,
-  });
+    /// Convert to a list
+    final list = collections.split(',');
 
-  final String moduleId;
-  final String nextSubId;
-  final String name;
-  final String short;
-  final String long;
-  final bool locked;
-  final bool complete;
-  final String keyArt;
-}
+    // Determine the collection to process now.
+    String collection;
 
-class Task {
-  Task({
-    @required this.submoduleId,
-    @required this.name,
-    @required this.short,
-    @required this.long,
-    @required this.type,
-    @required this.locked,
-    @required this.complete,
-    @required this.keyArt,
-  });
+    // If there's just one collection name in the String.
+    if (list.isEmpty || list[0].isEmpty) {
+      collection = collections.trim();
+    } else {
+      // Grab the fist element in the list.
+      collection = list.first.trim();
+      // Remove the first element from the list.
+      list.removeAt(0);
+    }
 
-  final String submoduleId;
-  final String name;
-  final String short;
-  final String long;
-  final String type; // NetworkedImage|NetworkedVideo|DeviceImage|Question
-  final bool locked;
-  final bool complete;
-  final String keyArt;
+    // Return the list to a String
+    if (list.isEmpty) {
+      collections = '';
+    } else if (list.length > 1) {
+      collections = list.join(',');
+    } else {
+      collections = list[0];
+    }
+
+    final QuerySnapshot querySnapshot = await collectionRef.get();
+
+    //
+    for (final doc in querySnapshot.docs) {
+      //
+      final Map<String, dynamic> data = doc.data();
+
+      // It may not have a userId yet.
+      if (data['userId'] == null) {
+        // Each record of course is associated with a particular user.
+        data['userId'] = _auth.uid;
+      }
+
+      // Each record has a primary key.
+      data['firebaseId'] = doc.id;
+
+      switch (collection) {
+        case 'Modules':
+          model.populateModule(data);
+
+          break;
+
+        case 'Submodules':
+          // Note the parent's primary key
+          data['moduleId'] = collectionRef.parent.id;
+
+          model.populateSubmodule(data);
+
+          break;
+
+        case 'Tasks':
+          // Note the parent's primary key
+          data['submoduleId'] = collectionRef.parent.id;
+
+          model.populateTask(data);
+          break;
+
+        default:
+          // Unknown 'collection' name??
+          return populated;
+      }
+
+      // Recursive call to the 'next' collection.
+      if (collections.isNotEmpty) {
+        populated = await _populateData(
+            doc.reference.collection(list[0].trim()), collections);
+      }
+    }
+    return populated;
+  }
 }

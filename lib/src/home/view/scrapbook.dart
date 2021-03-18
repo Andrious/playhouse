@@ -291,6 +291,12 @@ class Card extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              // CachedNetworkImage(
+              //   imageUrl: image,
+              //   progressIndicatorBuilder: (context, url, downloadProgress) =>
+              //       CircularProgressIndicator(value: downloadProgress.progress),
+              //   errorWidget: (context, url, error) => const Icon(Icons.error),
+              // ),
               Image.network(
                 image,
                 height: 80,

@@ -7,3 +7,6 @@ export 'package:mvc_application/controller.dart' hide AppController, runApp;
 
 /// The Controller for the App itself
 export 'package:playhouse/src/app/controller/app_controller.dart';
+
+/// Authentication
+export 'package:auth/auth.dart';

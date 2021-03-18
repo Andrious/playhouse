@@ -61,9 +61,9 @@ dependencies {
     //FirebaseUI  - This and the next two lines: facebook and twitter
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
 
-    // Required only if Facebook login support is required
-    // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
-    implementation 'com.facebook.android:facebook-android-sdk:4.0.0'
+//    // Required only if Facebook login support is required
+//    // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
+//    implementation 'com.facebook.android:facebook-android-sdk:4.0.0'
 
     // Required only if Twitter login support is required
     // Find the latest Twitter SDK releases here: https://goo.gl/E5wZvQ

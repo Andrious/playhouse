@@ -9,7 +9,11 @@ import 'package:playhouse/src/controller.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends AppStatefulWidget {
-  MyApp({Key key}) : super(key: key);
+  MyApp({Key key})
+      : super(
+          key: key,
+          loadingScreen: _LoadingScreen(),
+        );
 
   @override
   AppState createView() => AppState(
@@ -34,5 +38,27 @@ class MyApp extends AppStatefulWidget {
             ),
           ),
         ),
+      );
+}
+
+class _LoadingScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) =>
+      // SizedBox.expand(
+      //   child: Image.asset(
+      //     'assets/GILoadingScreen.jpg',
+      //     fit: BoxFit.fill,
+      //   ),
+      // );
+
+      const DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.greenAccent,
+          // image: DecorationImage(
+          //   image: AssetImage('assets/GILoadingScreen.jpg'),
+          //   fit: BoxFit.cover,
+          // ),
+        ),
+        child: Center(child: CircularProgressIndicator()),
       );
 }
