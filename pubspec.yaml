@@ -29,15 +29,16 @@ dependencies:
     path: ../../packages/auth
 
 # https://pub.dev/packages/mvc_application/
-  mvc_application: ^7.0.0
+  mvc_application: #^7.0.0
+    path: ../../packages/mvc_application
 
 # https://pub.dev/packages/firebase_crashlytics/
   firebase_crashlytics: ^1.0.0
 
 # https://pub.dev/packages/firebase_auth/
-  firebase_auth: any #^1.0.0
-  flutter_signin_button: any #^1.0.0
-  google_sign_in: any #^5.0.0-nullsafety
+  firebase_auth: ^1.0.0
+  flutter_signin_button: ^1.0.0
+  google_sign_in: ^5.0.0
 
 # https://pub.dev/packages/dbutils
   dbutils: #^3.0.0
@@ -46,22 +47,22 @@ dependencies:
 # https://pub.dev/packages/cached_network_image/
   cached_network_image: ^2.0.0
 
-# https://pub.dev/packages/scrollytell
-  scrollytell: ^1.0.0
+## https://pub.dev/packages/scrollytell
+#  scrollytell: ^1.0.0
+#
+## https://pub.dev/packages/photo_gallery
+#  photo_gallery: ^0.4.0
 
-# https://pub.dev/packages/photo_gallery
-  photo_gallery: ^0.4.0
+  transparent_image: ^2.0.0
 
-  transparent_image: any #^1.0.0
+  permission_handler: ^6.0.0
 
-  permission_handler: any #^5.0.0
+  video_player: ^2.0.0
 
-  video_player: any #^2.0.0
-
-# https://pub.dev/packages/images_picker
-  images_picker: ^1.0.0
-
-  dio: any # ^3.0.0
+## https://pub.dev/packages/images_picker
+#  images_picker: ^1.0.0
+#
+#  dio: ^2.0.0
 
 #  # The following adds the Cupertino Icons font to your application.
 #  # Use with the CupertinoIcons class for iOS style icons.
@@ -71,7 +72,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  pedantic: ^1.11.0
+  pedantic: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -85,7 +86,21 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+     - assets/
+     - assets/i10n/i10n.csv
+
+     - assets/images/Inspiration.jpg
+     - assets/images/SiteAssessment.jpg
+     - assets/images/FloorPlan.jpg
+     - assets/images/Elevation.jpg
+
+     - assets/images/abc.jpg
+     - assets/images/AR.jpg
+     - assets/images/movieCamera.jpg
+     - assets/images/pencil.jpg
+     - assets/images/picture.jpg
+     - assets/images/questionMark.jpg
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

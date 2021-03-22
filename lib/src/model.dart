@@ -15,7 +15,7 @@ export 'package:playhouse/src/home/model/assets.dart';
 export 'package:playhouse/src/home/model/database.dart';
 
 /// App's Data objects
-export 'package:playhouse/src/home/model/data_strutures.dart';
+export 'package:playhouse/src/home/model/scrapbook_model.dart';
 
 /// App's Testing Routines for the database
-export 'package:playhouse/src/home/model/testing_database.dart';
+export 'package:playhouse/src/app/model/testing_database.dart';

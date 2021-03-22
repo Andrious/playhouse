@@ -24,12 +24,13 @@ Future<void> main() async {
 ///
 /// Returns a [MaterialApp].
 class AuthExampleApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Firebase Example App',
       theme: ThemeData.dark(),
-      home: Scaffold(
+      home: const Scaffold(
         body: AuthTypeSelector(),
       ),
     );

@@ -1,4 +1,10 @@
 
+## 0.8.0
+ March 22, 2021
+- Emulate UI design
+- Removed ScrollyTell demo files
+- Introduced loading screen & graphics
+
 ## 0.7.0
  March 17, 2021
 - Developed database: database.dart

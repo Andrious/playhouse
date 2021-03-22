@@ -18,8 +18,7 @@ class MyApp extends AppStatefulWidget {
   @override
   AppState createView() => AppState(
         debugShowCheckedModeBanner: false,
-        title: 'Grey & Ivy Playhouse',
-        home: ScrapBookApp(), //const HomePage(),
+        home: ScrapBookApp(), //const ScrapBookApp(),
         con: AppController(),
         localizationsDelegates: [
           I10nDelegate(),
@@ -43,22 +42,43 @@ class MyApp extends AppStatefulWidget {
 
 class _LoadingScreen extends StatelessWidget {
   @override
-  Widget build(BuildContext context) =>
-      // SizedBox.expand(
-      //   child: Image.asset(
-      //     'assets/GILoadingScreen.jpg',
-      //     fit: BoxFit.fill,
-      //   ),
-      // );
-
-      const DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.greenAccent,
-          // image: DecorationImage(
-          //   image: AssetImage('assets/GILoadingScreen.jpg'),
-          //   fit: BoxFit.cover,
-          // ),
-        ),
-        child: Center(child: CircularProgressIndicator()),
+  Widget build(BuildContext context) => Column(
+        children: <Widget>[
+          const SizedBox(height: 30),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.black38,
+                        offset: Offset(5, 5),
+                        blurRadius: 5)
+                  ]),
+              margin: const EdgeInsets.all(48),
+              child: Column(
+                children: const <Widget>[
+                  Expanded(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/loading_screen.jpg'),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          )),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 40),
+        ],
       );
 }
