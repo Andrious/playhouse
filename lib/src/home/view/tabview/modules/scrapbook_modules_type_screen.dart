@@ -5,38 +5,48 @@
 /// The UI code
 import 'package:playhouse/src/view.dart';
 
+/// The event handling code
+import 'package:playhouse/src/controller.dart';
+
+/// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
 class ModuleTypeScreen extends StatefulWidget {
   const ModuleTypeScreen({Key key}) : super(key: key);
 
   @override
-  State createState() => _ModuleTypeScreenState();
+  State createState() => ModuleTypeScreenState();
 }
 
-class _ModuleTypeScreenState extends StateMVC<ModuleTypeScreen>
+class ModuleTypeScreenState extends StateMVC<ModuleTypeScreen>
     with SingleTickerProviderStateMixin {
-  ModulesAppBar sbModAppBar;
+  ModuleTypeScreenState() : super(ScrapBookController()) {
+    con = controller;
+  }
+
+  ModulesAppBar _sbModAppBar;
+  ScrapBookController con;
 
   @override
   void initState() {
     super.initState();
-    sbModAppBar = ModulesAppBar(this);
+    con.inBuildScreen = widget is ScrapbookBuildScreen;
+    _sbModAppBar = ModulesAppBar(this);
     // Set up this appbar's data
-    sbModAppBar.initState();
+    _sbModAppBar.initState();
   }
 
   @override
   void dispose() {
     // Don't forget to dispose the AppBar!
-    sbModAppBar.dispose();
+    _sbModAppBar.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
       primary: false,
-      appBar: sbModAppBar.appBar,
+      appBar: _sbModAppBar.appBar,
       body: TabBarView(
-        controller: sbModAppBar.controller,
-        children: sbModAppBar.children,
+        controller: _sbModAppBar.controller,
+        children: _sbModAppBar.children,
       ));
 }

@@ -8,6 +8,16 @@ export 'package:mvc_application/model.dart';
 /// Firebase Firestore
 export 'package:dbutils/firestore_db.dart';
 
+/// Firebase
+export 'package:firebase_database/firebase_database.dart'
+    show DataSnapshot, DatabaseReference, Event, Query;
+
+/// App's Firebase Routines
+export 'package:playhouse/src/app/model/firebase.dart';
+
+/// The App's Settings
+export 'package:playhouse/src/app/model/settings.dart';
+
 /// Assets for testing
 export 'package:playhouse/src/home/model/assets.dart';
 

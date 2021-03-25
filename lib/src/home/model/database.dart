@@ -29,6 +29,8 @@ class PlayhouseDB {
     return _populateData(table.collection, 'Modules, Submodules, Tasks');
   }
 
+  /// Go through the String of Collections names and populate
+  /// the appropriate Map objects.
   Future<bool> _populateData(
     CollectionReference collectionRef,
     String collections,

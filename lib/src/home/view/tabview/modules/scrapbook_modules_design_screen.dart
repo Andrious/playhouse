@@ -5,6 +5,9 @@
 /// The UI code
 import 'package:playhouse/src/view.dart';
 
+/// The Event Handler code
+import 'package:playhouse/src/controller.dart';
+
 class ScrapbookDesignScreen extends ModuleTypeScreen {
   const ScrapbookDesignScreen({Key key}):super(key: key);
 }

@@ -2,12 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+
 /// The database code
 import 'package:playhouse/src/model.dart';
 
 /// The UI code
 import 'package:playhouse/src/view.dart';
 
+/// Design | Build
 class ScrapBookApp extends StatefulWidget {
   const ScrapBookApp({Key key}) : super(key: key);
   @override

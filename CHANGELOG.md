@@ -1,4 +1,14 @@
 
+## 0.10.0
+ March 24, 2021
+- TabBar for All, Favorite, Incomplete
+- Introduced ScrapBookController
+
+## 0.9.0
+ March 23, 2021
+- Popup menu instead of Drawer
+- Introduced SignIn Screen (incomplete)
+
 ## 0.8.0
  March 22, 2021
 - Emulate UI design

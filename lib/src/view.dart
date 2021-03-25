@@ -4,10 +4,16 @@
 
 
 /// MVC framework
-export 'package:mvc_application/view.dart' hide runApp;
+export 'package:mvc_application/view.dart' hide AppMenu, runApp;
 
 /// https://pub.dev/packages/cached_network_image/
 export 'package:cached_network_image/cached_network_image.dart';
+
+/// The App's Menu
+export 'package:playhouse/src/app/view/menu/app_menu.dart';
+
+/// App's SignIn Routine
+export 'package:playhouse/src/app/view/signin_screen.dart';
 
 /// Scrapbook main screen
 export 'package:playhouse/src/home/view/scrapbook_main.dart'; //  hide ScrapBookApp
@@ -35,3 +41,6 @@ export 'package:playhouse/src/home/view/tabview/modules/scrapbook_module_screen.
 
 /// Individual Task screen
 export 'package:playhouse/src/home/view/tabview/tasks/scrapbook_tasks.dart'; // hide Card;
+
+/// 'State' of the Task (Favorite, Incomplete, etc.)
+export 'package:playhouse/src/home/view/tabview/taskstate/task_state.dart'; // hide Card;

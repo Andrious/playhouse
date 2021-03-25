@@ -5,10 +5,11 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart'
     show FirebaseCrashlytics;
 
+import 'package:playhouse/src/model.dart';
+
 import 'package:playhouse/src/view.dart' show showBox;
 
-import 'package:playhouse/src/controller.dart'
-    show App, Auth, BuildContext;
+import 'package:playhouse/src/controller.dart' show App, Auth, BuildContext;
 
 class SignIn {
   factory SignIn() => _this ??= SignIn._();
@@ -25,7 +26,7 @@ class SignIn {
       _loggedIn = await signInAnonymously();
     }
     if (_auth.isAnonymous) {
-//      FireBaseDB().removeAnonymous();
+//      Firebase().removeAnonymous();
 //      _auth.listener = _con?.recordDump;
     }
     return _loggedIn;
@@ -80,13 +81,14 @@ class SignIn {
 //     return signIn;
   }
 
-  Future<bool> signInEmailPassword(BuildContext context) async {
+  Future<bool> signInEmailPassword(
+    BuildContext context, {
+    String email = '',
+    String password = '',
+  }) async {
     //
-    const String email = '';
 
-    const String password = '';
-
-//    FireBaseDB().removeAnonymous();
+    Firebase().removeAnonymous();
     await _auth.delete();
     await signOut();
 
@@ -114,6 +116,8 @@ class SignIn {
     await rebuild();
     return signIn;
   }
+
+  Future<bool> delete() => _auth.delete();
 
   // Stamp the user information to the firebase database.
 //  void userStamp() => FireBaseDB().userStamp();
@@ -159,4 +163,17 @@ class SignIn {
     }
     FirebaseCrashlytics.instance.setUserIdentifier(_auth.displayName);
   }
+
+  String get message => _auth.message;
+
+  bool get hasError => _auth.hasError;
+
+  bool get inError => _auth.inError;
+
+  /// Get the last error but clear it.
+  Exception getError() => _auth.getError();
+
+  void setError(Object ex) => _auth.setError(ex);
+
+  List<Exception> getEventError() => _auth.getEventError();
 }

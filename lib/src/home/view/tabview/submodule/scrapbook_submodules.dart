@@ -15,25 +15,29 @@ class ScrapbookSubmodulesScreen extends StatefulWidget {
   const ScrapbookSubmodulesScreen({Key key}) : super(key: key);
 
   @override
-  State createState() => _ScrapbookSubmodulesState();
+  State createState() => ScrapbookSubmodulesState();
 }
 
-class _ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
+class ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
     with SingleTickerProviderStateMixin {
-  SubmodulesTabBar sbSubTabBar;
+  ScrapbookSubmodulesState(): super(ScrapBookController()){
+    con = controller;
+  }
+  SubmodulesTabBar _sbSubTabBar;
+  ScrapBookController con;
 
   @override
   void initState() {
     super.initState();
-    sbSubTabBar = SubmodulesTabBar(this);
+    _sbSubTabBar = SubmodulesTabBar(this);
     // Set up this appbar's data
-    sbSubTabBar.initState();
+    _sbSubTabBar.initState();
   }
 
   @override
   void dispose() {
     // Don't forget to dispose the AppBar!
-    sbSubTabBar.dispose();
+    _sbSubTabBar.dispose();
     super.dispose();
   }
 
@@ -43,7 +47,7 @@ class _ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             child: TabBar(
-              controller: sbSubTabBar.controller,
+              controller: _sbSubTabBar.controller,
 //              labelColor: Colors.green,
               isScrollable: true,
               indicatorSize: TabBarIndicatorSize.label,
@@ -58,13 +62,13 @@ class _ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
 //                 fontSize: 16,
 //                 fontWeight: FontWeight.w700,
 //               ),
-              tabs: sbSubTabBar.tabs,
+              tabs: _sbSubTabBar.tabs,
             ),
           ),
           Expanded(
             child: TabBarView(
-              controller: sbSubTabBar.controller,
-              children: sbSubTabBar.children,
+              controller: _sbSubTabBar.controller,
+              children: _sbSubTabBar.children,
             ),
           ),
         ],
@@ -97,4 +101,53 @@ class _ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
   //         )),
   //   ),
   // );
+
+  List<Widget> tabSubmodules() {
+
+    if(con.inBuildScreen){
+      sub03Locked = true;
+      sub04Locked = true;
+    }
+
+    String subPic03;
+    String subPic04;
+
+    if (sub03Locked) {
+      subPic03 = 'FloorPlanLocked.jpg';
+    } else {
+      subPic03 = 'FloorPlan.jpg';
+    }
+
+    if (sub04Locked) {
+      subPic04 = 'ElevationLocked.jpg';
+    } else {
+      subPic04 = 'Elevation.jpg';
+    }
+
+    return [
+      _sbSubTabBar.picTab(
+          Image.asset('assets/images/Inspiration.jpg', fit: BoxFit.cover)),
+      _sbSubTabBar.picTab(
+          Image.asset('assets/images/SiteAssessment.jpg', fit: BoxFit.cover)),
+      _sbSubTabBar.picTab(
+          Image.asset('assets/images/$subPic03', fit: BoxFit.cover)),
+      _sbSubTabBar.picTab(
+          Image.asset('assets/images/$subPic04', fit: BoxFit.cover)),
+    ];
+  }
+
+  List<Widget> children() {
+    return [
+      const ScrapbookTasksScreen(),
+      const ScrapbookTasksScreen(),
+      const ScrapbookTasksScreen(),
+      const ScrapbookTasksScreen(),
+    ];
+  }
+
+  /// Means to 'lock' certain Submodules.
+  bool sub01Locked = false;
+  bool sub02Locked = false;
+  bool sub03Locked = false;
+  bool sub04Locked = false;
 }

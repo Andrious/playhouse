@@ -8,14 +8,18 @@ import 'package:playhouse/src/model.dart';
 /// The UI code
 import 'package:playhouse/src/view.dart';
 
+/// The Event Handler code
+import 'package:playhouse/src/controller.dart';
+
+///  Design | Build
 class DesignBuildAppBar {
   //
-  DesignBuildAppBar(this._provider) {
+  DesignBuildAppBar(TickerProvider _provider) {
     //
     if (_provider is StateMVC) {
       _state = _provider as StateMVC;
     }
-    _tabController = TabController(
+    _tabController = GITabController(
         initialIndex: Prefs.getInt('DesignBuildIndex'),
         length: 2,
         vsync: _provider);
@@ -24,7 +28,6 @@ class DesignBuildAppBar {
       _state?.setState(() {});
     });
   }
-  final TickerProvider _provider;
   StateMVC _state;
 
   /// Clean up after itself.
@@ -35,8 +38,13 @@ class DesignBuildAppBar {
   TabController _tabController;
   TabController get controller => _tabController;
 
+  /// The App Tool bar
   AppBar get appBar => AppBar(
-        title: const Text('Grey & Ivy Playhouse'),
+        title: const Text('Playhouse'),
+        // actions: [
+        //   /// Supply the App's popup menu. Pass in the screen's State object.
+        //   AppMenu().show(_state),
+        // ],
         centerTitle: true,
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -75,28 +83,28 @@ class DesignBuildAppBar {
       );
 }
 
+/// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
 class ModulesAppBar {
   //
-  ModulesAppBar(this.provider);
+  ModulesAppBar(this.providerState);
 
-  final TickerProvider provider;
+  final ModuleTypeScreenState providerState;
   TabController _tabController;
-  StateMVC _state;
 
   /// Set up the AppBar
   void initState() {
-    //
-    if (provider is StateMVC) {
-      _state = provider as StateMVC;
-    }
-
-    _tabController = TabController(
-        initialIndex: Prefs.getInt('ModulesIndex'), length: 4, vsync: provider);
+    _tabController = GITabController(
+      initialIndex: Prefs.getInt('ModulesIndex'),
+      length: 4,
+      vsync: providerState,
+      state: providerState,
+    );
     _tabController.addListener(() {
       Prefs.setInt('ModulesIndex', _tabController.index);
-      _state?.setState(() {});
+      providerState?.setState(() {});
     });
 
+    /// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
     _children = const [
       ModuleScreen(),
       ModuleScreen(),
@@ -182,33 +190,25 @@ class SubmodulesTabBar {
   //
   SubmodulesTabBar(this.provider);
 
-  final TickerProvider provider;
+  final ScrapbookSubmodulesState provider;
   TabController _tabController;
   List<Widget> _tabSubmodules;
   List<Widget> _children;
 
   void initState() {
-    _tabSubmodules = [
-      picTab(Image.asset('assets/images/Inspiration.jpg', fit: BoxFit.cover)),
-      picTab(
-          Image.asset('assets/images/SiteAssessment.jpg', fit: BoxFit.cover)),
-      picTab(Image.asset('assets/images/FloorPlan.jpg', fit: BoxFit.cover)),
-      picTab(Image.asset('assets/images/Elevation.jpg', fit: BoxFit.cover)),
-    ];
+    _tabSubmodules = provider.tabSubmodules();
 
-    _children = [
-      const ScrapbookTaskScreen(),
-      const ScrapbookTaskScreen(),
-      const ScrapbookTaskScreen(),
-      const ScrapbookTaskScreen(),
-    ];
+    /// 4 Submodules. Each with their own 'ScrapbookTaskScreen
+    _children = provider.children();
 
     _tabController = TabController(
         initialIndex: Prefs.getInt('SubmodulesIndex'),
         length: _tabSubmodules.length,
         vsync: provider);
+
     _tabController.addListener(() {
       Prefs.setInt('SubmodulesIndex', _tabController.index);
+
     });
   }
 
@@ -241,4 +241,83 @@ class SubmodulesTabBar {
           // ),
         ],
       ));
+}
+
+/// Tabs for the 'state' of a Task
+///
+class TaskStateTabBar {
+  //
+  TaskStateTabBar(TickerProvider _provider) {
+    //
+    if (_provider is StateMVC) {
+      _state = _provider as StateMVC;
+    }
+
+    _tabController = GITabController(
+        initialIndex: Prefs.getInt('TaskStateIndex'),
+        length: 3,
+        vsync: _provider,
+        state: _state);
+
+    _tabController.addListener(() {
+      if (_tabController.length > 0) {
+        Prefs.setInt('TaskStateIndex', _tabController.index);
+      }
+      _state?.setState(() {});
+    });
+  }
+  StateMVC _state;
+  TabController _tabController;
+  List<Widget> _tabTasks;
+  List<Widget> _children;
+
+  void initState() {
+    _children = [
+      const ScrapbookTaskStateScreen(),
+      const EmptyTaskStateScreen(),
+      const EmptyTaskStateScreen(),
+    ];
+  }
+
+  /// Clean up after itself.
+  void dispose() {
+    _tabController.dispose();
+  }
+
+  TabController get controller => _tabController;
+
+  List<Widget> get tabs => [
+        _taskTab('All', 0),
+        _taskTab('Favorite', 1),
+        _taskTab('Incomplete', 2),
+      ];
+
+  List<Widget> get children => _children;
+
+  Tab _taskTab(String data, int index) => Tab(
+        child: Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.all(3),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.blueAccent),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Text(
+            data.trim(),
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontWeight: _tabController.index == index
+                  ? FontWeight.w700
+                  : FontWeight.w400,
+              // foreground: Paint()
+              //   ..style = PaintingStyle.stroke
+              //   ..strokeWidth = 1
+              //   ..color = Colors.blue[700],
+            ),
+            softWrap: false,
+            overflow: TextOverflow.visible,
+          ),
+        ),
+      );
 }

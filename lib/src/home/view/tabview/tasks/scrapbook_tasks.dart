@@ -13,116 +13,55 @@ import 'package:playhouse/src/view.dart';
 /// The Event handling code
 import 'package:playhouse/src/controller.dart';
 
-class ScrapbookTaskScreen extends StatefulWidget {
-  const ScrapbookTaskScreen({Key key}) : super(key: key);
+class ScrapbookTasksScreen extends StatefulWidget {
+  const ScrapbookTasksScreen({Key key}) : super(key: key);
 
   @override
   State createState() => _ScrapbookTaskState();
 }
 
-class _ScrapbookTaskState extends StateMVC<ScrapbookTaskScreen> {
+class _ScrapbookTaskState extends StateMVC<ScrapbookTasksScreen> with SingleTickerProviderStateMixin{
+  TaskStateTabBar sbTaskStateTabBar;
+
   @override
   void initState() {
     super.initState();
+    sbTaskStateTabBar = TaskStateTabBar(this);
+    // Set up this appbar's data
+    sbTaskStateTabBar.initState();
   }
 
   @override
   void dispose() {
+    // Don't forget to dispose the AppBar!
+    sbTaskStateTabBar.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) => Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(onPressed: () {}, child: const Text('All')),
-              TextButton(onPressed: () {}, child: const Text('Favorite')),
-              TextButton(onPressed: () {}, child: const Text('Incomplete')),
-            ],
+    children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        child: TabBar(
+          controller: sbTaskStateTabBar.controller,
+          indicatorSize: TabBarIndicatorSize.label,
+          indicator: ShapeDecoration(
+              color: const Color(0xFFE6E6E6),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(99)
+              )
           ),
-          LimitedBox(
-            maxHeight: 370,
-            child: GridView.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-//              shrinkWrap: true,
-              children: [
-                Card(
-                  child: Image.asset(
-                    'assets/images/questionMark.jpg',
- //                   height: 80,
-                  ),
-                ),
-                Card(
-                  child: Image.asset(
-                    'assets/images/abc.jpg',
- //                   height: 80,
-                  ),
-                ),
-                Card(
-                  child: Image.asset(
-                    'assets/images/AR.jpg',
- //                   height: 80,
-                  ),
-                ),
-                Card(
-                  child: Image.asset(
-                    'assets/images/pencil.jpg',
- //                   height: 80,
-                  ),
-                ),
-                Card(
-                  child: Image.asset(
-                    'assets/images/picture.jpg',
-//                    height: 80,
-                  ),
-                ),
-                Card(
-                  child: Image.asset(
-                    'assets/images/movieCamera.jpg',
-  //                  height: 80,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
+          tabs: sbTaskStateTabBar.tabs,
+        ),
+      ),
+      Expanded(
+        child: TabBarView(
+          controller: sbTaskStateTabBar.controller,
+          children: sbTaskStateTabBar.children,
+        ),
+      ),
+    ],
+  );
 }
 
-class Card01 extends StatelessWidget {
-  const Card01({Key key, this.image, this.title, this.price}) : super(key: key);
-  final Image image;
-  final String title;
-  final String price;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    width: 20,
-    height: 5,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 6,
-            ),
-          ],
-          color: Colors.white,
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              image,
-              const SizedBox(
-                height: 5,
-              ),
-            ],
-          ),
-        ),
-      );
-}
