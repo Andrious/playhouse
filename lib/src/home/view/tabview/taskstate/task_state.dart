@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-//import 'dart:html';
-
 /// The database code
 import 'package:playhouse/src/model.dart';
 
@@ -22,6 +20,12 @@ class ScrapbookTaskStateScreen extends StatefulWidget {
 }
 
 class _ScrapbookTaskStateState extends StateMVC<ScrapbookTaskStateScreen> {
+  _ScrapbookTaskStateState() : super(ScrapBookController()) {
+    _con = controller;
+  }
+  ScrapBookController get con => _con;
+  ScrapBookController _con;
+
   @override
   void initState() {
     super.initState();
@@ -35,51 +39,23 @@ class _ScrapbookTaskStateState extends StateMVC<ScrapbookTaskStateScreen> {
   @override
   Widget build(BuildContext context) => Column(
     children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextButton(onPressed: () {}, child: const Text('All')),
+          TextButton(onPressed: () {}, child: const Text('Favorite')),
+          TextButton(onPressed: () {}, child: const Text('Incomplete')),
+          TextButton(onPressed: () {}, child: const Text('View All ^')),
+        ],
+      ),
       LimitedBox(
-        maxHeight: 350,
+        maxHeight: 250, //350,
         child: GridView.count(
           crossAxisCount: 2,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
 //              shrinkWrap: true,
-          children: [
-            Card(
-              child: Image.asset(
-                'assets/images/questionMark.jpg',
-                //                   height: 80,
-              ),
-            ),
-            Card(
-              child: Image.asset(
-                'assets/images/abc.jpg',
-                //                   height: 80,
-              ),
-            ),
-            Card(
-              child: Image.asset(
-                'assets/images/AR.jpg',
-                //                   height: 80,
-              ),
-            ),
-            Card(
-              child: Image.asset(
-                'assets/images/pencil.jpg',
-                //                   height: 80,
-              ),
-            ),
-            Card(
-              child: Image.asset(
-                'assets/images/picture.jpg',
-//                    height: 80,
-              ),
-            ),
-            Card(
-              child: Image.asset(
-                'assets/images/movieCamera.jpg',
-                //                  height: 80,
-              ),
-            ),
-          ],
+          children: con.taskCards,
         ),
       ),
     ],

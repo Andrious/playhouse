@@ -19,11 +19,12 @@ class ModuleTypeScreen extends StatefulWidget {
 class ModuleTypeScreenState extends StateMVC<ModuleTypeScreen>
     with SingleTickerProviderStateMixin {
   ModuleTypeScreenState() : super(ScrapBookController()) {
-    con = controller;
+    _con = controller;
   }
 
   ModulesAppBar _sbModAppBar;
-  ScrapBookController con;
+  ScrapBookController get con => _con;
+  ScrapBookController _con;
 
   @override
   void initState() {

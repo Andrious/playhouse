@@ -21,10 +21,11 @@ class ScrapbookSubmodulesScreen extends StatefulWidget {
 class ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
     with SingleTickerProviderStateMixin {
   ScrapbookSubmodulesState(): super(ScrapBookController()){
-    con = controller;
+    _con = controller;
   }
   SubmodulesTabBar _sbSubTabBar;
-  ScrapBookController con;
+  ScrapBookController get con => _con;
+  ScrapBookController _con;
 
   @override
   void initState() {
@@ -104,7 +105,7 @@ class ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
 
   List<Widget> tabSubmodules() {
 
-    if(con.inBuildScreen){
+    if(_con.inBuildScreen){
       sub03Locked = true;
       sub04Locked = true;
     }
@@ -138,10 +139,10 @@ class ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
 
   List<Widget> children() {
     return [
-      const ScrapbookTasksScreen(),
-      const ScrapbookTasksScreen(),
-      const ScrapbookTasksScreen(),
-      const ScrapbookTasksScreen(),
+      const ScrapbookTaskStateScreen(),
+      const ScrapbookTaskStateScreen(),
+      const ScrapbookTaskStateScreen(),
+      const ScrapbookTaskStateScreen(),
     ];
   }
 

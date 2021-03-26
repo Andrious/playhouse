@@ -17,24 +17,30 @@ class ScrapbookTasksScreen extends StatefulWidget {
   const ScrapbookTasksScreen({Key key}) : super(key: key);
 
   @override
-  State createState() => _ScrapbookTaskState();
+  State createState() => ScrapbookTaskState();
 }
 
-class _ScrapbookTaskState extends StateMVC<ScrapbookTasksScreen> with SingleTickerProviderStateMixin{
-  TaskStateTabBar sbTaskStateTabBar;
+class ScrapbookTaskState extends StateMVC<ScrapbookTasksScreen> with SingleTickerProviderStateMixin{
+  ScrapbookTaskState() : super(ScrapBookController()) {
+    _con = controller;
+  }
+  TaskStateTabBar _sbTaskStateTabBar;
+
+  ScrapBookController get con => _con;
+  ScrapBookController _con;
 
   @override
   void initState() {
     super.initState();
-    sbTaskStateTabBar = TaskStateTabBar(this);
+    _sbTaskStateTabBar = TaskStateTabBar(this);
     // Set up this appbar's data
-    sbTaskStateTabBar.initState();
+    _sbTaskStateTabBar.initState();
   }
 
   @override
   void dispose() {
     // Don't forget to dispose the AppBar!
-    sbTaskStateTabBar.dispose();
+    _sbTaskStateTabBar.dispose();
     super.dispose();
   }
 
@@ -44,7 +50,7 @@ class _ScrapbookTaskState extends StateMVC<ScrapbookTasksScreen> with SingleTick
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         child: TabBar(
-          controller: sbTaskStateTabBar.controller,
+          controller: _sbTaskStateTabBar.controller,
           indicatorSize: TabBarIndicatorSize.label,
           indicator: ShapeDecoration(
               color: const Color(0xFFE6E6E6),
@@ -52,13 +58,13 @@ class _ScrapbookTaskState extends StateMVC<ScrapbookTasksScreen> with SingleTick
                   borderRadius: BorderRadius.circular(99)
               )
           ),
-          tabs: sbTaskStateTabBar.tabs,
+          tabs: _sbTaskStateTabBar.tabs,
         ),
       ),
       Expanded(
         child: TabBarView(
-          controller: sbTaskStateTabBar.controller,
-          children: sbTaskStateTabBar.children,
+          controller: _sbTaskStateTabBar.controller,
+          children: _sbTaskStateTabBar.children,
         ),
       ),
     ],

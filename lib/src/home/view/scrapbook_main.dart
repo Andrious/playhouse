@@ -6,6 +6,9 @@
 /// The database code
 import 'package:playhouse/src/model.dart';
 
+/// The event handling code
+import 'package:playhouse/src/controller.dart';
+
 /// The UI code
 import 'package:playhouse/src/view.dart';
 
@@ -13,32 +16,37 @@ import 'package:playhouse/src/view.dart';
 class ScrapBookApp extends StatefulWidget {
   const ScrapBookApp({Key key}) : super(key: key);
   @override
-  State createState() => _ScrapBookState();
+  State createState() => ScrapBookState();
 }
 
-class _ScrapBookState extends StateMVC<ScrapBookApp>
+class ScrapBookState extends StateMVC<ScrapBookApp>
     with SingleTickerProviderStateMixin {
-  DesignBuildAppBar sbAppBar;
+  ScrapBookState() : super(ScrapBookController()) {
+    con = controller;
+  }
+
+  DesignBuildAppBar _sbAppBar;
+  ScrapBookController con;
 
   @override
   void initState() {
     super.initState();
-    sbAppBar = DesignBuildAppBar(this);
+    _sbAppBar = DesignBuildAppBar(this);
   }
 
   @override
   void dispose(){
-    sbAppBar.dispose();
+    _sbAppBar.dispose();
     super.dispose();
   }
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
     return Scaffold(
-        appBar: sbAppBar.appBar,
+        appBar: _sbAppBar.appBar,
         endDrawer: ScrapBookDrawer(),
         body: TabBarView(
-          controller: sbAppBar.controller,
+          controller: _sbAppBar.controller,
           children: const <Widget>[
             ScrapbookDesignScreen(),
             ScrapbookBuildScreen(),

@@ -18,8 +18,14 @@ export 'package:playhouse/src/app/view/signin_screen.dart';
 /// Scrapbook main screen
 export 'package:playhouse/src/home/view/scrapbook_main.dart'; //  hide ScrapBookApp
 
-/// Scrapbook AppBar
-export 'package:playhouse/src/home/view/appbar/scrapbook_appbar.dart';
+/// AppBars
+export 'package:playhouse/src/home/view/appbar/design_build_appbar.dart';
+
+export 'package:playhouse/src/home/view/appbar/modules_appbar.dart';
+
+export 'package:playhouse/src/home/view/appbar/submodules_appbar.dart';
+
+export 'package:playhouse/src/home/view/appbar/taskstate_appbar.dart';
 
 /// Scrapbook Drawer
 export 'package:playhouse/src/home/view/drawer/scrapbook_drawer.dart';

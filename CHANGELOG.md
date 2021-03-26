@@ -1,4 +1,10 @@
 
+## 0.11.0
+ March 26, 2021
+- Split out Appbars into dart files.
+- Row 'All' 'Favorite' 'Incomplete' 'View All ^'
+- Replaced the splashscreen icon, @drawable/greyandivy
+
 ## 0.10.0
  March 24, 2021
 - TabBar for All, Favorite, Incomplete

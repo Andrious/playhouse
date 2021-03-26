@@ -5,6 +5,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/greyandivy" />
+            android:src="@drawable/greyandivy" />
     </item>
 </layer-list>
