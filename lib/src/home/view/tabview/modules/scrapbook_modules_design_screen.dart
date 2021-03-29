@@ -9,6 +9,5 @@ import 'package:playhouse/src/view.dart';
 import 'package:playhouse/src/controller.dart';
 
 class ScrapbookDesignScreen extends ModuleTypeScreen {
-  const ScrapbookDesignScreen({Key key}):super(key: key);
+  const ScrapbookDesignScreen({Key key}) : super(key: key);
 }
-

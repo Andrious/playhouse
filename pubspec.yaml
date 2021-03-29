@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.10.0
+version: 0.11.0
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -64,6 +64,9 @@ dependencies:
 #
 #  dio: ^2.0.0
 
+# https://pub.dev/packages/google_fonts/
+  google_fonts: ^2.0.0
+
 #  # The following adds the Cupertino Icons font to your application.
 #  # Use with the CupertinoIcons class for iOS style icons.
 #  cupertino_icons: ^1.0.0
@@ -92,12 +95,21 @@ flutter:
      - assets/
      - assets/i10n/i10n.csv
 
-     - assets/images/Inspiration.jpg
-     - assets/images/SiteAssessment.jpg
-     - assets/images/FloorPlan.jpg
-     - assets/images/FloorPlanLocked.jpg
-     - assets/images/Elevation.jpg
-     - assets/images/ElevationLocked.jpg
+     - assets/images/river_bend.jpg
+     - assets/images/construction_site.jpg
+     - assets/images/warehouse.jpg
+     - assets/images/warehouse_locked.jpg
+     - assets/images/city_night_locked.jpg
+     - assets/images/city_night.jpg
+
+     - assets/images/church_garbagetruck.jpg
+     - assets/images/riverbrook_pinktree.jpg
+     - assets/images/street_intersection.jpg
+     - assets/images/desert_housing.jpg
+     - assets/images/winter_cabin.jpg
+     - assets/images/city_park.jpg
+     - assets/images/country_trail.jpg
+     - assets/images/country_waterfall.jpg
 
      - assets/images/abc.jpg
      - assets/images/AR.jpg
@@ -106,6 +118,17 @@ flutter:
      - assets/images/picture.jpg
      - assets/images/questionMark.jpg
 
+     - assets/google_fonts/
+
+  fonts:
+    - family: Cabin
+      fonts:
+        - asset: assets/google_fonts/Cabin-Regular.ttf
+        - asset: assets/google_fonts/Cabin-Medium.ttf
+    - family: Ubuntu
+      fonts:
+        - asset: assets/google_fonts/Ubuntu-Regular.ttf
+        - asset: assets/google_fonts/Ubuntu-Medium.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

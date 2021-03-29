@@ -116,7 +116,8 @@ class AppController extends c.AppController {
     await _auth.delete();
     await signOut();
 
-    final bool signIn = await _auth.signInEmailPassword(context,
+    final bool signIn = await _auth.signInEmailPassword(
+      context,
       email: email,
       password: password,
     );

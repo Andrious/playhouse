@@ -15,18 +15,16 @@ class AppModel {
 
   bool populateModule(Map<String, dynamic> data) => _tryMap(data, _mapModule);
 
-  bool populateSubmodule(Map<String, dynamic> data) => _tryMap(data, _mapSubmodule);
+  bool populateSubmodule(Map<String, dynamic> data) =>
+      _tryMap(data, _mapSubmodule);
 
   bool populateTask(Map<String, dynamic> data) => _tryMap(data, _mapTask);
 
-
-  void _mapModule(Map<String, dynamic> data) =>  modules.add(data);
+  void _mapModule(Map<String, dynamic> data) => modules.add(data);
 
   void _mapSubmodule(Map<String, dynamic> data) => submodules.add(data);
 
   void _mapTask(Map<String, dynamic> data) => tasks.add(data);
-
-
 
   /// Attempts to 'map the data.'
   /// If errors returns false.
@@ -41,7 +39,6 @@ class AppModel {
     return pop;
   }
 }
-
 
 // void _mapModule(Map<String, dynamic> data) {
 //   var rec = Module(
@@ -80,8 +77,6 @@ class AppModel {
 //     keyArt: data['keyArt'],
 //   );
 // }
-
-
 
 // class Module {
 //   Module({

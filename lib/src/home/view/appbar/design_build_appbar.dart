@@ -42,7 +42,7 @@ class DesignBuildAppBar {
         title: const Text('Playhouse'),
         // actions: [
         //   /// Supply the App's popup menu. Pass in the screen's State object.
-        //   AppMenu().show(_state),
+        //   AppMenu().show(_provider),
         // ],
         centerTitle: true,
         automaticallyImplyLeading: false,

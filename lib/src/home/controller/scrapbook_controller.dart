@@ -9,6 +9,10 @@ class ScrapBookController extends ControllerMVC {
 
   bool inBuildScreen = false;
 
+  String module = '';
+
+  String submodule = '';
+
   List<Widget> _taskCards;
 
   List<Widget> get taskCards {

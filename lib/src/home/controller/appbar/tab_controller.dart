@@ -21,8 +21,6 @@ class GITabController extends TabController {
           vsync: vsync,
         );
   final _TabController con;
-
-
 }
 
 class _TabController extends ControllerMVC {

@@ -8,16 +8,16 @@ import 'package:playhouse/src/model.dart';
 /// The UI code
 import 'package:playhouse/src/view.dart'
     show
-    App,
-    DialogBox,
-    I10n,
-    ISOSpinner,
-    Menu,
-    PopupMenuItem,
-    Prefs,
-    Text,
-    UniversalPlatform,
-    unawaited;
+        App,
+        DialogBox,
+        I10n,
+        ISOSpinner,
+        Menu,
+        PopupMenuItem,
+        Prefs,
+        Text,
+        UniversalPlatform,
+        unawaited;
 
 import 'package:playhouse/src/controller.dart';
 
@@ -47,13 +47,13 @@ class AppMenu extends Menu {
 
   @override
   List<PopupMenuItem<dynamic>> menuItems() => [
-    PopupMenuItem(
-        value: 'interface',
-        child: Text('${I10n.s('Interface:')} $interface')),
-    PopupMenuItem(
-        value: 'Locale',
-        child: Text('${I10n.s('Locale:')} ${App.locale.toLanguageTag()}')),
-  ];
+        PopupMenuItem(
+            value: 'interface',
+            child: Text('${I10n.s('Interface:')} $interface')),
+        PopupMenuItem(
+            value: 'Locale',
+            child: Text('${I10n.s('Locale:')} ${App.locale.toLanguageTag()}')),
+      ];
 
   // Supply what the interface
   String get interface => App.useMaterial ? 'Material' : 'Cupertino';
@@ -80,12 +80,12 @@ class AppMenu extends Menu {
         await Prefs.setBool('switchUI', switchUI);
         break;
       case 'Locale':
-      // await MsgBox(
-      //   context: context,
-      //   title: I10n.s('Current Language'),
-      //   msg: I10n.s('Pick another:'),
-      //   body: const [ISOSpinner()],
-      // ).show();
+        // await MsgBox(
+        //   context: context,
+        //   title: I10n.s('Current Language'),
+        //   msg: I10n.s('Pick another:'),
+        //   body: const [ISOSpinner()],
+        // ).show();
 
         final initialItem = I10n.supportedLocales.indexOf(App.locale);
         final spinner = ISOSpinner(initialItem: initialItem);

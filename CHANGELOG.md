@@ -4,6 +4,10 @@
 - Split out Appbars into dart files.
 - Row 'All' 'Favorite' 'Incomplete' 'View All ^'
 - Replaced the splashscreen icon, @drawable/greyandivy
+- Introduced new images
+- import google_fonts.dart
+- _con.module = _label(tabs[initIndex]);
+- Flexible(flex: 3,
 
 ## 0.10.0
  March 24, 2021

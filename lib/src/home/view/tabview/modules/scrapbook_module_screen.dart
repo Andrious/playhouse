@@ -12,13 +12,18 @@ import 'package:playhouse/src/view.dart';
 import 'package:playhouse/src/controller.dart';
 
 class ModuleScreen extends StatefulWidget {
-  const ModuleScreen({Key key}) : super(key: key);
+  const ModuleScreen({Key key, @required this.tab}) : super(key: key);
+  final Tab tab;
 
   @override
   State createState() => _ModuleScreenState();
 }
 
-class _ModuleScreenState extends StateMVC<ModuleScreen>{
+class _ModuleScreenState extends StateMVC<ModuleScreen> {
+  _ModuleScreenState() : super(ScrapBookController()) {
+    _con = controller;
+  }
+  ScrapBookController _con;
 
   @override
   void initState() {
@@ -26,20 +31,14 @@ class _ModuleScreenState extends StateMVC<ModuleScreen>{
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) => Stack(
-    children:const <Widget>[
-      ScrapbookSubmodulesScreen(),
-    ],
-  );
+        children: const <Widget>[
+          ScrapbookSubmodulesScreen(),
+        ],
+      );
 }
-
-
-
-
-
-

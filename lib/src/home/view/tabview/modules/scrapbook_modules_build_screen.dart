@@ -7,6 +7,4 @@ import 'package:playhouse/src/view.dart';
 
 class ScrapbookBuildScreen extends ModuleTypeScreen {
   const ScrapbookBuildScreen({Key key}) : super(key: key);
-
-
 }

@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-
 /// MVC framework
 export 'package:mvc_application/view.dart' hide AppMenu, runApp;
 
@@ -25,8 +24,6 @@ export 'package:playhouse/src/home/view/appbar/modules_appbar.dart';
 
 export 'package:playhouse/src/home/view/appbar/submodules_appbar.dart';
 
-export 'package:playhouse/src/home/view/appbar/taskstate_appbar.dart';
-
 /// Scrapbook Drawer
 export 'package:playhouse/src/home/view/drawer/scrapbook_drawer.dart';
 
@@ -47,6 +44,3 @@ export 'package:playhouse/src/home/view/tabview/modules/scrapbook_module_screen.
 
 /// Individual Task screen
 export 'package:playhouse/src/home/view/tabview/tasks/scrapbook_tasks.dart'; // hide Card;
-
-/// 'State' of the Task (Favorite, Incomplete, etc.)
-export 'package:playhouse/src/home/view/tabview/taskstate/task_state.dart'; // hide Card;

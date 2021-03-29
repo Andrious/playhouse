@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-//import 'dart:html';
-
 /// The database code
 import 'package:playhouse/src/model.dart';
 
@@ -13,61 +11,123 @@ import 'package:playhouse/src/view.dart';
 /// The Event handling code
 import 'package:playhouse/src/controller.dart';
 
+/// State of the Task:  Favorite, Incomplete, etc.
 class ScrapbookTasksScreen extends StatefulWidget {
-  const ScrapbookTasksScreen({Key key}) : super(key: key);
+  const ScrapbookTasksScreen({Key key, @required this.tab}) : super(key: key);
+  final PicTab tab;
 
   @override
-  State createState() => ScrapbookTaskState();
+  State createState() => _ScrapbookTasksScreenState();
 }
 
-class ScrapbookTaskState extends StateMVC<ScrapbookTasksScreen> with SingleTickerProviderStateMixin{
-  ScrapbookTaskState() : super(ScrapBookController()) {
+class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
+  _ScrapbookTasksScreenState() : super(ScrapBookController()) {
     _con = controller;
   }
-  TaskStateTabBar _sbTaskStateTabBar;
 
   ScrapBookController get con => _con;
   ScrapBookController _con;
 
+  TextStyle style;
+
   @override
   void initState() {
     super.initState();
-    _sbTaskStateTabBar = TaskStateTabBar(this);
-    // Set up this appbar's data
-    _sbTaskStateTabBar.initState();
+    style = const TextStyle(color: Colors.black);
   }
 
   @override
   void dispose() {
-    // Don't forget to dispose the AppBar!
-    _sbTaskStateTabBar.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) => Column(
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-        child: TabBar(
-          controller: _sbTaskStateTabBar.controller,
-          indicatorSize: TabBarIndicatorSize.label,
-          indicator: ShapeDecoration(
-              color: const Color(0xFFE6E6E6),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(99)
-              )
+        children: [
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'All',
+                    style: style,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Favorite',
+                    style: style,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Incomplete',
+                    style: style,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'View All ^',
+                    style: style,
+                  ),
+                ),
+              ],
+            ),
           ),
-          tabs: _sbTaskStateTabBar.tabs,
-        ),
-      ),
-      Expanded(
-        child: TabBarView(
-          controller: _sbTaskStateTabBar.controller,
-          children: _sbTaskStateTabBar.children,
-        ),
-      ),
-    ],
-  );
+          Flexible(
+            flex: 5,
+            child: GridView.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              children: con.taskCards,
+            ),
+          ),
+        ],
+      );
 }
 
+class Card01 extends StatelessWidget {
+  const Card01({Key key, this.image, this.title, this.price}) : super(key: key);
+  final Image image;
+  final String title;
+  final String price;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: 20,
+        height: 5,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 6,
+            ),
+          ],
+          color: Colors.white,
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              image,
+              const SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        ),
+      );
+}
+
+class EmptyTaskStateScreen extends StatelessWidget {
+  const EmptyTaskStateScreen({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) => const Center();
+}

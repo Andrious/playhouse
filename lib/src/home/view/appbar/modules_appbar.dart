@@ -34,24 +34,23 @@ class ModulesAppBar {
       prefsLabel = 'Design';
     }
 
+    final initIndex = Prefs.getInt('${prefsLabel}ModulesIndex');
+
     _tabController = GITabController(
-      initialIndex: Prefs.getInt('${prefsLabel}ModulesIndex'),
+      initialIndex: initIndex,
       length: 4,
       vsync: provider,
       state: provider,
     );
+
     _tabController.addListener(() {
       Prefs.setInt('${prefsLabel}ModulesIndex', _tabController.index);
+      _con.module = _label(tabs[_tabController.index]);
       provider?.setState(() {});
     });
 
-    /// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
-    _children = const [
-      ModuleScreen(),
-      ModuleScreen(),
-      ModuleScreen(),
-      ModuleScreen(),
-    ];
+    // _tabController must be defined first.
+    _con.module = _label(tabs[initIndex]);
   }
 
   /// Clean up after itself.
@@ -61,7 +60,7 @@ class ModulesAppBar {
 
   TabController get controller => _tabController;
 
-  List<Widget> get _tabModules => [
+  List<Tab> get tabs => [
         Tab(
           child: Text(
             'Inspiration',
@@ -108,6 +107,13 @@ class ModulesAppBar {
         ),
       ];
 
+  List<Widget> get children => [
+        ModuleScreen(tab: tabs[0]),
+        ModuleScreen(tab: tabs[1]),
+        ModuleScreen(tab: tabs[2]),
+        ModuleScreen(tab: tabs[3]),
+      ];
+
   AppBar get appBar => AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -115,12 +121,22 @@ class ModulesAppBar {
         toolbarHeight: 50,
         primary: false,
         bottom: TabBar(
-          tabs: _tabModules,
+          tabs: tabs,
           controller: _tabController,
           indicatorSize: TabBarIndicatorSize.label,
         ),
       );
 
-  List<Widget> _children;
-  List<Widget> get children => _children;
+  /// Return the text label specified in the Tab object.
+  String _label(Tab tab) {
+    String label = '';
+    if (tab.text == null) {
+      if (tab.child is Text) {
+        label = (tab.child as Text).data;
+      }
+    } else {
+      label = tab.text;
+    }
+    return label;
+  }
 }

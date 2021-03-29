@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-
 /// The database code
 import 'package:playhouse/src/model.dart';
 
@@ -35,10 +34,11 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _sbAppBar.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
@@ -53,10 +53,4 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
           ],
         ));
   }
-
-
-
-
 }
-
-

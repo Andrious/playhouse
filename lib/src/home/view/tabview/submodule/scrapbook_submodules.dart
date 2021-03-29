@@ -20,7 +20,7 @@ class ScrapbookSubmodulesScreen extends StatefulWidget {
 
 class ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
     with SingleTickerProviderStateMixin {
-  ScrapbookSubmodulesState(): super(ScrapBookController()){
+  ScrapbookSubmodulesState() : super(ScrapBookController()) {
     _con = controller;
   }
   SubmodulesTabBar _sbSubTabBar;
@@ -45,28 +45,20 @@ class ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
   @override
   Widget build(BuildContext context) => Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+          Flexible(
+            flex: 3,
+            // child: Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             child: TabBar(
               controller: _sbSubTabBar.controller,
-//              labelColor: Colors.green,
               isScrollable: true,
               indicatorSize: TabBarIndicatorSize.label,
-//              indicatorColor: Colors.transparent,
-//               unselectedLabelColor: Colors.grey,
-//               unselectedLabelStyle: const TextStyle(
-//                 fontSize: 16,
-//                 color: Colors.grey,
-//                 fontWeight: FontWeight.w700,
-//               ),
-//               labelStyle: const TextStyle(
-//                 fontSize: 16,
-//                 fontWeight: FontWeight.w700,
-//               ),
               tabs: _sbSubTabBar.tabs,
             ),
+//            ),
           ),
-          Expanded(
+          Flexible(
+            flex: 4,
             child: TabBarView(
               controller: _sbSubTabBar.controller,
               children: _sbSubTabBar.children,
@@ -102,49 +94,6 @@ class ScrapbookSubmodulesState extends StateMVC<ScrapbookSubmodulesScreen>
   //         )),
   //   ),
   // );
-
-  List<Widget> tabSubmodules() {
-
-    if(_con.inBuildScreen){
-      sub03Locked = true;
-      sub04Locked = true;
-    }
-
-    String subPic03;
-    String subPic04;
-
-    if (sub03Locked) {
-      subPic03 = 'FloorPlanLocked.jpg';
-    } else {
-      subPic03 = 'FloorPlan.jpg';
-    }
-
-    if (sub04Locked) {
-      subPic04 = 'ElevationLocked.jpg';
-    } else {
-      subPic04 = 'Elevation.jpg';
-    }
-
-    return [
-      _sbSubTabBar.picTab(
-          Image.asset('assets/images/Inspiration.jpg', fit: BoxFit.cover)),
-      _sbSubTabBar.picTab(
-          Image.asset('assets/images/SiteAssessment.jpg', fit: BoxFit.cover)),
-      _sbSubTabBar.picTab(
-          Image.asset('assets/images/$subPic03', fit: BoxFit.cover)),
-      _sbSubTabBar.picTab(
-          Image.asset('assets/images/$subPic04', fit: BoxFit.cover)),
-    ];
-  }
-
-  List<Widget> children() {
-    return [
-      const ScrapbookTaskStateScreen(),
-      const ScrapbookTaskStateScreen(),
-      const ScrapbookTaskStateScreen(),
-      const ScrapbookTaskStateScreen(),
-    ];
-  }
 
   /// Means to 'lock' certain Submodules.
   bool sub01Locked = false;

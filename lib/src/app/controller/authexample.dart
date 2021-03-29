@@ -24,7 +24,6 @@ Future<void> main() async {
 ///
 /// Returns a [MaterialApp].
 class AuthExampleApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,39 +38,39 @@ class AuthExampleApp extends StatelessWidget {
 
 /// Provides a UI to select a authentication type page
 class AuthTypeSelector extends StatelessWidget {
-  const AuthTypeSelector({Key key}):super(key: key);
+  const AuthTypeSelector({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: const Text('Firebase Example App'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(16),
-            alignment: Alignment.center,
-            child: SignInButtonBuilder(
-              icon: Icons.person_add,
-              backgroundColor: Colors.indigo,
-              text: 'Registration',
-              onPressed: () => _pushPage(context, RegisterPage()),
+        appBar: AppBar(
+          title: const Text('Firebase Example App'),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(16),
+              alignment: Alignment.center,
+              child: SignInButtonBuilder(
+                icon: Icons.person_add,
+                backgroundColor: Colors.indigo,
+                text: 'Registration',
+                onPressed: () => _pushPage(context, RegisterPage()),
+              ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            alignment: Alignment.center,
-            child: SignInButtonBuilder(
-              icon: Icons.verified_user,
-              backgroundColor: Colors.orange,
-              text: 'Sign In',
-              onPressed: () => _pushPage(context, SignInPage()),
+            Container(
+              padding: const EdgeInsets.all(16),
+              alignment: Alignment.center,
+              child: SignInButtonBuilder(
+                icon: Icons.verified_user,
+                backgroundColor: Colors.orange,
+                text: 'Sign In',
+                onPressed: () => _pushPage(context, SignInPage()),
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
 
   // Navigates to a new page
   void _pushPage(BuildContext context, Widget page) {
