@@ -1,4 +1,11 @@
 
+## 0.12.0
+ March 31, 2021
+- A backdrop interface for the Scrapbook
+- A label transparent caption for the Submodules
+- A Sign-in feature
+- Replaced ModuleScreen all together.
+
 ## 0.11.0
  March 26, 2021
 - Split out Appbars into dart files.

@@ -107,11 +107,18 @@ class ModulesAppBar {
         ),
       ];
 
-  List<Widget> get children => [
-        ModuleScreen(tab: tabs[0]),
-        ModuleScreen(tab: tabs[1]),
-        ModuleScreen(tab: tabs[2]),
-        ModuleScreen(tab: tabs[3]),
+  // List<Widget> get children => [
+  //       ModuleScreen(tab: tabs[0]),
+  //       ModuleScreen(tab: tabs[1]),
+  //       ModuleScreen(tab: tabs[2]),
+  //       ModuleScreen(tab: tabs[3]),
+  //     ];
+
+  List<Widget> get children => const [
+        SubmodulesScreen(),
+        SubmodulesScreen(),
+        SubmodulesScreen(),
+        SubmodulesScreen(),
       ];
 
   AppBar get appBar => AppBar(

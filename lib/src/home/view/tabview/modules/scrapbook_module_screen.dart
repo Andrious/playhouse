@@ -26,19 +26,5 @@ class _ModuleScreenState extends StateMVC<ModuleScreen> {
   ScrapBookController _con;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) => Stack(
-        children: const <Widget>[
-          ScrapbookSubmodulesScreen(),
-        ],
-      );
+  Widget build(BuildContext context) => const SubmodulesScreen();
 }

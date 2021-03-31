@@ -59,6 +59,9 @@ class AppController extends c.AppController {
     return init;
   }
 
+  /// Return the 'last' context used in this app.
+  BuildContext get context => App.context;
+
   Future<void> signIn() async {
     await Navigator.push(App.context,
         MaterialPageRoute<void>(builder: (context) => const SignInScreen()));
@@ -66,6 +69,12 @@ class AppController extends c.AppController {
   }
 
   Future<bool> signInWithFacebook() async {
+    await MsgBox(
+            title: 'Playhouse Under Development',
+            msg: 'Facebook not yet implemented.\nSign in with Google!',
+            context: context)
+        .show();
+    return Future.value(false);
     Firebase().removeAnonymous();
     await _auth.delete();
     await signOut();
@@ -74,6 +83,11 @@ class AppController extends c.AppController {
   }
 
   Future<bool> signInWithTwitter() async {
+    await MsgBox(
+            title: 'Playhouse Under Development',
+            msg: 'Twitter not yet implemented.\nSign in with Google!',
+            context: context)
+        .show();
     return Future.value(false);
     // //
     // final PackageInfo info = await PackageInfo.fromPlatform();
@@ -107,6 +121,12 @@ class AppController extends c.AppController {
   }
 
   Future<bool> signInEmailPassword(BuildContext context) async {
+    await MsgBox(
+            title: 'Playhouse Under Development',
+            msg: 'Email not yet implemented.\nSign in with Google!',
+            context: context)
+        .show();
+    return Future.value(false);
     //
     const String email = '';
 

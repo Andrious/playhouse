@@ -22,16 +22,52 @@ class ScrapBookDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          // con.header,
-          // con.darkmode,
-          // con.account,
-          // con.orders,
-          // con.settings,
-          // con.about,
-          // con.contact,
-          // con.logout,
+          LogInLogOut(),
         ],
       ),
+    );
+  }
+}
+
+class LogInLogOut extends StatelessWidget {
+  LogInLogOut({Key key})
+      : _appCon = AppController(),
+        _auth = SignIn(),
+        super(key: key);
+  final AppController _appCon;
+  final SignIn _auth;
+
+  @override
+  Widget build(BuildContext context) {
+    final signedIn = _appCon.loggedIn && !_appCon.isAnonymous;
+    String title;
+    IconData icon;
+    if (signedIn) {
+      title = 'Sign out';
+      icon = Icons.logout;
+    } else {
+      title = 'Sign in...';
+      icon = Icons.login;
+    }
+    return ListTile(
+      leading: Icon(
+        icon,
+      ),
+      title: I10n.t(title),
+      onTap: () {
+        if (signedIn) {
+          _auth.signOut().then((value) {
+            Navigator.of(_appCon.context).pop();
+            _appCon.refresh();
+          });
+        } else {
+//          unawaited(_appCon.signIn());
+          _appCon.signIn().then((value) {
+            Navigator.of(_appCon.context).pop();
+            _appCon.refresh();
+          });
+        }
+      },
     );
   }
 }

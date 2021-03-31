@@ -19,7 +19,7 @@ class SubmodulesTabBar {
     // Supply the Controller.
     _con = provider.con;
   }
-  final ScrapbookSubmodulesState provider;
+  final SubmodulesState provider;
   ScrapBookController _con;
 
   TabController _tabController;
@@ -123,10 +123,10 @@ class SubmodulesTabBar {
         subPics = ['river_bend', 'construction_site', subPic03, subPic04];
     }
     return [
-      PicTab(name: subPics[0]),
-      PicTab(name: subPics[1]),
-      PicTab(name: subPics[2]),
-      PicTab(name: subPics[3]),
+      PicTab(name: subPics[0], state: provider),
+      PicTab(name: subPics[1], state: provider),
+      PicTab(name: subPics[2], state: provider),
+      PicTab(name: subPics[3], state: provider),
     ];
   }
 
@@ -135,8 +135,10 @@ class SubmodulesTabBar {
 }
 
 class PicTab extends StatelessWidget {
-  const PicTab({Key key, @required this.name}) : super(key: key);
+  const PicTab({Key key, @required this.name, @required this.state})
+      : super(key: key);
   final String name;
+  final SubmodulesState state;
 
   @override
   Widget build(BuildContext context) {
@@ -148,18 +150,68 @@ class PicTab extends StatelessWidget {
     } else {
       image = name.trim();
     }
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      width: 250,
-      height: 350,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: Image.asset('assets/images/$image.jpg', fit: BoxFit.cover),
+    final stackImage = StackImage(name: 'assets/images/$image.jpg');
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+      child: Stack(
+        children: [
+          stackImage,
+          Positioned(
+            bottom: 0,
+            child: Container(
+              width: stackImage.width,
+              height: stackImage.height * 0.3,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(32),
+                color: Colors.white.withOpacity(0.5),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(''),
+                  ]),
+            ),
+          ),
+        ],
       ),
-      // child: AspectRatio(
-      //   aspectRatio: 16.0 / 9.0,
-      //   child: Image.asset('assets/images/$image.jpg', fit: BoxFit.cover),
-      // ),
     );
+    // return Container(
+    //   margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+    //   width: 250,
+    //   height: 250,
+    //   child: ClipRRect(
+    //     borderRadius: BorderRadius.circular(30),
+    //     child: Image.asset('assets/images/$image.jpg', fit: BoxFit.cover),
+    //   ),
+    //   // child: AspectRatio(
+    //   //   aspectRatio: 16.0 / 9.0,
+    //   //   child: Image.asset('assets/images/$image.jpg', fit: BoxFit.cover),
+    //   // ),
+    // );
   }
+}
+
+class StackImage extends StatelessWidget {
+  const StackImage({
+    Key key,
+    @required this.name,
+    this.width = 250,
+    this.height = 250,
+  }) : super(key: key);
+  final String name;
+  final double width;
+  final double height;
+
+  @override
+  Container build(BuildContext context) => Container(
+        width: width,
+        height: height,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Image.asset(
+            name,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
 }

@@ -24,6 +24,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
   _ScrapbookTasksScreenState() : super(ScrapBookController()) {
     _con = controller;
   }
+  SubmodulesState submodule;
 
   ScrapBookController get con => _con;
   ScrapBookController _con;
@@ -33,63 +34,76 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
   @override
   void initState() {
     super.initState();
+    submodule = widget.tab.state;
     style = const TextStyle(color: Colors.black);
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) => Column(
-        children: [
-          Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'All',
-                    style: style,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Favorite',
-                    style: style,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Incomplete',
-                    style: style,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'View All ^',
-                    style: style,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Flexible(
-            flex: 5,
-            child: GridView.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              children: con.taskCards,
-            ),
-          ),
-        ],
+  Widget build(BuildContext context) {
+    Icon arrow;
+    if (submodule.isPanelUp) {
+      arrow = const Icon(
+        Icons.expand_more,
+        color: Colors.red,
       );
+    } else {
+      arrow = const Icon(
+        Icons.expand_less,
+        color: Colors.green,
+      );
+    }
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'All',
+                style: style,
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'Favorite',
+                style: style,
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'Incomplete',
+                style: style,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(submodule.onPressed);
+              },
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                Text(
+                  'View All',
+                  style: style,
+                ),
+                arrow,
+              ]),
+            ),
+          ],
+        ),
+        Expanded(
+          child: GridView.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            primary: false,
+            children: con.taskCards,
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class Card01 extends StatelessWidget {
