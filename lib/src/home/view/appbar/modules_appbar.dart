@@ -121,12 +121,13 @@ class ModulesAppBar {
         SubmodulesScreen(),
       ];
 
+  /// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
   AppBar get appBar => AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
         excludeHeaderSemantics: true,
         toolbarHeight: 50,
-        primary: false,
+//        primary: false,
         bottom: TabBar(
           tabs: tabs,
           controller: _tabController,

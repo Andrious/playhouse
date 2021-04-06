@@ -65,7 +65,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
     if (isPortrait) {
-      _panelHeight = MediaQuery.of(context).size.height * 0.35;
+      _panelHeight = MediaQuery.of(context).size.height * 0.4;
     } else {
       _panelHeight = 0.0;
     }

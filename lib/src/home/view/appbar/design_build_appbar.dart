@@ -49,7 +49,6 @@ class DesignBuildAppBar {
         elevation: 0,
         excludeHeaderSemantics: true,
         toolbarHeight: 100,
-        primary: false,
         bottom: TabBar(
           tabs: [
             Tab(

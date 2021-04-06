@@ -13,9 +13,11 @@ import 'package:playhouse/src/controller.dart' show App, Auth, BuildContext;
 
 class SignIn {
   factory SignIn() => _this ??= SignIn._();
-  SignIn._() : _auth = Auth();
+  SignIn._() {
+    _auth = Auth();
+  }
   static SignIn _this;
-  final Auth _auth;
+  Auth _auth;
 
   bool get loggedIn => _loggedIn;
   bool _loggedIn;
@@ -33,7 +35,7 @@ class SignIn {
   }
 
   // 'disconnect' from Firebase
-  Future<void> signOut() => _auth.signOut().then(_logInUser);
+  Future<void> signOut() => _auth.signOut().then(logInUser);
 
   Future<bool> signInAnonymously() => _auth.signInAnonymously();
 
@@ -88,7 +90,7 @@ class SignIn {
   }) async {
     //
 
-    Firebase().removeAnonymous();
+    FirebaseUser().removeAnonymous();
     await _auth.delete();
     await signOut();
 
@@ -138,7 +140,7 @@ class SignIn {
 
   String get name => _auth.displayName;
 
-  String get provider => _auth.providerId;
+  String get provider => _auth.signInProvider;
 
   bool get isNewUser => _auth.isNewUser;
 
@@ -156,11 +158,9 @@ class SignIn {
   //   super.onError(details);
   // }
 
-  void _logInUser(dynamic user) {
+  void logInUser(dynamic user) {
     //
-    if (user != null) {
-//      userStamp();
-    }
+    FirebaseUser().userStamp();
     FirebaseCrashlytics.instance.setUserIdentifier(_auth.displayName);
   }
 

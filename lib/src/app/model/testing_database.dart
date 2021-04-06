@@ -4,57 +4,65 @@
 
 ///todo: place this as an export in dbUtil's FireStoreDB
 ///todo:  _ex = ex as Exception in dbUtils in a try-catch
-import 'package:cloud_firestore/cloud_firestore.dart'
-    show DocumentReference, FieldValue;
+import 'package:cloud_firestore/cloud_firestore.dart' show DocumentReference;
 
-import 'package:playhouse/src/model.dart'
-    show FireStoreCollection, infoIcon, required, rocket;
+import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/controller.dart' show Auth;
+
+import 'module1_sun_and_shadow.dart';
+
+import 'module2_vegetation_material_assessment.dart';
+
+import 'module3_soil_and_grading_assessment.dart';
 
 class DatabaseTest {
   factory DatabaseTest() => _this ??= DatabaseTest._();
   DatabaseTest._() : _auth = Auth() {
     // Assign when this record was created.
-    _timeStamp = FieldValue.serverTimestamp();
+    _timeStamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     userId = _auth.uid;
   }
   static DatabaseTest _this;
   //
   FireStoreCollection _table;
-  dynamic _timeStamp;
+  int _timeStamp;
   final Auth _auth;
   String userId;
 
   /// Create a 'test' database
   ///
   bool createModules() {
+    //
     if (userId.isEmpty) {
       return false;
     }
     bool createDB = true;
 
-    final modRef = FireStoreCollection('Modules').collection.doc();
+    final DocumentReference modRef =
+        FireStoreCollection('Modules').collection.doc();
 
     createDB = createModule(
       modRef,
-      name: 'Mod01',
+      name: 'Module 1: Sun and Shadow Assessment',
       timestamp: _timeStamp,
     );
 
     if (!createDB) {
       return createDB;
     }
+
+    /// ==========================================================================
 
     final DocumentReference sub01Ref =
         FireStoreCollection('${modRef.path}/Submodules').collection.doc();
 
     final String sub01Id = sub01Ref.id;
 
-    createSubmodule(
+    createDB = createSubmodule(
       sub01Ref,
       nextSubId: '',
-      name: 'Sub01',
+      name: 'Sub Module 1.1: Sun Exposure',
       keyArt: infoIcon,
       timestamp: _timeStamp,
     );
@@ -63,22 +71,43 @@ class DatabaseTest {
       return createDB;
     }
 
+    /// ==========================================================================
+
     final DocumentReference sub02Ref =
         FireStoreCollection('${modRef.path}/Submodules').collection.doc();
 
     final String sub02Id = sub02Ref.id;
 
-    createSubmodule(
+    createDB = createSubmodule(
       sub02Ref,
       nextSubId: '',
-      name: 'Sub02',
+      name: 'Sub Module 1.2: Shadow Studies',
       keyArt: infoIcon,
       timestamp: _timeStamp,
     );
 
+    /// ==========================================================================
+
+    final DocumentReference sub03Ref =
+        FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+
+    final String sub03Id = sub03Ref.id;
+
+    createDB = createSubmodule(
+      sub02Ref,
+      nextSubId: '',
+      name: 'Sub Module 1.3: Solar Path',
+      keyArt: infoIcon,
+      timestamp: _timeStamp,
+    );
+
+    /// ==========================================================================
+
     createNTasks(doc: sub01Ref, id: sub01Id);
 
     createNTasks(doc: sub02Ref, id: sub02Id);
+
+    createNTasks(doc: sub03Ref, id: sub03Id);
 
     return createDB;
   }
@@ -168,7 +197,7 @@ class DatabaseTest {
   /// Create a 'Task' record.
   bool createTask(
     DocumentReference doc, {
-    @required String submoduleId,
+    String submoduleId,
     @required String name,
     String short = 'A short description.',
     String long = 'A much longer description with more detail.',
@@ -181,7 +210,7 @@ class DatabaseTest {
     //
     final data = <String, dynamic>{};
 
-    data['submoduleId'] = submoduleId;
+//    data['submoduleId'] = submoduleId;
     data['name'] = name;
     data['short'] = short;
     data['long'] = long;
@@ -220,5 +249,11 @@ class DatabaseTest {
   bool createUserRecord(DocumentReference doc, Map<String, dynamic> data) {
     var create = true;
     return create;
+  }
+
+  void insertShadow() {
+    module1SunAndShadow();
+    module2VegetationAndMaterialsAssessment();
+    module2SoilAndGradingAssessment();
   }
 }

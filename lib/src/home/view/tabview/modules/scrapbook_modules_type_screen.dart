@@ -44,10 +44,11 @@ class ModuleTypeScreenState extends StateMVC<ModuleTypeScreen>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      primary: false,
       appBar: _sbModAppBar.appBar,
-      body: TabBarView(
-        controller: _sbModAppBar.controller,
-        children: _sbModAppBar.children,
+      body: SafeArea(
+        child: TabBarView(
+          controller: _sbModAppBar.controller,
+          children: _sbModAppBar.children,
+        ),
       ));
 }

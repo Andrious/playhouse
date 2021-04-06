@@ -45,6 +45,7 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
     return Scaffold(
         appBar: _sbAppBar.appBar,
         endDrawer: ScrapBookDrawer(),
+        primary: false,
         body: TabBarView(
           controller: _sbAppBar.controller,
           children: const <Widget>[

@@ -175,19 +175,6 @@ class PicTab extends StatelessWidget {
         ],
       ),
     );
-    // return Container(
-    //   margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-    //   width: 250,
-    //   height: 250,
-    //   child: ClipRRect(
-    //     borderRadius: BorderRadius.circular(30),
-    //     child: Image.asset('assets/images/$image.jpg', fit: BoxFit.cover),
-    //   ),
-    //   // child: AspectRatio(
-    //   //   aspectRatio: 16.0 / 9.0,
-    //   //   child: Image.asset('assets/images/$image.jpg', fit: BoxFit.cover),
-    //   // ),
-    // );
   }
 }
 

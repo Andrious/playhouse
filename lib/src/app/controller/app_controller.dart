@@ -11,13 +11,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart'
 
 import 'package:playhouse/src/app/controller/authexample.dart';
 
-import 'package:playhouse/src/model.dart'
-    show
-        ErrorWidgetBuilder,
-        Firebase,
-        PlayhouseDB,
-        Widget,
-        WidgetsFlutterBinding;
+import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/view.dart';
 
@@ -48,10 +42,16 @@ class AppController extends c.AppController {
     if (init) {
       //
       if (App.inDebugger) {
-        // final test = DatabaseTest();
+        final test = DatabaseTest();
         //
         // if (!test.createDB()) {}
+
+//        test.insertShadow();
       }
+
+      // Initialize the User's data information.
+      await FirebaseUser().initAsync();
+
       final database = PlayhouseDB();
 
       init = await database.downloadDB();
@@ -69,17 +69,19 @@ class AppController extends c.AppController {
   }
 
   Future<bool> signInWithFacebook() async {
-    await MsgBox(
-            title: 'Playhouse Under Development',
-            msg: 'Facebook not yet implemented.\nSign in with Google!',
-            context: context)
-        .show();
-    return Future.value(false);
-    Firebase().removeAnonymous();
-    await _auth.delete();
-    await signOut();
-    final signIn = _auth.signInWithFacebook();
-    return signIn;
+    if (App.inDebugger) {
+      FirebaseUser().removeAnonymous();
+      await _auth.delete();
+      await signOut();
+      return _auth.signInWithFacebook();
+    } else {
+      await MsgBox(
+              title: 'Playhouse Under Development',
+              msg: 'Facebook not yet implemented.\nSign in with Google!',
+              context: context)
+          .show();
+      return Future.value(false);
+    }
   }
 
   Future<bool> signInWithTwitter() async {
@@ -132,7 +134,7 @@ class AppController extends c.AppController {
 
     const String password = '';
 
-    Firebase().removeAnonymous();
+    FirebaseUser().removeAnonymous();
     await _auth.delete();
     await signOut();
 
@@ -180,7 +182,7 @@ class AppController extends c.AppController {
   }
 
   // Stamp the user information to the firebase database.
-  void userStamp() => Firebase().userStamp();
+  void userStamp() => FirebaseUser().userStamp();
 
   String get uid => _auth.uid;
 

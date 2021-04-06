@@ -92,7 +92,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
             ),
           ],
         ),
-        Expanded(
+        Flexible(
           child: GridView.count(
             crossAxisCount: 2,
             mainAxisSpacing: 10,
@@ -104,40 +104,6 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
       ],
     );
   }
-}
-
-class Card01 extends StatelessWidget {
-  const Card01({Key key, this.image, this.title, this.price}) : super(key: key);
-  final Image image;
-  final String title;
-  final String price;
-
-  @override
-  Widget build(BuildContext context) => Container(
-        width: 20,
-        height: 5,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 6,
-            ),
-          ],
-          color: Colors.white,
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              image,
-              const SizedBox(
-                height: 5,
-              ),
-            ],
-          ),
-        ),
-      );
 }
 
 class EmptyTaskStateScreen extends StatelessWidget {

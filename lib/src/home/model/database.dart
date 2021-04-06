@@ -4,9 +4,10 @@
 
 ///todo: place this as an export in dbUtil's FireStoreDB
 ///todo:  _ex = ex as Exception in dbUtils in a try-catch
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'
+    show CollectionReference, QuerySnapshot;
 
-import 'package:playhouse/src/model.dart';
+import 'package:playhouse/src/model.dart' show AppModel, FireStoreCollection;
 
 import 'package:playhouse/src/controller.dart' show Auth;
 
@@ -25,8 +26,7 @@ class PlayhouseDB {
 
   Future<bool> downloadDB() {
     final table = FireStoreCollection('Modules');
-
-    return _populateData(table.collection, 'Modules, Submodules, Tasks');
+    return _populateData(table.collection, 'Modules, Submodules, Tasks', null);
   }
 
   /// Go through the String of Collections names and populate
@@ -34,6 +34,7 @@ class PlayhouseDB {
   Future<bool> _populateData(
     CollectionReference collectionRef,
     String collections,
+    bool get,
   ) async {
     //
     bool populated = true;
@@ -67,8 +68,14 @@ class PlayhouseDB {
       collections = list[0];
     }
 
-    final QuerySnapshot querySnapshot = await collectionRef.get();
+    QuerySnapshot querySnapshot;
 
+    if (get == null) {
+      querySnapshot =
+          await collectionRef.where('userId', isEqualTo: _auth.uid).get();
+    } else {
+      querySnapshot = await collectionRef.get();
+    }
     //
     for (final doc in querySnapshot.docs) {
       //
@@ -102,6 +109,7 @@ class PlayhouseDB {
           data['submoduleId'] = collectionRef.parent.id;
 
           model.populateTask(data);
+
           break;
 
         default:
@@ -112,7 +120,7 @@ class PlayhouseDB {
       // Recursive call to the 'next' collection.
       if (collections.isNotEmpty) {
         populated = await _populateData(
-            doc.reference.collection(list[0].trim()), collections);
+            doc.reference.collection(list[0].trim()), collections, true);
       }
     }
     return populated;
