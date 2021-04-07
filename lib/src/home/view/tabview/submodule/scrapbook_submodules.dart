@@ -28,7 +28,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
   ScrapBookController _con;
 
   AnimationController _animationController;
-  var _panelHeight = 330.0;
+  var _panelHeight = 0.0;
 
   void onPressed() {
     _animationController.fling(velocity: isPanelUp ? -1.0 : 1.0);

@@ -70,6 +70,12 @@ class ScrapBookController extends ControllerMVC {
         taskCard('pencil'),
         taskCard('picture'),
         taskCard('movieCamera'),
+        taskCard('questionMark'),
+        taskCard('abc'),
+        taskCard('AR'),
+        taskCard('pencil'),
+        taskCard('picture'),
+        taskCard('movieCamera'),
       ];
 
   Widget taskCard(String jpgName) {

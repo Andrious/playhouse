@@ -41,16 +41,25 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
   @override
   Widget build(BuildContext context) {
     Icon arrow;
+    double maxHeight;
     if (submodule.isPanelUp) {
       arrow = const Icon(
         Icons.expand_more,
         color: Colors.red,
       );
+      maxHeight = 0.7;
     } else {
       arrow = const Icon(
         Icons.expand_less,
         color: Colors.green,
       );
+      maxHeight = 0.35;
+    }
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    if (isLandscape && submodule.isPanelUp) {
+      //
+      maxHeight = 0.5;
     }
     return Column(
       children: [
@@ -92,7 +101,8 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
             ),
           ],
         ),
-        Flexible(
+        LimitedBox(
+          maxHeight: MediaQuery.of(context).size.height * maxHeight,
           child: GridView.count(
             crossAxisCount: 2,
             mainAxisSpacing: 10,

@@ -49,12 +49,12 @@ class AppController extends c.AppController {
 //        test.insertShadow();
       }
 
-      // Initialize the User's data information.
-      await FirebaseUser().initAsync();
-
-      final database = PlayhouseDB();
-
-      init = await database.downloadDB();
+      // // Initialize the User's data information.
+      // await FirebaseUser().initAsync();
+      //
+      // final database = PlayhouseDB();
+      //
+      // init = await database.downloadDB();
     }
     return init;
   }

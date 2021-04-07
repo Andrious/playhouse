@@ -35,6 +35,7 @@ class SubmodulesTabBar {
       prefsLabel = 'Design';
     }
 
+    /// Get the 'initial' index. Display the last viewed tab.
     final initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
 
     _tabController = GITabController(
@@ -49,9 +50,10 @@ class SubmodulesTabBar {
       _con.submodule = _label(tabs[_tabController.index]);
     });
 
-    //
+    /// Return a list of 'Picture tabs'
     _tabs = _subModules();
 
+    /// Return the text label specified in the Tab object.
     _con.submodule = _label(_tabs[initIndex]);
   }
 
@@ -151,33 +153,32 @@ class PicTab extends StatelessWidget {
       image = name.trim();
     }
     final stackImage = StackImage(name: 'assets/images/$image.jpg');
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
-      child: Stack(
-        children: [
-          stackImage,
-          Positioned(
-            bottom: 0,
-            child: Container(
-              width: stackImage.width,
-              height: stackImage.height * 0.3,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(32),
-                color: Colors.white.withOpacity(0.5),
-              ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(''),
-                  ]),
+    return Stack(
+      children: [
+        stackImage,
+        Positioned(
+          bottom: 0,
+          child: Container(
+            width: stackImage.width,
+            height: stackImage.height * 0.3,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+              color: Colors.white.withOpacity(0.5),
             ),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(''),
+                ]),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
+/// The Image has to be wrapped in a Stateful or Stateless widget
+/// for the Positioned widget to work properly.
 class StackImage extends StatelessWidget {
   const StackImage({
     Key key,
@@ -190,15 +191,14 @@ class StackImage extends StatelessWidget {
   final double height;
 
   @override
-  Container build(BuildContext context) => Container(
-        width: width,
-        height: height,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: Image.asset(
-            name,
-            fit: BoxFit.cover,
-          ),
-        ),
-      );
+  Widget build(BuildContext context) => AspectRatio(
+    aspectRatio: 16 / 9,
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: Image.asset(
+        name,
+        fit: BoxFit.fill,
+      ),
+    ),
+  );
 }
