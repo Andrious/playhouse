@@ -32,7 +32,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
 
   void onPressed() {
     _animationController.fling(velocity: isPanelUp ? -1.0 : 1.0);
-    Prefs.setBool('${_con.module}_panelUp', isPanelUp);
+    Prefs.setBool('${_con.moduleType}${_con.module}_panelUp', isPanelUp);
   }
 
   bool get isPanelUp {
@@ -51,7 +51,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 100), value: 1, vsync: this);
 
-    final panelUp = Prefs.getBool('${_con.module}_panelUp');
+    final panelUp = Prefs.getBool('${_con.moduleType}${_con.module}_panelUp');
 
     if (!panelUp) {
       onPressed();
@@ -65,7 +65,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
     if (isPortrait) {
-      _panelHeight = MediaQuery.of(context).size.height * 0.4;
+      _panelHeight = MediaQuery.of(context).size.height * 0.05;
     } else {
       _panelHeight = 0.0;
     }

@@ -16,18 +16,31 @@ class DesignBuildAppBar {
   //
   DesignBuildAppBar(this._provider) {
     //
+    // Supply the Controller.
+    _con = _provider.con;
+
     _tabController = GITabController(
       initialIndex: Prefs.getInt('DesignBuildIndex'),
       length: 2,
       vsync: _provider,
       state: _provider,
     );
+
+    _tabs = _onTabs();
+
+    _con.moduleType = _con.tabLabel(tabs[_tabController.index]);
+
     _tabController.addListener(() {
       Prefs.setInt('DesignBuildIndex', _tabController.index);
       _provider?.setState(() {});
+      _con.moduleType = _con.tabLabel(tabs[_tabController.index]);
     });
+
+
+    _appBar = _onAppBar();
   }
   final ScrapBookState _provider;
+  ScrapBookController _con;
 
   /// Clean up after itself.
   void dispose() {
@@ -37,46 +50,55 @@ class DesignBuildAppBar {
   TabController _tabController;
   TabController get controller => _tabController;
 
+  /// The Main Appbar's list of tabs.
+  List<Tab> get tabs => _tabs ??= _onTabs();
+  List<Tab> _tabs;
+
   /// The App Tool bar
-  AppBar get appBar => AppBar(
-        title: const Text('Playhouse'),
-        // actions: [
-        //   /// Supply the App's popup menu. Pass in the screen's State object.
-        //   AppMenu().show(_provider),
-        // ],
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        excludeHeaderSemantics: true,
-        toolbarHeight: 100,
-        bottom: TabBar(
-          tabs: [
-            Tab(
-              child: Text(
-                'Design',
-                style: TextStyle(
-                  fontWeight: _tabController.index == 0
-                      ? FontWeight.w700
-                      : FontWeight.w400,
-                ),
-                softWrap: false,
-                overflow: TextOverflow.visible,
-              ),
-            ),
-            Tab(
-              child: Text(
-                'Build',
-                style: TextStyle(
-                  fontWeight: _tabController.index == 1
-                      ? FontWeight.w700
-                      : FontWeight.w400,
-                ),
-                softWrap: false,
-                overflow: TextOverflow.visible,
-              ),
-            ),
-          ],
-          controller: _tabController,
+  AppBar get appBar => _onAppBar();
+  AppBar _appBar;
+
+  List<Tab> _onTabs() => [
+    Tab(
+      child: Text(
+        'Design',
+        style: TextStyle(
+          fontWeight: _tabController.index == 0
+              ? FontWeight.w700
+              : FontWeight.w400,
         ),
-      );
+        softWrap: false,
+        overflow: TextOverflow.visible,
+      ),
+    ),
+    Tab(
+      child: Text(
+        'Build',
+        style: TextStyle(
+          fontWeight: _tabController.index == 1
+              ? FontWeight.w700
+              : FontWeight.w400,
+        ),
+        softWrap: false,
+        overflow: TextOverflow.visible,
+      ),
+    ),
+  ];
+
+  AppBar _onAppBar() => AppBar(
+    title: const Text('Playhouse'),
+    // actions: [
+    //   /// Supply the App's popup menu. Pass in the screen's State object.
+    //   AppMenu().show(_provider),
+    // ],
+    centerTitle: true,
+    automaticallyImplyLeading: false,
+    elevation: 0,
+    excludeHeaderSemantics: true,
+    toolbarHeight: 100,
+    bottom: TabBar(
+      tabs: _onTabs(),
+      controller: _tabController,
+    ),
+  );
 }

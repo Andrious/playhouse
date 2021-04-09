@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/foundation.dart' show FlutterExceptionHandler;
-
+import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
 import 'package:firebase_core/firebase_core.dart' as f;
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:firebase_crashlytics/firebase_crashlytics.dart'
@@ -235,11 +235,14 @@ void runApp(
   }
 
   /// Assign the appropriate error handler.
-  c.runApp(
+  // Than we setup preferred orientations,
+  // and only after it finished we run our app
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) =>  c.runApp(
     app,
     errorHandler: handler,
     errorScreen: builder,
     errorReport: report,
     allowNewHandlers: allowNewHandlers,
-  );
+  ));
 }

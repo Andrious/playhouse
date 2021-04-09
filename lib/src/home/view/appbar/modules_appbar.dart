@@ -24,17 +24,8 @@ class ModulesAppBar {
 
   /// Set up the AppBar
   void initState() {
-    //
-    String prefsLabel;
 
-    /// Determine if we're on the Design side or the Build side.
-    if (_con.inBuildScreen) {
-      prefsLabel = 'Build';
-    } else {
-      prefsLabel = 'Design';
-    }
-
-    final initIndex = Prefs.getInt('${prefsLabel}ModulesIndex');
+    final initIndex = Prefs.getInt('${_con.moduleType}ModulesIndex');
 
     _tabController = GITabController(
       initialIndex: initIndex,
@@ -44,13 +35,14 @@ class ModulesAppBar {
     );
 
     _tabController.addListener(() {
-      Prefs.setInt('${prefsLabel}ModulesIndex', _tabController.index);
-      _con.module = _label(tabs[_tabController.index]);
+      /// Record the 'last' tab visited.
+      Prefs.setInt('${_con.moduleType}ModulesIndex', _tabController.index);
+      _con.module = _con.tabLabel(tabs[_tabController.index]);
       provider?.setState(() {});
     });
 
     // _tabController must be defined first.
-    _con.module = _label(tabs[initIndex]);
+    _con.module =  _con.tabLabel(tabs[initIndex]);
   }
 
   /// Clean up after itself.
@@ -134,17 +126,4 @@ class ModulesAppBar {
           indicatorSize: TabBarIndicatorSize.label,
         ),
       );
-
-  /// Return the text label specified in the Tab object.
-  String _label(Tab tab) {
-    String label = '';
-    if (tab.text == null) {
-      if (tab.child is Text) {
-        label = (tab.child as Text).data;
-      }
-    } else {
-      label = tab.text;
-    }
-    return label;
-  }
 }

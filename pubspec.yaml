@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.14.0
+version: 0.15.0
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -59,8 +59,6 @@ dependencies:
 
   video_player: ^2.0.0
 
-## https://pub.dev/packages/images_picker
-#  images_picker: ^1.0.0
 #
 #  dio: ^2.0.0
 
@@ -73,6 +71,15 @@ dependencies:
 
   # https://pub.dev/packages/remote_config
 #  remote_config: ^1.0.0
+
+# https://pub.dev/packages/image_picker/
+  image_picker: ^0.7.0
+
+  # https://pub.dev/packages/state_set/
+  state_set: ^2.0.0
+
+  # https://pub.flutter-io.cn/packages/image_size_getter/
+  image_size_getter: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -95,21 +102,21 @@ flutter:
      - assets/
      - assets/i10n/i10n.csv
 
-     - assets/images/river_bend.jpg
-     - assets/images/construction_site.jpg
-     - assets/images/warehouse.jpg
-     - assets/images/warehouse_locked.jpg
-     - assets/images/city_night_locked.jpg
-     - assets/images/city_night.jpg
+     - assets/images/river_bend02.jpg
+     - assets/images/construction_site02.jpg
+     - assets/images/warehouse02.jpg
+     - assets/images/warehouse_locked02.jpg
+     - assets/images/city_night_locked02.jpg
+     - assets/images/city_night02.jpg
 
-     - assets/images/church_garbagetruck.jpg
-     - assets/images/riverbrook_pinktree.jpg
-     - assets/images/street_intersection.jpg
-     - assets/images/desert_housing.jpg
-     - assets/images/winter_cabin.jpg
-     - assets/images/city_park.jpg
-     - assets/images/country_trail.jpg
-     - assets/images/country_waterfall.jpg
+     - assets/images/church_garbagetruck02.jpg
+     - assets/images/riverbrook_pinktree02.jpg
+     - assets/images/street_intersection02.jpg
+     - assets/images/desert_housing02.jpg
+     - assets/images/winter_cabin02.jpg
+     - assets/images/city_park02.jpg
+     - assets/images/country_trail02.jpg
+     - assets/images/country_waterfall02.jpg
 
      - assets/images/abc.jpg
      - assets/images/AR.jpg

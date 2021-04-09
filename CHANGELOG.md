@@ -1,4 +1,13 @@
 
+## 0.16.0
+ April 08, 2021
+- Installed plugin, image_picker
+
+## 0.15.0
+ April 07, 2021
+- 1280 x 720 for 16:9 images
+- android:screenOrientation="portrait"
+
 ## 0.14.0
  April 06, 2021
 - Double the number of Tasks

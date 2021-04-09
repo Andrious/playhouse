@@ -108,6 +108,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
             mainAxisSpacing: 10,
             crossAxisSpacing: 10,
             primary: false,
+            addRepaintBoundaries: false,
             children: con.taskCards,
           ),
         ),

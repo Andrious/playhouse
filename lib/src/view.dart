@@ -44,3 +44,6 @@ export 'package:playhouse/src/home/view/tabview/modules/scrapbook_module_screen.
 
 /// Individual Task screen
 export 'package:playhouse/src/home/view/tabview/tasks/scrapbook_tasks.dart'; // hide Card;
+
+/// Individual Task Cards
+export 'package:playhouse/src/home/view/taskscards.dart';

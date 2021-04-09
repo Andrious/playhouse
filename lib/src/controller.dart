@@ -14,6 +14,12 @@ export 'package:playhouse/src/app/controller/app_controller.dart';
 /// The Controller for this Home screen
 export 'package:playhouse/src/home/controller/scrapbook_controller.dart';
 
+/// The Tasks for the Home screen
+export 'package:playhouse/src/home/controller/taskcards_controller.dart';
+
+/// The image picker
+export 'package:playhouse/src/home/controller/image_picker.dart';
+
 /// Controls the Authentication into the App
 export 'package:playhouse/src/app/controller/initAsync/playhouse_signin.dart';
 

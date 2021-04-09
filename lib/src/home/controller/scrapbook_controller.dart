@@ -15,13 +15,28 @@ class ScrapBookController extends ControllerMVC {
 
   bool inBuildScreen = false;
 
+  String moduleType = '';
+
   String module = '';
 
   String submodule = '';
 
   List<Widget> _taskCards;
 
-  Future<void> onTap() async {
+  /// Return the text label specified in the Tab object.
+  String tabLabel(Tab tab) {
+    String label = '';
+    if (tab.text == null) {
+      if (tab.child is Text) {
+        label = (tab.child as Text).data;
+      }
+    } else {
+      label = tab.text;
+    }
+    return label;
+  }
+
+  Future<void> onTapInfo() async {
     //
     // await MsgBox(
     //         title: 'Task',
@@ -58,24 +73,24 @@ class ScrapBookController extends ControllerMVC {
     ).show();
   }
 
-  void onTapInfo() {
+  void onTap() {
     // ignore: avoid_print
     print('test');
   }
 
   List<Widget> get taskCards => [
-        taskCard('questionMark'),
-        taskCard('abc'),
-        taskCard('AR'),
-        taskCard('pencil'),
-        taskCard('picture'),
-        taskCard('movieCamera'),
-        taskCard('questionMark'),
-        taskCard('abc'),
-        taskCard('AR'),
-        taskCard('pencil'),
-        taskCard('picture'),
-        taskCard('movieCamera'),
+        QuestionTask(),
+        ABCTask(),
+        ARTask(),
+        PencilTask(),
+        PictureTask(),
+        MovieCameraTask(),
+        QuestionTask02(),
+        ABCTask02(),
+        ARTask02(),
+        PencilTask02(),
+        PictureTask02(),
+        MovieCameraTask02(),
       ];
 
   Widget taskCard(String jpgName) {
@@ -86,7 +101,7 @@ class ScrapBookController extends ControllerMVC {
       child: Stack(
         children: [
           InkWell(
-            onTap: onTap,
+            onTap: onTapInfo,
             highlightColor: const Color(0xffbb86fc),
             child: Image.asset(
               'assets/images/${jpgName.trim()}.jpg',
@@ -97,7 +112,7 @@ class ScrapBookController extends ControllerMVC {
             child: Align(
               alignment: Alignment.topRight,
               child: InkWell(
-                onTap: onTapInfo,
+                onTap: onTap,
                 highlightColor: const Color(0xffbb86fc),
               ),
             ),

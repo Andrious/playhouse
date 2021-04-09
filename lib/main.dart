@@ -31,6 +31,7 @@ class PlayHouseState extends AppState {
           //const ScrapBookApp(),
           con: AppController(),
 //          debugPaintLayerBordersEnabled: true,
+//          debugPaintSizeEnabled: true,
           localizationsDelegates: [
             I10nDelegate(),
             GlobalWidgetsLocalizations.delegate,
