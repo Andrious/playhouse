@@ -29,7 +29,7 @@ class SubmodulesTabBar {
   final SubmodulesState provider;
   ScrapBookController _con;
 
-  TabController _tabController;
+  SubTabController _tabController;
 
   void initState() {
     //
@@ -45,7 +45,7 @@ class SubmodulesTabBar {
     /// Get the 'initial' index. Display the last viewed tab.
     final initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
 
-    _tabController = GITabController(
+    _tabController = SubTabController(
       initialIndex: initIndex,
       length: 4,
       vsync: provider,
@@ -53,7 +53,7 @@ class SubmodulesTabBar {
     );
 
     _tabController.addListener(() {
-      Prefs.setInt('${prefsLabel}SubmodulesIndex', _tabController.index);
+      Prefs.setInt('${prefsLabel}SubmodulesIndex', _tabController.index + 1);
       _con.submodule = _label(tabs[_tabController.index]);
     });
 
@@ -69,7 +69,7 @@ class SubmodulesTabBar {
     _tabController.dispose();
   }
 
-  TabController get controller => _tabController;
+  SubTabController get controller => _tabController;
 
   List<PicTab> get tabs => _tabs;
   List<PicTab> _tabs;
@@ -92,44 +92,49 @@ class SubmodulesTabBar {
     String subPic04;
 
     if (provider.sub03Locked) {
-      subPic03 = 'warehouse_locked';
+      subPic03 = 'warehouse_locked02';
     } else {
-      subPic03 = 'warehouse';
+      subPic03 = 'warehouse02';
     }
 
     if (provider.sub04Locked) {
-      subPic04 = 'city_night_locked';
+      subPic04 = 'city_night_locked02';
     } else {
-      subPic04 = 'city_night';
+      subPic04 = 'city_night02';
     }
 
     List<String> subPics = [];
 
     switch (_con.module) {
       case 'Inspiration':
-        subPics = ['river_bend', 'construction_site', subPic03, subPic04];
+        subPics = ['river_bend02', 'construction_site02', subPic03, subPic04];
         break;
       case 'Site assessment':
         subPics = [
-          'church_garbagetruck',
-          'city_park',
+          'church_garbagetruck02',
+          'city_park02',
           subPic03,
-          'street_intersection'
+          'street_intersection02'
         ];
         break;
       case 'Floor Plan':
         subPics = [
-          'country_trail',
-          'country_waterfall',
-          'winter_cabin',
+          'country_trail02',
+          'country_waterfall02',
+          'winter_cabin02',
           subPic04
         ];
         break;
       case 'Elevation':
-        subPics = ['desert_housing', 'riverbrook_pinktree', subPic03, subPic04];
+        subPics = [
+          'desert_housing02',
+          'riverbrook_pinktree02',
+          subPic03,
+          subPic04
+        ];
         break;
       default:
-        subPics = ['river_bend', 'construction_site', subPic03, subPic04];
+        subPics = ['river_bend02', 'construction_site02', subPic03, subPic04];
     }
     return [
       PicTab(name: subPics[0], state: provider),
@@ -152,14 +157,7 @@ class PicTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //
-    String name;
-
-    if (name == null || name.isEmpty) {
-      name = 'river_bend';
-    } else {
-      name = name.trim();
-    }
-    final stackImage = StackImage(name: 'assets/images/${name}02.jpg');
+    final stackImage = StackImage(name: 'assets/images/$name.jpg');
     return Stack(
       children: [
         stackImage,

@@ -1,4 +1,13 @@
 
+## 0.18.0
+ April 14, 2021
+- Sync the Tab swipes with the TabView Task Cards
+- Fixed Image refresh in Task Card
+
+## 0.17.0
+ April 09, 2021
+- Fixed SubmodulesTabBar bug
+
 ## 0.16.0
  April 08, 2021
 - Installed plugin, image_picker

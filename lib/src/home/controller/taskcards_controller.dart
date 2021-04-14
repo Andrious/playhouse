@@ -4,6 +4,8 @@
 
 import 'dart:io';
 
+import 'package:state_set/state_set.dart';
+
 import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
@@ -20,6 +22,12 @@ class TaskCard extends StatefulWidget with StateSetWidget {
 
   final ScrapBookController con;
   final PickImage image;
+
+  @override
+  void dispose(){
+    image._state = null;
+    super.dispose();
+  }
 
   /// Override with subclasses.
   void onTap() {}
@@ -40,6 +48,7 @@ class _TaskCardsState extends State<TaskCard> {
     super.initState();
     widget.withState(this);
     widget.initState();
+    widget.image._state = this;
     widget.image.getImage(widget);
     child ??= Image.asset('assets/images/${widget.name.trim()}.jpg');
   }
@@ -52,6 +61,7 @@ class _TaskCardsState extends State<TaskCard> {
 
   @override
   Widget build(BuildContext context) {
+    final widget = this.widget;
     if (widget.name.isEmpty) {
       return Container();
     }
@@ -59,7 +69,7 @@ class _TaskCardsState extends State<TaskCard> {
       child: Stack(
         children: [
           InkWell(
-            onTap: () => widget.onTapInfo(),
+            onTap: widget.onTapInfo,
             highlightColor: const Color(0xffbb86fc),
             child: FutureBuilder<Widget>(
                 future: widget.image.getImage(widget),
@@ -71,7 +81,7 @@ class _TaskCardsState extends State<TaskCard> {
             child: Align(
               alignment: Alignment.topRight,
               child: InkWell(
-                onTap: () => widget.onTap(),
+                onTap: widget.onTap,
                 highlightColor: const Color(0xffbb86fc),
               ),
             ),
@@ -110,6 +120,8 @@ class PickImage {
   TaskCard card;
   String key;
 
+  _TaskCardsState _state;
+
   Future<Widget> getImage(TaskCard card) async {
     this.card = card;
     final con = card.con;
@@ -119,8 +131,13 @@ class PickImage {
     Widget image;
     if (path.isNotEmpty) {
       image = Image.file(File(path), fit: BoxFit.fitHeight);
-      final state = card.stateOf<_TaskCardsState>();
+      var state = card.stateOf<_TaskCardsState>();
+      if(state == null){
+        state = _state;
+      }
       state?.child = image;
+      // ignore: invalid_use_of_protected_member
+      state?.setState(() {});
     }
     return image;
   }
@@ -129,7 +146,10 @@ class PickImage {
     final image = ImagePicker();
     final path = await image.picker();
     if (path.isNotEmpty) {
-      final state = card.stateOf<_TaskCardsState>();
+      var state = card.stateOf<_TaskCardsState>();
+      if(state == null){
+        state = _state;
+      }
       state?.child = Image.file(File(path), fit: BoxFit.fitHeight);
       // ignore: invalid_use_of_protected_member
       state?.setState(() {});

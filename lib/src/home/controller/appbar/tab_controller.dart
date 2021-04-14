@@ -8,6 +8,19 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
+class SubTabController extends GITabController {
+  SubTabController({
+    int initialIndex = 0,
+    @required int length,
+    @required TickerProvider vsync,
+    StateMVC state,
+  })  :  super(
+        initialIndex: initialIndex,
+        length: length,
+        vsync: vsync,
+      );
+}
+
 class GITabController extends TabController {
   GITabController({
     int initialIndex = 0,
@@ -21,6 +34,14 @@ class GITabController extends TabController {
           vsync: vsync,
         );
   final _TabController con;
+
+  GreyIvyTabBar get tabBar => _tabBar;
+  set tabBar(GreyIvyTabBar tabBar){
+    if(tabBar != null){
+      _tabBar = tabBar;
+    }
+  }
+  GreyIvyTabBar _tabBar;
 }
 
 class _TabController extends ControllerMVC {

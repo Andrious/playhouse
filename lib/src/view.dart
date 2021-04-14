@@ -27,6 +27,9 @@ export 'package:playhouse/src/home/view/appbar/submodules_appbar.dart';
 /// Scrapbook Drawer
 export 'package:playhouse/src/home/view/drawer/scrapbook_drawer.dart';
 
+/// Grey & Ivy TabBar
+export 'package:playhouse/src/home/view/tabview/tabbar/gi_tabbar.dart';
+
 /// Scrapbook Design screen
 export 'package:playhouse/src/home/view/tabview/modules/scrapbook_modules_design_screen.dart';
 
@@ -47,3 +50,9 @@ export 'package:playhouse/src/home/view/tabview/tasks/scrapbook_tasks.dart'; // 
 
 /// Individual Task Cards
 export 'package:playhouse/src/home/view/taskscards.dart';
+
+/// Current Tab Indicator
+export 'package:playhouse/src/home/view/page_circle_indicator.dart';
+
+/// SetState routine
+export 'package:state_set/state_set.dart';

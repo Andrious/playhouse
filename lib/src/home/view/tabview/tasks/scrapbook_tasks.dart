@@ -61,55 +61,69 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
       //
       maxHeight = 0.5;
     }
+
+    // final tabIndicator = PageCircleIndicator(
+    //   itemCount: submodule.tabBar.tabs.length,
+    // );
+
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'All',
-                style: style,
-              ),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'Favorite',
-                style: style,
-              ),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'Incomplete',
-                style: style,
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(submodule.onPressed);
-              },
-              child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Text(
-                  'View All',
+        // Flexible(
+        //   child: tabIndicator,
+        // ),
+        Flexible(
+          flex: submodule.isPanelUp ? 3 : 20,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'All',
                   style: style,
                 ),
-                arrow,
-              ]),
-            ),
-          ],
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Favorite',
+                  style: style,
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Incomplete',
+                  style: style,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(submodule.onPressed);
+                },
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Text(
+                    'View All',
+                    style: style,
+                  ),
+                  arrow,
+                ]),
+              ),
+            ],
+          ),
         ),
-        LimitedBox(
-          maxHeight: MediaQuery.of(context).size.height * maxHeight,
-          child: GridView.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            primary: false,
-            addRepaintBoundaries: false,
-            children: con.taskCards,
+        Flexible(
+          flex: 30,
+          child: LimitedBox(
+            maxHeight: MediaQuery.of(context).size.height * maxHeight,
+            child: GridView.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              primary: false,
+              addRepaintBoundaries: false,
+              children: con.taskCards,
+            ),
           ),
         ),
       ],

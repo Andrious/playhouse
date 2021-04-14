@@ -238,11 +238,11 @@ void runApp(
   // Than we setup preferred orientations,
   // and only after it finished we run our app
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) =>  c.runApp(
-    app,
-    errorHandler: handler,
-    errorScreen: builder,
-    errorReport: report,
-    allowNewHandlers: allowNewHandlers,
-  ));
+      .then((value) => c.runApp(
+            app,
+            errorHandler: handler,
+            errorScreen: builder,
+            errorReport: report,
+            allowNewHandlers: allowNewHandlers,
+          ));
 }

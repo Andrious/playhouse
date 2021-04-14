@@ -24,7 +24,6 @@ class ModulesAppBar {
 
   /// Set up the AppBar
   void initState() {
-
     final initIndex = Prefs.getInt('${_con.moduleType}ModulesIndex');
 
     _tabController = GITabController(
@@ -42,7 +41,7 @@ class ModulesAppBar {
     });
 
     // _tabController must be defined first.
-    _con.module =  _con.tabLabel(tabs[initIndex]);
+    _con.module = _con.tabLabel(tabs[initIndex]);
   }
 
   /// Clean up after itself.
