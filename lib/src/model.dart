@@ -5,6 +5,13 @@
 /// MVC framework
 export 'package:mvc_application/model.dart';
 
+/// DB package
+export 'package:dbutils/sqlite_db.dart' show SQLiteDB, Transaction;
+
+/// sql plugin
+export 'package:sqflite/sqflite.dart' show Database;
+
+
 /// Firebase Firestore
 export 'package:dbutils/firestore_db.dart';
 
@@ -22,10 +29,21 @@ export 'package:playhouse/src/app/model/settings.dart';
 export 'package:playhouse/src/home/model/assets.dart';
 
 /// Firebase database
-export 'package:playhouse/src/home/model/database.dart';
-
-/// App's Data objects
-export 'package:playhouse/src/home/model/scrapbook_model.dart';
+export 'package:playhouse/src/home/model/firestore_db.dart';
 
 /// App's Testing Routines for the database
-export 'package:playhouse/src/app/model/testing_database.dart';
+export 'package:playhouse/src/home/model/testing/testing_database.dart';
+
+/// Scrapbook's Data Model
+export 'package:playhouse/src/home/model/scrapbook_model.dart';
+
+/// Scrapbook Database Classes
+export 'package:playhouse/src/home/model/data_fields.dart';
+
+
+// export 'package:playhouse/src/home/model/database_class.dart';
+
+/// SQLite classes
+export 'package:playhouse/src/home/model/sqlite_db.dart';
+
+

@@ -29,7 +29,10 @@ class SubmodulesTabBar {
   final SubmodulesState provider;
   ScrapBookController _con;
 
+  SubTabController get controller => _tabController;
   SubTabController _tabController;
+
+  PageCircleIndicator tabIndicator;
 
   void initState() {
     //
@@ -43,7 +46,11 @@ class SubmodulesTabBar {
     }
 
     /// Get the 'initial' index. Display the last viewed tab.
-    final initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
+    var initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
+
+    if(initIndex == 4){
+      initIndex--;
+    }
 
     _tabController = SubTabController(
       initialIndex: initIndex,
@@ -53,7 +60,8 @@ class SubmodulesTabBar {
     );
 
     _tabController.addListener(() {
-      Prefs.setInt('${prefsLabel}SubmodulesIndex', _tabController.index + 1);
+      Prefs.setInt('${prefsLabel}SubmodulesIndex', _tabController.index);
+      tabIndicator.value = _tabController.index + 1;
       _con.submodule = _label(tabs[_tabController.index]);
     });
 
@@ -62,14 +70,15 @@ class SubmodulesTabBar {
 
     /// Return the text label specified in the Tab object.
     _con.submodule = _label(_tabs[initIndex]);
+
+    tabIndicator = PageCircleIndicator(itemCount: _tabs.length);
+    tabIndicator.value = initIndex + 1;
   }
 
   /// Clean up after itself.
   void dispose() {
     _tabController.dispose();
   }
-
-  SubTabController get controller => _tabController;
 
   List<PicTab> get tabs => _tabs;
   List<PicTab> _tabs;

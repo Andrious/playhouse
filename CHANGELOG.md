@@ -1,4 +1,8 @@
 
+##0.19.0
+ April 21, 2021
+- Introduce SQLite and Data Schema
+
 ## 0.18.0
  April 14, 2021
 - Sync the Tab swipes with the TabView Task Cards

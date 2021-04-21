@@ -62,15 +62,13 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
       maxHeight = 0.5;
     }
 
-    // final tabIndicator = PageCircleIndicator(
-    //   itemCount: submodule.tabBar.tabs.length,
-    // );
-
     return Column(
       children: [
-        // Flexible(
-        //   child: tabIndicator,
-        // ),
+//         Flexible(
+//           flex: submodule.isPanelUp ? 30 : 3,
+//           fit: FlexFit.tight,
+//           child: submodule.tabBar.tabIndicator,
+//         ),
         Flexible(
           flex: submodule.isPanelUp ? 3 : 20,
           child: Row(
@@ -113,7 +111,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
           ),
         ),
         Flexible(
-          flex: 30,
+          flex: submodule.isPanelUp ? 30 : 2,
           child: LimitedBox(
             maxHeight: MediaQuery.of(context).size.height * maxHeight,
             child: GridView.count(

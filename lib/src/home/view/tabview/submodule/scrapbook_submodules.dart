@@ -40,6 +40,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
   @override
   void initState() {
     super.initState();
+
     _sbSubTabBar = SubmodulesTabBar(this);
     // Set up this appbar's data
     _sbSubTabBar.initState();
@@ -79,8 +80,8 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
   Widget build(BuildContext context) => LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         final animation = _getPanelAnimation(constraints);
-        // final ScrollPhysics scrollPhysics =
-        //     ScrollConfiguration.of(context).getScrollPhysics(context);
+        final ScrollPhysics scrollPhysics =
+            ScrollConfiguration.of(context).getScrollPhysics(context);
         final tabBar = GreyIvyTabBar(
           controller: _sbSubTabBar.controller,
           isScrollable: true,
@@ -88,7 +89,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
           tabs: _sbSubTabBar.tabs,
           physics: BigPageScrollPhysics(
             controller: _sbSubTabBar.controller,
-          ),
+          ).applyTo(scrollPhysics),
         );
 
         final tabView = TabBarView(

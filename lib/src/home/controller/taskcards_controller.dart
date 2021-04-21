@@ -127,14 +127,13 @@ class PickImage {
     final con = card.con;
     key =
         '${con.moduleType}${con.module}${con.submodule}${card.name}${card.runtimeType.toString()}';
+    print(key);
     final path = Prefs.getString(key);
     Widget image;
     if (path.isNotEmpty) {
       image = Image.file(File(path), fit: BoxFit.fitHeight);
       var state = card.stateOf<_TaskCardsState>();
-      if(state == null){
-        state = _state;
-      }
+      state ??= _state;
       state?.child = image;
       // ignore: invalid_use_of_protected_member
       state?.setState(() {});
@@ -147,9 +146,7 @@ class PickImage {
     final path = await image.picker();
     if (path.isNotEmpty) {
       var state = card.stateOf<_TaskCardsState>();
-      if(state == null){
-        state = _state;
-      }
+      state ??= _state;
       state?.child = Image.file(File(path), fit: BoxFit.fitHeight);
       // ignore: invalid_use_of_protected_member
       state?.setState(() {});

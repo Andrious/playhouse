@@ -2,16 +2,45 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:playhouse/src/model.dart';
+
 import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
 class ScrapBookController extends ControllerMVC {
-  factory ScrapBookController() => _this ??= ScrapBookController._();
+  factory ScrapBookController([StateMVC state]) =>
+      _this ??= ScrapBookController._(state);
 
-  ScrapBookController._();
+  ScrapBookController._([StateMVC state])
+      : model = ScrapBookModel(),
+        super(state);
 
   static ScrapBookController _this;
+  final ScrapBookModel model;
+
+  @override
+  Future<bool> initAsync() async {
+
+    if (App.inDebugger) {
+      final test = DatabaseTest();
+      //
+      // if (!test.createDB()) {}
+
+//        test.insertShadow();
+    }
+
+    // // Initialize the User's data information.
+    // await FirebaseUser().initAsync();
+    //
+    // final database = PlayhouseDB();
+    //
+    // init = await database.downloadDB();
+
+    bool init = await model.initAsync();
+
+    return init;
+  }
 
   bool inBuildScreen = false;
 

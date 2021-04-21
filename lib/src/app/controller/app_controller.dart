@@ -36,26 +36,8 @@ class AppController extends c.AppController {
     //
     // var user = auth.currentUser;
 
-    bool init = await _auth.signIn();
+    final bool init = await _auth.signIn();
 
-    /// todo: Remove and replace with more substantial routine.
-    if (init) {
-      //
-      if (App.inDebugger) {
-        final test = DatabaseTest();
-        //
-        // if (!test.createDB()) {}
-
-//        test.insertShadow();
-      }
-
-      // // Initialize the User's data information.
-      // await FirebaseUser().initAsync();
-      //
-      // final database = PlayhouseDB();
-      //
-      // init = await database.downloadDB();
-    }
     return init;
   }
 

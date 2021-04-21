@@ -1,17 +1,97 @@
-// Copyright 2021 Grey & Ivy Inc. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+import 'package:playhouse/src/model.dart';
 
-class AppModel {
-  factory AppModel() => _this ??= AppModel._();
-  AppModel._();
-  static AppModel _this;
+import 'package:playhouse/src/view.dart';
 
-  static List<Map<String, dynamic>> modules = [];
+import 'package:playhouse/src/controller.dart';
 
-  static List<Map<String, dynamic>> submodules = [];
+/// Scrapbook SQLite Database
+import 'package:playhouse/src/home/model/sqlite_db.dart';
 
-  static List<Map<String, dynamic>> tasks = [];
+class ScrapBookModel  {
+  factory ScrapBookModel() => _this ??= ScrapBookModel._();
+  ScrapBookModel._()
+      : app = AppController(),
+        sqlDB = PlayhouseSQLiteDB(),
+        modules = ModulesTable(),
+        submodules = SubmodulesTable(),
+        tasks = TasksTable(),
+        usersTasks = UsersTasksTable(),
+        users = UsersTable(),
+        modulesUnlocked = UserModulesUnlocked(),
+        submodulesUnlocked = UserSubmodulesUnlocked(),
+        tasksUnlocked = UserTasksUnlocked(),
+        organizationsModules = OrganizationsModules(),
+        organizationsSubmodules = OrganizationsSubmodules(),
+        organizationsTasks = OrganizationsTasks(),
+        organizationsUsers = OrganizationsUsers(),
+        organizations = OrganizationsTable();
+
+  static ScrapBookModel _this;
+
+  final AppController app;
+  final PlayhouseSQLiteDB sqlDB;
+  final ModulesTable modules;
+  final SubmodulesTable submodules;
+  final TasksTable tasks;
+  final UsersTasksTable usersTasks;
+  final UsersTable users;
+  final UserModulesUnlocked modulesUnlocked;
+  final UserSubmodulesUnlocked submodulesUnlocked;
+  final UserTasksUnlocked tasksUnlocked;
+  final OrganizationsModules organizationsModules;
+  final OrganizationsSubmodules organizationsSubmodules;
+  final OrganizationsTasks organizationsTasks;
+  final OrganizationsUsers organizationsUsers;
+  final OrganizationsTable organizations;
+
+  Future<bool> initAsync() async {
+    //
+    bool init = true;
+
+    init = await sqlDB.initAsync(throwError: true);
+
+    if (init) {
+      init = await fetchData();
+    }
+
+    return init;
+  }
+
+  Future<bool> fetchData() async {
+    bool fetch;
+    try {
+      await modules.initAsync();
+      await submodules.initAsync();
+      await tasks.initAsync();
+      await usersTasks.initAsync();
+      await users.initAsync();
+      await modulesUnlocked.initAsync();
+      await submodulesUnlocked.initAsync();
+      await tasksUnlocked.initAsync();
+      await organizationsModules.initAsync();
+      await organizationsSubmodules.initAsync();
+      await organizationsTasks.initAsync();
+//      await organizationsUsers.initAsync();
+      await organizations.initAsync();
+      fetch = true;
+    } catch (e) {
+      fetch = false;
+      rethrow;
+    }
+    return fetch;
+  }
+
+
+  static List<Map<String, dynamic>> mapModules = [];
+
+  static List<Map<String, dynamic>> mapSubmodules = [];
+
+  static List<Map<String, dynamic>> mapTasks = [];
+
+  static List<Map<String, dynamic>> mapUsers = [];
+
+  static List<Map<String, dynamic>> mapOrganizations = [];
+
 
   bool populateModule(Map<String, dynamic> data) => _tryMap(data, _mapModule);
 
@@ -20,11 +100,19 @@ class AppModel {
 
   bool populateTask(Map<String, dynamic> data) => _tryMap(data, _mapTask);
 
-  void _mapModule(Map<String, dynamic> data) => modules.add(data);
+  void _mapModule(Map<String, dynamic> data) => mapModules.add(data);
 
-  void _mapSubmodule(Map<String, dynamic> data) => submodules.add(data);
+  void _mapSubmodule(Map<String, dynamic> data) => mapSubmodules.add(data);
 
-  void _mapTask(Map<String, dynamic> data) => tasks.add(data);
+  void _mapTask(Map<String, dynamic> data) => mapTasks.add(data);
+
+  bool populateUsers(Map<String, dynamic> data) => _tryMap(data, _mapUsers);
+
+  void _mapUsers(Map<String, dynamic> data) => mapUsers.add(data);
+
+  bool populateOrganizations(Map<String, dynamic> data) => _tryMap(data, _mapOrganizations);
+
+  void _mapOrganizations(Map<String, dynamic> data) => mapOrganizations.add(data);
 
   /// Attempts to 'map the data.'
   /// If errors returns false.
@@ -40,105 +128,4 @@ class AppModel {
   }
 }
 
-// void _mapModule(Map<String, dynamic> data) {
-//   var rec = Module(
-//     type: data['type'],
-//     nextModId: data['nextModId'],
-//     name: data['name'],
-//     short: data['short'],
-//     long: data['long'],
-//     complete: data['complete'],
-//   );
-// }
-//
-// void _mapSubmodule(Map<String, dynamic> data) {
-//   var rec = Submodule(
-//     moduleId: data['moduleId'],
-//     nextSubId: data['nextSubId'],
-//     name: data['name'],
-//     short: data['short'],
-//     long: data['long'],
-//     locked: data['locked'],
-//     complete: data['complete'],
-//     keyArt: data['keyArt'],
-//   );
-// }
-//
-//
-// void _mapTask(Map<String, dynamic> data) {
-//   var rec = Task(
-//     submoduleId: data['submoduleId'],
-//     name: data['name'],
-//     short: data['short'],
-//     long: data['long'],
-//     type: data['type'],
-//     locked: data['locked'],
-//     complete: data['complete'],
-//     keyArt: data['keyArt'],
-//   );
-// }
 
-// class Module {
-//   Module({
-//     @required this.type,
-//     @required this.nextModId,
-//     @required this.name,
-//     @required this.short,
-//     @required this.long,
-//     @required this.complete,
-//   });
-//
-//   final String type; // Design | Build
-//   final String nextModId;
-//   final String name;
-//   final String short;
-//   final String long;
-//   final bool complete;
-// }
-//
-// class Submodule {
-//   Submodule({
-//     @required this.moduleId,
-//     @required this.nextSubId,
-//     @required this.name,
-//     @required this.short,
-//     @required this.long,
-//     @required this.locked,
-//     @required this.complete,
-//     @required this.keyArt,
-//   });
-//
-//   final String id;
-//   final String moduleId;
-//   final String nextSubId;
-//   final String name;
-//   final String short;
-//   final String long;
-//   final bool locked;
-//   final bool complete;
-//   final String keyArt;
-// }
-//
-// class Task {
-//   Task({
-//     @required this.id,
-//     @required this.submoduleId,
-//     @required this.name,
-//     @required this.short,
-//     @required this.long,
-//     @required this.type,
-//     @required this.locked,
-//     @required this.complete,
-//     @required this.keyArt,
-//   });
-//
-//   final String id;
-//   final String submoduleId;
-//   final String name;
-//   final String short;
-//   final String long;
-//   final String type; // NetworkedImage|NetworkedVideo|DeviceImage|Question
-//   final bool locked;
-//   final bool complete;
-//   final String keyArt;
-// }

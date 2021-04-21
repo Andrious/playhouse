@@ -23,6 +23,12 @@ class ScrapBookDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           LogInLogOut(),
+          const Divider(),
+          const _DrawerWidget(
+            OrganizationsList(),
+            icon: Icon(Icons.business),
+            title: Text('Organizations'),
+          ),
         ],
       ),
     );
@@ -69,5 +75,34 @@ class LogInLogOut extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class _DrawerWidget extends StatelessWidget {
+  const _DrawerWidget(
+    this.widget, {
+    Key key,
+    this.icon,
+    this.title,
+  }) : super(key: key);
+
+  final Icon icon;
+  final Text title;
+  final Widget widget;
+
+  @override
+  Widget build(BuildContext context) => ListTile(
+        leading: icon ?? const Icon(Icons.arrow_right),
+        title: title ?? const Text('Option'),
+        onTap: () => _openRoute(widget),
+      );
+
+  /// Open the supplied widget in a new route.
+  Future<void> _openRoute(Widget widget) async {
+    final Route<Map<String, dynamic>> route = MaterialPageRoute(
+      builder: (BuildContext context) => widget,
+      fullscreenDialog: true,
+    );
+    await Navigator.of(App.context).push(route);
   }
 }

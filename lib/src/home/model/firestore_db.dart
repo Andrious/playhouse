@@ -7,21 +7,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart'
     show CollectionReference, QuerySnapshot;
 
-import 'package:playhouse/src/model.dart' show AppModel, FireStoreCollection;
+import 'package:playhouse/src/model.dart' show ScrapBookModel, FireStoreCollection;
 
 import 'package:playhouse/src/controller.dart' show Auth;
 
-class PlayhouseDB {
-  factory PlayhouseDB() => _this ??= PlayhouseDB._();
+class PlayhouseFireStoreDB {
+  factory PlayhouseFireStoreDB() => _this ??= PlayhouseFireStoreDB._();
 
-  PlayhouseDB._()
+  PlayhouseFireStoreDB._()
       : _auth = Auth(),
-        model = AppModel();
-  static PlayhouseDB _this;
+        model = ScrapBookModel();
+  static PlayhouseFireStoreDB _this;
 
   //
   FireStoreCollection db;
-  final AppModel model;
+  final ScrapBookModel model;
   final Auth _auth;
 
   Future<bool> downloadDB() {
