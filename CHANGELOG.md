@@ -1,5 +1,9 @@
 
-##0.19.0
+## 0.20.0
+ April 23, 2021
+- class PlayHouseFields<T> extends DataFields<T>
+
+## 0.19.0
  April 21, 2021
 - Introduce SQLite and Data Schema
 

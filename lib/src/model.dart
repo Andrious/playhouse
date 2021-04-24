@@ -40,9 +40,6 @@ export 'package:playhouse/src/home/model/scrapbook_model.dart';
 /// Scrapbook Database Classes
 export 'package:playhouse/src/home/model/data_fields.dart';
 
-
-// export 'package:playhouse/src/home/model/database_class.dart';
-
 /// SQLite classes
 export 'package:playhouse/src/home/model/sqlite_db.dart';
 

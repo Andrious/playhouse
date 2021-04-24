@@ -93,6 +93,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        short_description VARCHAR,
        long_description VARCHAR,
        key_art BLOB,
+       next_submodule_id VARCHAR,
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -103,6 +104,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        short_description VARCHAR,
        long_description VARCHAR,
        key_art BLOB,
+       next_task_id VARCHAR,
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -162,13 +164,17 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        deleted INTEGER DEFAULT 0)
     ''');
 
+    final timeStamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
     await db.execute('''
        INSERT INTO $ORGANIZATIONS (
        name,
        short_description,
-       long_description) VALUES ('General Public',
+       long_description,
+       time_stamp) VALUES ('General Public',
        'Default Organization',
-       'Default Organization if not associated to a particular company or organization.')
+       'Default Organization if not associated to a particular company or organization.',
+       $timeStamp)
     ''');
 
     await db.execute('''
@@ -196,8 +202,6 @@ class PlayhouseSQLiteDB extends SQLiteDB {
     ''');
   }
 
-
-
   /// Name of the whole Database
   @override
   String get name => 'playhouse_scrapbook';
@@ -210,30 +214,75 @@ class ModulesTable extends SQLiteTable {
   factory ModulesTable() => _this ??= ModulesTable._();
   ModulesTable._() : super(tableName: PlayhouseSQLiteDB.MODULES);
   static ModulesTable _this;
+
+  @override
+  Future<bool> initAsync() async {
+    var init = await super.initAsync();
+    if (init) {
+//      init = await data.initAsync();
+    }
+    return init;
+  }
 }
 
 class SubmodulesTable extends SQLiteTable {
   factory SubmodulesTable() => _this ??= SubmodulesTable._();
   SubmodulesTable._() : super(tableName: PlayhouseSQLiteDB.SUBMODULES);
   static SubmodulesTable _this;
+
+  @override
+  Future<bool> initAsync() async {
+    var init = await super.initAsync();
+    if (init) {
+//      init = await data.initAsync();
+    }
+    return init;
+  }
 }
 
 class TasksTable extends SQLiteTable {
   factory TasksTable() => _this ??= TasksTable._();
   TasksTable._() : super(tableName: PlayhouseSQLiteDB.TASKS);
   static TasksTable _this;
+
+  @override
+  Future<bool> initAsync() async {
+    var init = await super.initAsync();
+    if (init) {
+//      init = await data.initAsync();
+    }
+    return init;
+  }
 }
 
 class UsersTasksTable extends SQLiteTable {
   factory UsersTasksTable() => _this ??= UsersTasksTable._();
   UsersTasksTable._() : super(tableName: PlayhouseSQLiteDB.USERS_TASKS);
   static UsersTasksTable _this;
+
+  @override
+  Future<bool> initAsync() async {
+    var init = await super.initAsync();
+    if (init) {
+//      init = await data.initAsync();
+    }
+    return init;
+  }
 }
 
 class UsersTable extends SQLiteTable {
   factory UsersTable() => _this ??= UsersTable._();
   UsersTable._() : super(tableName: PlayhouseSQLiteDB.USERS);
   static UsersTable _this;
+
+  @override
+  Future<bool> initAsync() async {
+    var init = await super.initAsync();
+    if (init) {
+//      init = await data.initAsync();
+    }
+    return init;
+  }
 }
 
 class UserModulesUnlocked extends SQLiteTable {
@@ -289,9 +338,19 @@ class OrganizationsTable extends SQLiteTable {
   factory OrganizationsTable() => _this ??= OrganizationsTable._();
   OrganizationsTable._() : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS);
   static OrganizationsTable _this;
+
+  @override
+  Future<bool> initAsync() async {
+    var init = await super.initAsync();
+    if (init) {
+//      init = await data.initAsync();
+    }
+    return init;
+  }
 }
 
-class SQLiteTable extends DataFields<Map<String, dynamic>> {
+class SQLiteTable {
+  // extends DataFields<Map<String, dynamic>> {
   SQLiteTable({@required this.tableName}) : db = PlayhouseSQLiteDB();
 
   final PlayhouseSQLiteDB db;
@@ -336,4 +395,20 @@ class SQLiteTable extends DataFields<Map<String, dynamic>> {
 
   String get selectDeleted => _selectDeleted;
   String _selectDeleted = '';
+
+  Future<List<Map<String, dynamic>>> retrieve() async => [{}];
+
+  Future<bool> add(Map<String, dynamic> rec) async => false;
+
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS, rec);
+
+    return newRec.isNotEmpty;
+  }
+
+  Future<bool> delete(Map<String, dynamic> rec) async => false;
+
+  Future<bool> undo(Map<String, dynamic> rec) async => false;
 }

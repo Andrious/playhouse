@@ -22,7 +22,8 @@ class OrganizationsAndroid extends State<OrganizationsList> {
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
-        child: FutureBuilder<List<Map<String, dynamic>>>(
+        child:
+            FutureBuilder<List<Map<String, FieldWidgets<OrganizationsTable>>>>(
           future: fetchData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -32,7 +33,8 @@ class OrganizationsAndroid extends State<OrganizationsList> {
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute<void>(
                       builder: (BuildContext _) => InheritedTheme.captureAll(
-                          context, _OrganizationEditAndroid(snapshot.data)),
+                          context,
+                          _OrganizationEditAndroid(snapshot.data[index])),
                     ));
                     //     .then((_) {
                     //   con.refresh();
@@ -44,19 +46,21 @@ class OrganizationsAndroid extends State<OrganizationsList> {
                       children: <Widget>[
                         Flexible(
                           flex: 2,
-                          child: Text(snapshot.data[index]['name'],
+                          child: Text(snapshot.data[index]['name'].value,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18)),
                         ),
                         Flexible(
                           flex: 3,
-                          child: Text(snapshot.data[index]['short_description'],
+                          child: Text(
+                              snapshot.data[index]['short_description'].value,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14)),
                         ),
                         Flexible(
                           flex: 4,
-                          child: Text(snapshot.data[index]['long_description'],
+                          child: Text(
+                              snapshot.data[index]['long_description'].value,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14)),
                         ),
@@ -67,7 +71,8 @@ class OrganizationsAndroid extends State<OrganizationsList> {
                         // ),
                         Flexible(
                           child: Text(
-                              snapshot.data[index]['deleted'].toString(),
+                              snapshot.data[index]['time_stamp'].value
+                                  .toString(),
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14)),
                         ),
@@ -90,13 +95,13 @@ class OrganizationsAndroid extends State<OrganizationsList> {
     );
   }
 
-  Future<List<Map<String, dynamic>>> fetchData() async =>
-      model.organizations.listAll;
+  Future<List<Map<String, FieldWidgets<OrganizationsTable>>>>
+      fetchData() async => OrganizationsFields().field.values.toList();
 }
 
 class _OrganizationEditAndroid extends StatefulWidget {
   const _OrganizationEditAndroid(this.record, {Key key}) : super(key: key);
-  final List<Map<String, dynamic>> record;
+  final Map<String, FieldWidgets<OrganizationsTable>> record;
   @override
   State createState() => _OrganizationEditAndroidState();
 }
@@ -109,133 +114,126 @@ class _OrganizationEditAndroidState extends State<_OrganizationEditAndroid> {
   }
 
   VoidCallback onTap;
-  List<Map<String, dynamic>> record;
+  Map<String, FieldWidgets<OrganizationsTable>> record;
 
   @override
   Widget build(BuildContext context) {
     onTap = () {
-      editContact(record, context);
+      _edit(record, context);
     };
-    return Theme(
-        data: App.themeData,
-        child: Scaffold(
-            appBar: AppBar(title: record.displayName.text, actions: [
-              TextButton(
-                onPressed: () {
-                  showBox(text: 'Delete this contact?', context: context)
-                      .then((bool delete) {
-                    if (delete) {
-                      record.delete().then((_) {
-                        Navigator.of(context).pop();
-                      });
-                    }
-                  });
-                },
-                child: const Icon(Icons.delete, color: Colors.white),
-              ),
-            ]),
-            bottomNavigationBar: SimpleBottomAppBar(
-              button01: HomeBarButton(onPressed: () {
-                Navigator.of(context).pop();
-              }),
-              button03: EditBarButton(onPressed: onTap),
-            ),
-            body: CustomScrollView(slivers: <Widget>[
-              SliverList(
-                delegate: SliverChildListDelegate(<Widget>[
-                  record.name.onListTile(tap: onTap),
-                  record.short.onListItems(onTap: onTap),
-                  record.long.onListItems(onTap: onTap),
-                  record.timeStamp.onListTile(tap: onTap),
-                ]),
-              )
-            ])));
+    return Scaffold(
+      appBar: AppBar(title: record['name'].text, actions: [
+        TextButton(
+          onPressed: () {
+            showBox(text: 'Delete this record?', context: context)
+                .then((bool delete) {
+              if (delete) {
+                // record.delete(record.record).then((_) {
+                //   Navigator.of(context).pop();
+                // });
+              }
+            });
+          },
+          child: const Icon(Icons.delete, color: Colors.white),
+        ),
+      ]),
+      body: CustomScrollView(slivers: <Widget>[
+        SliverList(
+          delegate: SliverChildListDelegate(<Widget>[
+            record['name'].onListTile(tap: onTap),
+            record['short_description'].onListTile(tap: onTap),
+            record['long_description'].onListTile(tap: onTap),
+            record['time_stamp'].onListTile(
+                tap: onTap, title: Text(record['time_stamp'].value.toString())),
+          ]),
+        )
+      ]),
+      bottomNavigationBar: SimpleBottomAppBar(
+        button01: HomeBarButton(onPressed: () {
+          Navigator.of(context).pop();
+        }),
+        button03: EditBarButton(onPressed: onTap),
+      ),
+    );
   }
 
-  Future<void> editContact(Contact contact, BuildContext context) async {
+  Future<void> _edit(Map<String, FieldWidgets<OrganizationsTable>> organization,
+      BuildContext context) async {
     await Navigator.of(context).push(MaterialPageRoute<void>(
         builder: (BuildContext context) =>
-            AddContact(contact: contact, title: 'Edit a contact')));
+            _AddOrganization(organization, title: 'Edit a contact')));
     setState(() {});
   }
-
-
 }
 
-// class _OrganizationEditAndroid extends StatelessWidget {
-//   _OrganizationEditAndroid({Key key})
-//       : model = ScrapBookModel().organizations,
-//         super(key: key);
-//
-//   final OrganizationsTable model;
-//
-//   @override
-//   Widget build(BuildContext context) {
-// //    _scaffoldButtons();
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Settings.getLeftHanded() ? _leading : model.data.title,,
-//         actions: _trailing == null ? null : [_trailing!],
-//       ),
-//       body: Form(
-//         onWillPop: _onWillPop,
-//         child: model.linkForm(ListView(
-//           padding: const EdgeInsets.all(16),
-//           children: _listWidgets(),
-//         )),
-//       ),
-//     );
-//   }
-//
-//   Future<bool> _onWillPop() async {
-//     if (!model.hasChanged) {
-//       return true;
-//     }
-//
-//     final TextStyle dialogTextStyle = theme!.textTheme.subtitle1!
-//         .copyWith(color: theme!.textTheme.caption!.color);
-//
-//     return await showDialog<bool>(
-//           context: context,
-//           builder: (BuildContext context) {
-//             return AlertDialog(
-//               content:
-//                   Text(I10n.s('Discard new event?'), style: dialogTextStyle),
-//               actions: _listButtons(),
-//             );
-//           },
-//         ) ??
-//         false;
-//   }
+class _AddOrganization extends StatefulWidget {
+  const _AddOrganization(
+    this.map, {
+    this.title,
+    Key key,
+  }) : super(key: key);
+  final Map<String, FieldWidgets<OrganizationsTable>> map;
+  final String title;
+  @override
+  State createState() => _AddOrganizationState();
+}
 
-//   List<Widget> _listWidgets() {
-//     final widgets = <Widget>[
-//       Container(
-//         padding: const EdgeInsets.symmetric(vertical: 8),
-//         alignment: Alignment.bottomLeft,
-//         child: model.field['name'].textFormField(
-//           controller: model.controller,
-//           decoration: const InputDecoration(
-//             filled: true,
-//           ),
-//           validator: (v) {
-//             if (v!.isEmpty) {
-//               return I10n.s('Cannot be empty.');
-//             }
-//             return null;
-//           },
-//           onSaved: (value) {
-//             _con.data.item = value!;
-//           },
-//         ),
-//       ),
-//     ];
-//     return widgets;
-//   }
-// }
+class _AddOrganizationState extends StateMVC<_AddOrganization> {
+  _AddOrganizationState([ControllerMVC controller])
+      : table = OrganizationsFields(),
+        super(controller);
 
-// class ToDoEdit extends DataFields<Map<String, dynamic>> {
-//   ToDoEdit(this.con) {
-//     _model = m.Model();
-//   }
-// }
+  final OrganizationsFields table;
+
+  @override
+  void initState() {
+    super.initState();
+    orgMap = widget.map;
+//    organization ??= Organization();
+    // ignore: cascade_invocations
+//   organization?.initState(this);
+  }
+
+  Map<String, FieldWidgets<OrganizationsTable>> orgMap;
+
+  @override
+  void dispose() {
+//    organization.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData.light(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title ?? 'Add an Organization'),
+          actions: [
+            ElevatedButton(
+              onPressed: () async {
+                final pop = await table.save(orgMap);
+                if (pop) {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Icon(Icons.save, color: Colors.white),
+            )
+          ],
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(12),
+          child: Form(
+//              key: organization.formKey,
+              child: ListView(
+            children: [
+              orgMap['name'].textFormField,
+              orgMap['short_description'].textFormField,
+              orgMap['long_description'].textFormField,
+            ],
+          )),
+        ),
+      ),
+    );
+  }
+}

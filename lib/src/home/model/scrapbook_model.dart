@@ -7,16 +7,16 @@ import 'package:playhouse/src/controller.dart';
 /// Scrapbook SQLite Database
 import 'package:playhouse/src/home/model/sqlite_db.dart';
 
-class ScrapBookModel  {
+class ScrapBookModel {
   factory ScrapBookModel() => _this ??= ScrapBookModel._();
   ScrapBookModel._()
       : app = AppController(),
         sqlDB = PlayhouseSQLiteDB(),
-        modules = ModulesTable(),
-        submodules = SubmodulesTable(),
-        tasks = TasksTable(),
-        usersTasks = UsersTasksTable(),
-        users = UsersTable(),
+        modules = ModuleFields(),
+        submodules = SubmoduleFields(),
+        tasks = TasksFields(),
+        usersTasks = UsersTasksFields(),
+        users = UsersFields(),
         modulesUnlocked = UserModulesUnlocked(),
         submodulesUnlocked = UserSubmodulesUnlocked(),
         tasksUnlocked = UserTasksUnlocked(),
@@ -24,17 +24,17 @@ class ScrapBookModel  {
         organizationsSubmodules = OrganizationsSubmodules(),
         organizationsTasks = OrganizationsTasks(),
         organizationsUsers = OrganizationsUsers(),
-        organizations = OrganizationsTable();
+        organizations = OrganizationsFields();
 
   static ScrapBookModel _this;
 
   final AppController app;
   final PlayhouseSQLiteDB sqlDB;
-  final ModulesTable modules;
-  final SubmodulesTable submodules;
-  final TasksTable tasks;
-  final UsersTasksTable usersTasks;
-  final UsersTable users;
+  final ModuleFields modules;
+  final SubmoduleFields submodules;
+  final TasksFields tasks;
+  final UsersTasksFields usersTasks;
+  final UsersFields users;
   final UserModulesUnlocked modulesUnlocked;
   final UserSubmodulesUnlocked submodulesUnlocked;
   final UserTasksUnlocked tasksUnlocked;
@@ -42,7 +42,7 @@ class ScrapBookModel  {
   final OrganizationsSubmodules organizationsSubmodules;
   final OrganizationsTasks organizationsTasks;
   final OrganizationsUsers organizationsUsers;
-  final OrganizationsTable organizations;
+  final OrganizationsFields organizations;
 
   Future<bool> initAsync() async {
     //
@@ -65,13 +65,13 @@ class ScrapBookModel  {
       await tasks.initAsync();
       await usersTasks.initAsync();
       await users.initAsync();
-      await modulesUnlocked.initAsync();
-      await submodulesUnlocked.initAsync();
-      await tasksUnlocked.initAsync();
-      await organizationsModules.initAsync();
-      await organizationsSubmodules.initAsync();
-      await organizationsTasks.initAsync();
-//      await organizationsUsers.initAsync();
+      // await modulesUnlocked.initAsync();
+      // await submodulesUnlocked.initAsync();
+      // await tasksUnlocked.initAsync();
+      // await organizationsModules.initAsync();
+      // await organizationsSubmodules.initAsync();
+      // await organizationsTasks.initAsync();
+      // await organizationsUsers.initAsync();
       await organizations.initAsync();
       fetch = true;
     } catch (e) {
@@ -80,7 +80,6 @@ class ScrapBookModel  {
     }
     return fetch;
   }
-
 
   static List<Map<String, dynamic>> mapModules = [];
 
@@ -91,7 +90,6 @@ class ScrapBookModel  {
   static List<Map<String, dynamic>> mapUsers = [];
 
   static List<Map<String, dynamic>> mapOrganizations = [];
-
 
   bool populateModule(Map<String, dynamic> data) => _tryMap(data, _mapModule);
 
@@ -110,9 +108,11 @@ class ScrapBookModel  {
 
   void _mapUsers(Map<String, dynamic> data) => mapUsers.add(data);
 
-  bool populateOrganizations(Map<String, dynamic> data) => _tryMap(data, _mapOrganizations);
+  bool populateOrganizations(Map<String, dynamic> data) =>
+      _tryMap(data, _mapOrganizations);
 
-  void _mapOrganizations(Map<String, dynamic> data) => mapOrganizations.add(data);
+  void _mapOrganizations(Map<String, dynamic> data) =>
+      mapOrganizations.add(data);
 
   /// Attempts to 'map the data.'
   /// If errors returns false.
@@ -127,5 +127,3 @@ class ScrapBookModel  {
     return pop;
   }
 }
-
-
