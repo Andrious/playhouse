@@ -8,10 +8,12 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
-class UsersList extends StatefulWidget {
-  const UsersList({Key key}) : super(key: key);
+class ModulesListiOS extends State<OrganizationsList> {
+  ModulesListiOS()
+      : model = ScrapBookModel(),
+        super();
+  final ScrapBookModel model;
 
   @override
-  State createState() =>
-      App.useMaterial ? UsersListAndroid() : UsersListiOS();
+  Widget build(BuildContext context) => const Center();
 }

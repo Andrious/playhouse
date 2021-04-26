@@ -17,22 +17,39 @@ class ScrapBookDrawer extends StatelessWidget {
   final StateMVC state;
 
   @override
-  Widget build(BuildContext context) {
-//    final ControllerMVC con = state.controllerByType<c.HomeDrawer>();
-    return Drawer(
-      child: ListView(
-        children: <Widget>[
-          LogInLogOut(),
-          const Divider(),
-          const _DrawerWidget(
-            OrganizationsList(),
-            icon: Icon(Icons.business),
-            title: Text('Organizations'),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Drawer(
+        child: ListView(
+          children: <Widget>[
+            LogInLogOut(),
+            const Divider(),
+            _DrawerWidget(
+              const ModulesList(),
+              icon: const Icon(Icons.view_agenda),
+              title: I10n.t('Modules'),
+            ),
+            _DrawerWidget(
+              const SubmodulesList(),
+              icon: const Icon(Icons.view_compact),
+              title: I10n.t('Submodules'),
+            ),
+            _DrawerWidget(
+              const TasksList(),
+              icon: const Icon(Icons.handyman),
+              title: I10n.t('Tasks'),
+            ),
+            _DrawerWidget(
+              const UsersList(),
+              icon: const Icon(Icons.group),
+              title: I10n.t('Users'),
+            ),
+            _DrawerWidget(
+              const OrganizationsList(),
+              icon: const Icon(Icons.business),
+              title: I10n.t('Organizations'),
+            ),
+          ],
+        ),
+      );
 }
 
 class LogInLogOut extends StatelessWidget {

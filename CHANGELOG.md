@@ -1,4 +1,9 @@
 
+## 0.21.0
+ April 25, 2021
+- base class in scrapbook_screens.dart
+- mixin ScrapbookFields
+
 ## 0.20.0
  April 23, 2021
 - class PlayHouseFields<T> extends DataFields<T>

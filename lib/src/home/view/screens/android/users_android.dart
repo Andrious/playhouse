@@ -6,12 +6,12 @@ import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/view.dart';
 
-class OrganizationsAndroid
-    extends ScrapbookListScreen<OrganizationsList, OrganizationsFields>
+class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
     with ScrapbookFields {
+//
 
   @override
-  String title = 'Organizations List';
+  String title = 'Users List';
 
   @override
   bool useModuleType = false;
@@ -35,6 +35,6 @@ class OrganizationsAndroid
   bool useDeleted = false;
 
   @override
-  List<Map<String, FieldWidgets<PlayHouseFields>>>
-      fetchData() => OrganizationsFields().field.values.toList();
+  List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
+      UsersFields().field.values.toList();
 }

@@ -402,7 +402,7 @@ class SQLiteTable {
 
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    Map<String, dynamic> newRec =
+    final Map<String, dynamic> newRec =
         await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS, rec);
 
     return newRec.isNotEmpty;
@@ -412,3 +412,4 @@ class SQLiteTable {
 
   Future<bool> undo(Map<String, dynamic> rec) async => false;
 }
+

@@ -8,10 +8,11 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
-class UsersList extends StatefulWidget {
-  const UsersList({Key key}) : super(key: key);
+
+class TasksList extends StatefulWidget {
+  const TasksList({Key key}) : super(key: key);
 
   @override
-  State createState() =>
-      App.useMaterial ? UsersListAndroid() : UsersListiOS();
+  // ignore: no_logic_in_create_state
+  State createState() => App.useMaterial ? TasksListAndroid() : TasksListiOS();
 }
