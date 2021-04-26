@@ -13,11 +13,13 @@ import 'package:playhouse/src/controller.dart';
 class TaskCard extends StatefulWidget with StateSetWidget {
   TaskCard({
     Key key,
+    this.submodule,
     this.name,
   })  : con = ScrapBookController(),
         image = PickImage(),
         super(key: key);
 
+  final String submodule;
   final String name;
 
   final ScrapBookController con;
@@ -49,7 +51,7 @@ class _TaskCardsState extends State<TaskCard> {
     widget.withState(this);
     widget.initState();
     widget.image._state = this;
-    widget.image.getImage(widget);
+//    widget.image.getImage(widget);
     child ??= Image.asset('assets/images/${widget.name.trim()}.jpg');
   }
 
@@ -125,18 +127,19 @@ class PickImage {
   Future<Widget> getImage(TaskCard card) async {
     this.card = card;
     final con = card.con;
-    key =
-        '${con.moduleType}${con.module}${con.submodule}${card.name}${card.runtimeType.toString()}';
-    print(key);
-    final path = Prefs.getString(key);
     Widget image;
+    // final state = StateSet.to<SubmodulesState>();
+    // if(state != null && state.isPanelUp){
+    //   return image;
+    // }
+    key =
+        '${con.moduleType}${con.module}${card.submodule}${card.name}${card.runtimeType.toString()}';
+    final path = Prefs.getString(key);
     if (path.isNotEmpty) {
       image = Image.file(File(path), fit: BoxFit.fitHeight);
-      var state = card.stateOf<_TaskCardsState>();
-      state ??= _state;
-      state?.child = image;
+      _state?.child = image;
       // ignore: invalid_use_of_protected_member
-      state?.setState(() {});
+      _state?.setState(() {});
     }
     return image;
   }

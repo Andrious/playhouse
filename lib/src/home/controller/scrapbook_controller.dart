@@ -107,19 +107,19 @@ class ScrapBookController extends ControllerMVC {
     print('test');
   }
 
-  List<Widget> get taskCards => [
-        QuestionTask(),
-        ABCTask(),
-        ARTask(),
-        PencilTask(),
-        PictureTask(),
-        MovieCameraTask(),
-        QuestionTask02(),
-        ABCTask02(),
-        ARTask02(),
-        PencilTask02(),
-        PictureTask02(),
-        MovieCameraTask02(),
+  List<Widget> taskCards(String submodule) => [
+        QuestionTask(submodule),
+        ABCTask(submodule),
+        ARTask(submodule),
+        PencilTask(submodule),
+        PictureTask(submodule),
+        MovieCameraTask(submodule),
+        QuestionTask02(submodule),
+        ABCTask02(submodule),
+        ARTask02(submodule),
+        PencilTask02(submodule),
+        PictureTask02(submodule),
+        MovieCameraTask02(submodule),
       ];
 
   Widget taskCard(String jpgName) {

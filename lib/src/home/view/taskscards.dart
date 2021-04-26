@@ -9,41 +9,46 @@ import 'package:playhouse/src/view.dart';
 import 'package:playhouse/src/controller.dart';
 
 class QuestionTask extends TaskCard {
-  QuestionTask({Key key})
+  QuestionTask(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'questionMark',
         );
 }
 
 class ABCTask extends TaskCard {
-  ABCTask({Key key})
+  ABCTask(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'abc',
         );
 }
 
 class ARTask extends TaskCard {
-  ARTask({Key key})
+  ARTask(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'AR',
         );
 }
 
 class PencilTask extends TaskCard {
-  PencilTask({Key key})
+  PencilTask(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'pencil',
         );
 }
 
 class PictureTask extends TaskCard {
-  PictureTask({Key key})
+  PictureTask(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'picture',
         );
 
@@ -54,49 +59,55 @@ class PictureTask extends TaskCard {
 }
 
 class MovieCameraTask extends TaskCard {
-  MovieCameraTask({Key key})
+  MovieCameraTask(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'movieCamera',
         );
 }
 
 class QuestionTask02 extends TaskCard {
-  QuestionTask02({Key key})
+  QuestionTask02(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'questionMark',
         );
 }
 
 class ABCTask02 extends TaskCard {
-  ABCTask02({Key key})
+  ABCTask02(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'abc',
         );
 }
 
 class ARTask02 extends TaskCard {
-  ARTask02({Key key})
+  ARTask02(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'AR',
         );
 }
 
 class PencilTask02 extends TaskCard {
-  PencilTask02({Key key})
+  PencilTask02(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'pencil',
         );
 }
 
 class PictureTask02 extends TaskCard {
-  PictureTask02({Key key})
+  PictureTask02(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'picture',
         );
 
@@ -107,9 +118,10 @@ class PictureTask02 extends TaskCard {
 }
 
 class MovieCameraTask02 extends TaskCard {
-  MovieCameraTask02({Key key})
+  MovieCameraTask02(String submodule, {Key key})
       : super(
           key: key,
+          submodule: submodule,
           name: 'movieCamera',
         );
 

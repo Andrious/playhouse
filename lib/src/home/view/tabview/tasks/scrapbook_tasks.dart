@@ -25,7 +25,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
     _con = controller;
   }
   SubmodulesState submodule;
-
+  String submoduleName;
   ScrapBookController get con => _con;
   ScrapBookController _con;
 
@@ -35,6 +35,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
   void initState() {
     super.initState();
     submodule = widget.tab.state;
+    submoduleName = widget.tab.name;
     style = const TextStyle(color: Colors.black);
   }
 
@@ -120,7 +121,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
               crossAxisSpacing: 10,
               primary: false,
               addRepaintBoundaries: false,
-              children: con.taskCards,
+              children: con.taskCards(submoduleName),
             ),
           ),
         ),
