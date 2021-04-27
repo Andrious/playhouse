@@ -715,7 +715,16 @@ class _TabStyle extends AnimatedWidget {
 // This class, and TabBarScrollPosition, only exist to handle the case
 // where a scrollable TabBar has a non-zero initialIndex.
 class _TabBarScrollController extends ScrollController {
-  _TabBarScrollController(this.tabBar);
+  _TabBarScrollController(
+    this.tabBar, {
+    double initialScrollOffset = 0.0,
+    bool keepScrollOffset = true,
+    String debugLabel,
+  }) : super(
+          initialScrollOffset: initialScrollOffset,
+          keepScrollOffset: keepScrollOffset,
+          debugLabel: debugLabel,
+        );
 
   final _GreyIvyTabBarState tabBar;
 
@@ -726,6 +735,7 @@ class _TabBarScrollController extends ScrollController {
       physics: physics,
       context: context,
       oldPosition: oldPosition,
+      keepScrollOffset: keepScrollOffset,
       tabBar: tabBar,
     );
   }
@@ -773,12 +783,14 @@ class _TabBarScrollPosition extends ScrollPositionWithSingleContext {
   _TabBarScrollPosition({
     @required ScrollPhysics physics,
     @required ScrollContext context,
+    bool keepScrollOffset = true,
     @required ScrollPosition oldPosition,
     @required this.tabBar,
   }) : super(
           physics: physics,
           context: context,
           initialPixels: null,
+          keepScrollOffset: keepScrollOffset,
           oldPosition: oldPosition,
         );
 
@@ -1085,7 +1097,7 @@ class GreyIvyTabBarView extends StatefulWidget {
     this.controller,
     this.physics,
     this.dragStartBehavior = DragStartBehavior.start,
-  }) : assert(children != null),
+  })  : assert(children != null),
         assert(dragStartBehavior != null),
         super(key: key);
 
@@ -1133,16 +1145,15 @@ class _GreyIvyTabBarViewState extends State<GreyIvyTabBarView> with StateSet {
   bool get _controllerIsValid => _controller?.animation != null;
 
   void _updateTabController() {
-    final TabController newController = widget.controller ?? DefaultTabController.of(context);
+    final TabController newController =
+        widget.controller ?? DefaultTabController.of(context);
     assert(() {
       if (newController == null) {
-        throw FlutterError(
-            'No TabController for ${widget.runtimeType}.\n'
-                'When creating a ${widget.runtimeType}, you must either provide an explicit '
-                'TabController using the "controller" property, or you must ensure that there '
-                'is a DefaultTabController above the ${widget.runtimeType}.\n'
-                'In this case, there was neither an explicit controller nor a default controller.'
-        );
+        throw FlutterError('No TabController for ${widget.runtimeType}.\n'
+            'When creating a ${widget.runtimeType}, you must either provide an explicit '
+            'TabController using the "controller" property, or you must ensure that there '
+            'is a DefaultTabController above the ${widget.runtimeType}.\n'
+            'In this case, there was neither an explicit controller nor a default controller.');
       }
       return true;
     }());
@@ -1223,15 +1234,15 @@ class _GreyIvyTabBarViewState extends State<GreyIvyTabBarView> with StateSet {
     final int previousIndex = _controller.previousIndex;
     if ((_currentIndex - previousIndex).abs() == 1) {
       _warpUnderwayCount += 1;
-      await _pageController.animateToPage(_currentIndex, duration: kTabScrollDuration, curve: Curves.ease);
+      await _pageController.animateToPage(_currentIndex,
+          duration: kTabScrollDuration, curve: Curves.ease);
       _warpUnderwayCount -= 1;
       return Future<void>.value();
     }
 
     assert((_currentIndex - previousIndex).abs() > 1);
-    final int initialPage = _currentIndex > previousIndex
-        ? _currentIndex - 1
-        : _currentIndex + 1;
+    final int initialPage =
+        _currentIndex > previousIndex ? _currentIndex - 1 : _currentIndex + 1;
     final List<Widget> originalChildren = _childrenWithKey;
     setState(() {
       _warpUnderwayCount += 1;
@@ -1243,7 +1254,8 @@ class _GreyIvyTabBarViewState extends State<GreyIvyTabBarView> with StateSet {
     });
     _pageController.jumpToPage(initialPage);
 
-    await _pageController.animateToPage(_currentIndex, duration: kTabScrollDuration, curve: Curves.ease);
+    await _pageController.animateToPage(_currentIndex,
+        duration: kTabScrollDuration, curve: Curves.ease);
     if (!mounted) {
       return Future<void>.value();
     }
@@ -1268,17 +1280,20 @@ class _GreyIvyTabBarViewState extends State<GreyIvyTabBarView> with StateSet {
     }
 
     _warpUnderwayCount += 1;
-    if (notification is ScrollUpdateNotification && !_controller.indexIsChanging) {
+    if (notification is ScrollUpdateNotification &&
+        !_controller.indexIsChanging) {
       if ((_pageController.page - _controller.index).abs() > 1.0) {
         _controller.index = _pageController.page.floor();
-        _currentIndex =_controller.index;
+        _currentIndex = _controller.index;
       }
-      _controller.offset = (_pageController.page - _controller.index).clamp(-1.0, 1.0);
+      _controller.offset =
+          (_pageController.page - _controller.index).clamp(-1.0, 1.0);
     } else if (notification is ScrollEndNotification) {
       _controller.index = _pageController.page.round();
       _currentIndex = _controller.index;
       if (!_controller.indexIsChanging) {
-        _controller.offset = (_pageController.page - _controller.index).clamp(-1.0, 1.0);
+        _controller.offset =
+            (_pageController.page - _controller.index).clamp(-1.0, 1.0);
       }
     }
     _warpUnderwayCount -= 1;
@@ -1292,8 +1307,7 @@ class _GreyIvyTabBarViewState extends State<GreyIvyTabBarView> with StateSet {
       if (_controller.length != widget.children.length) {
         throw FlutterError(
             "Controller's length property (${_controller.length}) does not match the "
-                "number of tabs (${widget.children.length}) present in TabBar's tabs property."
-        );
+            "number of tabs (${widget.children.length}) present in TabBar's tabs property.");
       }
       return true;
     }());
@@ -1310,4 +1324,3 @@ class _GreyIvyTabBarViewState extends State<GreyIvyTabBarView> with StateSet {
     );
   }
 }
-

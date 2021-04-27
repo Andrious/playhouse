@@ -12,6 +12,5 @@ class UsersList extends StatefulWidget {
   const UsersList({Key key}) : super(key: key);
 
   @override
-  State createState() =>
-      App.useMaterial ? UsersListAndroid() : UsersListiOS();
+  State createState() => App.useMaterial ? UsersListAndroid() : UsersListiOS();
 }

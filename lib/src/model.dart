@@ -11,7 +11,6 @@ export 'package:dbutils/sqlite_db.dart' show SQLiteDB, Transaction;
 /// sql plugin
 export 'package:sqflite/sqflite.dart' show Database;
 
-
 /// Firebase Firestore
 export 'package:dbutils/firestore_db.dart';
 
@@ -42,5 +41,3 @@ export 'package:playhouse/src/home/model/data_fields.dart';
 
 /// SQLite classes
 export 'package:playhouse/src/home/model/sqlite_db.dart';
-
-

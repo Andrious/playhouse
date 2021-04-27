@@ -35,6 +35,6 @@ class TasksListAndroid extends ScrapbookListScreen<TasksList, TasksFields>
   bool useDeleted = false;
 
   @override
-  List<Map<String, FieldWidgets<PlayHouseFields>>>
-  fetchData() => TasksFields().field.values.toList();
+  List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
+      TasksFields().field.values.toList();
 }

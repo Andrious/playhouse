@@ -26,7 +26,7 @@ class TaskCard extends StatefulWidget with StateSetWidget {
   final PickImage image;
 
   @override
-  void dispose(){
+  void dispose() {
     image._state = null;
     super.dispose();
   }

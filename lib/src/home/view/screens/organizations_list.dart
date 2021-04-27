@@ -8,11 +8,11 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
-
 class OrganizationsList extends StatefulWidget {
   const OrganizationsList({Key key}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
-  State createState() => App.useMaterial ? OrganizationsAndroid() : OrganizationsiOS();
+  State createState() =>
+      App.useMaterial ? OrganizationsAndroid() : OrganizationsiOS();
 }

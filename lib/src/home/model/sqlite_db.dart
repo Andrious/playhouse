@@ -412,4 +412,3 @@ class SQLiteTable {
 
   Future<bool> undo(Map<String, dynamic> rec) async => false;
 }
-

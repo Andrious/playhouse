@@ -8,7 +8,6 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
-
 class TasksList extends StatefulWidget {
   const TasksList({Key key}) : super(key: key);
 

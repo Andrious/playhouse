@@ -21,7 +21,6 @@ class ScrapBookController extends ControllerMVC {
 
   @override
   Future<bool> initAsync() async {
-
     if (App.inDebugger) {
       final test = DatabaseTest();
       //

@@ -8,11 +8,11 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
-
 class SubmodulesList extends StatefulWidget {
   const SubmodulesList({Key key}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
-  State createState() => App.useMaterial ? SubmodulesListAndroid() : SubmodulesListiOS();
+  State createState() =>
+      App.useMaterial ? SubmodulesListAndroid() : SubmodulesListiOS();
 }

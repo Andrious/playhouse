@@ -10,7 +10,8 @@ import 'package:playhouse/src/controller.dart';
 
 mixin ScrapbookFields implements UseWhichWidgets {
   //
-  List<Widget> columnWidgets(Map<String, FieldWidgets<PlayHouseFields>> fldWidget) {
+  List<Widget> columnWidgets(
+      Map<String, FieldWidgets<PlayHouseFields>> fldWidget) {
     //
     final List<Widget> _fieldWidgets = [];
 
@@ -67,7 +68,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
         Flexible(
           child: Text(fldWidget['email_address'].value.toString(),
               style:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         ),
       );
     }
@@ -77,7 +78,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
         Flexible(
           child: Text(fldWidget['phone_number'].value.toString(),
               style:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         ),
       );
     }
@@ -88,7 +89,6 @@ mixin ScrapbookFields implements UseWhichWidgets {
 }
 
 class UseWhichWidgets {
-
   bool useModuleType;
   bool useLocked;
 

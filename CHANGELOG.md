@@ -1,4 +1,8 @@
 
+## 0.22.0
+ April 26, 2021
+- Attempted nextPage = controller.index;
+
 ## 0.21.1
  April 26, 2021
 - Get correct submodule: submoduleName = widget.tab.name;

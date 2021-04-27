@@ -46,14 +46,14 @@ class SubmodulesTabBar {
     }
 
     /// Get the 'initial' index. Display the last viewed tab.
-    var initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
+    final initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
 
-    if(initIndex == 4){
-      initIndex--;
-    }
+    // if(initIndex == 4){
+    //   initIndex--;
+    // }
 
     _tabController = SubTabController(
-      initialIndex: initIndex,
+//      initialIndex: initIndex,
       length: 4,
       vsync: provider,
       state: provider,

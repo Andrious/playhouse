@@ -14,11 +14,12 @@ class SubTabController extends GITabController {
     @required int length,
     @required TickerProvider vsync,
     StateMVC state,
-  })  :  super(
-        initialIndex: initialIndex,
-        length: length,
-        vsync: vsync,
-      );
+  }) : super(
+          initialIndex: initialIndex,
+          length: length,
+          vsync: vsync,
+          state: state,
+        );
 }
 
 class GITabController extends TabController {
@@ -36,11 +37,12 @@ class GITabController extends TabController {
   final _TabController con;
 
   GreyIvyTabBar get tabBar => _tabBar;
-  set tabBar(GreyIvyTabBar tabBar){
-    if(tabBar != null){
+  set tabBar(GreyIvyTabBar tabBar) {
+    if (tabBar != null) {
       _tabBar = tabBar;
     }
   }
+
   GreyIvyTabBar _tabBar;
 }
 

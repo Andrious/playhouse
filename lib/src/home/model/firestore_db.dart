@@ -7,7 +7,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart'
     show CollectionReference, QuerySnapshot;
 
-import 'package:playhouse/src/model.dart' show ScrapBookModel, FireStoreCollection;
+import 'package:playhouse/src/model.dart'
+    show ScrapBookModel, FireStoreCollection;
 
 import 'package:playhouse/src/controller.dart' show Auth;
 

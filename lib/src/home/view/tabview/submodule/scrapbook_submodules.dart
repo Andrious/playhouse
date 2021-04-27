@@ -23,7 +23,7 @@ class SubmodulesScreen extends StatefulWidget {
 }
 
 class SubmodulesState extends StateMVC<SubmodulesScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, StateSet {
   SubmodulesState() : super(ScrapBookController()) {
     _con = controller;
   }
@@ -205,7 +205,11 @@ class BigPageScrollPhysics extends ScrollPhysics {
         nextPage = controller.index - 1;
       } else if (velocity > tolerance.velocity) {
         nextPage = controller.index + 1;
-      }
+      } //else if (controller.index > 0) {
+      //   nextPage = controller.index;
+      //   final state = StateSet.to<SubmodulesState>();
+      //   state?.setState(() {});
+      // }
       if (nextPage != null) {
         // There's a bug! It won't go to initialIndex!?
         if (nextPage >= 0 && (nextPage < controller.length)) {

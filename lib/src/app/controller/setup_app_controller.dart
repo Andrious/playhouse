@@ -19,7 +19,6 @@ class SetupApp extends AppConMVC {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     LicenseRegistry.addLicense(() async* {
       var licence = await rootBundle.loadString('assets/google_fonts/OFL.txt');
