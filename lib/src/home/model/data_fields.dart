@@ -73,95 +73,8 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
       //
       final _query = await query();
 
-      for (final field in field.values) {
-        field.forEach((String field, FieldWidgets<PlayHouseFields> widget) {
-          widget.object = this;
-          switch (field) {
-            case 'deleted':
-              widget.label = 'Deleted';
-              widget.keyboardType = TextInputType.number;
-              break;
-            case 'time_stamp':
-              widget.label = 'Time Stamp';
-              widget.keyboardType = TextInputType.number;
-              break;
-            case 'key_art':
-              widget.label = 'Key Art';
-              break;
-            case 'email_address':
-              widget.label = 'Email Address';
-              widget.inputDecoration =
-                  const InputDecoration(labelText: 'Email');
-              widget.keyboardType = TextInputType.emailAddress;
-              break;
-            case 'phone_number':
-              widget.label = 'Phone Number';
-              widget.inputDecoration =
-                  const InputDecoration(labelText: 'Phone');
-              widget.keyboardType = TextInputType.phone;
-              break;
-            case 'login_provider':
-              widget.label = 'Login Provider';
-              widget.keyboardType = TextInputType.name;
-              break;
-            case 'long_description':
-              widget.label = 'Long Description';
-              widget.keyboardType = TextInputType.name;
-              widget.validator = notEmpty;
-              widget.maxLines = 3;
-              break;
-            case 'short_description':
-              widget.label = 'Short Description';
-              widget.keyboardType = TextInputType.name;
-              widget.validator = notEmpty;
-              break;
-            case 'name':
-              widget.label = 'Name';
-              widget.keyboardType = TextInputType.name;
-              widget.validator = notEmpty;
-              break;
-            case 'completed':
-              widget.label = 'Completed';
-              widget.keyboardType = TextInputType.number;
-              break;
-            case 'module_type':
-              widget.label = 'Module Type';
-              widget.keyboardType = TextInputType.name;
-              widget.validator = notEmpty;
-              break;
-            case 'task_id':
-              widget.label = 'Id';
-              widget.validator = notEmpty;
-              widget.keyboardType = TextInputType.number;
-              break;
-            case 'submodule_id':
-              widget.label = 'Id';
-              widget.validator = notEmpty;
-              widget.keyboardType = TextInputType.number;
-              break;
-            case 'module_id':
-              widget.label = 'Id';
-              widget.validator = notEmpty;
-              widget.keyboardType = TextInputType.number;
-              break;
-            case 'user_id':
-              widget.label = 'Id';
-              widget.validator = notEmpty;
-              widget.keyboardType = TextInputType.number;
-              break;
-            case 'organization_id ':
-              widget.label = 'Id';
-              widget.validator = notEmpty;
-              widget.keyboardType = TextInputType.number;
-              break;
-            case 'rowid':
-              widget.label = 'Id';
-              widget.validator = notEmpty;
-              widget.keyboardType = TextInputType.number;
-              break;
-          }
-        });
-      }
+      // Populate the field variables properly.
+      populateFieldWidgets();
 
       // for (final Map<String, dynamic> map in _query) {
       //   //
@@ -174,6 +87,13 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
       rethrow;
     }
     return init;
+  }
+
+  /// Get a new record
+  Map<String, dynamic> getNewRecord() {
+    fillRecords([table.newRecord]);
+    // Populate the field variables properly.
+    return populateFieldWidgets();
   }
 
   @override
@@ -205,6 +125,100 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
 
   @override
   Future<bool> undo(Map<String, dynamic> rec) async => false;
+
+  /// The 'field' property is assigned specific properties.
+  Map<String, FieldWidgets<PlayHouseFields>> populateFieldWidgets() {
+    final fieldsMap = <String, FieldWidgets<PlayHouseFields>>{};
+    for (final field in field.values) {
+      field.forEach((String field, FieldWidgets<PlayHouseFields> widget) {
+        fieldsMap[field] = widget;
+        widget.object = this;
+        switch (field) {
+          case 'deleted':
+            widget.label = 'Deleted';
+            widget.keyboardType = TextInputType.number;
+            break;
+          case 'time_stamp':
+            widget.label = 'Time Stamp';
+            widget.keyboardType = TextInputType.number;
+            break;
+          case 'key_art':
+            widget.label = 'Key Art';
+            break;
+          case 'email_address':
+            widget.label = 'Email Address';
+            widget.inputDecoration = const InputDecoration(labelText: 'Email');
+            widget.keyboardType = TextInputType.emailAddress;
+            break;
+          case 'phone_number':
+            widget.label = 'Phone Number';
+            widget.inputDecoration = const InputDecoration(labelText: 'Phone');
+            widget.keyboardType = TextInputType.phone;
+            break;
+          case 'login_provider':
+            widget.label = 'Login Provider';
+            widget.keyboardType = TextInputType.name;
+            break;
+          case 'long_description':
+            widget.label = 'Long Description';
+            widget.keyboardType = TextInputType.name;
+            widget.validator = notEmpty;
+            widget.maxLines = 3;
+            break;
+          case 'short_description':
+            widget.label = 'Short Description';
+            widget.keyboardType = TextInputType.name;
+            widget.validator = notEmpty;
+            break;
+          case 'name':
+            widget.label = 'Name';
+            widget.keyboardType = TextInputType.name;
+            widget.validator = notEmpty;
+            break;
+          case 'completed':
+            widget.label = 'Completed';
+            widget.keyboardType = TextInputType.number;
+            break;
+          case 'module_type':
+            widget.label = 'Module Type';
+            widget.keyboardType = TextInputType.name;
+            widget.validator = notEmpty;
+            break;
+          case 'task_id':
+            widget.label = 'Id';
+            widget.validator = notEmpty;
+            widget.keyboardType = TextInputType.number;
+            break;
+          case 'submodule_id':
+            widget.label = 'Id';
+            widget.validator = notEmpty;
+            widget.keyboardType = TextInputType.number;
+            break;
+          case 'module_id':
+            widget.label = 'Id';
+            widget.validator = notEmpty;
+            widget.keyboardType = TextInputType.number;
+            break;
+          case 'user_id':
+            widget.label = 'Id';
+            widget.validator = notEmpty;
+            widget.keyboardType = TextInputType.number;
+            break;
+          case 'organization_id ':
+            widget.label = 'Id';
+            widget.validator = notEmpty;
+            widget.keyboardType = TextInputType.number;
+            break;
+          case 'rowid':
+            widget.label = 'Id';
+            widget.validator = notEmpty;
+            widget.keyboardType = TextInputType.number;
+            break;
+        }
+      });
+    }
+    return fieldsMap;
+  }
 }
 
 /// Fields used on a Form screen.

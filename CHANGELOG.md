@@ -1,4 +1,13 @@
 
+## 0.24.0
+ April 29, 2021
+- crop: ^0.5.0
+
+## 0.23.0
+ April 28, 2021
+- Introduced I10n.t
+- Introduced lottie & Lock1_V1
+
 ## 0.22.0
  April 26, 2021
 - Attempted nextPage = controller.index;

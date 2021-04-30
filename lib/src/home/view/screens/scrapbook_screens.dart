@@ -10,9 +10,9 @@ import 'package:playhouse/src/controller.dart';
 
 abstract class ScrapbookListScreen<T extends StatefulWidget,
     U extends PlayHouseFields> extends State<T> {
-  //
+  ScrapbookListScreen([this.title]);
 
-  String title;
+  final String title;
 
   @override
   void initState() {
@@ -27,14 +27,16 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
         data: ThemeData.light(),
         child: Scaffold(
           appBar: AppBar(
-            title: Text(title),
+            title: Text(title ?? 'List'),
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
+              final title = 'New ${this.title ?? ''} Record';
               await Navigator.of(context)
                   .push(
                     MaterialPageRoute<void>(
-                      builder: (BuildContext _) => ScrapbookEditScreen(),
+                      builder: (BuildContext _) =>
+                          ScrapbookEditScreen(map: newRecord(), title: title),
                     ),
                   )
                   .then((value) => setState(() {}));
@@ -74,6 +76,8 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
       Map<String, FieldWidgets<PlayHouseFields>> fldWidget);
 
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData();
+
+  Map<String, FieldWidgets<PlayHouseFields>> newRecord();
 }
 
 class ScrapbookDetailsScreen extends StatefulWidget {
@@ -182,7 +186,7 @@ class _ScrapbookEditScreenState extends StateMVC<ScrapbookEditScreen> {
       data: ThemeData.light(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.title ?? 'Add an Organization'),
+          title: Text(widget.title ?? 'Add New Record'),
           actions: [
             ElevatedButton(
               onPressed: () async {

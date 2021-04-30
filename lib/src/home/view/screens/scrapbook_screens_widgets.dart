@@ -15,7 +15,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
     //
     final List<Widget> _fieldWidgets = [];
 
-    if (useName && fldWidget['name'] != null) {
+    if (useName && fldWidget['name'] != null && fldWidget['name'].value != null) {
       _fieldWidgets.add(
         Flexible(
           flex: 2,
@@ -26,7 +26,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (useDescription && fldWidget['short_description'] != null) {
+    if (useDescription && fldWidget['short_description'] != null && fldWidget['short_description'].value != null) {
       _fieldWidgets.addAll([
         Flexible(
           flex: 3,
@@ -43,7 +43,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       ]);
     }
 
-    if (useKeyArt && fldWidget['key_art'] != null) {
+    if (useKeyArt && fldWidget['key_art'] != null && fldWidget['key_art'].value != null) {
       _fieldWidgets.add(
         Flexible(
           child: Text(fldWidget['key_art'].value,
@@ -53,7 +53,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (useTimeStamp && fldWidget['time_stamp'] != null) {
+    if (useTimeStamp && fldWidget['time_stamp'] != null && fldWidget['time_stamp'].value != null) {
       _fieldWidgets.add(
         Flexible(
           child: Text(fldWidget['time_stamp'].value.toString(),
@@ -63,7 +63,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (useEmail && fldWidget['email_address'] != null) {
+    if (useEmail && fldWidget['email_address'] != null && fldWidget['email_address'].value != null) {
       _fieldWidgets.add(
         Flexible(
           child: Text(fldWidget['email_address'].value.toString(),
@@ -73,7 +73,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (usePhone && fldWidget['phone_number'] != null) {
+    if (usePhone && fldWidget['phone_number'] != null && fldWidget['phone_number'].value != null) {
       _fieldWidgets.add(
         Flexible(
           child: Text(fldWidget['phone_number'].value.toString(),

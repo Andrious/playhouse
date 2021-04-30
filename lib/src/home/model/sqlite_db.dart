@@ -79,42 +79,42 @@ class PlayhouseSQLiteDB extends SQLiteDB {
 
     await db.execute('''
        CREATE TABLE IF NOT EXISTS $MODULES(
-       name VARCHAR,
-       short_description VARCHAR,
-       long_description VARCHAR,
-       module_type VARCHAR,
+       name VARCHAR NOT NULL,
+       short_description VARCHAR NOT NULL,
+       long_description VARCHAR NOT NULL,
+       module_type VARCHAR NOT NULL,
        deleted INTEGER DEFAULT 0)
     ''');
 
     await db.execute('''
        CREATE TABLE IF NOT EXISTS $SUBMODULES(
        module_id INTEGER NOT NULL,
-       name VARCHAR,
-       short_description VARCHAR,
-       long_description VARCHAR,
+       name VARCHAR NOT NULL,
+       short_description VARCHAR NOT NULL,
+       long_description VARCHAR NOT NULL,
        key_art BLOB,
-       next_submodule_id VARCHAR,
+       next_submodule_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
 
     await db.execute('''
        CREATE TABLE IF NOT EXISTS $TASKS(
        submodule_id INTEGER NOT NULL,
-       name VARCHAR,
-       short_description VARCHAR,
-       long_description VARCHAR,
+       name VARCHAR NOT NULL,
+       short_description VARCHAR NOT NULL,
+       long_description VARCHAR NOT NULL,
        key_art BLOB,
-       next_task_id VARCHAR,
+       next_task_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
 
     await db.execute('''
        CREATE TABLE IF NOT EXISTS $USERS(
-       name VARCHAR,
-       short_description VARCHAR,
-       long_description VARCHAR,
-       email_address VARCHAR,
-       phone_number VARCHAR,
+       name VARCHAR NOT NULL,
+       short_description VARCHAR NOT NULL,
+       long_description VARCHAR NOT NULL,
+       email_address VARCHAR NOT NULL,
+       phone_number VARCHAR NOT NULL,
        key_art BLOB,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -123,9 +123,9 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        CREATE TABLE IF NOT EXISTS $USERS_TASKS(
        user_id INTEGER NOT NULL,
        task_id INTEGER NOT NULL,
-       name VARCHAR,
-       short_description VARCHAR,
-       long_description VARCHAR,
+       name VARCHAR NOT NULL,
+       short_description VARCHAR NOT NULL,
+       long_description VARCHAR NOT NULL,
        key_art BLOB,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -156,25 +156,12 @@ class PlayhouseSQLiteDB extends SQLiteDB {
 
     await db.execute('''
        CREATE TABLE IF NOT EXISTS $ORGANIZATIONS(
-       name VARCHAR,
-       short_description VARCHAR,
-       long_description VARCHAR,
+       name VARCHAR NOT NULL,
+       short_description VARCHAR NOT NULL,
+       long_description VARCHAR NOT NULL,
        key_art BLOB,
        time_stamp INTEGER,
        deleted INTEGER DEFAULT 0)
-    ''');
-
-    final timeStamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-
-    await db.execute('''
-       INSERT INTO $ORGANIZATIONS (
-       name,
-       short_description,
-       long_description,
-       time_stamp) VALUES ('General Public',
-       'Default Organization',
-       'Default Organization if not associated to a particular company or organization.',
-       $timeStamp)
     ''');
 
     await db.execute('''
@@ -200,6 +187,8 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        locked INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
+
+    await loadScrapBookDatabase(this);
   }
 
   /// Name of the whole Database
@@ -379,8 +368,17 @@ class SQLiteTable {
     return init;
   }
 
-  Future<List<Map<String, dynamic>>> get list =>
-      db.getTable(tableName, where: 'deleted = ?', whereArgs: [0]);
+  /// Return a new 'empty' record.
+  Map<String, dynamic> get newRecord => db.newRec(tableName);
+
+  Future<List<Map<String, dynamic>>> get list async {
+    List<Map<String, dynamic>> list;
+    list = await db.getTable(tableName, where: 'deleted = ?', whereArgs: [0]);
+    if (list.isEmpty) {
+      list = [newRecord];
+    }
+    return list;
+  }
 
   Future<List<Map<String, dynamic>>> get listAll => db.getTable(tableName);
 

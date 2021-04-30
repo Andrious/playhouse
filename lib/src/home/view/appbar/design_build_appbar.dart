@@ -59,7 +59,7 @@ class DesignBuildAppBar {
 
   List<Tab> _onTabs() => [
         Tab(
-          child: Text(
+          child: I10n.t(
             'Design',
             style: TextStyle(
               fontWeight:
@@ -70,7 +70,7 @@ class DesignBuildAppBar {
           ),
         ),
         Tab(
-          child: Text(
+          child: I10n.t(
             'Build',
             style: TextStyle(
               fontWeight:
@@ -83,7 +83,7 @@ class DesignBuildAppBar {
       ];
 
   AppBar _onAppBar() => AppBar(
-        title: const Text('Playhouse'),
+        title: I10n.t('Playhouse'),
         // actions: [
         //   /// Supply the App's popup menu. Pass in the screen's State object.
         //   AppMenu().show(_provider),

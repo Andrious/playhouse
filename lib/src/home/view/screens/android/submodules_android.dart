@@ -9,10 +9,7 @@ import 'package:playhouse/src/view.dart';
 class SubmodulesListAndroid
     extends ScrapbookListScreen<SubmodulesList, SubmoduleFields>
     with ScrapbookFields {
-//
-
-  @override
-  String title = 'Submodules List';
+  SubmodulesListAndroid() : super(I10n.s('Submodule'));
 
   @override
   bool useModuleType = false;
@@ -38,4 +35,8 @@ class SubmodulesListAndroid
   @override
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
       SubmoduleFields().field.values.toList();
+
+  @override
+  Map<String, FieldWidgets<PlayHouseFields<SQLiteTable>>> newRecord()  =>
+      SubmoduleFields().getNewRecord();
 }

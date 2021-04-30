@@ -2,13 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:io';
-
-import 'package:state_set/state_set.dart';
-
-import 'package:playhouse/src/view.dart';
+import 'dart:ui' as ui;
 
 import 'package:playhouse/src/controller.dart';
+import 'package:playhouse/src/view.dart';
+import 'package:state_set/state_set.dart';
+
+import 'package:crop/crop.dart';
 
 class TaskCard extends StatefulWidget with StateSetWidget {
   TaskCard({
@@ -69,6 +71,7 @@ class _TaskCardsState extends State<TaskCard> {
     }
     return Card(
       child: Stack(
+        clipBehavior: Clip.antiAlias,
         children: [
           InkWell(
             onTap: widget.onTapInfo,
@@ -126,20 +129,123 @@ class PickImage {
 
   Future<Widget> getImage(TaskCard card) async {
     this.card = card;
+    double widthAmount = 1;
     final con = card.con;
     Widget image;
-    // final state = StateSet.to<SubmodulesState>();
-    // if(state != null && state.isPanelUp){
-    //   return image;
-    // }
+    ui.Image imageInfo;
+
     key =
         '${con.moduleType}${con.module}${card.submodule}${card.name}${card.runtimeType.toString()}';
+
     final path = Prefs.getString(key);
+
     if (path.isNotEmpty) {
-      image = Image.file(File(path), fit: BoxFit.fitHeight);
-      _state?.child = image;
+      //
+ //     image = Image.file(File(path)); //, fit: BoxFit.fitWidth);
+
+//      imageInfo = await _getImageInfo(image);
+
+      _state?.child = Crop(controller: CropController(), child: Image.file(File(path)));
+
+//       _state?.child = LayoutBuilder(
+//           builder: (BuildContext context, BoxConstraints constraints) {
+//         int smaller;
+//         bool heightSmaller;
+//         if (imageInfo.height <= imageInfo.width) {
+//           heightSmaller = true;
+//           smaller = imageInfo.height;
+//         } else {
+//           heightSmaller = false;
+//           smaller = imageInfo.width;
+//         }
+//
+// //    double scaleFactor = smaller / size.width;
+//
+//         double offset;
+//         double widthOffset = 0;
+//         double heightOffset = 0;
+//
+//         if (heightSmaller) {
+//           widthOffset = (imageInfo.width - constraints.maxWidth) * 0.5;
+//           widthOffset = 0;
+//         } else {
+//           heightOffset = (imageInfo.height - constraints.maxWidth) * 0.5;
+//         }
+//
+//         final widget = ClipRect(
+//           clipper: CustomRect(imageInfo),
+//           child: Row(
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: [image]),
+//         );
+//
+//         final con = CropController();
+//         con.offset = Offset(widthOffset, heightOffset);
+//         return Crop(controller: con, child: image);
+//
+//         return Transform.translate(
+//           offset: Offset(CustomRect.widthOffset, CustomRect.heightOffset),
+//           child: widget,
+//         );
+//
+//         return ClipRect(
+//           child: Transform.translate(
+//               offset: Offset(widthOffset, heightOffset), child: image),
+//         );
+//
+//         // return Transform.translate(
+//         //   offset: Offset(widthOffset, heightOffset),
+//         //   child: Row(
+//         //     crossAxisAlignment: CrossAxisAlignment.stretch,
+//         //     children: [Expanded(child: image)],
+//         //   ),
+//         // );
+//       });
+
+      // _state?.child = ClipRect(
+      //   clipper: CustomRect(widthAmount, info),
+      //   clipBehavior: Clip.antiAlias,
+      //   child: image,
+      // );
+
+      // _state?.child = ClipRect(
+      //   clipper: CustomRect(widthAmount, info),
+      //   child: Transform(
+      //     transform: Matrix4.translation(Vector3(-widthAmount, 0, 0)),
+      //     child: Row(
+      //       crossAxisAlignment: CrossAxisAlignment.stretch,
+      //       children: [Expanded(child: image)],
+      //     ),
+      //   ),
+      // );
+
+      // _state?.child = Row(
+      //   crossAxisAlignment: CrossAxisAlignment.stretch,
+      //   children: [
+      //     Expanded(
+      //       child: ClipRect(
+      //         child: Transform(
+      //           transform: Matrix4.translation(
+      //             Vector3(-widthAmount, 0, 0),
+      //           ),
+      //           child: image,
+      //         ),
+      //       ),
+      //     )
+      //   ],
+      // );
+
+//       _state?.child = ClipRect(
+//         child: Align(
+//           child: Row(
+//             crossAxisAlignment: CrossAxisAlignment.stretch,
+//             children: [image],
+// //          children: [Container(child: image)],
+//           ),
+//         ),
+//       );
       // ignore: invalid_use_of_protected_member
-      _state?.setState(() {});
+//      _state?.setState(() {});
     }
     return image;
   }
@@ -155,5 +261,59 @@ class PickImage {
       state?.setState(() {});
       await Prefs.setString(key, path);
     }
+  }
+
+  Future<ui.Image> _getImageInfo(Image image) async {
+    final completer = Completer<ui.Image>();
+    image.image.resolve(const ImageConfiguration()).addListener(
+      ImageStreamListener(
+        (ImageInfo info, _) {
+          completer.complete(info.image);
+        },
+      ),
+    );
+    final ui.Image info = await completer.future;
+    return info;
+  }
+}
+
+class CustomRect extends CustomClipper<Rect> {
+  CustomRect(this.imageInfo);
+  final ui.Image imageInfo;
+
+  static double widthOffset = 0;
+  static double heightOffset = 0;
+
+  @override
+  Rect getClip(Size size) {
+    int smaller;
+    bool heightSmaller;
+    if (imageInfo.height <= imageInfo.width) {
+      heightSmaller = true;
+      smaller = imageInfo.height;
+    } else {
+      heightSmaller = false;
+      smaller = imageInfo.width;
+    }
+
+//    double scaleFactor = smaller / size.width;
+
+    double offset;
+
+    if (heightSmaller) {
+      widthOffset = (imageInfo.width - size.width) * 0.5;
+      widthOffset = 0;
+    } else {
+      heightOffset = (imageInfo.height - size.height) * 0.5;
+    }
+
+    final rect = Rect.fromLTRB(
+        widthOffset, heightOffset, size.width - widthOffset, size.height);
+    return rect;
+  }
+
+  @override
+  bool shouldReclip(CustomRect oldClipper) {
+    return true; //oldClipper.widthAmount != widthAmount;
   }
 }

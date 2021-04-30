@@ -41,3 +41,6 @@ export 'package:playhouse/src/home/model/data_fields.dart';
 
 /// SQLite classes
 export 'package:playhouse/src/home/model/sqlite_db.dart';
+
+/// Load test data
+export 'package:playhouse/src/home/model/load_database.dart';
