@@ -11,7 +11,6 @@ class OrganizationsAndroid
     with ScrapbookFields {
   OrganizationsAndroid() : super(I10n.s('Organization'));
 
-
   @override
   bool useModuleType = false;
   @override

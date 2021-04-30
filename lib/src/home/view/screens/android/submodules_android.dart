@@ -37,6 +37,6 @@ class SubmodulesListAndroid
       SubmoduleFields().field.values.toList();
 
   @override
-  Map<String, FieldWidgets<PlayHouseFields<SQLiteTable>>> newRecord()  =>
+  Map<String, FieldWidgets<PlayHouseFields<SQLiteTable>>> newRecord() =>
       SubmoduleFields().getNewRecord();
 }

@@ -4,10 +4,7 @@
 
 import 'package:playhouse/src/model.dart';
 
-import 'package:playhouse/src/view.dart';
-
 Future<void> loadScrapBookDatabase(PlayhouseSQLiteDB sql) async {
-
   final Database db = sql.db;
 
   final timeStamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
@@ -656,15 +653,6 @@ A Level
        0)
     ''');
 
-
-
-
-
-
-
-
-
-
   await db.execute('''
        INSERT INTO ${PlayhouseSQLiteDB.ORGANIZATIONS} (
        name,
@@ -675,5 +663,4 @@ A Level
        'Default Organization if not associated to a particular company or organization.',
        $timeStamp)
     ''');
-
 }

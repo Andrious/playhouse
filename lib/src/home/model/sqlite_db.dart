@@ -188,7 +188,9 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        deleted INTEGER DEFAULT 0)
     ''');
 
-    await loadScrapBookDatabase(this);
+    if(App.inDebugger) {
+      await loadScrapBookDatabase(this);
+    }
   }
 
   /// Name of the whole Database

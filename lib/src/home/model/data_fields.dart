@@ -71,7 +71,7 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
     bool init = true;
     try {
       //
-      final _query = await query();
+      await query();
 
       // Populate the field variables properly.
       populateFieldWidgets();
