@@ -8,12 +8,5 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
-class SubmodulesListiOS extends State<OrganizationsList> {
-  SubmodulesListiOS()
-      : model = ScrapBookModel(),
-        super();
-  final ScrapBookModel model;
-
-  @override
-  Widget build(BuildContext context) => const Center();
+class SubmodulesListiOS extends SubmodulesListAndroid {
 }

@@ -71,30 +71,20 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
 //           child: submodule.tabBar.tabIndicator,
 //         ),
         Flexible(
-          flex: submodule.isPanelUp ? 3 : 20,
+          flex: 3,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'All',
-                  style: style,
+              Text(
+                '$submoduleName | ',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Favorite',
-                  style: style,
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Incomplete',
-                  style: style,
-                ),
+              Text(
+                'Submodule description',
+                style: style,
               ),
               TextButton(
                 onPressed: () {
@@ -123,6 +113,35 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
               addRepaintBoundaries: false,
               children: con.taskCards(submoduleName),
             ),
+          ),
+        ),
+        Flexible(
+          flex: 3,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'All',
+                  style: style,
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Favorite',
+                  style: style,
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Incomplete',
+                  style: style,
+                ),
+              ),
+            ],
           ),
         ),
       ],

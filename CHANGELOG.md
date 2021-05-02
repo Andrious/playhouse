@@ -1,4 +1,7 @@
 
+## 0.25.0
+ May 02, 2021
+- Introduce to iOS
 
 ## 0.24.1
  April 30, 2021
