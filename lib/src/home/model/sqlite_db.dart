@@ -189,7 +189,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
     ''');
 
     if(App.inDebugger) {
-      await loadScrapBookDatabase(this);
+//      await loadScrapBookDatabase(this);
     }
   }
 

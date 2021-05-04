@@ -2,7 +2,7 @@
 #.gitignore
 
 # Ignore except for application packages
-#pubspec.lock
+pubspec.lock
 
 # Flutter IDE files
 .packages

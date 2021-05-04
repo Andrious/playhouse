@@ -6,7 +6,7 @@
 export 'package:mvc_application/view.dart' hide AppMenu, runApp;
 
 /// https://pub.dev/packages/cached_network_image/
-export 'package:cached_network_image/cached_network_image.dart';
+//export 'package:cached_network_image/cached_network_image.dart';
 
 /// The App's Menu
 export 'package:playhouse/src/app/view/menu/app_menu.dart';

@@ -1,4 +1,8 @@
 
+## 0.27.0
+ May 04, 2021
+- Migrated to iOS platform
+
 ## 0.26.0
  May 03, 2021
 - Removed Auth package
