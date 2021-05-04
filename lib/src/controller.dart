@@ -23,8 +23,5 @@ export 'package:playhouse/src/home/controller/image_picker.dart';
 /// Controls the Authentication into the App
 export 'package:playhouse/src/app/controller/initAsync/playhouse_signin.dart';
 
-/// Authentication
-export 'package:auth/auth.dart';
-
 /// Tab Controller for the App
 export 'package:playhouse/src/home/controller/appbar/tab_controller.dart';

@@ -54,7 +54,8 @@ class _SignInState extends StateMVC<SignInScreen> {
               child: GestureDetector(
                 onTap: () async {
                   _working();
-                  final bool signIn = await app.signInWithFacebook();
+//                  final bool signIn = await app.signInWithFacebook();
+                  const bool signIn = true;
                   if (signIn) {
                     Navigator.pop(context);
                   }
@@ -123,7 +124,8 @@ class _SignInState extends StateMVC<SignInScreen> {
               child: GestureDetector(
                 onTap: () async {
                   _working();
-                  final bool signIn = await app.signInWithGoogle(context);
+//                  final bool signIn = await app.signInWithGoogle(context);
+                  const bool signIn = true;
                   if (signIn) {
                     Navigator.pop(context);
                   }

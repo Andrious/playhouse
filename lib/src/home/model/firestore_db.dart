@@ -16,14 +16,14 @@ class PlayhouseFireStoreDB {
   factory PlayhouseFireStoreDB() => _this ??= PlayhouseFireStoreDB._();
 
   PlayhouseFireStoreDB._()
-      : _auth = Auth(),
-        model = ScrapBookModel();
+      :  model = ScrapBookModel();
+//      : _auth = Auth(),
   static PlayhouseFireStoreDB _this;
 
   //
   FireStoreCollection db;
   final ScrapBookModel model;
-  final Auth _auth;
+//  final Auth _auth;
 
   Future<bool> downloadDB() {
     final table = FireStoreCollection('Modules');
@@ -71,22 +71,22 @@ class PlayhouseFireStoreDB {
 
     QuerySnapshot querySnapshot;
 
-    if (get == null) {
-      querySnapshot =
-          await collectionRef.where('userId', isEqualTo: _auth.uid).get();
-    } else {
+//    if (get == null) {
+//      querySnapshot =
+//          await collectionRef.where('userId', isEqualTo: _auth.uid).get();
+//    } else {
       querySnapshot = await collectionRef.get();
-    }
+//    }
     //
     for (final doc in querySnapshot.docs) {
       //
       final Map<String, dynamic> data = doc.data();
 
-      // It may not have a userId yet.
-      if (data['userId'] == null) {
-        // Each record of course is associated with a particular user.
-        data['userId'] = _auth.uid;
-      }
+      // // It may not have a userId yet.
+      // if (data['userId'] == null) {
+      //   // Each record of course is associated with a particular user.
+      //   data['userId'] = _auth.uid;
+      // }
 
       // Each record has a primary key.
       data['firebaseId'] = doc.id;

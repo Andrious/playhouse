@@ -27,10 +27,6 @@ dependencies:
   # https://pub.dev/packages/crop/
   crop: ^0.5.0
 
-  ## https://pub.dev/packages/auth
-  auth: #^7.0.0
-    path: ../../packages/auth
-
 # https://pub.dev/packages/mvc_application/
   mvc_application: #^7.0.0
     path: ../../packages/mvc_application

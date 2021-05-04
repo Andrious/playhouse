@@ -18,7 +18,8 @@ class ScrapBookDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> widgets = [LogInLogOut()];
+//    final List<Widget> widgets = [LogInLogOut()];
+    final List<Widget> widgets = [];
     if (App.inDebugger) {
       widgets.addAll([
         const Divider(),
@@ -60,14 +61,15 @@ class ScrapBookDrawer extends StatelessWidget {
 class LogInLogOut extends StatelessWidget {
   LogInLogOut({Key key})
       : _appCon = AppController(),
-        _auth = SignIn(),
+ //       _auth = SignIn(),
         super(key: key);
   final AppController _appCon;
-  final SignIn _auth;
+//  final SignIn _auth;
 
   @override
   Widget build(BuildContext context) {
-    final signedIn = _appCon.loggedIn && !_appCon.isAnonymous;
+//    final signedIn = _appCon.loggedIn && !_appCon.isAnonymous;
+    const signedIn = true;
     String title;
     IconData icon;
     if (signedIn) {
@@ -84,10 +86,10 @@ class LogInLogOut extends StatelessWidget {
       title: I10n.t(title),
       onTap: () {
         if (signedIn) {
-          _auth.signOut().then((value) {
-            Navigator.of(_appCon.context).pop();
-            _appCon.refresh();
-          });
+          // _auth.signOut().then((value) {
+          //   Navigator.of(_appCon.context).pop();
+          //   _appCon.refresh();
+//          });
         } else {
 //          unawaited(_appCon.signIn());
           _appCon.signIn().then((value) {

@@ -19,25 +19,27 @@ import 'module3_soil_and_grading_assessment.dart';
 
 class DatabaseTest {
   factory DatabaseTest() => _this ??= DatabaseTest._();
-  DatabaseTest._() : _auth = Auth() {
+  DatabaseTest._()
+//      : _auth = Auth() {
+    {
     // Assign when this record was created.
     _timeStamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    userId = _auth.uid;
+//    userId = _auth.uid;
   }
   static DatabaseTest _this;
   //
   FireStoreCollection _table;
   int _timeStamp;
-  final Auth _auth;
-  String userId;
+//  final Auth _auth;
+//  String userId;
 
   /// Create a 'test' database
   ///
   bool createModules() {
     //
-    if (userId.isEmpty) {
-      return false;
-    }
+    // if (userId.isEmpty) {
+    //   return false;
+    // }
     bool createDB = true;
 
     final DocumentReference modRef =
@@ -230,11 +232,11 @@ class DatabaseTest {
   bool createRecord(DocumentReference doc, Map<String, dynamic> data) {
     var create = true;
 
-    // It may not have a userId yet.
-    if (userId != null && userId.isNotEmpty) {
-      // Each record of course is associated with a particular user.
-      data['userId'] = userId;
-    }
+    // // It may not have a userId yet.
+    // if (userId != null && userId.isNotEmpty) {
+    //   // Each record of course is associated with a particular user.
+    //   data['userId'] = userId;
+    // }
 
     doc.set(data).onError((error, stackTrace) {
       create = false;

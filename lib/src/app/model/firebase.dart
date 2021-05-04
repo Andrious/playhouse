@@ -55,19 +55,19 @@ class FirebaseUser with FirebaseOperations {
     return delete;
   }
 
-  Future<bool> userStamp() =>
-      updateRef(_table.collection.doc(appCon.uid), {'timestamp': timeStamp});
+  Future<bool> userStamp() => Future.value(true);
+//      updateRef(_table.collection.doc(appCon.uid), {'timestamp': timeStamp});
 
   Map<String, dynamic> _addUserData() {
     //
-    final _data = {
-      'email': appCon.email,
-      'name': appCon.name,
-      'provider': appCon.provider,
-      'isAnonymous': appCon.isAnonymous,
-      'photo': appCon.photo,
-      'tokenId': appCon.tokenId,
-      'timestamp': timeStamp,
+    final _data = <String, dynamic>{
+      // 'email': appCon.email,
+      // 'name': appCon.name,
+      // 'provider': appCon.provider,
+      // 'isAnonymous': appCon.isAnonymous,
+      // 'photo': appCon.photo,
+      // 'tokenId': appCon.tokenId,
+      // 'timestamp': timeStamp,
     };
 
     /// Update and insert if not there.
@@ -84,15 +84,15 @@ class UserDevices with FirebaseOperations {
   }
   static UserDevices _this;
 
-  Map<String, dynamic> _addUserData() {
-    //
-    final id = appCon.uid;
-    final _data = {App.installNum: timeStamp};
-
-    _table.collection.doc(id).set(_data);
-
-    return _data;
-  }
+  // Map<String, dynamic> _addUserData() {
+  //   //
+  //   final id = appCon.uid;
+  //   final _data = {App.installNum: timeStamp};
+  //
+  //   _table.collection.doc(id).set(_data);
+  //
+  //   return _data;
+  // }
 }
 
 mixin FirebaseOperations {
@@ -115,26 +115,26 @@ mixin FirebaseOperations {
 
   Future<void> _collectUserData() async {
     //
-    String id = appCon.uid;
-
-    if (id == null || id.trim().isEmpty) {
-      id = null;
-    } else {
-      id = id.trim();
-    }
-
-    if (id != null) {
-      //
-      final DocumentSnapshot snapshot = await _table.collection?.doc(id)?.get();
-
-      _reference = snapshot.reference;
-
-      if (snapshot != null && snapshot.exists) {
-        _data = snapshot.data();
-      } else {
-        _data = {};
-      }
-    }
+    // String id = appCon.uid;
+    //
+    // if (id == null || id.trim().isEmpty) {
+    //   id = null;
+    // } else {
+    //   id = id.trim();
+    // }
+    //
+    // if (id != null) {
+    //   //
+    //   final DocumentSnapshot snapshot = await _table.collection?.doc(id)?.get();
+    //
+    //   _reference = snapshot.reference;
+    //
+    //   if (snapshot != null && snapshot.exists) {
+    //     _data = snapshot.data();
+    //   } else {
+    //     _data = {};
+    //   }
+    // }
   }
 
   // Set the timeStamp this program was last run.

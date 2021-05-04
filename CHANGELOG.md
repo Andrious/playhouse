@@ -1,4 +1,9 @@
 
+## 0.26.0
+ May 03, 2021
+- Removed Auth package
+- Submodule name now displayed
+
 ## 0.25.0
  May 02, 2021
 - Introduce to iOS

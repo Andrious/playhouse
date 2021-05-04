@@ -25,23 +25,23 @@ import 'package:universal_platform/universal_platform.dart';
 
 class AppMenu extends Menu {
   AppMenu() : super() {
-    _appCon = AppController();
-
-    if (_appCon.loggedIn) {
-      if (_appCon.isAnonymous) {
-        tailItems = [
-          PopupMenuItem(value: 'SignIn', child: I10n.t('Sign in...')),
-        ];
-      } else {
-        tailItems = [
-          PopupMenuItem(value: 'Logout', child: I10n.t('Logout')),
-        ];
-      }
-    } else {
-      tailItems = [
-        PopupMenuItem(value: 'SignIn', child: I10n.t('Sign in...')),
-      ];
-    }
+    // _appCon = AppController();
+    //
+    // if (_appCon.loggedIn) {
+    //   if (_appCon.isAnonymous) {
+    //     tailItems = [
+    //       PopupMenuItem(value: 'SignIn', child: I10n.t('Sign in...')),
+    //     ];
+    //   } else {
+    //     tailItems = [
+    //       PopupMenuItem(value: 'Logout', child: I10n.t('Logout')),
+    //     ];
+    //   }
+    // } else {
+    //   tailItems = [
+    //     PopupMenuItem(value: 'SignIn', child: I10n.t('Sign in...')),
+    //   ];
+    // }
   }
   AppController _appCon;
 
