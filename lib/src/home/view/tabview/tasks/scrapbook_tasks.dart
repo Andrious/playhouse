@@ -70,36 +70,41 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
 //           fit: FlexFit.tight,
 //           child: submodule.tabBar.tabIndicator,
 //         ),
-        Flexible(
-          flex: 3,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Flexible(
+              flex: 2,
+              child: Text(
                 '$submoduleName | ',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
-              Text(
+            ),
+            Flexible(
+              flex: 2,
+              child: Text(
                 'Submodule description',
                 style: style,
               ),
-              TextButton(
-                onPressed: () {
-                  setState(submodule.onPressed);
-                },
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Text(
-                    'View All',
-                    style: style,
-                  ),
-                  arrow,
-                ]),
-              ),
-            ],
-          ),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(submodule.onPressed);
+              },
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                //   Text(
+                //     'View All',
+                //     style: style,
+                //   ),
+                Flexible(child: arrow),
+                Flexible(child: arrow),
+                Flexible(child: arrow),
+              ]),
+            ),
+          ],
         ),
         Flexible(
           flex: submodule.isPanelUp ? 30 : 2,
