@@ -83,3 +83,11 @@ export 'package:playhouse/src/home/view/screens/ios/users_ios.dart';
 
 /// SetState routine
 export 'package:state_set/state_set.dart';
+
+/// Responsive Screen size
+/// https://pub.dev/packages/flutter_screenutil/
+export 'package:flutter_screenutil/flutter_screenutil.dart';
+
+/// Auto size text
+/// https://pub.dev/packages/auto_size_text/
+export 'package:auto_size_text/auto_size_text.dart';

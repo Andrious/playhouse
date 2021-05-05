@@ -5,11 +5,10 @@
 import 'package:flutter/foundation.dart' show FlutterExceptionHandler;
 import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
 import 'package:firebase_core/firebase_core.dart' as f;
-import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
+//import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:firebase_crashlytics/firebase_crashlytics.dart'
     show FirebaseCrashlytics;
 
-import 'package:playhouse/src/app/controller/authexample.dart';
 
 import 'package:playhouse/src/model.dart';
 
@@ -46,11 +45,11 @@ class AppController extends c.AppController {
   /// Return the 'last' context used in this app.
   BuildContext get context => App.context;
 
-  Future<void> signIn() async {
-    await Navigator.push(App.context,
-        MaterialPageRoute<void>(builder: (context) => const SignInScreen()));
-    refresh();
-  }
+  // Future<void> signIn() async {
+  //   await Navigator.push(App.context,
+  //       MaterialPageRoute<void>(builder: (context) => const SignInScreen()));
+  //   refresh();
+  // }
 
   // Future<bool> signInWithFacebook() async {
   //   if (App.inDebugger) {

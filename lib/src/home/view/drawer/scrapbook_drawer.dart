@@ -92,10 +92,10 @@ class LogInLogOut extends StatelessWidget {
 //          });
         } else {
 //          unawaited(_appCon.signIn());
-          _appCon.signIn().then((value) {
-            Navigator.of(_appCon.context).pop();
-            _appCon.refresh();
-          });
+//           _appCon.signIn().then((value) {
+//             Navigator.of(_appCon.context).pop();
+//             _appCon.refresh();
+//           });
         }
       },
     );

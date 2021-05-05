@@ -75,7 +75,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
           children: [
             Flexible(
               flex: 2,
-              child: Text(
+              child: AutoSizeText(
                 '$submoduleName | ',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
@@ -85,7 +85,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
             ),
             Flexible(
               flex: 2,
-              child: Text(
+              child: AutoSizeText(
                 'Submodule description',
                 style: style,
               ),

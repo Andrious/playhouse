@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '10.3'
+platform :ios, '8.1'
 use_frameworks!
 
 ENV['SWIFT_VERSION'] = '4.2'

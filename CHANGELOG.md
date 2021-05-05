@@ -1,4 +1,10 @@
 
+
+## 0.28.0
+- iOS running
+- auto_size_text:
+- flutter_screenutil:
+
 ## 0.27.0+2
  May 04, 2021
 - Three arrows. Flexible(child: arrow),
