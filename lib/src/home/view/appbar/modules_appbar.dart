@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:auto_size_text/auto_size_text.dart';
 /// The database code
 import 'package:playhouse/src/model.dart';
 
@@ -53,7 +54,7 @@ class ModulesAppBar {
 
   List<Tab> get tabs => [
         Tab(
-          child: Text(
+          child: AutoSizeText(
             'Inspiration',
             style: TextStyle(
               fontWeight:
@@ -64,7 +65,7 @@ class ModulesAppBar {
           ),
         ),
         Tab(
-          child: Text(
+          child: AutoSizeText(
             'Site assessment',
             style: TextStyle(
               fontWeight:
@@ -75,7 +76,7 @@ class ModulesAppBar {
           ),
         ),
         Tab(
-          child: Text(
+          child: AutoSizeText(
             'Floor Plan',
             style: TextStyle(
               fontWeight:
@@ -86,7 +87,7 @@ class ModulesAppBar {
           ),
         ),
         Tab(
-          child: Text(
+          child: AutoSizeText(
             'Elevation',
             style: TextStyle(
               fontWeight:

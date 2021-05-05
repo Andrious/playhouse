@@ -1,4 +1,6 @@
 
+## 0.29.0
+- AutoSizeText on Module Names
 
 ## 0.28.0
 - iOS running
