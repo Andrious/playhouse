@@ -9,7 +9,6 @@ import 'package:playhouse/src/controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(ScreenUtilInit(
-//designSize: const Size(360, 690),
     builder: () => MyApp()));
 
 class MyApp extends AppStatefulWidget {
@@ -28,6 +27,7 @@ class PlayHouseState extends AppState {
   PlayHouseState()
       : super(
           object: const Text('Hello World!'),
+          useMaterial: true,
           debugShowCheckedModeBanner: false,
           home: ScrapBookApp(),
           //const ScrapBookApp(),

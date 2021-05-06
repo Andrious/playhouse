@@ -1,8 +1,15 @@
 
+## 0.30.0
+ May 06, 2021
+- useMaterial: true,
+- platform :ios, '8.2'
+
 ## 0.29.0
+ May 05, 2021
 - AutoSizeText on Module Names
 
 ## 0.28.0
+ May 05, 2021
 - iOS running
 - auto_size_text:
 - flutter_screenutil:

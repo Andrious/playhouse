@@ -277,13 +277,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"
-  flutter_string_encryption:
-    dependency: transitive
-    description:
-      name: flutter_string_encryption
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
