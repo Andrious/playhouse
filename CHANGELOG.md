@@ -1,4 +1,10 @@
 
+## 0.31.0
+ May 11, 2021
+- if(table.hasError){
+- retrieve() => table.retrieve();
+- Data Entry screens for Backend
+
 ## 0.30.0
  May 06, 2021
 - useMaterial: true,

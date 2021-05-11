@@ -26,8 +26,6 @@ class PlayhouseSQLiteDB extends SQLiteDB {
   static const ORGANIZATIONS_SUBMODULES = 'organizations_submodules';
   static const ORGANIZATIONS_TASKS = 'organizations_tasks';
 
-  static const ORGANIZATIONS_USERS = 'organizations_users';
-
   bool _callInitAsync = false;
 
   /// Initialize the database
@@ -88,23 +86,21 @@ class PlayhouseSQLiteDB extends SQLiteDB {
 
     await db.execute('''
        CREATE TABLE IF NOT EXISTS $SUBMODULES(
-       module_id INTEGER NOT NULL,
+       module_id INTEGER,
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
        key_art BLOB,
-       next_submodule_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
 
     await db.execute('''
        CREATE TABLE IF NOT EXISTS $TASKS(
-       submodule_id INTEGER NOT NULL,
+       submodule_id INTEGER,
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
        key_art BLOB,
-       next_task_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -115,6 +111,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        long_description VARCHAR NOT NULL,
        email_address VARCHAR NOT NULL,
        phone_number VARCHAR NOT NULL,
+       organization_id INTEGER DEFAULT 0,
        key_art BLOB,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -168,15 +165,17 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        CREATE TABLE IF NOT EXISTS $ORGANIZATIONS_MODULES(
        organization_id INTEGER NOT NULL,
        module_id INTEGER NOT NULL,
-       locked INTEGER DEFAULT 0,
+       lockedFirst INTEGER DEFAULT 0,
+       next_module_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
 
     await db.execute('''
        CREATE TABLE IF NOT EXISTS $ORGANIZATIONS_SUBMODULES(
        organization_id INTEGER NOT NULL,
-       submodules_id INTEGER NOT NULL,
-       locked INTEGER DEFAULT 0,
+       submodule_id INTEGER NOT NULL,
+       lockedFirst INTEGER DEFAULT 0,
+       next_submodule_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -184,12 +183,13 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        CREATE TABLE IF NOT EXISTS $ORGANIZATIONS_TASKS(
        organization_id INTEGER NOT NULL,
        task_id INTEGER NOT NULL,
-       locked INTEGER DEFAULT 0,
+       lockedFirst INTEGER DEFAULT 0,
+       next_task_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
 
-    if(App.inDebugger) {
-//      await loadScrapBookDatabase(this);
+    if (App.inDebugger) {
+      await loadScrapBookDatabase(db);
     }
   }
 
@@ -201,142 +201,469 @@ class PlayhouseSQLiteDB extends SQLiteDB {
   int get version => 1;
 }
 
+/// The Modules of this app.
+/// A particular Module will have one or more Submodules.
 class ModulesTable extends SQLiteTable {
   factory ModulesTable() => _this ??= ModulesTable._();
   ModulesTable._() : super(tableName: PlayhouseSQLiteDB.MODULES);
   static ModulesTable _this;
 
   @override
-  Future<bool> initAsync() async {
-    var init = await super.initAsync();
-    if (init) {
-//      init = await data.initAsync();
+  Future<List<Map<String, dynamic>>> retrieve() {
+    const sqlStmt = '''
+    SELECT A.rowid 
+    , A.*
+    , B.lockedFirst
+    , B.next_module_id
+    FROM ${PlayhouseSQLiteDB.MODULES} A 
+    LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS_MODULES} B 
+    ON A.rowid = B.module_id
+    ''';
+    return db.rawQuery(sqlStmt);
+  }
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.MODULES, rec);
+    return newRec.isNotEmpty;
+  }
+
+  @override
+  Future<bool> delete(Map<String, dynamic> rec) async {
+    bool delete;
+    final Database _db = db.db;
+    try {
+      //
+      delete = await _db.transaction<bool>((Transaction txn) async {
+        //
+
+        final moduleId = rec['rowid'].value;
+
+        await _db.rawQuery(
+          'DELETE FROM ${PlayhouseSQLiteDB.MODULES} WHERE rowid = ?',
+          [moduleId],
+        );
+
+        /// Release any and all Submodules from this now deleted Module.
+        final count = await _db.rawUpdate(
+            'UPDATE ${PlayhouseSQLiteDB.SUBMODULES} SET module_id = ?', [null]);
+
+        return count > 0;
+      }, exclusive: true);
+    } catch (e) {
+      delete = false;
+    } finally {
+      // clean up dummy transaction
+//      db.openTransaction = null;
     }
-    return init;
+    return delete;
   }
 }
 
+/// The Submodules of this app.
+/// A particular Submodule will have one or more Tasks.
 class SubmodulesTable extends SQLiteTable {
   factory SubmodulesTable() => _this ??= SubmodulesTable._();
   SubmodulesTable._() : super(tableName: PlayhouseSQLiteDB.SUBMODULES);
   static SubmodulesTable _this;
 
   @override
-  Future<bool> initAsync() async {
-    var init = await super.initAsync();
-    if (init) {
-//      init = await data.initAsync();
+  Future<List<Map<String, dynamic>>> retrieve() {
+    const sqlStmt = '''
+    SELECT A.rowid 
+    , A.*
+    , B.lockedFirst
+    , B.next_submodule_id
+    FROM ${PlayhouseSQLiteDB.SUBMODULES} A 
+    LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES} B 
+    ON A.rowid = B.submodule_id
+    ''';
+    return db.rawQuery(sqlStmt);
+  }
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.SUBMODULES, rec);
+    return newRec.isNotEmpty;
+  }
+
+  @override
+  Future<bool> delete(Map<String, dynamic> rec) async {
+    bool delete;
+    final Database _db = db.db;
+    try {
+      //
+      delete = await _db.transaction<bool>((Transaction txn) async {
+        //
+
+        final submoduleId = rec['rowid'].value;
+
+        await _db.rawQuery(
+          'DELETE FROM ${PlayhouseSQLiteDB.SUBMODULES} WHERE rowid = ?',
+          [submoduleId],
+        );
+
+        /// Release any and all Tasks from this now deleted Submodule.
+        final count = await _db.rawUpdate(
+            'UPDATE ${PlayhouseSQLiteDB.TASKS} SET submodule_id = ?', [null]);
+
+        return count > 0;
+      }, exclusive: true);
+    } catch (e) {
+      delete = false;
+    } finally {
+      // clean up dummy transaction
+//      db.openTransaction = null;
     }
-    return init;
+    return delete;
   }
 }
 
+/// The Tasks contained in this app.
+/// Each task is assigned to a particular Submodule.
 class TasksTable extends SQLiteTable {
   factory TasksTable() => _this ??= TasksTable._();
   TasksTable._() : super(tableName: PlayhouseSQLiteDB.TASKS);
   static TasksTable _this;
 
   @override
-  Future<bool> initAsync() async {
-    var init = await super.initAsync();
-    if (init) {
-//      init = await data.initAsync();
+  Future<List<Map<String, dynamic>>> retrieve() {
+    const sqlStmt = '''
+    SELECT A.rowid 
+    , A.*
+    , B.lockedFirst
+    , B.next_task_id
+    FROM ${PlayhouseSQLiteDB.TASKS} A 
+    LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS_TASKS} B 
+    ON A.rowid = B.task_id
+    ''';
+    return db.rawQuery(sqlStmt);
+  }
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.TASKS, rec);
+    return newRec.isNotEmpty;
+  }
+
+  @override
+  Future<bool> delete(Map<String, dynamic> rec) async {
+    bool delete;
+    final Database _db = db.db;
+    try {
+      //
+      delete = await _db.transaction<bool>((Transaction txn) async {
+        //
+        int count = 0;
+
+        final rowId = rec['rowid'].value;
+
+        /// If not a valid record id.
+        if (rowId == null || rowId <= 0) {
+          return false;
+        }
+
+        /// Has this task been performed already by users?
+        final list = await _db.rawQuery(
+          'SELECT rowid FROM ${PlayhouseSQLiteDB.USERS_TASKS} WHERE task_id = ?',
+          [rowId],
+        );
+
+        /// Continue to delete the task only if it has not been used yet.
+        if (list.isNotEmpty) {
+          //
+          /// Notify the user this record cannot be deleted yet.
+        } else {
+          //
+          count = await _db.rawDelete(
+              'DELETE FROM ${PlayhouseSQLiteDB.TASKS} WHERE rowid = ?',
+              [rowId]);
+        }
+        return count > 0;
+      }, exclusive: true);
+    } catch (e) {
+      delete = false;
+    } finally {
+      // clean up dummy transaction
+//      db.openTransaction = null;
     }
-    return init;
+    return delete;
   }
 }
 
+/// The Task worked on by a particular User.
+/// A particular task can be worked on by more than one user.
 class UsersTasksTable extends SQLiteTable {
   factory UsersTasksTable() => _this ??= UsersTasksTable._();
   UsersTasksTable._() : super(tableName: PlayhouseSQLiteDB.USERS_TASKS);
   static UsersTasksTable _this;
 
   @override
-  Future<bool> initAsync() async {
-    var init = await super.initAsync();
-    if (init) {
-//      init = await data.initAsync();
-    }
-    return init;
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.USERS_TASKS, rec);
+    return newRec.isNotEmpty;
   }
 }
 
+/// A user of this app.
+/// More than one user can be on this app.
 class UsersTable extends SQLiteTable {
   factory UsersTable() => _this ??= UsersTable._();
   UsersTable._() : super(tableName: PlayhouseSQLiteDB.USERS);
   static UsersTable _this;
 
   @override
-  Future<bool> initAsync() async {
-    var init = await super.initAsync();
-    if (init) {
-//      init = await data.initAsync();
+  Future<List<Map<String, dynamic>>> retrieve() {
+    const sqlStmt = '''
+    SELECT A.rowid 
+    , A.*
+    , B.name as organization_name
+    , B.short_description as organization_short
+    , B.long_description as organization_long
+    FROM ${PlayhouseSQLiteDB.USERS} A 
+    LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS} B
+    ON A.organization_id = B.rowid
+    ''';
+    return db.rawQuery(sqlStmt);
+  }
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.USERS, rec);
+    return newRec.isNotEmpty;
+  }
+
+  @override
+  Future<bool> delete(Map<String, dynamic> rec) async {
+    bool delete;
+    final Database _db = db.db;
+    try {
+      //
+      delete = await _db.transaction<bool>((Transaction txn) async {
+        //
+        await _db.rawQuery(
+          'DELETE FROM ${PlayhouseSQLiteDB.USERS} WHERE user_id = ?',
+          [rec['user_id'].value],
+        );
+
+        final count = await _db.rawDelete(
+          'DELETE FROM ${PlayhouseSQLiteDB.USERS_TASKS} WHERE user_id = ?',
+          [rec['user_id'].value],
+        );
+
+        await _db.rawDelete(
+          'DELETE FROM ${PlayhouseSQLiteDB.USERS_TASKS_UNLOCKED} WHERE user_id = ?',
+          [rec['user_id'].value],
+        );
+
+        await _db.rawDelete(
+          'DELETE FROM ${PlayhouseSQLiteDB.USERS_SUBMODULES_UNLOCKED} WHERE user_id = ?',
+          [rec['user_id'].value],
+        );
+
+        await _db.rawDelete(
+          'DELETE FROM ${PlayhouseSQLiteDB.USERS_MODULES_UNLOCKED} WHERE user_id = ?',
+          [rec['user_id'].value],
+        );
+
+        return count > 0;
+      }, exclusive: true);
+    } catch (e) {
+      delete = false;
+    } finally {
+      // clean up dummy transaction
+//      db.openTransaction = null;
     }
-    return init;
+    return delete;
   }
 }
 
+/// Modules unlocked for and or completed by a particular user.
+/// A particular module can be unlocked and or completed by more than one user.
 class UserModulesUnlocked extends SQLiteTable {
   factory UserModulesUnlocked() => _this ??= UserModulesUnlocked._();
   UserModulesUnlocked._()
       : super(tableName: PlayhouseSQLiteDB.USERS_MODULES_UNLOCKED);
   static UserModulesUnlocked _this;
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.USERS_MODULES_UNLOCKED, rec);
+    return newRec.isNotEmpty;
+  }
 }
 
+/// Submodules unlocked for and or completed by a particular user.
+/// A particular submodule can be unlocked and or completed by more than one user.
 class UserSubmodulesUnlocked extends SQLiteTable {
   factory UserSubmodulesUnlocked() => _this ??= UserSubmodulesUnlocked._();
   UserSubmodulesUnlocked._()
       : super(tableName: PlayhouseSQLiteDB.USERS_SUBMODULES_UNLOCKED);
   static UserSubmodulesUnlocked _this;
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.USERS_SUBMODULES_UNLOCKED, rec);
+    return newRec.isNotEmpty;
+  }
 }
 
+/// Tasks unlocked for and or completed by a particular user.
+/// A particular task can be unlocked and or completed by more than one user.
 class UserTasksUnlocked extends SQLiteTable {
   factory UserTasksUnlocked() => _this ??= UserTasksUnlocked._();
   UserTasksUnlocked._()
       : super(tableName: PlayhouseSQLiteDB.USERS_TASKS_UNLOCKED);
   static UserTasksUnlocked _this;
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.USERS_TASKS_UNLOCKED, rec);
+    return newRec.isNotEmpty;
+  }
 }
 
-class OrganizationsModules extends SQLiteTable {
-  factory OrganizationsModules() => _this ??= OrganizationsModules._();
-  OrganizationsModules._()
-      : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_MODULES);
-  static OrganizationsModules _this;
-}
-
-class OrganizationsSubmodules extends SQLiteTable {
-  factory OrganizationsSubmodules() => _this ??= OrganizationsSubmodules._();
-  OrganizationsSubmodules._()
-      : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES);
-  static OrganizationsSubmodules _this;
-}
-
-class OrganizationsTasks extends SQLiteTable {
-  factory OrganizationsTasks() => _this ??= OrganizationsTasks._();
-  OrganizationsTasks._()
-      : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_TASKS);
-  static OrganizationsTasks _this;
-}
-
-class OrganizationsUsers extends SQLiteTable {
-  factory OrganizationsUsers() => _this ??= OrganizationsUsers._();
-  OrganizationsUsers._()
-      : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_USERS);
-  static OrganizationsUsers _this;
-}
-
+/// The Organization associated to a particular user.
+///
 class OrganizationsTable extends SQLiteTable {
   factory OrganizationsTable() => _this ??= OrganizationsTable._();
   OrganizationsTable._() : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS);
   static OrganizationsTable _this;
 
   @override
-  Future<bool> initAsync() async {
-    var init = await super.initAsync();
-    if (init) {
-//      init = await data.initAsync();
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS, rec);
+    return newRec.isNotEmpty;
+  }
+
+  @override
+  Future<bool> delete(Map<String, dynamic> rec) async {
+    bool delete = false;
+    final Database _db = db.db;
+    try {
+      //
+      delete = await _db.transaction<bool>((Transaction txn) async {
+        //
+        /// Count the number of records deleted if any.
+        var count = 0;
+
+        final rowId = rec['rowid'].value;
+
+        /// Test for a valid record id.
+        if (rowId == null || rowId <= 0) {
+          return false;
+        }
+
+        /// Are there still some users under the Organization.
+        final list = await _db.rawQuery(
+          'SELECT rowid FROM ${PlayhouseSQLiteDB.USERS} WHERE organization_id = ?',
+          [rowId],
+        );
+
+        /// Continue to delete the organization only if there are no users.
+        if (list.isNotEmpty) {
+          //
+          /// Notify the user this record cannot be deleted yet.
+        } else {
+          //
+          count = await _db.rawDelete(
+            'DELETE FROM ${PlayhouseSQLiteDB.ORGANIZATIONS} WHERE rowid = ?',
+            [rowId],
+          );
+
+          await _db.rawDelete(
+            'DELETE FROM ${PlayhouseSQLiteDB.ORGANIZATIONS_MODULES} WHERE organization_id = ?',
+            [rowId],
+          );
+
+          await _db.rawDelete(
+            'DELETE FROM ${PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES} WHERE organization_id = ?',
+            [rowId],
+          );
+
+          await _db.rawDelete(
+            'DELETE FROM ${PlayhouseSQLiteDB.ORGANIZATIONS_TASKS} WHERE organization_id = ?',
+            [rowId],
+          );
+        }
+        return count > 0;
+      }, exclusive: true);
+    } catch (e) {
+      delete = false;
+    } finally {
+      // clean up dummy transaction
+//      db.openTransaction = null;
     }
-    return init;
+    return delete;
+  }
+}
+
+/// The Modules associated with a particular Organization
+/// A particular Module can be assigned to more than one Organization.
+class OrganizationsModules extends SQLiteTable {
+  factory OrganizationsModules() => _this ??= OrganizationsModules._();
+  OrganizationsModules._()
+      : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_MODULES);
+  static OrganizationsModules _this;
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS_MODULES, rec);
+    return newRec.isNotEmpty;
+  }
+}
+
+/// The Submodule associated with a particular Organization
+/// A particular Submodule can be assigned to more than one Organization.
+class OrganizationsSubmodules extends SQLiteTable {
+  factory OrganizationsSubmodules() => _this ??= OrganizationsSubmodules._();
+  OrganizationsSubmodules._()
+      : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES);
+  static OrganizationsSubmodules _this;
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES, rec);
+    return newRec.isNotEmpty;
+  }
+}
+
+/// The Tasks associated with a particular Organization
+/// A particular Task can be assigned to more than one Organization.
+class OrganizationsTasks extends SQLiteTable {
+  factory OrganizationsTasks() => _this ??= OrganizationsTasks._();
+  OrganizationsTasks._()
+      : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_TASKS);
+  static OrganizationsTasks _this;
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS_TASKS, rec);
+    return newRec.isNotEmpty;
   }
 }
 
@@ -396,19 +723,28 @@ class SQLiteTable {
   String get selectDeleted => _selectDeleted;
   String _selectDeleted = '';
 
-  Future<List<Map<String, dynamic>>> retrieve() async => [{}];
+  Future<List<Map<String, dynamic>>> retrieve() async => list; // [{}];
 
   Future<bool> add(Map<String, dynamic> rec) async => false;
 
-  Future<bool> save(Map<String, dynamic> rec) async {
-    //
-    final Map<String, dynamic> newRec =
-        await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS, rec);
-
-    return newRec.isNotEmpty;
-  }
+  Future<bool> save(Map<String, dynamic> rec) async => false;
 
   Future<bool> delete(Map<String, dynamic> rec) async => false;
 
   Future<bool> undo(Map<String, dynamic> rec) async => false;
+
+  /// Gets the exception if any.
+  Exception get exception => db.error;
+
+  /// Get the error message
+  String get message => db.message;
+
+  /// There was just now an error
+  bool get inError => db.inError;
+
+  /// Has an error.
+  bool get hasError => db.inError;
+
+  /// There was no error
+  bool get noError => db.noError;
 }

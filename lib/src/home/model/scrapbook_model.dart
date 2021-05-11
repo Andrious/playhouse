@@ -23,7 +23,6 @@ class ScrapBookModel {
         organizationsModules = OrganizationsModules(),
         organizationsSubmodules = OrganizationsSubmodules(),
         organizationsTasks = OrganizationsTasks(),
-        organizationsUsers = OrganizationsUsers(),
         organizations = OrganizationsFields();
 
   static ScrapBookModel _this;
@@ -41,7 +40,6 @@ class ScrapBookModel {
   final OrganizationsModules organizationsModules;
   final OrganizationsSubmodules organizationsSubmodules;
   final OrganizationsTasks organizationsTasks;
-  final OrganizationsUsers organizationsUsers;
   final OrganizationsFields organizations;
 
   Future<bool> initAsync() async {

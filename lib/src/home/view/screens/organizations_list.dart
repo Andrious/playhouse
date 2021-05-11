@@ -16,3 +16,31 @@ class OrganizationsList extends StatefulWidget {
   State createState() =>
       App.useMaterial ? OrganizationsAndroid() : OrganizationsiOS();
 }
+
+
+class OrganizationsModuleList extends StatefulWidget {
+  const OrganizationsModuleList({Key key}) : super(key: key);
+
+  @override
+  // ignore: no_logic_in_create_state
+  State createState() =>
+      App.useMaterial ? OrganizationsModuleAndroid() : OrganizationsModuleiOS();
+}
+
+class OrganizationsSubmoduleList extends StatefulWidget {
+  const OrganizationsSubmoduleList({Key key}) : super(key: key);
+
+  @override
+  // ignore: no_logic_in_create_state
+  State createState() =>
+      App.useMaterial ? OrganizationsSubmoduleAndroid() : OrganizationsSubmoduleiOS();
+}
+
+class OrganizationsTaskList extends StatefulWidget {
+  const OrganizationsTaskList({Key key}) : super(key: key);
+
+  @override
+  // ignore: no_logic_in_create_state
+  State createState() =>
+      App.useMaterial ? OrganizationsTaskAndroid() : OrganizationsTaskiOS();
+}

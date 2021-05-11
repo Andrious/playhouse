@@ -11,6 +11,12 @@ import 'package:playhouse/src/controller.dart' hide User;
 /// SQLite database
 import 'package:playhouse/src/home/model/sqlite_db.dart' as s;
 
+import 'package:sqflite/sqflite.dart';
+
+import 'package:sqflite/sqlite_api.dart';
+
+import 'package:sqflite_common/src/transaction.dart';
+
 /// The Fields consolidated Class
 //export 'package:playhouse/src/home/model/database_class.dart';
 
@@ -60,6 +66,42 @@ class OrganizationsFields extends PlayHouseFields<OrganizationsTable> {
     table = s.OrganizationsTable();
   }
   static OrganizationsFields _this;
+
+  @override
+  Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
+}
+
+class OrganizationsModuleFields extends PlayHouseFields<OrganizationsModules> {
+  factory OrganizationsModuleFields() => _this ??= OrganizationsModuleFields._();
+  OrganizationsModuleFields._() {
+    table = s.OrganizationsModules();
+  }
+  static OrganizationsModuleFields _this;
+
+  @override
+  Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
+}
+
+class OrganizationsSubmoduleFields extends PlayHouseFields<OrganizationsSubmodules> {
+  factory OrganizationsSubmoduleFields() => _this ??= OrganizationsSubmoduleFields._();
+  OrganizationsSubmoduleFields._() {
+    table = s.OrganizationsSubmodules();
+  }
+  static OrganizationsSubmoduleFields _this;
+
+  @override
+  Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
+}
+
+class OrganizationsTaskFields extends PlayHouseFields<OrganizationsTasks> {
+  factory OrganizationsTaskFields() => _this ??= OrganizationsTaskFields._();
+  OrganizationsTaskFields._() {
+    table = s.OrganizationsTasks();
+  }
+  static OrganizationsTaskFields _this;
+
+  @override
+  Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
 }
 
 @mustCallSuper
@@ -72,6 +114,11 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
     try {
       //
       await query();
+
+      // Throw any exceptions that may result from the query.
+      if(table.hasError){
+        throw table.exception;
+      }
 
       // Populate the field variables properly.
       populateFieldWidgets();
@@ -97,7 +144,7 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
   }
 
   @override
-  Future<List<Map<String, dynamic>>> retrieve() => table.list;
+  Future<List<Map<String, dynamic>>> retrieve() => table.retrieve();
 
   @override
   Future<bool> add(Map<String, dynamic> rec) async => false;
@@ -106,13 +153,7 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
   Future<bool> save(Map<String, dynamic> rec) async {
     //
     bool save = await super.save(rec);
-    //
-    //
-    // final Map<String, dynamic> record = rec.map((key, value) {
-    //   final test = value.value;
-    //   final fld = (value as FieldWidgets<OrganizationsTable>).value;
-    //   return
-    // });
+
     if (save) {
       save =
           await table.save(rec.map((key, value) => MapEntry(key, value.value)));

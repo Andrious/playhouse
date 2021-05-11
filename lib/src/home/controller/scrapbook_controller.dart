@@ -57,6 +57,12 @@ class ScrapBookController extends ControllerMVC {
     if (tab.text == null) {
       if (tab.child is Text) {
         label = (tab.child as Text).data;
+      } else {
+        try {
+          label = (tab.child as dynamic).data;
+        } catch (ex) {
+          label = '';
+        }
       }
     } else {
       label = tab.text;

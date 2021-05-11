@@ -15,6 +15,29 @@ mixin ScrapbookFields implements UseWhichWidgets {
     //
     final List<Widget> _fieldWidgets = [];
 
+    if (rowid &&
+        fldWidget['rowid'] != null &&
+        fldWidget['rowid'].value != null) {
+      final value = fldWidget['rowid'].value;
+      String text;
+      if (value == null) {
+        text = '';
+      } else if (value is bool) {
+        text = value ? 'true' : 'false';
+      } else if (value is String) {
+        text = value.trim();
+      } else {
+        text = value.toString().trim();
+      }
+      _fieldWidgets.add(
+        Flexible(
+          child: Text(text,
+              style:
+              const TextStyle(fontSize: 18)),
+        ),
+      );
+    }
+
     if (useName &&
         fldWidget['name'] != null &&
         fldWidget['name'].value != null) {
@@ -101,6 +124,9 @@ mixin ScrapbookFields implements UseWhichWidgets {
 }
 
 class UseWhichWidgets {
+
+  bool rowid;
+
   bool useModuleType;
   bool useLocked;
 
@@ -114,4 +140,7 @@ class UseWhichWidgets {
 
   bool useCompleted;
   bool useDeleted;
+
+  bool useLockedFirst;
+  bool useNextId;
 }

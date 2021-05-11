@@ -43,11 +43,28 @@ class ScrapBookDrawer extends StatelessWidget {
           icon: const Icon(Icons.group),
           title: I10n.t('Users'),
         ),
+        const Divider(),
         _DrawerWidget(
           const OrganizationsList(),
           icon: const Icon(Icons.business),
           title: I10n.t('Organizations'),
         ),
+        _DrawerWidget(
+          const OrganizationsModuleList(),
+          icon: const Icon(Icons.business_outlined),
+          title: I10n.t('Organizations Module'),
+        ),
+        _DrawerWidget(
+          const OrganizationsSubmoduleList(),
+          icon: const Icon(Icons.business_rounded),
+          title: I10n.t('Organizations Submodule'),
+        ),
+        _DrawerWidget(
+          const OrganizationsTaskList(),
+          icon: const Icon(Icons.business_sharp),
+          title: I10n.t('Organizations Task'),
+        ),
+        const Divider(),
       ]);
     }
     return Drawer(

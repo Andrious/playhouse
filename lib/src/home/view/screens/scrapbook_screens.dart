@@ -8,6 +8,12 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
+typedef WidgetListFunc = List<Widget> Function(
+    Map<String, FieldWidgets<PlayHouseFields>> record, VoidCallback onTap);
+
+typedef WidgetEditFunc = List<Widget> Function(
+    Map<String, FieldWidgets<PlayHouseFields>> record);
+
 abstract class ScrapbookListScreen<T extends StatefulWidget,
     U extends PlayHouseFields> extends State<T> {
   ScrapbookListScreen([this.title]);
@@ -35,8 +41,11 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
               await Navigator.of(context)
                   .push(
                     MaterialPageRoute<void>(
-                      builder: (BuildContext _) =>
-                          ScrapbookEditScreen(map: newRecord(), title: title),
+                      builder: (BuildContext _) => ScrapbookEditScreen(
+                        record: newRecord(),
+                        widgetEdit: editWidgets,
+                        title: title,
+                      ),
                     ),
                   )
                   .then((value) => setState(() {}));
@@ -55,7 +64,8 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
                           builder: (BuildContext _) =>
                               InheritedTheme.captureAll(
                             context,
-                            ScrapbookDetailsScreen(_list[index]),
+                            detailsScreen(
+                                _list[index], addedWidgets, editWidgets),
                           ),
                         ),
                       )
@@ -72,6 +82,20 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
         ),
       );
 
+  /// Override this routine to supply your own details scrren.
+  Widget detailsScreen(Map<String, FieldWidgets<PlayHouseFields>> record,
+          WidgetListFunc widgetList, WidgetEditFunc widgetEdit) =>
+      ScrapbookDetailsScreen(record, widgetList, widgetEdit);
+
+  /// Optionally add any additional widgets from the record list.
+  List<Widget> addedWidgets(Map<String, FieldWidgets<PlayHouseFields>> record,
+          VoidCallback onTap) =>
+      null;
+
+  /// Optionally add any additional widgets from the record list.
+  List<Widget> editWidgets(Map<String, FieldWidgets<PlayHouseFields>> record) =>
+      null;
+
   List<Widget> columnWidgets(
       Map<String, FieldWidgets<PlayHouseFields>> fldWidget);
 
@@ -81,28 +105,58 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
 }
 
 class ScrapbookDetailsScreen extends StatefulWidget {
-  const ScrapbookDetailsScreen(this.record, {Key key}) : super(key: key);
+  const ScrapbookDetailsScreen(
+    this.record,
+    this.widgetList,
+    this.widgetEdit, {
+    Key key,
+  }) : super(key: key);
   final Map<String, FieldWidgets<PlayHouseFields>> record;
+  final WidgetListFunc widgetList;
+  final WidgetEditFunc widgetEdit;
   @override
   State createState() => _ScrapbookDetailsScreenState();
 }
 
 class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
   //
-
   @override
   void initState() {
     super.initState();
     record = widget.record;
+    // Supply default widgets
+    widgets = <Widget>[
+      record['rowid'].onListTile(enabled: false, tap: onTap),
+      record['name'].onListTile(tap: onTap),
+      record['short_description'].onListTile(tap: onTap),
+      record['long_description'].onListTile(tap: onTap),
+    ];
+    final func = widget.widgetList;
+    final List<Widget> list = func == null ? null : func(record, onTap);
+    if (list != null) {
+      widgets.addAll(list);
+    }
+    final timeStamp = record['time_stamp'];
+    if (timeStamp != null) {
+      widgets.add(timeStamp.onListTile(
+          tap: onTap, title: Text(timeStamp.value.toString())));
+    }
   }
 
+  List<Widget> widgets;
   VoidCallback onTap;
   Map<String, FieldWidgets<PlayHouseFields>> record;
 
   @override
   Widget build(BuildContext context) {
-    onTap = () {
-      _edit(record, context);
+    onTap = () async {
+      await Navigator.of(context).push(MaterialPageRoute<void>(
+          builder: (BuildContext context) => ScrapbookEditScreen(
+                record: record,
+                widgetEdit: widget.widgetEdit,
+                title: 'Edit a contact',
+              )));
+      setState(() {});
     };
     return Scaffold(
       appBar: AppBar(title: record['name'].text, actions: [
@@ -110,11 +164,11 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
           onPressed: () {
             showBox(text: 'Delete this record?', context: context)
                 .then((bool delete) {
-              if (delete) {
-                // record.delete(record.record).then((_) {
-                //   Navigator.of(context).pop();
-                // });
-              }
+              // if (delete) {
+              //   record.delete(record.record).then((_) {
+              //     Navigator.of(context).pop();
+              //   });
+              // }
             });
           },
           child: const Icon(Icons.delete, color: Colors.white),
@@ -122,13 +176,7 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
       ]),
       body: CustomScrollView(slivers: <Widget>[
         SliverList(
-          delegate: SliverChildListDelegate(<Widget>[
-            record['name'].onListTile(tap: onTap),
-            record['short_description'].onListTile(tap: onTap),
-            record['long_description'].onListTile(tap: onTap),
-            record['time_stamp'].onListTile(
-                tap: onTap, title: Text(record['time_stamp'].value.toString())),
-          ]),
+          delegate: SliverChildListDelegate(widgets),
         )
       ]),
       bottomNavigationBar: SimpleBottomAppBar(
@@ -139,23 +187,18 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
       ),
     );
   }
-
-  Future<void> _edit(Map<String, FieldWidgets<PlayHouseFields>> record,
-      BuildContext context) async {
-    await Navigator.of(context).push(MaterialPageRoute<void>(
-        builder: (BuildContext context) =>
-            ScrapbookEditScreen(map: record, title: 'Edit a contact')));
-    setState(() {});
-  }
 }
 
+/// To edit thr data
 class ScrapbookEditScreen extends StatefulWidget {
   const ScrapbookEditScreen({
-    this.map,
+    this.record,
+    this.widgetEdit,
     this.title,
     Key key,
   }) : super(key: key);
-  final Map<String, FieldWidgets<PlayHouseFields>> map;
+  final Map<String, FieldWidgets<PlayHouseFields>> record;
+  final WidgetEditFunc widgetEdit;
   final String title;
   @override
   State createState() => _ScrapbookEditScreenState();
@@ -167,54 +210,56 @@ class _ScrapbookEditScreenState extends StateMVC<ScrapbookEditScreen> {
   @override
   void initState() {
     super.initState();
-    fieldsMap = widget.map;
-    fieldsObj = fieldsMap.values.first.object;
+    record = widget.record;
+    fieldsObj = record.values.first.object;
+    final func = widget.widgetEdit;
+    widgets = func == null ? null : func(record);
+    if (widgets == null) {
+      widgets = [];
+      record.forEach((key, value) {
+        widgets.add(value.textFormField);
+      });
+    }
   }
 
   PlayHouseFields fieldsObj;
-
-  Map<String, FieldWidgets<PlayHouseFields>> fieldsMap;
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  Map<String, FieldWidgets<PlayHouseFields>> record;
+  List<Widget> widgets;
 
   @override
-  Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData.light(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title ?? 'Add New Record'),
-          actions: [
-            ElevatedButton(
-              onPressed: () async {
-                final pop = await fieldsObj.save(fieldsMap);
-                if (pop) {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Icon(Icons.save, color: Colors.white),
-            )
-          ],
-        ),
-        body: Container(
-          padding: const EdgeInsets.all(12),
-          child: Form(
-            key: fieldsObj.formKey,
-            child: ListView(
-              children: [
-                fieldsMap['name'].textFormField,
-                fieldsMap['short_description'].textFormField,
-                fieldsMap['long_description'].textFormField,
-              ],
+  Widget build(BuildContext context) => Theme(
+        data: ThemeData.light(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title ?? 'Add New Record'),
+            actions: [
+              ElevatedButton(
+                onPressed: () async {
+                  final pop = await fieldsObj.save(record);
+                  if (pop) {
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: const Icon(Icons.save, color: Colors.white),
+              )
+            ],
+          ),
+          body: Container(
+            padding: const EdgeInsets.all(12),
+            child: Form(
+              key: fieldsObj.formKey,
+              child: ListView(
+                children: widgets,
+                // [
+                //   record['name'].textFormField,
+                //   record['short_description'].textFormField,
+                //   record['long_description'].textFormField,
+                // ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 String notEmpty(String v) => v.isEmpty ? 'Cannot be empty' : null;

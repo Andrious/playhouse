@@ -384,7 +384,7 @@ packages:
       path: "../../packages/mvc_application"
       relative: true
     source: path
-    version: "7.1.0"
+    version: "7.2.0"
   mvc_pattern:
     dependency: transitive
     description:
