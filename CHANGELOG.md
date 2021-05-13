@@ -1,4 +1,13 @@
 
+## 0.33.0
+ May 13, 2021
+- class Unlocked
+- return primaryList(await db.rawQuery(sqlStmt));
+
+## 0.32.0
+ May 11, 2021
+- void onTapInfo() => con.onTapInfo();
+
 ## 0.31.0
  May 11, 2021
 - if(table.hasError){

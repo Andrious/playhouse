@@ -6,10 +6,15 @@ import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/view.dart';
 
+import 'package:playhouse/src/controller.dart';
+
 /// Look to the mixin ScrapbookFields for the actual listing.
 class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
     with ScrapbookFields {
   UsersListAndroid() : super(I10n.s('User'));
+
+  @override
+  UsersFields get fields => UsersFields();
 
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
@@ -72,8 +77,16 @@ class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
       record['long_description'].textFormField,
       record['email_address'].textFormField,
       record['phone_number'].textFormField,
-      org.onListItems(dropItems: _organizations(org)),
+      org.onListItems(
+        onChanged: (String v) {
+          con.setState(() {
+            org.value = int.parse(v);
+          });
+        },
+        dropItems: _organizations(org),
+      ),
     ];
+
     /// There may be additional 'organization' fields.
     if (record['organization_name'] != null) {
       widgets.addAll([
@@ -85,16 +98,75 @@ class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
     return widgets;
   }
 
-  /// List the next submodules
-  List<String> _organizations(FieldWidgets<PlayHouseFields> record) {
-    return [''];
-  }
+  /// List the user's organization
+  List<String> _organizations(FieldWidgets<PlayHouseFields> record) =>
+      OrganizationsFields().table.idList;
 
   @override
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
-      UsersFields().field.values.toList();
+      fields.field.values.toList();
 
   @override
   Map<String, FieldWidgets<PlayHouseFields<SQLiteTable>>> newRecord() =>
-      UsersFields().getNewRecord();
+      fields.getNewRecord();
+}
+
+class ModulesUnlocked extends Unlocked<UsersModulesUnlocked> {
+  ModulesUnlocked()
+      : super(title: 'User Modules Unlocked', con: ScrapBookController());
+
+  @override
+  PlayHouseFields get fields => UserModulesUnlockedFields();
+}
+
+class SubmodulesUnlocked extends Unlocked<UsersSubmodulesUnlocked> {
+  SubmodulesUnlocked()
+      : super(title: 'User Submodules Unlocked', con: ScrapBookController());
+
+  @override
+  PlayHouseFields get fields => UserSubmodulesUnlockedFields();
+}
+
+class TasksUnlocked extends Unlocked<UsersTasksUnlocked> {
+  TasksUnlocked()
+      : super(title: 'User Tasks Unlocked', con: ScrapBookController());
+
+  @override
+  PlayHouseFields get fields => UserTasksUnlockedFields();
+}
+
+abstract class Unlocked<T extends StatefulWidget> extends StateMVC<T> {
+  Unlocked({this.title = 'Unlocked', this.con}) : super(con);
+  ControllerMVC con;
+  String title;
+
+  PlayHouseFields get fields;
+
+  @override
+  void initState() {
+    super.initState();
+    _list = fields.items.map((e) => null).toList();
+    if (_list.first == null) {
+      _list = [Container()];
+    }
+  }
+
+  /// List of widgets displayed.
+  List<Widget> _list;
+
+  @override
+  Widget build(BuildContext context) => Theme(
+        data: ThemeData.light(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(title),
+          ),
+          body: Container(
+            padding: const EdgeInsets.all(16),
+            child: ListView(
+              children: _list,
+            ),
+          ),
+        ),
+      );
 }

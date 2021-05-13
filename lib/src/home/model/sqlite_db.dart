@@ -209,7 +209,7 @@ class ModulesTable extends SQLiteTable {
   static ModulesTable _this;
 
   @override
-  Future<List<Map<String, dynamic>>> retrieve() {
+  Future<List<Map<String, dynamic>>> retrieve() async {
     const sqlStmt = '''
     SELECT A.rowid 
     , A.*
@@ -219,7 +219,7 @@ class ModulesTable extends SQLiteTable {
     LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS_MODULES} B 
     ON A.rowid = B.module_id
     ''';
-    return db.rawQuery(sqlStmt);
+    return primaryList(await db.rawQuery(sqlStmt));
   }
 
   @override
@@ -270,7 +270,7 @@ class SubmodulesTable extends SQLiteTable {
   static SubmodulesTable _this;
 
   @override
-  Future<List<Map<String, dynamic>>> retrieve() {
+  Future<List<Map<String, dynamic>>> retrieve() async {
     const sqlStmt = '''
     SELECT A.rowid 
     , A.*
@@ -280,7 +280,7 @@ class SubmodulesTable extends SQLiteTable {
     LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES} B 
     ON A.rowid = B.submodule_id
     ''';
-    return db.rawQuery(sqlStmt);
+    return primaryList(await db.rawQuery(sqlStmt));
   }
 
   @override
@@ -331,7 +331,7 @@ class TasksTable extends SQLiteTable {
   static TasksTable _this;
 
   @override
-  Future<List<Map<String, dynamic>>> retrieve() {
+  Future<List<Map<String, dynamic>>> retrieve() async {
     const sqlStmt = '''
     SELECT A.rowid 
     , A.*
@@ -341,7 +341,7 @@ class TasksTable extends SQLiteTable {
     LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS_TASKS} B 
     ON A.rowid = B.task_id
     ''';
-    return db.rawQuery(sqlStmt);
+    return primaryList(await db.rawQuery(sqlStmt));
   }
 
   @override
@@ -421,7 +421,7 @@ class UsersTable extends SQLiteTable {
   static UsersTable _this;
 
   @override
-  Future<List<Map<String, dynamic>>> retrieve() {
+  Future<List<Map<String, dynamic>>> retrieve() async {
     const sqlStmt = '''
     SELECT A.rowid 
     , A.*
@@ -432,7 +432,7 @@ class UsersTable extends SQLiteTable {
     LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS} B
     ON A.organization_id = B.rowid
     ''';
-    return db.rawQuery(sqlStmt);
+    return primaryList(await db.rawQuery(sqlStmt));
   }
 
   @override
@@ -705,11 +705,29 @@ class SQLiteTable {
     list = await db.getTable(tableName, where: 'deleted = ?', whereArgs: [0]);
     if (list.isEmpty) {
       list = [newRecord];
+    } else {
+      // Define a list of primary id's
+      primaryList(list);
     }
     return list;
   }
 
   Future<List<Map<String, dynamic>>> get listAll => db.getTable(tableName);
+
+  /// The list of primary keys from the table.
+  List<String> get idList => _idList;
+  List<String> _idList = [];
+
+  /// Produce a list of primary id's
+  List<Map<String, dynamic>> primaryList(List<Map<String, dynamic>> records) {
+    if (records.isNotEmpty) {
+      _idList = [];
+      for (final rec in records) {
+        _idList.add(rec['rowid'].toString());
+      }
+    }
+    return records;
+  }
 
   String tableName = '';
   String _keyFld = '';
@@ -723,7 +741,7 @@ class SQLiteTable {
   String get selectDeleted => _selectDeleted;
   String _selectDeleted = '';
 
-  Future<List<Map<String, dynamic>>> retrieve() async => list; // [{}];
+  Future<List<Map<String, dynamic>>> retrieve() async => list;
 
   Future<bool> add(Map<String, dynamic> rec) async => false;
 

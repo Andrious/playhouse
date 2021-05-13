@@ -16,9 +16,14 @@ typedef WidgetEditFunc = List<Widget> Function(
 
 abstract class ScrapbookListScreen<T extends StatefulWidget,
     U extends PlayHouseFields> extends State<T> {
-  ScrapbookListScreen([this.title]);
+  ScrapbookListScreen([this.title]) {
+    con = ScrapBookController();
+  }
 
   final String title;
+  ScrapBookController con;
+
+  U get fields;
 
   @override
   void initState() {
@@ -201,7 +206,7 @@ class ScrapbookEditScreen extends StatefulWidget {
   final WidgetEditFunc widgetEdit;
   final String title;
   @override
-  State createState() => _ScrapbookEditScreenState();
+  State createState() => _ScrapbookEditScreenState(ScrapBookController());
 }
 
 class _ScrapbookEditScreenState extends StateMVC<ScrapbookEditScreen> {
@@ -212,14 +217,14 @@ class _ScrapbookEditScreenState extends StateMVC<ScrapbookEditScreen> {
     super.initState();
     record = widget.record;
     fieldsObj = record.values.first.object;
-    final func = widget.widgetEdit;
-    widgets = func == null ? null : func(record);
-    if (widgets == null) {
-      widgets = [];
-      record.forEach((key, value) {
-        widgets.add(value.textFormField);
-      });
-    }
+    // final func = widget.widgetEdit;
+    // widgets = func == null ? null : func(record);
+    // if (widgets == null) {
+    //   widgets = [];
+    //   record.forEach((key, value) {
+    //     widgets.add(value.textFormField);
+    //   });
+    // }
   }
 
   PlayHouseFields fieldsObj;
@@ -227,39 +232,53 @@ class _ScrapbookEditScreenState extends StateMVC<ScrapbookEditScreen> {
   List<Widget> widgets;
 
   @override
-  Widget build(BuildContext context) => Theme(
-        data: ThemeData.light(),
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(widget.title ?? 'Add New Record'),
-            actions: [
-              ElevatedButton(
-                onPressed: () async {
-                  final pop = await fieldsObj.save(record);
-                  if (pop) {
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: const Icon(Icons.save, color: Colors.white),
-              )
-            ],
-          ),
-          body: Container(
-            padding: const EdgeInsets.all(12),
-            child: Form(
-              key: fieldsObj.formKey,
-              child: ListView(
-                children: widgets,
-                // [
-                //   record['name'].textFormField,
-                //   record['short_description'].textFormField,
-                //   record['long_description'].textFormField,
-                // ],
-              ),
+  Widget build(BuildContext context) {
+    widgets = _widgets(widget.widgetEdit);
+    return Theme(
+      data: ThemeData.light(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title ?? 'Add New Record'),
+          actions: [
+            ElevatedButton(
+              onPressed: () async {
+                final pop = await fieldsObj.save(record);
+                if (pop) {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Icon(Icons.save, color: Colors.white),
+            )
+          ],
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(12),
+          child: Form(
+            key: fieldsObj.formKey,
+            child: ListView(
+              children: widgets,
+              // [
+              //   record['name'].textFormField,
+              //   record['short_description'].textFormField,
+              //   record['long_description'].textFormField,
+              // ],
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
+
+  List<Widget> _widgets(WidgetEditFunc func) {
+    var widgets = func == null ? null : func(record);
+    if (widgets == null) {
+      widgets = [];
+      record.forEach((key, value) {
+        widgets.add(value.textFormField);
+      });
+    }
+    return widgets;
+  }
 }
 
 String notEmpty(String v) => v.isEmpty ? 'Cannot be empty' : null;

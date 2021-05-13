@@ -12,6 +12,9 @@ class OrganizationsAndroid
     with ScrapbookFields {
   OrganizationsAndroid() : super(I10n.s('Organizations'));
 
+  @override
+  OrganizationsFields get fields => OrganizationsFields();
+
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
   @override
@@ -43,11 +46,11 @@ class OrganizationsAndroid
 
   @override
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
-      OrganizationsFields().field.values.toList();
+      fields.field.values.toList();
 
   @override
   Map<String, FieldWidgets<PlayHouseFields>> newRecord() =>
-      OrganizationsFields().getNewRecord();
+      fields.getNewRecord();
 }
 
 class OrganizationsModuleAndroid
@@ -55,6 +58,9 @@ class OrganizationsModuleAndroid
     with ScrapbookFields {
   OrganizationsModuleAndroid() : super(I10n.s('Organizations Module'));
 
+  @override
+  OrganizationsModuleFields get fields => OrganizationsModuleFields();
+
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
   @override
@@ -86,11 +92,11 @@ class OrganizationsModuleAndroid
 
   @override
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
-      OrganizationsModuleFields().field.values.toList();
+      fields.field.values.toList();
 
   @override
   Map<String, FieldWidgets<PlayHouseFields>> newRecord() =>
-      OrganizationsModuleFields().getNewRecord();
+      fields.getNewRecord();
 }
 
 class OrganizationsSubmoduleAndroid
@@ -98,6 +104,9 @@ class OrganizationsSubmoduleAndroid
     with ScrapbookFields {
   OrganizationsSubmoduleAndroid() : super(I10n.s('Organizations Submodule'));
 
+  @override
+  OrganizationsSubmoduleFields get fields => OrganizationsSubmoduleFields();
+
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
   @override
@@ -129,11 +138,11 @@ class OrganizationsSubmoduleAndroid
 
   @override
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
-      OrganizationsSubmoduleFields().field.values.toList();
+      fields.field.values.toList();
 
   @override
   Map<String, FieldWidgets<PlayHouseFields>> newRecord() =>
-      OrganizationsSubmoduleFields().getNewRecord();
+      fields.getNewRecord();
 }
 
 class OrganizationsTaskAndroid
@@ -141,6 +150,9 @@ class OrganizationsTaskAndroid
     with ScrapbookFields {
   OrganizationsTaskAndroid() : super(I10n.s('Organizations Task'));
 
+  @override
+  OrganizationsTaskFields get fields => OrganizationsTaskFields();
+
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
   @override
@@ -172,9 +184,9 @@ class OrganizationsTaskAndroid
 
   @override
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
-      OrganizationsTaskFields().field.values.toList();
+      fields.field.values.toList();
 
   @override
   Map<String, FieldWidgets<PlayHouseFields>> newRecord() =>
-      OrganizationsTaskFields().getNewRecord();
+      fields.getNewRecord();
 }

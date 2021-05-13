@@ -14,3 +14,24 @@ class UsersList extends StatefulWidget {
   @override
   State createState() => App.useMaterial ? UsersListAndroid() : UsersListiOS();
 }
+
+class UsersModulesUnlocked extends StatefulWidget {
+  const UsersModulesUnlocked({Key key}) : super(key: key);
+
+  @override
+  State createState() => ModulesUnlocked();
+}
+
+class UsersSubmodulesUnlocked extends StatefulWidget {
+  const UsersSubmodulesUnlocked({Key key}) : super(key: key);
+
+  @override
+  State createState() => SubmodulesUnlocked();
+}
+
+class UsersTasksUnlocked extends StatefulWidget {
+  const UsersTasksUnlocked({Key key}) : super(key: key);
+
+  @override
+  State createState() => TasksUnlocked();
+}

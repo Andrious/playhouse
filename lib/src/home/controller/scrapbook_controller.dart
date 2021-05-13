@@ -70,24 +70,18 @@ class ScrapBookController extends ControllerMVC {
     return label;
   }
 
+  Future<void> onTap() async {
+
+  }
+
   Future<void> onTapInfo() async {
-    //
-    // await MsgBox(
-    //         title: 'Task',
-    //         msg:
-    //             "This is a description of this card's task and what you need to do accomplish it!'\n\nWould you like to start doing this task?",
-    //         context: App.context)
-    //     .show();
 
     const List<Widget> body = [
       SizedBox(height: 20),
-      Flexible(
-          flex: 2,
-          child: Text(
-              "This is a description of this card's task and what you need to do accomplish it!")),
+      Text(
+          "This is a description of this card's task and what you need to do accomplish it!"),
       SizedBox(height: 30),
-      Flexible(
-          flex: 2, child: Text('Would you like to start doing this task?')),
+      Text('Would you like to start doing this task?'),
       SizedBox(height: 30),
     ];
 
@@ -105,11 +99,13 @@ class ScrapBookController extends ControllerMVC {
       ],
       context: App.context,
     ).show();
-  }
 
-  void onTap() {
-    // ignore: avoid_print
-    print('test');
+    // await MsgBox(
+    //         title: 'Task',
+    //         msg:
+    //             "This is a description of this card's task and what you need to do accomplish it!'\n\nWould you like to start doing this task?",
+    //         context: App.context)
+    //     .show();
   }
 
   List<Widget> taskCards(String submodule) => [
@@ -126,33 +122,4 @@ class ScrapBookController extends ControllerMVC {
         PictureTask02(submodule),
         MovieCameraTask02(submodule),
       ];
-
-  Widget taskCard(String jpgName) {
-    if (jpgName.isEmpty) {
-      return Container();
-    }
-    return Card(
-      child: Stack(
-        children: [
-          InkWell(
-            onTap: onTapInfo,
-            highlightColor: const Color(0xffbb86fc),
-            child: Image.asset(
-              'assets/images/${jpgName.trim()}.jpg',
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20, right: 25),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: onTap,
-                highlightColor: const Color(0xffbb86fc),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

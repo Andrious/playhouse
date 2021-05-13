@@ -33,10 +33,10 @@ class TaskCard extends StatefulWidget with StateSetWidget {
   }
 
   /// Override with subclasses.
-  void onTap() {}
+  void onTap() => con.onTap();
 
   /// Override with subclasses.
-  void onTapInfo() {}
+  void onTapInfo() => con.onTapInfo();
 
   @override
   // ignore: no_logic_in_create_state
@@ -81,7 +81,7 @@ class _TaskCardsState extends State<TaskCard> {
                 builder: (_, snapshot) => _futureBuilder(snapshot)),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20, right: 25),
+            padding: const EdgeInsets.only(top: 20, right: 30), //(top: 20, right: 25),
             child: Align(
               alignment: Alignment.topRight,
               child: InkWell(

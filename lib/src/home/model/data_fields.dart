@@ -60,6 +60,30 @@ class UsersFields extends PlayHouseFields<UsersTable> {
   static UsersFields _this;
 }
 
+class UserModulesUnlockedFields extends PlayHouseFields<UserModulesUnlocked> {
+  factory UserModulesUnlockedFields() => _this ??= UserModulesUnlockedFields._();
+  UserModulesUnlockedFields._() {
+    table = s.UserModulesUnlocked();
+  }
+  static UserModulesUnlockedFields _this;
+}
+
+class UserSubmodulesUnlockedFields extends PlayHouseFields<UserSubmodulesUnlocked> {
+  factory UserSubmodulesUnlockedFields() => _this ??= UserSubmodulesUnlockedFields._();
+  UserSubmodulesUnlockedFields._() {
+    table = s.UserSubmodulesUnlocked();
+  }
+  static UserSubmodulesUnlockedFields _this;
+}
+
+class UserTasksUnlockedFields extends PlayHouseFields<UserTasksUnlocked> {
+  factory UserTasksUnlockedFields() => _this ??= UserTasksUnlockedFields._();
+  UserTasksUnlockedFields._() {
+    table = s.UserTasksUnlocked();
+  }
+  static UserTasksUnlockedFields _this;
+}
+
 class OrganizationsFields extends PlayHouseFields<OrganizationsTable> {
   factory OrganizationsFields() => _this ??= OrganizationsFields._();
   OrganizationsFields._() {

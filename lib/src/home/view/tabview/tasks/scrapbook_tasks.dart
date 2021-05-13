@@ -76,20 +76,21 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
             Flexible(
               flex: 2,
               child: AutoSizeText(
-                '$submoduleName | ',
+                submoduleName, // |',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
             ),
-            Flexible(
-              flex: 2,
-              child: AutoSizeText(
-                'Submodule description',
-                style: style,
-              ),
-            ),
+            const SizedBox(width: 100),
+            // Flexible(
+            //   flex: 2,
+            //   child: AutoSizeText(
+            //     'Submodule description',
+            //     style: style,
+            //   ),
+            // ),
             TextButton(
               onPressed: () {
                 setState(submodule.onPressed);

@@ -67,6 +67,7 @@ class ModulesAppBar {
         Tab(
           child: AutoSizeText(
             'Site assessment',
+            minFontSize: 16,
             style: TextStyle(
               fontWeight:
                   _tabController.index == 1 ? FontWeight.w700 : FontWeight.w400,

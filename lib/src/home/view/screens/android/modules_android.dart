@@ -11,6 +11,9 @@ class ModulesListAndroid extends ScrapbookListScreen<ModulesList, ModuleFields>
     with ScrapbookFields {
   ModulesListAndroid() : super(I10n.s('Module'));
 
+  @override
+  ModuleFields get fields => ModuleFields();
+
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
   @override
@@ -76,16 +79,15 @@ class ModulesListAndroid extends ScrapbookListScreen<ModulesList, ModuleFields>
   }
 
   List<String> _moduleItems(Map<String, FieldWidgets<PlayHouseFields>> record) {
-    final list = fetchData();
-
-    return [''];
+    final rowid = record['rowid'].value.toString();
+    return fields.table.idList.where((id) => id != rowid).toList();
   }
 
   @override
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
-      ModuleFields().field.values.toList();
+      fields.field.values.toList();
 
   @override
   Map<String, FieldWidgets<PlayHouseFields<SQLiteTable>>> newRecord() =>
-      ModuleFields().getNewRecord();
+      fields.getNewRecord();
 }

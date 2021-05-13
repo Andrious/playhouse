@@ -11,6 +11,9 @@ class TasksListAndroid extends ScrapbookListScreen<TasksList, TasksFields>
     with ScrapbookFields {
   TasksListAndroid() : super(I10n.s('Task'));
 
+  @override
+  TasksFields get fields => TasksFields();
+
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
   @override
@@ -43,14 +46,17 @@ class TasksListAndroid extends ScrapbookListScreen<TasksList, TasksFields>
   /// Supply the widgets to 'list' the record.
   @override
   List<Widget> addedWidgets(
-      Map<String, FieldWidgets<PlayHouseFields>> record,
-      VoidCallback onTap,
-      ) {
+    Map<String, FieldWidgets<PlayHouseFields>> record,
+    VoidCallback onTap,
+  ) {
+    final module = record['submodule_id'];
+    module.label = 'Submodule Id';
     final locked = record['lockedFirst'];
     locked.label = 'First Locked';
     final next = record['next_task_id'];
     next.label = 'Next Task';
     return [
+      module.onListTile(tap: onTap),
       locked.onListTile(tap: onTap),
       next.onListTile(tap: onTap),
     ];
@@ -59,36 +65,48 @@ class TasksListAndroid extends ScrapbookListScreen<TasksList, TasksFields>
   /// Supply the fields required to 'edit' the current record.
   @override
   List<Widget> editWidgets(
-      Map<String, FieldWidgets<PlayHouseFields>> record,
-      ) {
+    Map<String, FieldWidgets<PlayHouseFields>> record,
+  ) {
     final moduleId = record['submodule_id'];
     moduleId.label = 'Submodule Id';
     final next = record['next_task_id'];
     return [
       record['rowid'].onListTile(enabled: false),
-      moduleId.onListItems(dropItems: _parentModule(moduleId)),
+      moduleId.onListItems(
+          onChanged: (String v) {
+            con.setState(() {
+              moduleId.value = int.parse(v);
+            });
+          },
+          dropItems: _parentModule(moduleId)),
       record['name'].textFormField,
       record['short_description'].textFormField,
       record['long_description'].textFormField,
-      next.onListItems(dropItems: _moduleItems(next)),
+      next.onListItems(
+          onChanged: (String v) {
+            con.setState(() {
+              moduleId.value = int.parse(v);
+            });
+          },
+          dropItems: _moduleItems(record)),
     ];
   }
 
   /// List the parent modules
-  List<String> _parentModule(FieldWidgets<PlayHouseFields> record) {
-    return [''];
-  }
+  List<String> _parentModule(FieldWidgets<PlayHouseFields> record) =>
+      SubmoduleFields().table.idList;
 
-  /// List the next submodules
-  List<String> _moduleItems(FieldWidgets<PlayHouseFields> record) {
-    return [''];
+  /// List the next task
+  List<String> _moduleItems(Map<String, FieldWidgets<PlayHouseFields>> record) {
+    final rowid = record['rowid'].value.toString();
+    return fields.table.idList.where((id) => id != rowid).toList();
   }
 
   @override
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
-      TasksFields().field.values.toList();
+      fields.field.values.toList();
 
   @override
   Map<String, FieldWidgets<PlayHouseFields<SQLiteTable>>> newRecord() =>
-      TasksFields().getNewRecord();
+      fields.getNewRecord();
 }

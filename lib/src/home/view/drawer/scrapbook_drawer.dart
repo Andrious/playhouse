@@ -38,10 +38,26 @@ class ScrapBookDrawer extends StatelessWidget {
           icon: const Icon(Icons.handyman),
           title: I10n.t('Tasks'),
         ),
+        const Divider(),
         _DrawerWidget(
           const UsersList(),
           icon: const Icon(Icons.group),
           title: I10n.t('Users'),
+        ),
+        _DrawerWidget(
+          const UsersModulesUnlocked(),
+          icon: const Icon(Icons.group),
+          title: I10n.t('Users Modules Unlocked'),
+        ),
+        _DrawerWidget(
+          const UsersSubmodulesUnlocked(),
+          icon: const Icon(Icons.group),
+          title: I10n.t('Users Submodules Unlocked'),
+        ),
+        _DrawerWidget(
+          const UsersTasksUnlocked(),
+          icon: const Icon(Icons.group),
+          title: I10n.t('Users Tasks Unlocked'),
         ),
         const Divider(),
         _DrawerWidget(
@@ -78,7 +94,7 @@ class ScrapBookDrawer extends StatelessWidget {
 class LogInLogOut extends StatelessWidget {
   LogInLogOut({Key key})
       : _appCon = AppController(),
- //       _auth = SignIn(),
+        //       _auth = SignIn(),
         super(key: key);
   final AppController _appCon;
 //  final SignIn _auth;
