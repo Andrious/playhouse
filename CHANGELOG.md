@@ -1,4 +1,8 @@
 
+## 0.35.0
+ May 14, 2021
+- package="ca.greyandivy.playhouse"
+
 ## 0.34.0
  May 13, 2021
 - image_picker: 0.7.4

@@ -55,7 +55,7 @@ class ModulesAppBar {
   List<Tab> get tabs => [
         Tab(
           child: AutoSizeText(
-            'Inspiration',
+            I10n.s('Inspiration'),
             style: TextStyle(
               fontWeight:
                   _tabController.index == 0 ? FontWeight.w700 : FontWeight.w400,
@@ -66,7 +66,7 @@ class ModulesAppBar {
         ),
         Tab(
           child: AutoSizeText(
-            'Site assessment',
+            I10n.s('Site Assessment'),
             minFontSize: 16,
             style: TextStyle(
               fontWeight:
@@ -78,7 +78,7 @@ class ModulesAppBar {
         ),
         Tab(
           child: AutoSizeText(
-            'Floor Plan',
+            I10n.s('Floor Plan'),
             style: TextStyle(
               fontWeight:
                   _tabController.index == 2 ? FontWeight.w700 : FontWeight.w400,
@@ -89,7 +89,7 @@ class ModulesAppBar {
         ),
         Tab(
           child: AutoSizeText(
-            'Elevation',
+            I10n.s('Elevation'),
             style: TextStyle(
               fontWeight:
                   _tabController.index == 3 ? FontWeight.w700 : FontWeight.w400,

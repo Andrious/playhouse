@@ -42,7 +42,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "ca.greyivy.playhousedemo"
+        applicationId "ca.greyandivy.playhouse"
         minSdkVersion 23 // You need minSdkVersion 23 when using firebase in flutter.
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
