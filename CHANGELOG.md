@@ -1,4 +1,8 @@
 
+## 0.34.0
+ May 13, 2021
+- image_picker: 0.7.4
+
 ## 0.33.0
  May 13, 2021
 - class Unlocked

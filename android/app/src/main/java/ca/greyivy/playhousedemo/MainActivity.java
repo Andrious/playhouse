@@ -1,4 +1,4 @@
-package ca.greyandivy.playhouse;
+package ca.greyivy.playhousedemo;
 
 import io.flutter.embedding.android.FlutterActivity;
 
