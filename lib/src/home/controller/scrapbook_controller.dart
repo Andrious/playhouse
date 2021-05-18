@@ -45,15 +45,30 @@ class ScrapBookController extends ControllerMVC {
 
   String moduleType = '';
 
-  String module = '';
+  Map<String, dynamic> module;
+//  String module = '';
 
-  String submodule = '';
+  ///todo To be removed.
+  bool database = false;
+
+  ///todo To be removed.
+  String moduleName = '';
+
+  Map<String, dynamic> submodule;
+//  String submodule = '';
+
+  ///todo To be removed.
+  String submoduleName = '';
+
+  ///todo To be removed.
+  int cardNo = 0;
 
   List<Widget> _taskCards;
 
   /// Return the text label specified in the Tab object.
   String tabLabel(Tab tab) {
     String label = '';
+    // If not a Text widget
     if (tab.text == null) {
       if (tab.child is Text) {
         label = (tab.child as Text).data;
@@ -70,12 +85,31 @@ class ScrapBookController extends ControllerMVC {
     return label;
   }
 
+  /// Merely tapping the Task Card
   Future<void> onTap() async {
-
+    ///todo To be removed.
+    final Map<String, dynamic> task = model.tasks.items[cardNo];
+    final Map<String, dynamic> subTask = Map.from(task);
+    subTask['subName'] = submoduleName;
+    await openFullScreenRoute(TaskScreen(subTask: subTask));
+    setState(() {});
   }
 
+  /// Tapping the 'info' icon on the Task Card
   Future<void> onTapInfo() async {
+    await onTap();
+  }
 
+  /// Open the supplied widget in a new route.
+  Future<void> openFullScreenRoute(Widget widget) async {
+    final Route<Map<String, dynamic>> route = CupertinoPageRoute(
+      builder: (BuildContext context) => Material(child: widget),
+      fullscreenDialog: true,
+    );
+    await Navigator.of(App.context).push(route);
+  }
+
+  Future<void> infoDialogue() async {
     const List<Widget> body = [
       SizedBox(height: 20),
       Text(
@@ -99,27 +133,20 @@ class ScrapBookController extends ControllerMVC {
       ],
       context: App.context,
     ).show();
-
-    // await MsgBox(
-    //         title: 'Task',
-    //         msg:
-    //             "This is a description of this card's task and what you need to do accomplish it!'\n\nWould you like to start doing this task?",
-    //         context: App.context)
-    //     .show();
   }
 
-  List<Widget> taskCards(String submodule) => [
-        QuestionTask(submodule),
-        ABCTask(submodule),
-        ARTask(submodule),
-        PencilTask(submodule),
-        PictureTask(submodule),
-        MovieCameraTask(submodule),
-        QuestionTask02(submodule),
-        ABCTask02(submodule),
-        ARTask02(submodule),
-        PencilTask02(submodule),
-        PictureTask02(submodule),
-        MovieCameraTask02(submodule),
-      ];
+  List<Widget> get taskCards => [
+      QuestionTask(submoduleName),
+      ABCTask(submoduleName),
+      ARTask(submoduleName),
+      PencilTask(submoduleName),
+      PictureTask(submoduleName),
+      MovieCameraTask(submoduleName),
+      QuestionTask02(submoduleName),
+      ABCTask02(submoduleName),
+      ARTask02(submoduleName),
+      PencilTask02(submoduleName),
+      PictureTask02(submoduleName),
+      MovieCameraTask02(submoduleName),
+    ];
 }

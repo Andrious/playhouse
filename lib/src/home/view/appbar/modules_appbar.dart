@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:auto_size_text/auto_size_text.dart';
+
 /// The database code
 import 'package:playhouse/src/model.dart';
 
@@ -25,24 +26,37 @@ class ModulesAppBar {
 
   /// Set up the AppBar
   void initState() {
+    //
     final initIndex = Prefs.getInt('${_con.moduleType}ModulesIndex');
 
-    _tabController = GITabController(
+    _tabController = TabController(
+      // GITabController(
       initialIndex: initIndex,
-      length: 4,
+      length: _con.database ? ModuleFields().table.list.length : 4,
       vsync: provider,
-      state: provider,
+//      state: provider,
     );
+
+    // _tabController must be defined first.
+    ///todo To be removed.
+    if (_con.database) {
+      _con.module = _con.model.modules.items[initIndex];
+    } else {
+      _con.moduleName = _con.tabLabel(tabs[initIndex]);
+    }
 
     _tabController.addListener(() {
       /// Record the 'last' tab visited.
       Prefs.setInt('${_con.moduleType}ModulesIndex', _tabController.index);
-      _con.module = _con.tabLabel(tabs[_tabController.index]);
+
+      ///todo To be removed.
+      if (_con.database) {
+        _con.module = _con.model.modules.items[_tabController.index];
+      } else {
+        _con.moduleName = _con.tabLabel(tabs[_tabController.index]);
+      }
       provider?.setState(() {});
     });
-
-    // _tabController must be defined first.
-    _con.module = _con.tabLabel(tabs[initIndex]);
   }
 
   /// Clean up after itself.
@@ -52,7 +66,41 @@ class ModulesAppBar {
 
   TabController get controller => _tabController;
 
-  List<Tab> get tabs => [
+  List<Tab> get tabs {
+    var modules = <Tab>[];
+
+    ///todo To be removed.
+    if (_con.database) {
+      _children = [];
+      final table = ModuleFields().table;
+      var index = -1;
+      for (final module in table.list) {
+        _children.add(const SubmodulesScreen());
+        index++;
+        modules.add(Tab(
+          child: AutoSizeText(
+            I10n.s(module['name']),
+            style: TextStyle(
+              fontWeight: _tabController.index == index
+                  ? FontWeight.w700
+                  : FontWeight.w400,
+            ),
+            softWrap: false,
+            overflow: TextOverflow.visible,
+          ),
+        ));
+      }
+
+      ///todo To be removed.
+    } else {
+      //
+      _children = const [
+        SubmodulesScreen(),
+        SubmodulesScreen(),
+        SubmodulesScreen(),
+        SubmodulesScreen(),
+      ];
+      modules = [
         Tab(
           child: AutoSizeText(
             I10n.s('Inspiration'),
@@ -99,20 +147,12 @@ class ModulesAppBar {
           ),
         ),
       ];
+    }
+    return modules;
+  }
 
-  // List<Widget> get children => [
-  //       ModuleScreen(tab: tabs[0]),
-  //       ModuleScreen(tab: tabs[1]),
-  //       ModuleScreen(tab: tabs[2]),
-  //       ModuleScreen(tab: tabs[3]),
-  //     ];
-
-  List<Widget> get children => const [
-        SubmodulesScreen(),
-        SubmodulesScreen(),
-        SubmodulesScreen(),
-        SubmodulesScreen(),
-      ];
+  List<Widget> get children => _children;
+  List<Widget> _children;
 
   /// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
   AppBar get appBar => AppBar(

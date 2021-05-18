@@ -89,8 +89,8 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
 
   /// Override this routine to supply your own details scrren.
   Widget detailsScreen(Map<String, FieldWidgets<PlayHouseFields>> record,
-          WidgetListFunc widgetList, WidgetEditFunc widgetEdit) =>
-      ScrapbookDetailsScreen(record, widgetList, widgetEdit);
+          WidgetListFunc addedWidgets, WidgetEditFunc widgetEdit) =>
+      ScrapbookDetailsScreen(record, addedWidgets, widgetEdit);
 
   /// Optionally add any additional widgets from the record list.
   List<Widget> addedWidgets(Map<String, FieldWidgets<PlayHouseFields>> record,
@@ -112,12 +112,12 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
 class ScrapbookDetailsScreen extends StatefulWidget {
   const ScrapbookDetailsScreen(
     this.record,
-    this.widgetList,
+    this.addedWidgets,
     this.widgetEdit, {
     Key key,
   }) : super(key: key);
   final Map<String, FieldWidgets<PlayHouseFields>> record;
-  final WidgetListFunc widgetList;
+  final WidgetListFunc addedWidgets;
   final WidgetEditFunc widgetEdit;
   @override
   State createState() => _ScrapbookDetailsScreenState();
@@ -130,13 +130,17 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
     super.initState();
     record = widget.record;
     // Supply default widgets
-    widgets = <Widget>[
-      record['rowid'].onListTile(enabled: false, tap: onTap),
-      record['name'].onListTile(tap: onTap),
-      record['short_description'].onListTile(tap: onTap),
-      record['long_description'].onListTile(tap: onTap),
-    ];
-    final func = widget.widgetList;
+    if(record['name'] == null) {
+      widgets = [];
+    }else{
+      widgets = <Widget>[
+        record['rowid'].onListTile(enabled: false, tap: onTap),
+        record['name'].onListTile(tap: onTap),
+        record['short_description'].onListTile(tap: onTap),
+        record['long_description'].onListTile(tap: onTap),
+      ];
+    }
+    final func = widget.addedWidgets;
     final List<Widget> list = func == null ? null : func(record, onTap);
     if (list != null) {
       widgets.addAll(list);
@@ -154,17 +158,18 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final title = record['name']?.text;
     onTap = () async {
       await Navigator.of(context).push(MaterialPageRoute<void>(
           builder: (BuildContext context) => ScrapbookEditScreen(
                 record: record,
                 widgetEdit: widget.widgetEdit,
-                title: 'Edit a contact',
+                title: 'Edit ${title ?? 'record'}',
               )));
       setState(() {});
     };
     return Scaffold(
-      appBar: AppBar(title: record['name'].text, actions: [
+      appBar: AppBar(title: title, actions: [
         TextButton(
           onPressed: () {
             showBox(text: 'Delete this record?', context: context)

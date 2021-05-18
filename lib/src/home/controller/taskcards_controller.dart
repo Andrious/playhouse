@@ -131,8 +131,16 @@ class PickImage {
     final con = card.con;
     Widget image;
 
+    ///todo To be removed
+    String name;
+    if(con.database){
+      name = con.module['name'];
+    }else{
+      name = con.moduleName;
+    }
+
     key =
-        '${con.moduleType}${con.module}${card.submodule}${card.name}${card.runtimeType.toString()}';
+        '${con.moduleType}$name${card.submodule}${card.name}${card.runtimeType.toString()}';
 
     final path = Prefs.getString(key);
 

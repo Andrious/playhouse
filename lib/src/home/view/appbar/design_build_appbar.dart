@@ -19,11 +19,11 @@ class DesignBuildAppBar {
     // Supply the Controller.
     _con = _provider.con;
 
-    _tabController = GITabController(
+    _tabController = TabController( // GITabController(
       initialIndex: Prefs.getInt('DesignBuildIndex'),
       length: 2,
       vsync: _provider,
-      state: _provider,
+//      state: _provider,
     );
 
     _tabs = _onTabs();

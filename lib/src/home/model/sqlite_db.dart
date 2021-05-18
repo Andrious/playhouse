@@ -90,6 +90,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
+       image VARCHAR,
        key_art BLOB,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -700,17 +701,9 @@ class SQLiteTable {
   /// Return a new 'empty' record.
   Map<String, dynamic> get newRecord => db.newRec(tableName);
 
-  Future<List<Map<String, dynamic>>> get list async {
-    List<Map<String, dynamic>> list;
-    list = await db.getTable(tableName, where: 'deleted = ?', whereArgs: [0]);
-    if (list.isEmpty) {
-      list = [newRecord];
-    } else {
-      // Define a list of primary id's
-      primaryList(list);
-    }
-    return list;
-  }
+  /// Simply a list of the records
+  List<Map<String, dynamic>> get list => _list;
+  List<Map<String, dynamic>> _list;
 
   Future<List<Map<String, dynamic>>> get listAll => db.getTable(tableName);
 
@@ -725,6 +718,7 @@ class SQLiteTable {
       for (final rec in records) {
         _idList.add(rec['rowid'].toString());
       }
+      _list = records;
     }
     return records;
   }
@@ -741,7 +735,17 @@ class SQLiteTable {
   String get selectDeleted => _selectDeleted;
   String _selectDeleted = '';
 
-  Future<List<Map<String, dynamic>>> retrieve() async => list;
+  Future<List<Map<String, dynamic>>> retrieve() async {
+    List<Map<String, dynamic>> list =
+        await db.getTable(tableName, where: 'deleted = ?', whereArgs: [0]);
+    if (list.isEmpty) {
+      list = [newRecord];
+    } else {
+      // Define a list of primary id's
+      primaryList(list);
+    }
+    return _list = list;
+  }
 
   Future<bool> add(Map<String, dynamic> rec) async => false;
 

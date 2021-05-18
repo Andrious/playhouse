@@ -45,10 +45,18 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     // Set up this appbar's data
     _sbSubTabBar.initState();
 
+    ///todo To be removed
+    String name;
+    if (_con.database) {
+      name = _con.module['name'];
+    } else {
+      name = _con.moduleName;
+    }
+
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 100), value: 1, vsync: this);
 
-    final panelUp = Prefs.getBool('${_con.moduleType}${_con.module}_panelUp');
+    final panelUp = Prefs.getBool('${_con.moduleType}${name}_panelUp');
 
     if (!panelUp) {
       _movePanel();
@@ -79,9 +87,12 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
   @override
   Widget build(BuildContext context) => LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
+        //
         final animation = _getPanelAnimation(constraints);
+
         final ScrollPhysics scrollPhysics =
             ScrollConfiguration.of(context).getScrollPhysics(context);
+
         final tabBar = GreyIvyTabBar(
           controller: _sbSubTabBar.controller,
           isScrollable: true,
@@ -97,7 +108,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
           children: _sbSubTabBar.children,
         );
 
-        _sbSubTabBar.controller.tabBar = tabBar;
+//        _sbSubTabBar.controller.tabBar = tabBar;
 
         return Stack(
           children: <Widget>[
@@ -120,6 +131,35 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
         );
       });
 
+//   @override
+//   Widget build(BuildContext context) => Column(
+//     children: <Widget>[
+//       Flexible(
+//         flex: 3,
+//         // child: Padding(
+//         //   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+//         child: TabBar(
+//           controller: _sbSubTabBar.controller,
+//           isScrollable: true,
+//           indicatorSize: TabBarIndicatorSize.label,
+//           tabs: _sbSubTabBar.tabs,
+//         ),
+// //            ),
+//       ),
+//       Flexible(
+//         flex: 4,
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+//           child: TabBarView(
+//             controller: _sbSubTabBar.controller,
+//             children: _sbSubTabBar.children,
+//           ),
+//         ),
+//       ),
+//     ],
+//   );
+
+
   void onPressed() {
     _movePanel();
   }
@@ -131,8 +171,18 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
   }
 
   void _movePanel() {
+    //
     _animationController.fling(velocity: isPanelUp ? -1.0 : 1.0);
-    Prefs.setBool('${_con.moduleType}${_con.module}_panelUp', isPanelUp);
+
+    ///todo To be removed
+    String name;
+    if (_con.database) {
+      name = _con.module['name'];
+    } else {
+      name = _con.moduleName;
+    }
+
+    Prefs.setBool('${_con.moduleType}${name}_panelUp', isPanelUp);
   }
 
   Animation<RelativeRect> _getPanelAnimation(BoxConstraints constraints) {
@@ -167,7 +217,8 @@ class BigPageScrollPhysics extends ScrollPhysics {
   const BigPageScrollPhysics({ScrollPhysics parent, this.controller})
       : super(parent: parent);
 
-  final GITabController controller;
+//  final GITabController controller;
+  final TabController controller;
 
   double get viewportFraction => 2;
 

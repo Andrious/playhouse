@@ -43,7 +43,7 @@ export 'package:playhouse/src/home/view/tabview/modules/scrapbook_modules_type_s
 /// Individual Module screen
 export 'package:playhouse/src/home/view/tabview/modules/scrapbook_module_screen.dart';
 
-/// Individual Task screen
+/// List of Task Cards
 export 'package:playhouse/src/home/view/tabview/tasks/scrapbook_tasks.dart'; // hide Card;
 
 /// Individual Task Cards
@@ -70,6 +70,7 @@ export 'package:playhouse/src/home/view/screens/ios/submodules_ios.dart';
 export 'package:playhouse/src/home/view/screens/tasks_list.dart';
 export 'package:playhouse/src/home/view/screens/android/tasks_android.dart';
 export 'package:playhouse/src/home/view/screens/ios/tasks_ios.dart';
+export 'package:playhouse/src/home/view/screens/task_screen.dart';
 
 /// Organizations
 export 'package:playhouse/src/home/view/screens/organizations_list.dart';

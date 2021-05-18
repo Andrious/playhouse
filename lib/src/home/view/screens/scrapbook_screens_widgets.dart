@@ -15,8 +15,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
     //
     final List<Widget> _fieldWidgets = [];
 
-    if (rowid &&
-        fldWidget['rowid'] != null &&
+    if (fldWidget['rowid'] != null &&
         fldWidget['rowid'].value != null) {
       final value = fldWidget['rowid'].value;
       String text;
@@ -38,8 +37,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (useName &&
-        fldWidget['name'] != null &&
+    if (fldWidget['name'] != null &&
         fldWidget['name'].value != null) {
       _fieldWidgets.add(
         Flexible(
@@ -51,8 +49,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (useDescription &&
-        fldWidget['short_description'] != null &&
+    if (fldWidget['short_description'] != null &&
         fldWidget['short_description'].value != null) {
       _fieldWidgets.addAll([
         Flexible(
@@ -82,8 +79,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (useTimeStamp &&
-        fldWidget['time_stamp'] != null &&
+    if (fldWidget['time_stamp'] != null &&
         fldWidget['time_stamp'].value != null) {
       _fieldWidgets.add(
         Flexible(
@@ -94,8 +90,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (useEmail &&
-        fldWidget['email_address'] != null &&
+    if (fldWidget['email_address'] != null &&
         fldWidget['email_address'].value != null) {
       _fieldWidgets.add(
         Flexible(
@@ -106,14 +101,46 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (usePhone &&
-        fldWidget['phone_number'] != null &&
+    if (fldWidget['phone_number'] != null &&
         fldWidget['phone_number'].value != null) {
       _fieldWidgets.add(
         Flexible(
           child: Text(fldWidget['phone_number'].value.toString(),
               style:
                   const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        ),
+      );
+    }
+
+    if(fldWidget['organization_id'] != null &&
+        fldWidget['organization_id'].value != null){
+      _fieldWidgets.add(
+        Flexible(
+          child: Text(fldWidget['organization_id'].value.toString(),
+              style:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        ),
+      );
+    }
+
+    if(fldWidget['module_id'] != null &&
+        fldWidget['module_id'].value != null){
+      _fieldWidgets.add(
+        Flexible(
+          child: Text(fldWidget['module_id'].value.toString(),
+              style:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        ),
+      );
+    }
+
+    if(fldWidget['next_module_id'] != null &&
+        fldWidget['next_module_id'].value != null){
+      _fieldWidgets.add(
+        Flexible(
+          child: Text(fldWidget['next_module_id'].value.toString(),
+              style:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         ),
       );
     }
@@ -125,18 +152,10 @@ mixin ScrapbookFields implements UseWhichWidgets {
 
 class UseWhichWidgets {
 
-  bool rowid;
-
   bool useModuleType;
   bool useLocked;
 
-  bool useName;
-  bool useDescription;
   bool useKeyArt;
-  bool useTimeStamp;
-
-  bool useEmail;
-  bool usePhone;
 
   bool useCompleted;
   bool useDeleted;

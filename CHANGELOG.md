@@ -1,4 +1,16 @@
 
+## 0.36.0
+ May 18, 2021
+- Removed extra jpg files
+- Removed GITabController class
+- Removed some 'flag fields' bool useName = true;
+- if (_con.database) { interlaced through the code
+- Removed image_size_getter: ^1.0.0
+- Future<void> openFullScreenRoute(Widget widget) async {
+- CREATE TABLE IF NOT EXISTS $SUBMODULES(image VARCHAR,
+- _con.submodule = _con.model.submodules.items[initIndex];
+- task_screen.dart';
+
 ## 0.35.0
  May 14, 2021
 - package="ca.greyandivy.playhouse"

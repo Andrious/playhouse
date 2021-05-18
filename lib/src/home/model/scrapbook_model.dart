@@ -17,12 +17,12 @@ class ScrapBookModel {
         tasks = TasksFields(),
         usersTasks = UsersTasksFields(),
         users = UsersFields(),
-        modulesUnlocked = UserModulesUnlocked(),
-        submodulesUnlocked = UserSubmodulesUnlocked(),
-        tasksUnlocked = UserTasksUnlocked(),
-        organizationsModules = OrganizationsModules(),
-        organizationsSubmodules = OrganizationsSubmodules(),
-        organizationsTasks = OrganizationsTasks(),
+        modulesUnlocked = UserModulesUnlockedFields(),
+        submodulesUnlocked = UserSubmodulesUnlockedFields(),
+        tasksUnlocked = UserTasksUnlockedFields(),
+        organizationsModules = OrganizationsModuleFields(),
+        organizationsSubmodules = OrganizationsSubmoduleFields(),
+        organizationsTasks = OrganizationsTaskFields(),
         organizations = OrganizationsFields();
 
   static ScrapBookModel _this;
@@ -34,12 +34,12 @@ class ScrapBookModel {
   final TasksFields tasks;
   final UsersTasksFields usersTasks;
   final UsersFields users;
-  final UserModulesUnlocked modulesUnlocked;
-  final UserSubmodulesUnlocked submodulesUnlocked;
-  final UserTasksUnlocked tasksUnlocked;
-  final OrganizationsModules organizationsModules;
-  final OrganizationsSubmodules organizationsSubmodules;
-  final OrganizationsTasks organizationsTasks;
+  final UserModulesUnlockedFields modulesUnlocked;
+  final UserSubmodulesUnlockedFields submodulesUnlocked;
+  final UserTasksUnlockedFields tasksUnlocked;
+  final OrganizationsModuleFields organizationsModules;
+  final OrganizationsSubmoduleFields organizationsSubmodules;
+  final OrganizationsTaskFields organizationsTasks;
   final OrganizationsFields organizations;
 
   Future<bool> initAsync() async {
@@ -63,13 +63,12 @@ class ScrapBookModel {
       await tasks.initAsync();
       await usersTasks.initAsync();
       await users.initAsync();
-      // await modulesUnlocked.initAsync();
-      // await submodulesUnlocked.initAsync();
-      // await tasksUnlocked.initAsync();
-      // await organizationsModules.initAsync();
-      // await organizationsSubmodules.initAsync();
-      // await organizationsTasks.initAsync();
-      // await organizationsUsers.initAsync();
+      await modulesUnlocked.initAsync();
+      await submodulesUnlocked.initAsync();
+      await tasksUnlocked.initAsync();
+      await organizationsModules.initAsync();
+      await organizationsSubmodules.initAsync();
+      await organizationsTasks.initAsync();
       await organizations.initAsync();
       fetch = true;
     } catch (e) {

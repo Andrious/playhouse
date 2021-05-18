@@ -17,24 +17,15 @@ class OrganizationsAndroid
 
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
-  @override
-  bool rowid = true;
+
   @override
   bool useModuleType = false;
   @override
   bool useLocked = false;
-  @override
-  bool useName = true;
-  @override
-  bool useDescription = true;
+
   @override
   bool useKeyArt = false;
-  @override
-  bool useTimeStamp = true;
-  @override
-  bool useEmail = false;
-  @override
-  bool usePhone = false;
+
   @override
   bool useCompleted = false;
   @override
@@ -64,23 +55,13 @@ class OrganizationsModuleAndroid
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
   @override
-  bool rowid = true;
-  @override
   bool useModuleType = false;
   @override
   bool useLocked = false;
-  @override
-  bool useName = true;
-  @override
-  bool useDescription = true;
+
   @override
   bool useKeyArt = false;
-  @override
-  bool useTimeStamp = true;
-  @override
-  bool useEmail = false;
-  @override
-  bool usePhone = false;
+
   @override
   bool useCompleted = false;
   @override
@@ -88,7 +69,7 @@ class OrganizationsModuleAndroid
   @override
   bool useLockedFirst = false;
   @override
-  bool useNextId = false;
+  bool useNextId = true;
 
   @override
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData() =>
@@ -97,6 +78,28 @@ class OrganizationsModuleAndroid
   @override
   Map<String, FieldWidgets<PlayHouseFields>> newRecord() =>
       fields.getNewRecord();
+
+  @override
+  List<Widget> addedWidgets(Map<String, FieldWidgets<PlayHouseFields>> record,
+      VoidCallback onTap) {
+    final rowid = record['rowid'];
+    rowid.label = 'Id';
+    final organization = record['organization_id'];
+    organization.label = 'Organization Id';
+    final module = record['module_id'];
+    module.label = 'Module Id';
+    final locked = record['lockedFirst'];
+    locked.label = 'First Locked';
+    final next = record['next_module_id'];
+    next.label = 'Next Module';
+    return [
+      rowid.onListTile(enabled: false, tap: onTap),
+      organization.onListTile(enabled: false, tap: onTap),
+      module.onListTile(enabled: false, tap: onTap),
+      locked.onListTile(enabled: false, tap: onTap),
+      next.onListTile(enabled: false, tap: onTap),
+    ];
+  }
 }
 
 class OrganizationsSubmoduleAndroid
@@ -110,23 +113,13 @@ class OrganizationsSubmoduleAndroid
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
   @override
-  bool rowid = true;
-  @override
   bool useModuleType = false;
   @override
   bool useLocked = false;
-  @override
-  bool useName = true;
-  @override
-  bool useDescription = true;
+
   @override
   bool useKeyArt = false;
-  @override
-  bool useTimeStamp = true;
-  @override
-  bool useEmail = false;
-  @override
-  bool usePhone = false;
+
   @override
   bool useCompleted = false;
   @override
@@ -156,23 +149,13 @@ class OrganizationsTaskAndroid
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
   @override
-  bool rowid = true;
-  @override
   bool useModuleType = false;
   @override
   bool useLocked = false;
-  @override
-  bool useName = true;
-  @override
-  bool useDescription = true;
+
   @override
   bool useKeyArt = false;
-  @override
-  bool useTimeStamp = true;
-  @override
-  bool useEmail = false;
-  @override
-  bool usePhone = false;
+
   @override
   bool useCompleted = false;
   @override

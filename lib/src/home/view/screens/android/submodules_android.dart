@@ -17,24 +17,15 @@ class SubmodulesListAndroid
 
   /// Flags indicating which fields are actually displayed.
   /// Note, flags are implemented in the mixin ScrapbookFields
-  @override
-  bool rowid = true;
+
   @override
   bool useModuleType = false;
   @override
   bool useLocked = false;
-  @override
-  bool useName = true;
-  @override
-  bool useDescription = true;
+
   @override
   bool useKeyArt = false;
-  @override
-  bool useTimeStamp = false;
-  @override
-  bool useEmail = false;
-  @override
-  bool usePhone = false;
+
   @override
   bool useCompleted = false;
   @override

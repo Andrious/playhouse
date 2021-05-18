@@ -15,6 +15,12 @@ class QuestionTask extends TaskCard {
           submodule: submodule,
           name: 'questionMark',
         );
+
+  @override
+  void onTap() {
+    con.cardNo = 1;
+    super.onTap();
+  }
 }
 
 class ABCTask extends TaskCard {
@@ -24,6 +30,12 @@ class ABCTask extends TaskCard {
           submodule: submodule,
           name: 'abc',
         );
+
+  @override
+  void onTap() {
+    con.cardNo = 2;
+    super.onTap();
+  }
 }
 
 class ARTask extends TaskCard {
@@ -33,6 +45,12 @@ class ARTask extends TaskCard {
           submodule: submodule,
           name: 'AR',
         );
+
+  @override
+  void onTap() {
+    con.cardNo = 3;
+    super.onTap();
+  }
 }
 
 class PencilTask extends TaskCard {
@@ -42,6 +60,12 @@ class PencilTask extends TaskCard {
           submodule: submodule,
           name: 'pencil',
         );
+
+  @override
+  void onTap() {
+    con.cardNo = 4;
+    super.onTap();
+  }
 }
 
 class PictureTask extends TaskCard {
@@ -54,6 +78,7 @@ class PictureTask extends TaskCard {
 
   @override
   Future<void> onTap() async {
+    con.cardNo = 5;
     await image.pickImage();
   }
 }
@@ -65,6 +90,12 @@ class MovieCameraTask extends TaskCard {
           submodule: submodule,
           name: 'movieCamera',
         );
+
+  @override
+  void onTap() {
+    con.cardNo = 6;
+    super.onTap();
+  }
 }
 
 class QuestionTask02 extends TaskCard {
@@ -74,6 +105,12 @@ class QuestionTask02 extends TaskCard {
           submodule: submodule,
           name: 'questionMark',
         );
+
+  @override
+  void onTap() {
+    con.cardNo = 7;
+    super.onTap();
+  }
 }
 
 class ABCTask02 extends TaskCard {
@@ -83,6 +120,12 @@ class ABCTask02 extends TaskCard {
           submodule: submodule,
           name: 'abc',
         );
+
+  @override
+  void onTap() {
+    con.cardNo = 8;
+    super.onTap();
+  }
 }
 
 class ARTask02 extends TaskCard {
@@ -92,6 +135,12 @@ class ARTask02 extends TaskCard {
           submodule: submodule,
           name: 'AR',
         );
+
+  @override
+  void onTap() {
+    con.cardNo = 9;
+    super.onTap();
+  }
 }
 
 class PencilTask02 extends TaskCard {
@@ -101,6 +150,12 @@ class PencilTask02 extends TaskCard {
           submodule: submodule,
           name: 'pencil',
         );
+
+  @override
+  void onTap() {
+    con.cardNo = 10;
+    super.onTap();
+  }
 }
 
 class PictureTask02 extends TaskCard {
@@ -113,6 +168,7 @@ class PictureTask02 extends TaskCard {
 
   @override
   Future<void> onTap() async {
+    con.cardNo = 11;
     await image.pickImage();
   }
 }
@@ -126,7 +182,10 @@ class MovieCameraTask02 extends TaskCard {
         );
 
   @override
-  void onTap() {}
+  void onTap() {
+    con.cardNo = 12;
+    super.onTap();
+  }
 
   @override
   void onTapInfo() {}

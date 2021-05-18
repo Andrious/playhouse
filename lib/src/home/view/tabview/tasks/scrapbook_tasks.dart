@@ -21,12 +21,13 @@ class ScrapbookTasksScreen extends StatefulWidget {
 }
 
 class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
-  _ScrapbookTasksScreenState() : super(ScrapBookController()) {
-    _con = controller;
-  }
+  _ScrapbookTasksScreenState() : super(ScrapBookController());
+  // _ScrapbookTasksScreenState() : super(ScrapBookController()) {
+  //   _con = controller;
+  // }
   SubmodulesState submodule;
   String submoduleName;
-  ScrapBookController get con => _con;
+  // ScrapBookController get con => _con;
   ScrapBookController _con;
 
   TextStyle style;
@@ -35,7 +36,16 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
   void initState() {
     super.initState();
     submodule = widget.tab.state;
-    submoduleName = widget.tab.name;
+    _con = submodule.con;
+    var name;
+    if (widget.tab.submodule is String) {
+      name = widget.tab.submodule;
+    } else {
+      name = widget.tab.submodule['name'];
+    }
+    // critical to assign.
+    _con.submoduleName = name;
+    submoduleName = name;
     style = const TextStyle(color: Colors.black);
   }
 
@@ -75,35 +85,36 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
           children: [
             Flexible(
               flex: 2,
-              child: AutoSizeText(
-                submoduleName, // |',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+              child: InkWell(
+                onTap: () {
+                  setState(submodule.onPressed);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(2, 1, 2, 20),
+                  child: AutoSizeText(
+                    '$submoduleName  |',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
             ),
-            const SizedBox(width: 100),
-            // Flexible(
-            //   flex: 2,
-            //   child: AutoSizeText(
-            //     'Submodule description',
-            //     style: style,
-            //   ),
-            // ),
-            TextButton(
-              onPressed: () {
-                setState(submodule.onPressed);
-              },
-              child: Row(mainAxisSize: MainAxisSize.min, children: [
-                //   Text(
-                //     'View All',
-                //     style: style,
-                //   ),
-                Flexible(child: arrow),
-                Flexible(child: arrow),
-                Flexible(child: arrow),
-              ]),
+            Flexible(
+              flex: 2,
+              child: InkWell(
+                onTap: () {
+                  setState(submodule.onPressed);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(2, 1, 2, 20),
+                  child: AutoSizeText(
+                    'Submodule description',
+                    style: style,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -117,7 +128,8 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
               crossAxisSpacing: 10,
               primary: false,
               addRepaintBoundaries: false,
-              children: con.taskCards(submoduleName),
+              children: _con.taskCards,
+//              children: con.taskCards(widget.tab.submodule);
             ),
           ),
         ),
@@ -126,6 +138,18 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              TextButton(
+                onPressed: () {
+                  setState(submodule.onPressed);
+                },
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Text(
+                    'View All',
+                    style: style,
+                  ),
+                  Flexible(child: arrow),
+                ]),
+              ),
               TextButton(
                 onPressed: () {},
                 child: Text(
