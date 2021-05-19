@@ -92,3 +92,7 @@ export 'package:flutter_screenutil/flutter_screenutil.dart';
 /// Auto size text
 /// https://pub.dev/packages/auto_size_text/
 export 'package:auto_size_text/auto_size_text.dart';
+
+/// Crop images
+export 'package:crop/crop.dart';
+

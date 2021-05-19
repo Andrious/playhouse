@@ -9,8 +9,6 @@ import 'package:playhouse/src/controller.dart';
 import 'package:playhouse/src/view.dart';
 import 'package:state_set/state_set.dart';
 
-import 'package:crop/crop.dart';
-
 class TaskCard extends StatefulWidget with StateSetWidget {
   TaskCard({
     Key key,

@@ -71,20 +71,20 @@ class SubmodulesTabBar {
     _tabController.addListener(() {
       Prefs.setInt('${prefsLabel}SubmodulesIndex', _tabController.index);
       tabIndicator.value = _tabController.index + 1;
-      if (_con.database) {
+//      if (_con.database) {
         _con.submodule = _con.model.submodules.items[_tabController.index];
-      } else {
+//      } else {
         _con.submoduleName = _label(tabs[_tabController.index]);
-      }
+//      }
     });
 
     /// Return the text label specified in the Tab object.
     ///todo To be removed.
-    if (_con.database) {
+//    if (_con.database) {
       _con.submodule = _con.model.submodules.items[initIndex];
-    } else {
+//    } else {
       _con.submoduleName = _label(_tabs[initIndex]);
-    }
+//    }
 
     tabIndicator = PageCircleIndicator(itemCount: _tabs.length);
     tabIndicator.value = initIndex + 1;
@@ -204,33 +204,35 @@ class PicTab extends StatelessWidget {
   Widget build(BuildContext context) {
     //
     String name;
+    ///todo To be removed
     if (submodule is String) {
       name = submodule;
     } else {
       name = submodule['image'];
     }
-    final stackImage = StackImage(name: name);
-    return Stack(
-      children: [
-        stackImage,
-        Positioned(
-          bottom: 0,
-          child: Container(
-            width: 0,
-            height: 0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32),
-              color: Colors.white.withOpacity(0.5),
-            ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(''),
-                ]),
-          ),
-        ),
-      ],
-    );
+    return StackImage(name: name);
+    // final stackImage = StackImage(name: name);
+    // return Stack(
+    //   children: [
+    //     stackImage,
+    //     // Positioned(
+    //     //   bottom: 0,
+    //     //   child: Container(
+    //     //     width: 0,
+    //     //     height: 0,
+    //     //     decoration: BoxDecoration(
+    //     //       borderRadius: BorderRadius.circular(32),
+    //     //       color: Colors.white.withOpacity(0.5),
+    //     //     ),
+    //     //     child: Column(
+    //     //         crossAxisAlignment: CrossAxisAlignment.start,
+    //     //         children: const [
+    //     //           Text(''),
+    //     //         ]),
+    //     //   ),
+    //     // ),
+    //   ],
+    // );
   }
 }
 

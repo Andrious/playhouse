@@ -1,4 +1,9 @@
 
+
+## 0.37.0
+ May 19, 2021
+- Adjusting UI of task_screen
+
 ## 0.36.0
  May 18, 2021
 - Removed extra jpg files

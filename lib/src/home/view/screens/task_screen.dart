@@ -1,6 +1,8 @@
 // Copyright 2021 Grey & Ivy Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+// For base64.decode()
+import 'dart:convert';
 
 import 'package:playhouse/src/model.dart';
 
@@ -16,12 +18,10 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends StateMVC<TaskScreen> {
-  _TaskScreenState() : super(ScrapBookController());
-  //   _TaskScreenState() : super(ScrapBookController()) {
-  //   con = controller;
-  // }
-  //
-  // ScrapBookController con;
+  _TaskScreenState() : super(ScrapBookController()) {
+    con = controller;
+  }
+  ScrapBookController con;
 
   @override
   Widget build(BuildContext context) {
@@ -34,92 +34,103 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
         elevation: 0,
         excludeHeaderSemantics: true,
       ),
-      endDrawer: ScrapBookDrawer(),
-      body: Stack(
-        children: <Widget>[
-          // Container(
-          //     height: double.infinity,
-          //     child: PNetworkImage(
-          //       image,
-          //       fit: BoxFit.cover,
-          //     )),
-          SafeArea(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 2, 20),
-                        child: AutoSizeText(
-//                          '${con.submoduleName}  |',
-                          '${widget.subTask['subName']}  |',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Flexible(
-                      flex: 2,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(2, 2, 2, 20),
-                        child: AutoSizeText(
-                          'Submodule description',
-                        ),
-                      ),
-                    ),
-                  ],
+      endDrawer: const ScrapBookDrawer(),
+      body: SafeArea(
+        child: Stack(
+          alignment: AlignmentDirectional.topCenter,
+          children: <Widget>[
+            Container(
+              height: 500, // double.infinity,
+              child: Crop(
+                interactive: false,
+                backgroundColor: Colors.white,
+                dimColor: Colors.white,
+                controller: CropController(),
+                child: Image.memory(
+                  base64.decode(
+                    con.submodule['image'],
+                  ),
                 ),
-                const SizedBox(height: 100),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
                 Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
-                        color: Colors.white),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          widget.subTask['name'],
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 8),
-                                  child:
-                                      Text(widget.subTask['short_description']),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 8),
-                                  child:
-                                      Text(widget.subTask['long_description']),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 4, 2, 2),
+                    child: AutoSizeText(
+                      '${widget.subTask['subName']}  |',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                )
+                ),
+                const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(2, 4, 2, 2),
+                    child: AutoSizeText(
+                      'Submodule description',
+                    ),
+                  ),
+                ),
               ],
             ),
-          )
-        ],
+            Positioned(
+              top: 380,
+              left: 0,
+              right: 0,
+              height: 800,
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(60),
+                            topRight: Radius.circular(60),
+                          ),
+                          color: Colors.white),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            widget.subTask['name'],
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              //                             physics: const BouncingScrollPhysics(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                    child: Text(
+                                        widget.subTask['short_description']),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                    child: Text(
+                                        widget.subTask['long_description']),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
