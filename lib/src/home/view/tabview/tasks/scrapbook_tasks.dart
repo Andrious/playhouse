@@ -55,13 +55,13 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
     double maxHeight;
     if (submodule.isPanelUp) {
       arrow = const Icon(
-        Icons.expand_more,
+        Icons.expand_more, // Icons.view_headline,
         color: Colors.red,
       );
       maxHeight = 0.7;
     } else {
       arrow = const Icon(
-        Icons.expand_less,
+        Icons.expand_less, // Icons.view_headline,
         color: Colors.green,
       );
       maxHeight = 0.35;
@@ -80,18 +80,34 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
 //           fit: FlexFit.tight,
 //           child: submodule.tabBar.tabIndicator,
 //         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Flexible(
-              flex: 2,
-              child: InkWell(
-                onTap: () {
-                  setState(submodule.onPressed);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(2, 1, 2, 20),
-                  child: AutoSizeText(
+        InkWell(
+          onTap: () {
+            setState(submodule.onPressed);
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                arrow,
+                arrow,
+                arrow,
+              ],
+            ),
+          ),
+        ),
+        Flexible(
+          flex: 2,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(submodule.onPressed);
+                  },
+                  child: Text(
                     '$submoduleName  |',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -99,24 +115,18 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
                     ),
                   ),
                 ),
-              ),
-            ),
-            Flexible(
-              flex: 2,
-              child: InkWell(
-                onTap: () {
-                  setState(submodule.onPressed);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(2, 1, 2, 20),
-                  child: AutoSizeText(
+                InkWell(
+                  onTap: () {
+                    setState(submodule.onPressed);
+                  },
+                  child: Text(
                     'Submodule description',
                     style: style,
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
         Flexible(
           flex: submodule.isPanelUp ? 30 : 2,

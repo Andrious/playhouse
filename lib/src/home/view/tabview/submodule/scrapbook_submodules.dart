@@ -159,7 +159,6 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
 //     ],
 //   );
 
-
   void onPressed() {
     _movePanel();
   }
@@ -192,8 +191,10 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     return RelativeRectTween(
       begin: RelativeRect.fromLTRB(0, top, 0, bottom),
       end: const RelativeRect.fromLTRB(0, 0, 0, 0),
-    ).animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.linear));
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.linear,
+    ));
   }
 
   /// Means to 'lock' certain Submodules.

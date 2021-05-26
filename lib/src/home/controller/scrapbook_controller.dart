@@ -49,7 +49,7 @@ class ScrapBookController extends ControllerMVC {
 //  String module = '';
 
   ///todo To be removed.
-  bool database = false;
+  bool database = true;
 
   ///todo To be removed.
   String moduleName = '';

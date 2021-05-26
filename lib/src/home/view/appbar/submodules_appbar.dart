@@ -113,6 +113,7 @@ class SubmodulesTabBar {
   }
 
   List<PicTab> _subModules() {
+    //
     if (_con.inBuildScreen) {
       provider.sub03Locked = true;
       provider.sub04Locked = true;
@@ -191,7 +192,15 @@ class SubmodulesTabBar {
   }
 
   /// Return the text label specified in the Tab object.
-  String _label(PicTab tab) => tab.submodule.trim();
+  String _label(PicTab tab) {
+   String label;
+   if(tab.submodule is String) {
+     label = tab.submodule.trim();
+   }else{
+     label = '';
+   }
+   return label;
+  }
 }
 
 class PicTab extends StatelessWidget {

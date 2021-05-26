@@ -18,7 +18,7 @@ class QuestionTask extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 1;
+    con.cardNo = 0;
     super.onTap();
   }
 }
@@ -33,7 +33,7 @@ class ABCTask extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 2;
+    con.cardNo = 1;
     super.onTap();
   }
 }
@@ -48,7 +48,7 @@ class ARTask extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 3;
+    con.cardNo = 2;
     super.onTap();
   }
 }
@@ -63,7 +63,7 @@ class PencilTask extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 4;
+    con.cardNo = 3;
     super.onTap();
   }
 }
@@ -78,7 +78,7 @@ class PictureTask extends TaskCard {
 
   @override
   Future<void> onTap() async {
-    con.cardNo = 5;
+    con.cardNo = 4;
     await image.pickImage();
   }
 }
@@ -93,7 +93,7 @@ class MovieCameraTask extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 6;
+    con.cardNo = 5;
     super.onTap();
   }
 }
@@ -108,7 +108,7 @@ class QuestionTask02 extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 7;
+    con.cardNo = 6;
     super.onTap();
   }
 }
@@ -123,7 +123,7 @@ class ABCTask02 extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 8;
+    con.cardNo = 7;
     super.onTap();
   }
 }
@@ -138,7 +138,7 @@ class ARTask02 extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 9;
+    con.cardNo = 8;
     super.onTap();
   }
 }
@@ -153,7 +153,7 @@ class PencilTask02 extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 10;
+    con.cardNo = 9;
     super.onTap();
   }
 }
@@ -168,7 +168,7 @@ class PictureTask02 extends TaskCard {
 
   @override
   Future<void> onTap() async {
-    con.cardNo = 11;
+    con.cardNo = 10;
     await image.pickImage();
   }
 }
@@ -183,7 +183,7 @@ class MovieCameraTask02 extends TaskCard {
 
   @override
   void onTap() {
-    con.cardNo = 12;
+    con.cardNo = 11;
     super.onTap();
   }
 
