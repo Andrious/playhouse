@@ -16,7 +16,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
   String get name => 'playhouse_scrapbook';
 
   @override
-  int get version => 1;
+  int get version => 2;
 
   static const MODULES = 'modules';
   static const SUBMODULES = 'submodules';

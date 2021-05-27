@@ -1,5 +1,9 @@
 
 
+## 0.40.1
+ May 27, 2021
+- int get version => 2;
+
 ## 0.40.0
  May 27, 2021
 - if (App.inDebugger) {
