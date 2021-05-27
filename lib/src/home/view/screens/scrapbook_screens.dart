@@ -130,9 +130,9 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
     super.initState();
     record = widget.record;
     // Supply default widgets
-    if(record['name'] == null) {
+    if (record['name'] == null) {
       widgets = [];
-    }else{
+    } else {
       widgets = <Widget>[
         record['rowid'].onListTile(enabled: false, tap: onTap),
         record['name'].onListTile(tap: onTap),

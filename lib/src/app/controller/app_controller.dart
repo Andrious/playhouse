@@ -9,7 +9,6 @@ import 'package:firebase_core/firebase_core.dart' as f;
 import 'package:firebase_crashlytics/firebase_crashlytics.dart'
     show FirebaseCrashlytics;
 
-
 import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/view.dart';
@@ -155,11 +154,11 @@ class AppController extends c.AppController {
   // Future<void> signOut() => _auth.signOut().then(_logInUser);
 
 //  void _logInUser(dynamic user) {
-    // //
-    // if (user != null) {
-    //   userStamp();
-    // }
-    // FirebaseCrashlytics.instance.setUserIdentifier(_auth.name);
+  // //
+  // if (user != null) {
+  //   userStamp();
+  // }
+  // FirebaseCrashlytics.instance.setUserIdentifier(_auth.name);
 //  }
 
   // Stamp the user information to the firebase database.

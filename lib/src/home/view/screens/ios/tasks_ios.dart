@@ -4,6 +4,4 @@
 
 import 'package:playhouse/src/view.dart';
 
-class TasksListiOS extends TasksListAndroid {
-
-}
+class TasksListiOS extends TasksListAndroid {}

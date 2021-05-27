@@ -21,7 +21,7 @@ class DatabaseTest {
   factory DatabaseTest() => _this ??= DatabaseTest._();
   DatabaseTest._()
 //      : _auth = Auth() {
-    {
+  {
     // Assign when this record was created.
     _timeStamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 //    userId = _auth.uid;

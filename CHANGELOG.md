@@ -1,5 +1,18 @@
 
 
+## 0.40.0
+ May 27, 2021
+- if (App.inDebugger) {
+-        await loadScrapBookDatabase(db);
+-  Future<void> _onDelete(Database db) async {
+-  Future<void> _onCreate(Database db) async {
+
+## 0.39.0
+ May 27, 2021
+- database = Prefs.getBool('useDatabase');
+- commented out the arrow, arrow, arrow
+- if(initIndex < 0 || initIndex > _tabs.length - 1) { initIndex = 0;
+
 ## 0.38.0
  May 26, 2021
 - bool database = true;

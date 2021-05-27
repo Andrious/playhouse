@@ -63,8 +63,7 @@ class ModulesListAndroid extends ScrapbookListScreen<ModulesList, ModuleFields>
       record['name'].textFormField,
       record['short_description'].textFormField,
       record['long_description'].textFormField,
-      record['next_module_id']
-          .onListItems(dropItems: _moduleItems(record))
+      record['next_module_id'].onListItems(dropItems: _moduleItems(record))
     ];
   }
 

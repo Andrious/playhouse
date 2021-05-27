@@ -19,7 +19,8 @@ class DesignBuildAppBar {
     // Supply the Controller.
     _con = _provider.con;
 
-    _tabController = TabController( // GITabController(
+    _tabController = TabController(
+      // GITabController(
       initialIndex: Prefs.getInt('DesignBuildIndex'),
       length: 2,
       vsync: _provider,

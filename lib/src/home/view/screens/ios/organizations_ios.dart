@@ -4,18 +4,10 @@
 
 import 'package:playhouse/src/view.dart';
 
-class OrganizationsiOS extends OrganizationsAndroid {
+class OrganizationsiOS extends OrganizationsAndroid {}
 
-}
+class OrganizationsModuleiOS extends OrganizationsModuleAndroid {}
 
-class OrganizationsModuleiOS extends OrganizationsModuleAndroid {
+class OrganizationsSubmoduleiOS extends OrganizationsSubmoduleAndroid {}
 
-}
-
-class OrganizationsSubmoduleiOS extends OrganizationsSubmoduleAndroid {
-
-}
-
-class OrganizationsTaskiOS extends OrganizationsTaskAndroid {
-
-}
+class OrganizationsTaskiOS extends OrganizationsTaskAndroid {}

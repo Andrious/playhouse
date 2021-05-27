@@ -36,12 +36,14 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
       endDrawer: const ScrapBookDrawer(),
       body: Stack(
         children: <Widget>[
-          /// Large Picture
           Crop(
+            padding: const EdgeInsets.only(),
             interactive: false,
             backgroundColor: Colors.white,
             dimColor: Colors.white,
-            controller: CropController(),
+            controller: CropController(
+              aspectRatio: 0.78,
+            ),
             child: Image.memory(
               base64.decode(
                 con.submodule['image'],
@@ -51,15 +53,29 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
           SafeArea(
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(children: []),
-                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          widget.subTask['subName'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      const Flexible(
+                        child: Text(
+                          'Submodule description',
+                        ),
+                      ),
+                    ]),
                 const Spacer(),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(30),
                         color: Colors.white),
                     child: Column(
                       children: <Widget>[
@@ -82,22 +98,14 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
                         Padding(
                           padding: const EdgeInsets.only(
                             top: 10,
-                            bottom: 30,
                           ),
                           child: Text(widget.subTask['short_description']),
                         ),
-                        Expanded(
+                        const SizedBox(height: 30),
+                        Flexible(
                           child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                /// Long Description
-                                SingleChildScrollView(
-                                  child:
-                                      Text(widget.subTask['long_description']),
-                                ),
-                              ],
-                            ),
+                            physics: const BouncingScrollPhysics(),
+                            child: Text(widget.subTask['long_description']),
                           ),
                         ),
                       ],

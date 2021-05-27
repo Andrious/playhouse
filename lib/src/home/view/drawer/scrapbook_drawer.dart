@@ -20,6 +20,21 @@ class ScrapBookDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
 //    final List<Widget> widgets = [LogInLogOut()];
     final List<Widget> widgets = [];
+
+    final dataWidget = ListTile(
+      title: const Text('Use Database'),
+      trailing: CupertinoSwitch(
+        value: Prefs.getBool('useDatabase'),
+        onChanged: (bool value) {
+          final useDatabase = Prefs.getBool('useDatabase');
+          Prefs.setBool('useDatabase', !useDatabase);
+          App.refresh();
+        },
+      ),
+    );
+    // Add to the drawer.
+    widgets.add(dataWidget);
+
     if (App.inDebugger) {
       widgets.addAll([
         const Divider(),

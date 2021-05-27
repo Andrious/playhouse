@@ -36,6 +36,8 @@ class ScrapBookController extends ControllerMVC {
     //
     // init = await database.downloadDB();
 
+    database = Prefs.getBool('useDatabase');
+
     bool init = await model.initAsync();
 
     return init;
@@ -49,7 +51,7 @@ class ScrapBookController extends ControllerMVC {
 //  String module = '';
 
   ///todo To be removed.
-  bool database = true;
+  bool database = false;
 
   ///todo To be removed.
   String moduleName = '';
@@ -136,17 +138,17 @@ class ScrapBookController extends ControllerMVC {
   }
 
   List<Widget> get taskCards => [
-      QuestionTask(submoduleName),
-      ABCTask(submoduleName),
-      ARTask(submoduleName),
-      PencilTask(submoduleName),
-      PictureTask(submoduleName),
-      MovieCameraTask(submoduleName),
-      QuestionTask02(submoduleName),
-      ABCTask02(submoduleName),
-      ARTask02(submoduleName),
-      PencilTask02(submoduleName),
-      PictureTask02(submoduleName),
-      MovieCameraTask02(submoduleName),
-    ];
+        QuestionTask(submoduleName),
+        ABCTask(submoduleName),
+        ARTask(submoduleName),
+        PencilTask(submoduleName),
+        PictureTask(submoduleName),
+        MovieCameraTask(submoduleName),
+        QuestionTask02(submoduleName),
+        ABCTask02(submoduleName),
+        ARTask02(submoduleName),
+        PencilTask02(submoduleName),
+        PictureTask02(submoduleName),
+        MovieCameraTask02(submoduleName),
+      ];
 }

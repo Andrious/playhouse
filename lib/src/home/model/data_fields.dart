@@ -61,15 +61,18 @@ class UsersFields extends PlayHouseFields<UsersTable> {
 }
 
 class UserModulesUnlockedFields extends PlayHouseFields<UserModulesUnlocked> {
-  factory UserModulesUnlockedFields() => _this ??= UserModulesUnlockedFields._();
+  factory UserModulesUnlockedFields() =>
+      _this ??= UserModulesUnlockedFields._();
   UserModulesUnlockedFields._() {
     table = s.UserModulesUnlocked();
   }
   static UserModulesUnlockedFields _this;
 }
 
-class UserSubmodulesUnlockedFields extends PlayHouseFields<UserSubmodulesUnlocked> {
-  factory UserSubmodulesUnlockedFields() => _this ??= UserSubmodulesUnlockedFields._();
+class UserSubmodulesUnlockedFields
+    extends PlayHouseFields<UserSubmodulesUnlocked> {
+  factory UserSubmodulesUnlockedFields() =>
+      _this ??= UserSubmodulesUnlockedFields._();
   UserSubmodulesUnlockedFields._() {
     table = s.UserSubmodulesUnlocked();
   }
@@ -96,7 +99,8 @@ class OrganizationsFields extends PlayHouseFields<OrganizationsTable> {
 }
 
 class OrganizationsModuleFields extends PlayHouseFields<OrganizationsModules> {
-  factory OrganizationsModuleFields() => _this ??= OrganizationsModuleFields._();
+  factory OrganizationsModuleFields() =>
+      _this ??= OrganizationsModuleFields._();
   OrganizationsModuleFields._() {
     table = s.OrganizationsModules();
   }
@@ -106,8 +110,10 @@ class OrganizationsModuleFields extends PlayHouseFields<OrganizationsModules> {
   Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
 }
 
-class OrganizationsSubmoduleFields extends PlayHouseFields<OrganizationsSubmodules> {
-  factory OrganizationsSubmoduleFields() => _this ??= OrganizationsSubmoduleFields._();
+class OrganizationsSubmoduleFields
+    extends PlayHouseFields<OrganizationsSubmodules> {
+  factory OrganizationsSubmoduleFields() =>
+      _this ??= OrganizationsSubmoduleFields._();
   OrganizationsSubmoduleFields._() {
     table = s.OrganizationsSubmodules();
   }
@@ -140,7 +146,7 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
       await query();
 
       // Throw any exceptions that may result from the query.
-      if(table.hasError){
+      if (table.hasError) {
         throw table.exception;
       }
 

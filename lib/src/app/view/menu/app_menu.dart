@@ -106,7 +106,7 @@ class AppMenu extends Menu {
         _appCon.logOut();
         break;
       case 'SignIn':
- //       unawaited(_appCon.signIn());
+        //       unawaited(_appCon.signIn());
         break;
       default:
     }

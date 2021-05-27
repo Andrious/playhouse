@@ -11,6 +11,13 @@ class PlayhouseSQLiteDB extends SQLiteDB {
   PlayhouseSQLiteDB._();
   static PlayhouseSQLiteDB _this;
 
+  /// Name of the whole Database
+  @override
+  String get name => 'playhouse_scrapbook';
+
+  @override
+  int get version => 1;
+
   static const MODULES = 'modules';
   static const SUBMODULES = 'submodules';
   static const TASKS = 'tasks';
@@ -70,7 +77,66 @@ class PlayhouseSQLiteDB extends SQLiteDB {
   }
 
   @override
-  Future<void> onCreate(Database db, int version) async {
+  Future<void> onCreate(Database db, int version) => _onCreate(db);
+
+  @override
+  Future<void> onUpgrade(Database db, int oldVersion, int newVersion) {
+    _onDelete(db);
+    return _onCreate(db);
+  }
+
+  Future<void> _onDelete(Database db) async {
+    //
+    await db.execute('''
+    DROP TABLE IF EXISTS `$MODULES`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$SUBMODULES`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$TASKS`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$USERS`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$USERS_TASKS`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$USERS_MODULES_UNLOCKED`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$USERS_SUBMODULES_UNLOCKED`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$USERS_TASKS_UNLOCKED`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$ORGANIZATIONS`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$ORGANIZATIONS_MODULES`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$ORGANIZATIONS_SUBMODULES`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$ORGANIZATIONS_TASKS`
+    ''');
+  }
+
+  Future<void> _onCreate(Database db) async {
     // NOTE:
     // Each table has a rowid field supplied by SQLite as the PRIMARY field
     // Other Tables will reference this field as a FOREIGN key field by another name.
@@ -189,17 +255,8 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        deleted INTEGER DEFAULT 0)
     ''');
 
-    if (App.inDebugger) {
-      await loadScrapBookDatabase(db);
-    }
+    await loadScrapBookDatabase(db);
   }
-
-  /// Name of the whole Database
-  @override
-  String get name => 'playhouse_scrapbook';
-
-  @override
-  int get version => 1;
 }
 
 /// The Modules of this app.

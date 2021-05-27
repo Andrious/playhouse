@@ -15,8 +15,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
     //
     final List<Widget> _fieldWidgets = [];
 
-    if (fldWidget['rowid'] != null &&
-        fldWidget['rowid'].value != null) {
+    if (fldWidget['rowid'] != null && fldWidget['rowid'].value != null) {
       final value = fldWidget['rowid'].value;
       String text;
       if (value == null) {
@@ -30,15 +29,12 @@ mixin ScrapbookFields implements UseWhichWidgets {
       }
       _fieldWidgets.add(
         Flexible(
-          child: Text(text,
-              style:
-              const TextStyle(fontSize: 18)),
+          child: Text(text, style: const TextStyle(fontSize: 18)),
         ),
       );
     }
 
-    if (fldWidget['name'] != null &&
-        fldWidget['name'].value != null) {
+    if (fldWidget['name'] != null && fldWidget['name'].value != null) {
       _fieldWidgets.add(
         Flexible(
           flex: 2,
@@ -112,35 +108,35 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if(fldWidget['organization_id'] != null &&
-        fldWidget['organization_id'].value != null){
+    if (fldWidget['organization_id'] != null &&
+        fldWidget['organization_id'].value != null) {
       _fieldWidgets.add(
         Flexible(
           child: Text(fldWidget['organization_id'].value.toString(),
               style:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         ),
       );
     }
 
-    if(fldWidget['module_id'] != null &&
-        fldWidget['module_id'].value != null){
+    if (fldWidget['module_id'] != null &&
+        fldWidget['module_id'].value != null) {
       _fieldWidgets.add(
         Flexible(
           child: Text(fldWidget['module_id'].value.toString(),
               style:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         ),
       );
     }
 
-    if(fldWidget['next_module_id'] != null &&
-        fldWidget['next_module_id'].value != null){
+    if (fldWidget['next_module_id'] != null &&
+        fldWidget['next_module_id'].value != null) {
       _fieldWidgets.add(
         Flexible(
           child: Text(fldWidget['next_module_id'].value.toString(),
               style:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         ),
       );
     }
@@ -151,7 +147,6 @@ mixin ScrapbookFields implements UseWhichWidgets {
 }
 
 class UseWhichWidgets {
-
   bool useModuleType;
   bool useLocked;
 

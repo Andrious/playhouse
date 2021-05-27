@@ -15,8 +15,7 @@ import 'package:playhouse/src/controller.dart' show Auth;
 class PlayhouseFireStoreDB {
   factory PlayhouseFireStoreDB() => _this ??= PlayhouseFireStoreDB._();
 
-  PlayhouseFireStoreDB._()
-      :  model = ScrapBookModel();
+  PlayhouseFireStoreDB._() : model = ScrapBookModel();
 //      : _auth = Auth(),
   static PlayhouseFireStoreDB _this;
 
@@ -75,7 +74,7 @@ class PlayhouseFireStoreDB {
 //      querySnapshot =
 //          await collectionRef.where('userId', isEqualTo: _auth.uid).get();
 //    } else {
-      querySnapshot = await collectionRef.get();
+    querySnapshot = await collectionRef.get();
 //    }
     //
     for (final doc in querySnapshot.docs) {

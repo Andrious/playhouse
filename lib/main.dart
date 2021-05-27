@@ -8,8 +8,7 @@ import 'package:playhouse/src/controller.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-void main() => runApp(ScreenUtilInit(
-    builder: () => MyApp()));
+void main() => runApp(ScreenUtilInit(builder: () => MyApp()));
 
 class MyApp extends AppStatefulWidget {
   MyApp({Key key})

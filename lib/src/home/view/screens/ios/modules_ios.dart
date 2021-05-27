@@ -18,7 +18,4 @@ import 'package:playhouse/src/controller.dart';
 //   Widget build(BuildContext context) => const Center();
 // }
 
-
-class ModulesListiOS extends ModulesListAndroid {
-
-}
+class ModulesListiOS extends ModulesListAndroid {}

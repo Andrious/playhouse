@@ -51,7 +51,7 @@ class SubmodulesTabBar {
     }
 
     /// Get the 'initial' index. Display the last viewed tab.
-    final initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
+    var initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
 
     // if(initIndex == 4){
     //   initIndex--;
@@ -60,7 +60,8 @@ class SubmodulesTabBar {
     /// Return a list of 'Picture tabs'
     _tabs = _subModules();
 
-    _tabController = TabController( // SubTabController(
+    _tabController = TabController(
+      // SubTabController(
 //      initialIndex: initIndex,
       length: _tabs.length,
       vsync: provider,
@@ -72,19 +73,19 @@ class SubmodulesTabBar {
       Prefs.setInt('${prefsLabel}SubmodulesIndex', _tabController.index);
       tabIndicator.value = _tabController.index + 1;
 //      if (_con.database) {
-        _con.submodule = _con.model.submodules.items[_tabController.index];
+      _con.submodule = _con.model.submodules.items[_tabController.index];
 //      } else {
-        _con.submoduleName = _label(tabs[_tabController.index]);
+      _con.submoduleName = _label(tabs[_tabController.index]);
 //      }
     });
 
     /// Return the text label specified in the Tab object.
-    ///todo To be removed.
-//    if (_con.database) {
-      _con.submodule = _con.model.submodules.items[initIndex];
-//    } else {
-      _con.submoduleName = _label(_tabs[initIndex]);
-//    }
+    _con.submodule = _con.model.submodules.items[initIndex];
+
+    if (initIndex < 0 || initIndex > _tabs.length - 1) {
+      initIndex = 0;
+    }
+    _con.submoduleName = _label(_tabs[initIndex]);
 
     tabIndicator = PageCircleIndicator(itemCount: _tabs.length);
     tabIndicator.value = initIndex + 1;
@@ -193,13 +194,13 @@ class SubmodulesTabBar {
 
   /// Return the text label specified in the Tab object.
   String _label(PicTab tab) {
-   String label;
-   if(tab.submodule is String) {
-     label = tab.submodule.trim();
-   }else{
-     label = '';
-   }
-   return label;
+    String label;
+    if (tab.submodule is String) {
+      label = tab.submodule.trim();
+    } else {
+      label = '';
+    }
+    return label;
   }
 }
 
@@ -213,6 +214,7 @@ class PicTab extends StatelessWidget {
   Widget build(BuildContext context) {
     //
     String name;
+
     ///todo To be removed
     if (submodule is String) {
       name = submodule;

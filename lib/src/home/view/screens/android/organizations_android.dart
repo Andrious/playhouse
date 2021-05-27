@@ -44,9 +44,8 @@ class OrganizationsAndroid
       fields.getNewRecord();
 }
 
-class OrganizationsModuleAndroid
-    extends ScrapbookListScreen<OrganizationsModuleList, OrganizationsModuleFields>
-    with ScrapbookFields {
+class OrganizationsModuleAndroid extends ScrapbookListScreen<
+    OrganizationsModuleList, OrganizationsModuleFields> with ScrapbookFields {
   OrganizationsModuleAndroid() : super(I10n.s('Organizations Module'));
 
   @override
@@ -80,8 +79,8 @@ class OrganizationsModuleAndroid
       fields.getNewRecord();
 
   @override
-  List<Widget> addedWidgets(Map<String, FieldWidgets<PlayHouseFields>> record,
-      VoidCallback onTap) {
+  List<Widget> addedWidgets(
+      Map<String, FieldWidgets<PlayHouseFields>> record, VoidCallback onTap) {
     final rowid = record['rowid'];
     rowid.label = 'Id';
     final organization = record['organization_id'];
@@ -102,9 +101,9 @@ class OrganizationsModuleAndroid
   }
 }
 
-class OrganizationsSubmoduleAndroid
-    extends ScrapbookListScreen<OrganizationsSubmoduleList, OrganizationsSubmoduleFields>
-    with ScrapbookFields {
+class OrganizationsSubmoduleAndroid extends ScrapbookListScreen<
+    OrganizationsSubmoduleList,
+    OrganizationsSubmoduleFields> with ScrapbookFields {
   OrganizationsSubmoduleAndroid() : super(I10n.s('Organizations Submodule'));
 
   @override
