@@ -6,7 +6,6 @@ import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
 class SimpleUnityScreen extends StatefulWidget {
   const SimpleUnityScreen({Key key}) : super(key: key);
-
   @override
   State createState() => _SimpleUnityScreen();
 }

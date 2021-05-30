@@ -1,9 +1,10 @@
 
 
-## 0.41.0
+## 0.41.0+2
  May 29, 2021
 - flutter_unity_widget: ^4.0.0
 - unitLibrary example app
+- await con.openFullScreenRoute(const SimpleUnityScreen());
 
 ## 0.40.1
  May 27, 2021

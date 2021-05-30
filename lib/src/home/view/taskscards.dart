@@ -50,7 +50,6 @@ class ARTask extends TaskCard {
   Future<void> onTap() async {
     con.cardNo = 2;
     await con.openFullScreenRoute(const SimpleUnityScreen());
-    con.setState(() {});
   }
 }
 
