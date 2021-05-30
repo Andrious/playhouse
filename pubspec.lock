@@ -275,6 +275,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_unity_widget:
+    dependency: "direct main"
+    description:
+      name: flutter_unity_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0-null-safe"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -551,6 +558,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  stream_transform:
+    dependency: transitive
+    description:
+      name: stream_transform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   string_scanner:
     dependency: transitive
     description:

@@ -47,9 +47,10 @@ class ARTask extends TaskCard {
         );
 
   @override
-  void onTap() {
+  Future<void> onTap() async {
     con.cardNo = 2;
-    super.onTap();
+    await con.openFullScreenRoute(const SimpleUnityScreen());
+    con.setState(() {});
   }
 }
 

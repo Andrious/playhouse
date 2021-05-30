@@ -1,5 +1,10 @@
 
 
+## 0.41.0
+ May 29, 2021
+- flutter_unity_widget: ^4.0.0
+- unitLibrary example app
+
 ## 0.40.1
  May 27, 2021
 - int get version => 2;

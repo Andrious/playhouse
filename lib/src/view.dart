@@ -55,6 +55,7 @@ export 'package:playhouse/src/home/view/page_circle_indicator.dart';
 /// Screens
 export 'package:playhouse/src/home/view/screens/scrapbook_screens.dart';
 export 'package:playhouse/src/home/view/screens/scrapbook_screens_widgets.dart';
+export 'package:playhouse/src/home/view/screens/simple_unity_screen.dart';
 
 /// Modules
 export 'package:playhouse/src/home/view/screens/modules_list.dart';

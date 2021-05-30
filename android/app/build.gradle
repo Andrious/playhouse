@@ -79,6 +79,9 @@ android {
 }
 
 dependencies {
+
+    implementation project(':unityLibrary')                                   //   <--- depends on the unity folder, unityLibrary
+
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
 

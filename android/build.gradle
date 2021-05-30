@@ -13,11 +13,14 @@ buildscript {
 
 allprojects {
     repositories {
-        google()  // Google's Maven repository
+        flatDir {
+            dirs "${project(':unityLibrary').projectDir}/libs"    //      <-------------   folder's location.
+        }
+
+        google()
         jcenter()
     }
 }
-
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
