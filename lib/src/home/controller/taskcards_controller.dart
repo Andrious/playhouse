@@ -74,7 +74,7 @@ class _TaskCardsState extends State<TaskCard> {
             onTap: widget.onTapInfo,
             highlightColor: const Color(0xffbb86fc),
             child: FutureBuilder<Widget>(
-                future: widget.image.getImage(widget),
+                future: _cardContent(),
                 initialData: child,
                 builder: (_, snapshot) => _futureBuilder(snapshot)),
           ),
@@ -92,6 +92,16 @@ class _TaskCardsState extends State<TaskCard> {
         ],
       ),
     );
+  }
+
+  Future<Widget> _cardContent() async {
+    Widget widget;
+    final parent = this.widget;
+    widget = await parent.image.getImage(parent);
+    if(widget == null){
+      widget = child;
+    }
+    return widget;
   }
 
   Widget _futureBuilder(AsyncSnapshot<Widget> snapshot) {

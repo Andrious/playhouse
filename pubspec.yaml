@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.41.0+2
+version: 0.42.0
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -23,6 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+
+  # https://pub.dev/packages/font_awesome_flutter/
+  font_awesome_flutter: ^9.0.0
 
   # https://pub.dev/packages/flutter_unity_widget/
   flutter_unity_widget: ^4.0.0
@@ -46,8 +50,6 @@ dependencies:
   dbutils: ^3.0.0
 #    path: ../../packages/dbutils
 
-# https://pub.dev/packages/flutter_screenutil/
-  flutter_screenutil: ^5.0.0
 
 # https://pub.dev/packages/auto_size_text/
   auto_size_text: ^2.0.0
@@ -164,6 +166,10 @@ flutter:
       fonts:
         - asset: assets/google_fonts/Ubuntu-Regular.ttf
         - asset: assets/google_fonts/Ubuntu-Medium.ttf
+# Add custom icons
+    - family: MyFlutterApp
+      fonts:
+        - asset: assets/icons/ReminderIcon.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

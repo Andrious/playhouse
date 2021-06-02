@@ -11,6 +11,9 @@ import 'package:playhouse/src/view.dart';
 /// The Event handling code
 import 'package:playhouse/src/controller.dart';
 
+/// Special icons used
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 /// State of the Task:  Favorite, Incomplete, etc.
 class ScrapbookTasksScreen extends StatefulWidget {
   const ScrapbookTasksScreen({Key key, @required this.tab}) : super(key: key);
@@ -149,33 +152,72 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
                 onPressed: () {
                   setState(submodule.onPressed);
                 },
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Text(
-                    'View All',
-                    style: style,
-                  ),
-                  Flexible(child: arrow),
-                ]),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'All',
-                  style: style,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'View All',
+                        style: style,
+                      ),
+                    ),
+                    const Expanded(
+                      child: FaIcon(FontAwesomeIcons.angleUp),
+                    ),
+                  ],
                 ),
               ),
               TextButton(
                 onPressed: () {},
-                child: Text(
-                  'Favorite',
-                  style: style,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: I10n.t(
+                        'To Do',
+                        style: style,
+                      ),
+                    ),
+                    const Expanded(
+                      child: FaIcon(
+                        FlutterIcons.reminder,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               TextButton(
                 onPressed: () {},
-                child: Text(
-                  'Incomplete',
-                  style: style,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: I10n.t(
+                        'Done',
+                        style: style,
+                      ),
+                    ),
+                    const Expanded(
+                      child: FaIcon(
+                        Icons.done,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: I10n.t(
+                        'Favourites',
+                        style: style,
+                      ),
+                    ),
+                    const Expanded(
+                      child: FaIcon(
+                        Icons.star,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

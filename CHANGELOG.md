@@ -1,5 +1,12 @@
 
 
+## 0.42.0
+ June 02, 2021
+- FlutterIcons.reminder icon
+- Removed ScreenUtilInit package
+- Use AutoSizeText package
+- Add icons to View All (arrow below), To Do (finder), Done (Check), Favourites (Star)
+
 ## 0.41.0+2
  May 29, 2021
 - flutter_unity_widget: ^4.0.0

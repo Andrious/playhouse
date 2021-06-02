@@ -14,6 +14,9 @@ export 'package:playhouse/src/app/view/menu/app_menu.dart';
 /// App's SignIn Routine
 export 'package:playhouse/src/app/view/signin_screen.dart';
 
+/// Custom Icon
+export 'package:playhouse/src/app/view/flutter_icons.dart';
+
 /// Scrapbook main screen
 export 'package:playhouse/src/home/view/scrapbook_main.dart';
 
@@ -88,7 +91,7 @@ export 'package:state_set/state_set.dart';
 
 /// Responsive Screen size
 /// https://pub.dev/packages/flutter_screenutil/
-export 'package:flutter_screenutil/flutter_screenutil.dart';
+//export 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// Auto size text
 /// https://pub.dev/packages/auto_size_text/

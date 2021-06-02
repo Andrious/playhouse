@@ -23,6 +23,7 @@ class ScrapBookDrawer extends StatelessWidget {
 
     final dataWidget = ListTile(
       title: const Text('Use Database'),
+      subtitle: const Text('restart app to take effect'),
       trailing: CupertinoSwitch(
         value: Prefs.getBool('useDatabase'),
         onChanged: (bool value) {

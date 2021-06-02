@@ -115,13 +115,14 @@ class ModulesAppBar {
         Tab(
           child: AutoSizeText(
             I10n.s('Site Assessment'),
-            minFontSize: 16,
+//            minFontSize: 6,
             style: TextStyle(
               fontWeight:
                   _tabController.index == 1 ? FontWeight.w700 : FontWeight.w400,
             ),
-            softWrap: false,
-            overflow: TextOverflow.fade,
+//            softWrap: false,
+            wrapWords: true,
+//            overflow: TextOverflow.visible,
           ),
         ),
         Tab(

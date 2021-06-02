@@ -87,34 +87,23 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
   @override
   Widget build(BuildContext context) => LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-        //
-        final animation = _getPanelAnimation(constraints);
-
-        final ScrollPhysics scrollPhysics =
-            ScrollConfiguration.of(context).getScrollPhysics(context);
-
-        final tabBar = GreyIvyTabBar(
-          controller: _sbSubTabBar.controller,
-          isScrollable: true,
-          indicatorSize: TabBarIndicatorSize.label,
-          tabs: _sbSubTabBar.tabs,
-          physics: BigPageScrollPhysics(
-            controller: _sbSubTabBar.controller,
-          ).applyTo(scrollPhysics),
-        );
-
-        final tabView = TabBarView(
-          controller: _sbSubTabBar.controller,
-          children: _sbSubTabBar.children,
-        );
-
-//        _sbSubTabBar.controller.tabBar = tabBar;
-
         return Stack(
           children: <Widget>[
-            tabBar,
+            _SwipeUpDetector(
+              this,
+              child: GreyIvyTabBar(
+                controller: _sbSubTabBar.controller,
+                isScrollable: true,
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs: _sbSubTabBar.tabs,
+                physics: BigPageScrollPhysics(
+                  controller: _sbSubTabBar.controller,
+                ).applyTo(
+                    ScrollConfiguration.of(context).getScrollPhysics(context)),
+              ),
+            ),
             PositionedTransition(
-              rect: animation,
+              rect: _getPanelAnimation(constraints),
               child: Material(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30),
@@ -123,7 +112,13 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
                 elevation: 12,
                 child: Container(
                   height: _panelHeight,
-                  child: tabView,
+                  child: _SwipeUpDetector(
+                    this,
+                    child: TabBarView(
+                      controller: _sbSubTabBar.controller,
+                      children: _sbSubTabBar.children,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -319,4 +314,34 @@ class BigPageScrollPhysics extends ScrollPhysics {
 
   @override
   bool get allowImplicitScrolling => false;
+}
+
+/// Swipe the Task Card panel up and down.
+class _SwipeUpDetector extends GestureDetector {
+  //
+  _SwipeUpDetector(SubmodulesState state, {@required Widget child})
+      : super(
+          onVerticalDragStart: (details) => _start = details.localPosition.dy,
+          onVerticalDragUpdate: (details) => _end = details.localPosition.dy,
+          onVerticalDragEnd: (details) {
+            //
+            final panelUp = state.isPanelUp;
+            if (_end < _start) {
+              if (!panelUp) {
+                state.setState(() {
+                  state._movePanel();
+                });
+              }
+            } else if (_end > _start) {
+              if (panelUp) {
+                state.setState(() {
+                  state._movePanel();
+                });
+              }
+            }
+          },
+          child: child,
+        );
+  static double _start = double.infinity;
+  static double _end = double.infinity;
 }
