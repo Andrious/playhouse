@@ -4,10 +4,16 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data' show Uint8List;
 
 import 'package:playhouse/src/controller.dart';
 import 'package:playhouse/src/view.dart';
+
 import 'package:state_set/state_set.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'package:image/image.dart' as i;
+import 'package:uuid/uuid.dart';
 
 class TaskCard extends StatefulWidget with StateSetWidget {
   TaskCard({
@@ -47,11 +53,12 @@ class _TaskCardsState extends State<TaskCard> {
   @override
   void initState() {
     super.initState();
-    widget.withState(this);
-    widget.initState();
-    widget.image._state = this;
+    final _parent = widget;
+    _parent.withState(this);
+    _parent.initState();
+    _parent.image._state = this;
 //    widget.image.getImage(widget);
-    child ??= Image.asset('assets/images/${widget.name.trim()}.jpg');
+    child ??= Image.asset('assets/images/${_parent.name.trim()}.jpg');
   }
 
   @override
@@ -98,7 +105,7 @@ class _TaskCardsState extends State<TaskCard> {
     Widget widget;
     final parent = this.widget;
     widget = await parent.image.getImage(parent);
-    if(widget == null){
+    if (widget == null) {
       widget = child;
     }
     return widget;
@@ -172,13 +179,73 @@ class PickImage {
   Future<void> pickImage() async {
     final image = ImagePicker();
     final path = await image.picker();
-    if (path.isNotEmpty) {
+    return recordImage(path);
+  }
+
+  Future<bool> saveJpg(Uint8List image) async {
+    //
+    Directory directory;
+
+    try {
+      directory = await getApplicationDocumentsDirectory();
+    } catch (ex) {
+      directory = null;
+    }
+
+    if (directory == null) {
+      return false;
+    }
+
+    const uuid = Uuid();
+
+    final unique = uuid.v4().replaceAll(RegExp('-'), '');
+
+    final fileName = '${card.name}_${unique.substring(0, 7)}';
+
+    var file = await File('${directory.path}/$fileName.jpg').create();
+
+    file =
+        await file.writeAsBytes(i.encodeJpg(i.decodeImage(image)), flush: true);
+
+    final path = file.path;
+
+    var save = path.isNotEmpty;
+
+    if (save) {
+      //
+      final old = Prefs.getString(key);
+
+      if (old.isNotEmpty) {
+        //
+        final oldFile = File(old);
+
+        FileSystemEntity entity;
+        try {
+          entity = await oldFile.delete();
+        } catch (e) {
+          entity = null;
+        }
+        save = await entity?.exists() ?? false;
+      }
+      save = await recordImage(path);
+    }
+    return save;
+  }
+
+  Future<bool> recordImage(String path) async {
+    //
+    var record = path != null && path.isNotEmpty;
+
+    if (record) {
       var state = card.stateOf<_TaskCardsState>();
       state ??= _state;
-      state?.child = Image.file(File(path), fit: BoxFit.fitHeight);
+//      state?.child = Image.file(File(path), fit: BoxFit.fitHeight);
+      state?.child =
+          Crop(controller: CropController(), child: Image.file(File(path)));
       // ignore: invalid_use_of_protected_member
       state?.setState(() {});
-      await Prefs.setString(key, path);
+      record = await Prefs.setString(key, path);
     }
+    return record;
   }
 }

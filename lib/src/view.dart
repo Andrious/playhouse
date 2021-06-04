@@ -50,7 +50,7 @@ export 'package:playhouse/src/home/view/tabview/modules/scrapbook_module_screen.
 export 'package:playhouse/src/home/view/tabview/tasks/scrapbook_tasks.dart'; // hide Card;
 
 /// Individual Task Cards
-export 'package:playhouse/src/home/view/taskscards.dart';
+export 'package:playhouse/src/home/view/screens/task_cards.dart';
 
 /// Current Tab Indicator
 export 'package:playhouse/src/home/view/page_circle_indicator.dart';
@@ -59,6 +59,7 @@ export 'package:playhouse/src/home/view/page_circle_indicator.dart';
 export 'package:playhouse/src/home/view/screens/scrapbook_screens.dart';
 export 'package:playhouse/src/home/view/screens/scrapbook_screens_widgets.dart';
 export 'package:playhouse/src/home/view/screens/simple_unity_screen.dart';
+export 'package:playhouse/src/home/view/screens/in_app_webiew_example.screen.dart';
 
 /// Modules
 export 'package:playhouse/src/home/view/screens/modules_list.dart';

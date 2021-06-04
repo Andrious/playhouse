@@ -25,199 +25,132 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: I10n.t('Playhouse'),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        excludeHeaderSemantics: true,
-      ),
-      endDrawer: const ScrapBookDrawer(),
-      body: Stack(
-        children: <Widget>[
-          Crop(
-            padding: const EdgeInsets.only(),
-            interactive: false,
-            backgroundColor: Colors.white,
-            dimColor: Colors.white,
-            controller: CropController(
-              aspectRatio: 0.78,
-            ),
-            child: Image.memory(
-              base64.decode(
-                con.submodule['image'],
-              ),
+    return Stack(
+      children: <Widget>[
+        Crop(
+          padding: const EdgeInsets.only(),
+          interactive: false,
+          backgroundColor: Colors.white,
+          dimColor: Colors.white,
+          controller: CropController(
+            aspectRatio: 0.8,
+          ),
+          child: Image.memory(
+            base64.decode(
+              con.submodule['image'],
             ),
           ),
-          SafeArea(
+        ),
+        SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(16, 200, 16, 16),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(30)),
+            padding: const EdgeInsets.all(16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          widget.subTask['subName'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                /// Task Name and Number
+                Flexible(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 30,
+                        bottom: 30,
+                      ),
+                      child: Text(
+                        widget.subTask['name'],
+                        style: const TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Flexible(
-                        child: Text(
-                          'Submodule description',
-                        ),
-                      ),
-                    ]),
-                const Spacer(),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white),
-                    child: Column(
-                      children: <Widget>[
-                        /// Task Name and Number
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 30,
-                            bottom: 20,
-                          ),
-                          child: Text(
-                            widget.subTask['name'],
-                            style: const TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-
-                        /// Short Description or Title
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 10,
-                          ),
-                          child: Text(widget.subTask['short_description']),
-                        ),
-                        const SizedBox(height: 30),
-                        Flexible(
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: Text(widget.subTask['long_description']),
-                          ),
-                        ),
-                      ],
                     ),
                   ),
-                )
+                ),
+
+                /// Short Description or Title
+                Flexible(
+                  child: Center(
+                    child: Text(widget.subTask['short_description']),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Flexible(
+                  child: Text(widget.subTask['long_description']),
+                ),
               ],
             ),
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: I10n.t('Playhouse'),
-  //       centerTitle: true,
-  //       automaticallyImplyLeading: false,
-  //       elevation: 0,
-  //       excludeHeaderSemantics: true,
-  //     ),
-  //     endDrawer: const ScrapBookDrawer(),
-  //     body: SafeArea(
-  //       child: Column(
-  //         children: [
-  //           /// Submodule Name |  Short Description
-  //           Flexible(
-  //             flex: 3,
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //               children: [
-  //                 Padding(
-  //                   padding: const EdgeInsets.only(top: 4),
-  //                   child: Text(
-  //                     widget.subTask['subName'],
-  //                     style: const TextStyle(
-  //                       fontWeight: FontWeight.bold,
-  //                       fontSize: 16,
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 const Flexible(
-  //                   child: Padding(
-  //                     padding: EdgeInsets.only(top: 4),
-  //                     child: Text(
-  //                       'Submodule description',
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           Flexible(
-  //             flex: 5,
-  //             fit: FlexFit.tight,
-  //             child: Stack(
-  //               children: <Widget>[
-  //                 /// Large Picture
-  //                 Crop(
-  //                   interactive: false,
-  //                   backgroundColor: Colors.white,
-  //                   dimColor: Colors.white,
-  //                   controller: CropController(),
-  //                   child: Image.memory(
-  //                     base64.decode(
-  //                       con.submodule['image'],
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 Card(
-  //                   child: Column(
-  //                     children: <Widget>[
-  //                       /// Task Name and Number
-  //                       Padding(
-  //                         padding: const EdgeInsets.only(
-  //                           top: 30,
-  //                           bottom: 20,
-  //                         ),
-  //                         child: Text(
-  //                           widget.subTask['name'],
-  //                           style: const TextStyle(
-  //                             fontSize: 26,
-  //                             fontWeight: FontWeight.bold,
-  //                           ),
-  //                         ),
-  //                       ),
-  //
-  //                       /// Short Description or Title
-  //                       Padding(
-  //                         padding: const EdgeInsets.only(
-  //                           top: 10,
-  //                           bottom: 30,
-  //                         ),
-  //                         child: Text(widget.subTask['short_description']),
-  //                       ),
-  //
-  //                       /// Long Description
-  //                       SingleChildScrollView(
-  //                         child: Text(widget.subTask['long_description']),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+// Stack(
+//       children: <Widget>[
+//         Crop(
+//           padding: const EdgeInsets.only(),
+//           interactive: false,
+//           backgroundColor: Colors.white,
+//           dimColor: Colors.white,
+//           controller: CropController(
+//             aspectRatio: 0.78,
+//           ),
+//           child: Image.memory(
+//             base64.decode(
+//               con.submodule['image'],
+//             ),
+//           ),
+//         ),
+
+  //        SafeArea(
+//           child: Column(
+//             children: <Widget>[
+//               Expanded(
+//                 child: Container(
+//                   decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(30),
+//                       color: Colors.white),
+//                   child: Column(
+//                     children: <Widget>[
+//                       /// Task Name and Number
+//                       Padding(
+//                         padding: const EdgeInsets.only(
+//                           top: 30,
+//                           bottom: 20,
+//                         ),
+//                         child: Text(
+//                           widget.subTask['name'],
+//                           style: const TextStyle(
+//                             fontSize: 26,
+//                             fontWeight: FontWeight.bold,
+//                           ),
+//                         ),
+//                       ),
+//
+//                       /// Short Description or Title
+//                       Padding(
+//                         padding: const EdgeInsets.only(
+//                           top: 10,
+//                         ),
+//                         child: Text(widget.subTask['short_description']),
+//                       ),
+//                       const SizedBox(height: 30),
+//                       Flexible(
+//                         child: SingleChildScrollView(
+//                           physics: const BouncingScrollPhysics(),
+//                           child: Text(widget.subTask['long_description']),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               )
+//             ],
+//           ),
+//         )
+
 }

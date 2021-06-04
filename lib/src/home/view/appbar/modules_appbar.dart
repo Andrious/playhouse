@@ -163,6 +163,7 @@ class ModulesAppBar {
         toolbarHeight: 50,
 //        primary: false,
         bottom: TabBar(
+          isScrollable: true,
           tabs: tabs,
           controller: _tabController,
           indicatorSize: TabBarIndicatorSize.label,

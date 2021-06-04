@@ -137,9 +137,9 @@ class ARTask02 extends TaskCard {
         );
 
   @override
-  void onTap() {
+  Future<void> onTap() async {
     con.cardNo = 8;
-    super.onTap();
+    await con.openFullScreenRoute(InAppWebViewExampleScreen(image: image));
   }
 }
 

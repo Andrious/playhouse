@@ -1,4 +1,10 @@
 
+## 0.43.0
+ June 03, 2021
+- isScrollable: true,
+- task_screen.dart
+- InAppWebViewExampleScreen
+- Future<bool> saveJpg(Uint8List image) async {
 
 ## 0.42.0
  June 02, 2021
