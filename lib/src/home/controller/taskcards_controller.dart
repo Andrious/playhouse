@@ -12,6 +12,7 @@ import 'package:playhouse/src/view.dart';
 import 'package:state_set/state_set.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'package:images_picker/images_picker.dart';
 import 'package:image/image.dart' as i;
 import 'package:uuid/uuid.dart';
 
@@ -176,10 +177,19 @@ class PickImage {
     return image;
   }
 
+  // // Works with import 'package:image_picker/image_picker.dart' as i;
+  // Future<void> pickImage() async {
+  //   final image = ImagePicker();
+  //   final path = await image.picker();
+  //   return recordImage(path);
+  // }
+
+  // Works with import 'package:images_picker/images_picker.dart';
   Future<void> pickImage() async {
-    final image = ImagePicker();
-    final path = await image.picker();
-    return recordImage(path);
+    final path = await ImagesPicker.pick();
+    if(path != null && path.isNotEmpty){
+      await recordImage(path[0].path);
+    }
   }
 
   Future<bool> saveJpg(Uint8List image) async {

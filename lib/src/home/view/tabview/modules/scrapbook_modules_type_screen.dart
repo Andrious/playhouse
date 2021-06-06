@@ -8,6 +8,15 @@ import 'package:playhouse/src/view.dart';
 /// The event handling code
 import 'package:playhouse/src/controller.dart';
 
+class ScrapbookDesignScreen extends ModuleTypeScreen {
+  const ScrapbookDesignScreen({Key key}) : super(key: key);
+}
+
+class ScrapbookBuildScreen extends ModuleTypeScreen {
+  const ScrapbookBuildScreen({Key key}) : super(key: key);
+}
+
+
 /// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
 class ModuleTypeScreen extends StatefulWidget {
   const ModuleTypeScreen({Key key}) : super(key: key);

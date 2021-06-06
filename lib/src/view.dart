@@ -31,16 +31,10 @@ export 'package:playhouse/src/home/view/drawer/scrapbook_drawer.dart';
 /// Grey & Ivy TabBar
 export 'package:playhouse/src/home/view/tabview/tabbar/gi_tabbar.dart';
 
-/// Scrapbook Design screen
-export 'package:playhouse/src/home/view/tabview/modules/scrapbook_modules_design_screen.dart';
-
-/// Scrapbook Build screen
-export 'package:playhouse/src/home/view/tabview/modules/scrapbook_modules_build_screen.dart';
-
 /// Scrapbook Submodules screen
 export 'package:playhouse/src/home/view/tabview/submodule/scrapbook_submodules.dart';
 
-/// Modules screen (Parent of the two screens above: Design & Build
+/// Scrapbook Modules Design & Build screen
 export 'package:playhouse/src/home/view/tabview/modules/scrapbook_modules_type_screen.dart';
 
 /// Individual Module screen

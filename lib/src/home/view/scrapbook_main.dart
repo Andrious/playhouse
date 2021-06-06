@@ -41,10 +41,10 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
+//    final theme = Theme.of(context).textTheme;
     return Scaffold(
         appBar: _sbAppBar.appBar,
-        endDrawer: ScrapBookDrawer(),
+        endDrawer: const ScrapBookDrawer(),
         primary: false,
         body: TabBarView(
           controller: _sbAppBar.controller,

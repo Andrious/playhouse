@@ -40,7 +40,7 @@ class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen> {
   PullToRefreshController pullToRefreshController;
   ContextMenu contextMenu;
 
-  final Uri initialUrl = Uri.parse('https://github.com/flutter');
+  final Uri initialUrl = Uri.parse('https://app.sketchup.com/app');
 
   String url = '';
 

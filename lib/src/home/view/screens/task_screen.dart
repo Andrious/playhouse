@@ -25,67 +25,94 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Crop(
-          padding: const EdgeInsets.only(),
-          interactive: false,
-          backgroundColor: Colors.white,
-          dimColor: Colors.white,
-          controller: CropController(
-            aspectRatio: 0.8,
-          ),
-          child: Image.memory(
-            base64.decode(
-              con.submodule['image'],
+    return SafeArea(
+      child: Stack(
+        children: <Widget>[
+          // Crop(
+          //   padding: const EdgeInsets.only(),
+          //   interactive: false,
+          //   backgroundColor: Colors.white,
+          //   dimColor: Colors.white,
+          //   controller: CropController(
+          //     aspectRatio: 0.8,
+          //   ),
+          //   child: Image.memory(
+          //     base64.decode(
+          //       con.submodule['image'],
+          //     ),
+          //   ),
+          // ),
+          ClipRRect(
+            child: Image.memory(
+              base64.decode(
+                con.submodule['image'],
+              ),
             ),
           ),
-        ),
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Container(
-            margin: const EdgeInsets.fromLTRB(16, 200, 16, 16),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(30)),
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                /// Task Name and Number
-                Flexible(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 30,
-                        bottom: 30,
-                      ),
-                      child: Text(
-                        widget.subTask['name'],
-                        style: const TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
+//           GreyIvyTabBar(
+// //            indicatorSize: TabBarIndicatorSize.label,
+//             controller: TabController(
+//               length: 1,
+//               vsync: provider,
+//             ),
+//             tabs: [
+//               ClipRRect(
+//                 child: Image.memory(
+//                   base64.decode(
+//                     con.submodule['image'],
+//                   ),
+//                 ),
+//               ),
+//             ],
+//             physics: const BigPageScrollPhysics().applyTo(
+//                 ScrollConfiguration.of(context).getScrollPhysics(context)),
+//           ),
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(16, 200, 16, 16),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(30)),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  /// Task Name and Number
+                  Flexible(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 30,
+                          bottom: 30,
+                        ),
+                        child: Text(
+                          widget.subTask['name'],
+                          style: const TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                /// Short Description or Title
-                Flexible(
-                  child: Center(
-                    child: Text(widget.subTask['short_description']),
+                  /// Short Description or Title
+                  Flexible(
+                    child: Center(
+                      child: Text(widget.subTask['short_description']),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 30),
-                Flexible(
-                  child: Text(widget.subTask['long_description']),
-                ),
-              ],
+                  const SizedBox(height: 30),
+                  Flexible(
+                    child: Text(widget.subTask['long_description']),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
