@@ -11,7 +11,8 @@ import 'package:playhouse/src/view.dart';
 import 'package:playhouse/src/controller.dart';
 
 class TaskScreen extends StatefulWidget {
-  const TaskScreen({Key key, this.subTask}) : super(key: key);
+  const TaskScreen({Key key, this.task, this.subTask}) : super(key: key);
+  final TaskCard task;
   final Map<String, dynamic> subTask;
   @override
   State createState() => _TaskScreenState();
@@ -24,96 +25,212 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
   ScrapBookController con;
 
   @override
+  void initState() {
+    super.initState();
+    subState = con.ofState<SubmodulesState>();
+  }
+
+  final List<Widget> actions = [];
+  SubmodulesState subState;
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Stack(
-        children: <Widget>[
-          // Crop(
-          //   padding: const EdgeInsets.only(),
-          //   interactive: false,
-          //   backgroundColor: Colors.white,
-          //   dimColor: Colors.white,
-          //   controller: CropController(
-          //     aspectRatio: 0.8,
-          //   ),
-          //   child: Image.memory(
-          //     base64.decode(
-          //       con.submodule['image'],
-          //     ),
-          //   ),
-          // ),
-          ClipRRect(
-            child: Image.memory(
-              base64.decode(
-                con.submodule['image'],
-              ),
-            ),
-          ),
-//           GreyIvyTabBar(
-// //            indicatorSize: TabBarIndicatorSize.label,
-//             controller: TabController(
-//               length: 1,
-//               vsync: provider,
-//             ),
-//             tabs: [
-//               ClipRRect(
-//                 child: Image.memory(
-//                   base64.decode(
-//                     con.submodule['image'],
-//                   ),
-//                 ),
-//               ),
-//             ],
-//             physics: const BigPageScrollPhysics().applyTo(
-//                 ScrollConfiguration.of(context).getScrollPhysics(context)),
-//           ),
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Container(
-              margin: const EdgeInsets.fromLTRB(16, 200, 16, 16),
+    return Scaffold(
+      primary: false,
+      appBar: AppBar(
+        title: I10n.t('Playhouse'),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        excludeHeaderSemantics: true,
+        actions: actions,
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            Container(
+              constraints: const BoxConstraints.expand(),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(30)),
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  /// Task Name and Number
-                  Flexible(
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 30,
-                          bottom: 30,
+                  image: DecorationImage(
+                      image: MemoryImage(
+                        base64.decode(
+                          con.submodule['image'],
                         ),
+                      ),
+                      fit: BoxFit.cover)),
+              child: SizedBox(
+                width: 300,
+                height: 500,
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(16, 200, 16, 16),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30)),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Align(
+                        heightFactor: 0,
+                        alignment: Alignment.topLeft,
                         child: Text(
-                          widget.subTask['name'],
+                          '${widget.subTask['subName']}',
                           style: const TextStyle(
-                            fontSize: 26,
                             fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
-                    ),
-                  ),
 
-                  /// Short Description or Title
-                  Flexible(
-                    child: Center(
-                      child: Text(widget.subTask['short_description']),
-                    ),
+                      /// Task Name and Number
+                      Flexible(
+                        flex: 2,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 30,
+                              bottom: 30,
+                            ),
+                            child: Text(
+                              widget.subTask['name'],
+                              style: const TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      /// Short Description or Title
+                      Flexible(
+                        child: Center(
+                          child: Text(widget.subTask['short_description']),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 4,
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Text(widget.subTask['long_description']),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 30),
-                  Flexible(
-                    child: Text(widget.subTask['long_description']),
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
-        ],
+            Positioned(
+//              height: 50,
+//              width: 50,
+              left: 330,
+              top: 10,
+              right: 15,
+              bottom: 640,
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+//                    borderRadius: BorderRadius.circular(30)
+                ),
+//                padding: const EdgeInsets.all(16),
+                child: widget.task.icon,
+              ),
+            ),
+          ],
+        ),
       ),
     );
+//     return SafeArea(
+//       child: Stack(
+//         children: <Widget>[
+//           // Crop(
+//           //   padding: const EdgeInsets.only(),
+//           //   interactive: false,
+//           //   backgroundColor: Colors.white,
+//           //   dimColor: Colors.white,
+//           //   controller: CropController(
+//           //     aspectRatio: 0.8,
+//           //   ),
+//           //   child: Image.memory(
+//           //     base64.decode(
+//           //       con.submodule['image'],
+//           //     ),
+//           //   ),
+//           // ),
+//           ClipRRect(
+//             child: Image.memory(
+//               base64.decode(
+//                 con.submodule['image'],
+//               ),
+//             ),
+//           ),
+// //           GreyIvyTabBar(
+// // //            indicatorSize: TabBarIndicatorSize.label,
+// //             controller: TabController(
+// //               length: 1,
+// //               vsync: subState,
+// //             ),
+// //             tabs: [
+// //               ClipRRect(
+// //                 child: Image.memory(
+// //                   base64.decode(
+// //                     con.submodule['image'],
+// //                   ),
+// //                 ),
+// //               ),
+// //             ],
+// //             physics: const BigPageScrollPhysics().applyTo(
+// //                 ScrollConfiguration.of(context).getScrollPhysics(context)),
+// //           ),
+//           SingleChildScrollView(
+//             physics: const BouncingScrollPhysics(),
+//             child: Container(
+//               margin: const EdgeInsets.fromLTRB(16, 200, 16, 16),
+//               decoration: BoxDecoration(
+//                   color: Colors.white, borderRadius: BorderRadius.circular(30)),
+//               padding: const EdgeInsets.all(16),
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: <Widget>[
+//                   /// Task Name and Number
+//                   Flexible(
+//                     child: Center(
+//                       child: Padding(
+//                         padding: const EdgeInsets.only(
+//                           top: 30,
+//                           bottom: 30,
+//                         ),
+//                         child: Text(
+//                           widget.subTask['name'],
+//                           style: const TextStyle(
+//                             fontSize: 26,
+//                             fontWeight: FontWeight.bold,
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//
+//                   /// Short Description or Title
+//                   Flexible(
+//                     child: Center(
+//                       child: Text(widget.subTask['short_description']),
+//                     ),
+//                   ),
+//                   const SizedBox(height: 30),
+//                   Flexible(
+//                     child: Text(widget.subTask['long_description']),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
   }
 
 // Stack(

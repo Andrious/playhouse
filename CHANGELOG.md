@@ -1,5 +1,11 @@
 
 
+## 0.45.0
+ June 09, 2021
+- Individual Task - Type inset in top right
+- New fields, submodule_type & task_type
+- Info image (i) now a separate image
+
 ## 0.44.0
  June 06, 2021
 - Replace with image_picker: ^0.8.0 with images_picker: ^1.0.0

@@ -19,10 +19,11 @@ import 'package:uuid/uuid.dart';
 class TaskCard extends StatefulWidget with StateSetWidget {
   TaskCard({
     Key key,
-    this.submodule,
-    this.name,
+    @required this.submodule,
+    @required this.name,
   })  : con = ScrapBookController(),
         image = PickImage(),
+        icon = Image.asset('assets/images/${name.trim()}02.jpg'),
         super(key: key);
 
   final String submodule;
@@ -30,6 +31,7 @@ class TaskCard extends StatefulWidget with StateSetWidget {
 
   final ScrapBookController con;
   final PickImage image;
+  final Widget icon;
 
   @override
   void dispose() {
@@ -38,10 +40,10 @@ class TaskCard extends StatefulWidget with StateSetWidget {
   }
 
   /// Override with subclasses.
-  void onTap() => con.onTap();
+  void onTap() => con.onTap(this);
 
   /// Override with subclasses.
-  void onTapInfo() => con.onTapInfo();
+  void onTapInfo() => con.onTapInfo(this);
 
   @override
   // ignore: no_logic_in_create_state
@@ -58,8 +60,7 @@ class _TaskCardsState extends State<TaskCard> {
     _parent.withState(this);
     _parent.initState();
     _parent.image._state = this;
-//    widget.image.getImage(widget);
-    child ??= Image.asset('assets/images/${_parent.name.trim()}.jpg');
+    child ??= _parent.icon;
   }
 
   @override
@@ -70,44 +71,55 @@ class _TaskCardsState extends State<TaskCard> {
 
   @override
   Widget build(BuildContext context) {
-    final widget = this.widget;
+    final TaskCard widget = this.widget;
     if (widget.name.isEmpty) {
       return Container();
     }
     return Card(
-      child: Stack(
-        clipBehavior: Clip.antiAlias,
-        children: [
-          InkWell(
-            onTap: widget.onTapInfo,
-            highlightColor: const Color(0xffbb86fc),
-            child: FutureBuilder<Widget>(
-                future: _cardContent(),
-                initialData: child,
-                builder: (_, snapshot) => _futureBuilder(snapshot)),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-                top: 20, right: 30), //(top: 20, right: 25),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: widget.onTap,
-                highlightColor: const Color(0xffbb86fc),
-              ),
-            ),
-          ),
-        ],
+      child: FutureBuilder<Widget>(
+        future: _cardContent(widget),
+        initialData: child,
+        builder: (_, snapshot) => _futureBuilder(snapshot),
       ),
     );
   }
 
-  Future<Widget> _cardContent() async {
+  Future<Widget> _cardContent(TaskCard card) async {
     Widget widget;
     final parent = this.widget;
     widget = await parent.image.getImage(parent);
-    if (widget == null) {
-      widget = child;
+
+    if (widget != null) {
+      //
+      widget = InkWell(
+        onTap: card.onTap,
+        highlightColor: const Color(0xffbb86fc),
+        child: widget,
+      );
+    } else {
+      //
+      widget = Column(children: [
+        Flexible(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: InkWell(
+              onTap: card.onTapInfo,
+              highlightColor: const Color(0xffbb86fc),
+              child: Image.asset('assets/images/info.jpg'),
+            ),
+          ),
+        ),
+        Flexible(
+          flex: 3,
+          child: Center(
+            child: InkWell(
+              onTap: card.onTap,
+              highlightColor: const Color(0xffbb86fc),
+              child: child,
+            ),
+          ),
+        ),
+      ]);
     }
     return widget;
   }
@@ -123,7 +135,11 @@ class _TaskCardsState extends State<TaskCard> {
       );
       return App.errorHandler.displayError(details);
     } else if (snapshot.connectionState == ConnectionState.done) {
-      return child;
+      if (snapshot.hasData) {
+        return snapshot.data;
+      } else {
+        return child;
+      }
     } else {
       Widget widget;
       if (UniversalPlatform.isAndroid) {
@@ -144,9 +160,10 @@ class PickImage {
   _TaskCardsState _state;
 
   Future<Widget> getImage(TaskCard card) async {
+    Widget image;
+
     this.card = card;
     final con = card.con;
-    Widget image;
 
     ///todo To be removed
     String name;
@@ -170,8 +187,14 @@ class PickImage {
 
       if (exists) {
         //
-        _state?.child =
-            Crop(controller: CropController(), child: Image.file(file));
+        image = Crop(
+          controller: CropController(),
+          child: Image.file(
+            file,
+          ),
+        );
+
+        _state?.child = image;
       }
     }
     return image;
@@ -187,7 +210,7 @@ class PickImage {
   // Works with import 'package:images_picker/images_picker.dart';
   Future<void> pickImage() async {
     final path = await ImagesPicker.pick();
-    if(path != null && path.isNotEmpty){
+    if (path != null && path.isNotEmpty) {
       await recordImage(path[0].path);
     }
   }

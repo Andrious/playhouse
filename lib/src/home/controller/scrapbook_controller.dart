@@ -88,18 +88,17 @@ class ScrapBookController extends ControllerMVC {
   }
 
   /// Merely tapping the Task Card
-  Future<void> onTap() async {
+  Future<void> onTap(TaskCard card) async {
     ///todo To be removed.
-    final Map<String, dynamic> task = model.tasks.items[cardNo];
-    final Map<String, dynamic> subTask = Map.from(task);
+    final Map<String, dynamic> subTask = Map.from(model.tasks.items[cardNo]);
     subTask['subName'] = submoduleName;
-    await openFullScreenRoute(TaskScreen(subTask: subTask));
+    await openFullScreenRoute(TaskScreen(task: card, subTask: subTask));
     setState(() {});
   }
 
   /// Tapping the 'info' icon on the Task Card
-  Future<void> onTapInfo() async {
-    await onTap();
+  Future<void> onTapInfo(TaskCard card) async {
+    await onTap(card);
   }
 
   /// Open the supplied widget in a new route.

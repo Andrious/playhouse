@@ -98,8 +98,8 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
           flex: submodule.isPanelUp ? 3 : 30,
           child: Padding(
             padding: submodule.isPanelUp
-                ? const EdgeInsets.only(bottom: 10)
-                : const EdgeInsets.only(top: 10),
+                ? const EdgeInsets.only(top: 20, bottom: 10)
+                : const EdgeInsets.only(top: 10, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

@@ -157,16 +157,18 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
        image VARCHAR,
+       submodule_type VARCHAR NOT NULL DEFAULT '',
        key_art BLOB,
        deleted INTEGER DEFAULT 0)
     ''');
 
     await db.execute('''
        CREATE TABLE IF NOT EXISTS $TASKS(
-       submodule_id INTEGER,
+       submodule_id INTEGER DEFAULT 0,
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
+       task_type VARCHAR NOT NULL DEFAULT '',
        key_art BLOB,
        deleted INTEGER DEFAULT 0)
     ''');

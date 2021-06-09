@@ -11,11 +11,16 @@ import 'package:playhouse/src/view.dart';
 /// The Event handling code
 import 'package:playhouse/src/controller.dart';
 
-class ScrapBookDrawer extends StatelessWidget {
+class ScrapBookDrawer extends StatefulWidget {
   const ScrapBookDrawer({Key key, this.state}) : super(key: key);
 
   final StateMVC state;
 
+  @override
+  State createState() => _ScrapBookDrawerState();
+}
+
+class _ScrapBookDrawerState extends State<ScrapBookDrawer> {
   @override
   Widget build(BuildContext context) {
 //    final List<Widget> widgets = [LogInLogOut()];
@@ -29,7 +34,7 @@ class ScrapBookDrawer extends StatelessWidget {
         onChanged: (bool value) {
           final useDatabase = Prefs.getBool('useDatabase');
           Prefs.setBool('useDatabase', !useDatabase);
-          App.refresh();
+          setState(() {});
         },
       ),
     );
