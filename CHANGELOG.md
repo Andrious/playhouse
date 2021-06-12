@@ -1,4 +1,8 @@
 
+## 0.46.0
+ June 12, 2021
+- Crop(controller: CropController(), child: Image.file(File(path)));
+- EdgeInsets.fromLTRB(16, 100, 16, 16),
 
 ## 0.45.0
  June 09, 2021
@@ -10,7 +14,6 @@
  June 06, 2021
 - Replace with image_picker: ^0.8.0 with images_picker: ^1.0.0
 - Uri.parse('https://app.sketchup.com/app');
-
 
 ## 0.43.0
  June 03, 2021

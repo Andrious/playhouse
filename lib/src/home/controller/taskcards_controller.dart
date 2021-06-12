@@ -270,14 +270,19 @@ class PickImage {
     var record = path != null && path.isNotEmpty;
 
     if (record) {
+      //
       var state = card.stateOf<_TaskCardsState>();
       state ??= _state;
+      record = state != null;
+      if (record) {
+        // ignore: invalid_use_of_protected_member
+        state.setState(() {});
+
 //      state?.child = Image.file(File(path), fit: BoxFit.fitHeight);
-      state?.child =
-          Crop(controller: CropController(), child: Image.file(File(path)));
-      // ignore: invalid_use_of_protected_member
-      state?.setState(() {});
-      record = await Prefs.setString(key, path);
+        state.child =
+            Crop(controller: CropController(), child: Image.file(File(path)));
+        record = await Prefs.setString(key, path);
+      }
     }
     return record;
   }

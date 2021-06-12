@@ -38,6 +38,7 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
     return Scaffold(
       primary: false,
       appBar: AppBar(
+//        leading: widget.task.icon,
         title: I10n.t('Playhouse'),
         centerTitle: true,
         automaticallyImplyLeading: false,
@@ -51,21 +52,24 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
             Container(
               constraints: const BoxConstraints.expand(),
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: MemoryImage(
-                        base64.decode(
-                          con.submodule['image'],
-                        ),
+                image: DecorationImage(
+                    image: MemoryImage(
+                      base64.decode(
+                        con.submodule['image'],
                       ),
-                      fit: BoxFit.cover)),
+                    ),
+                    fit: BoxFit.cover,
+                ),
+              ),
               child: SizedBox(
                 width: 300,
                 height: 500,
                 child: Container(
-                  margin: const EdgeInsets.fromLTRB(16, 200, 16, 16),
+                  margin: const EdgeInsets.fromLTRB(16, 100, 16, 16),
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,6 +125,7 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
                 ),
               ),
             ),
+
             Positioned(
 //              height: 50,
 //              width: 50,
