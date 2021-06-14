@@ -1,4 +1,8 @@
 
+## 0.47.0
+ June 14, 2021
+- //        automaticallyImplyLeading: false,
+
 ## 0.46.0
  June 12, 2021
 - Crop(controller: CropController(), child: Image.file(File(path)));

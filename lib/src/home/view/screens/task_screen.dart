@@ -41,7 +41,7 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
 //        leading: widget.task.icon,
         title: I10n.t('Playhouse'),
         centerTitle: true,
-        automaticallyImplyLeading: false,
+//        automaticallyImplyLeading: false,
         elevation: 0,
         excludeHeaderSemantics: true,
         actions: actions,
