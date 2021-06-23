@@ -52,12 +52,35 @@ class UsersTasksFields extends PlayHouseFields<UsersTasksTable> {
   static UsersTasksFields _this;
 }
 
+class UsersScrapbookFields extends PlayHouseFields<UsersScrapbookTable> {
+  factory UsersScrapbookFields() => _this ??= UsersScrapbookFields._();
+  UsersScrapbookFields._() {
+    table = s.UsersScrapbookTable();
+  }
+  static UsersScrapbookFields _this;
+}
+
 class UsersFields extends PlayHouseFields<UsersTable> {
   factory UsersFields() => _this ??= UsersFields._();
   UsersFields._() {
     table = s.UsersTable();
   }
   static UsersFields _this;
+
+  @override
+  Future<bool> initAsync() async {
+    //
+    final init = await super.initAsync();
+
+    if (init) {
+      // Create a user if there isn't one at the moment.
+      if (table.list.isEmpty) {
+        await table.save({'name': 'Your Name'});
+        await super.initAsync();
+      }
+    }
+    return init;
+  }
 }
 
 class UserModulesUnlockedFields extends PlayHouseFields<UserModulesUnlocked> {
@@ -285,6 +308,9 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
             widget.validator = notEmpty;
             widget.keyboardType = TextInputType.number;
             break;
+          default:
+            // Likely a field to be used, but not to be displayed.
+            break;
         }
       });
     }
@@ -310,9 +336,17 @@ mixin FormKeyState {
   @mustCallSuper
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final save = _formKey.currentState.validate();
+    final formState = _formKey?.currentState;
+
+    bool save = formState != null;
+
     if (save) {
-      _formKey.currentState.save();
+      save = formState.validate();
+    }
+
+    if (save) {
+      //
+      formState.save();
 
       /// todo This might have to be in the child routine to be accurate.
       _inForm = false;

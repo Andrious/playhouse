@@ -1,0 +1,195 @@
+// Copyright 2021 Grey & Ivy Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+/// The database code
+// For base64.decode()
+/// The Event Handler code
+import 'package:playhouse/src/controller.dart';
+import 'package:playhouse/src/model.dart';
+
+/// The UI code
+import 'package:playhouse/src/view.dart';
+
+/// Tabs for the Submodules
+///
+class SubmodulesTabBar {
+  //
+  SubmodulesTabBar(this.provider) {
+    // Supply the Controller.
+    _con = provider.con;
+  }
+  final SubmodulesState provider;
+  ScrapBookController _con;
+
+  // SubTabController get controller => _tabController;
+  // SubTabController _tabController;
+  TabController get controller => _tabController;
+  TabController _tabController;
+
+  PageCircleIndicator tabIndicator;
+
+  void initState() {
+    //
+    String prefsLabel;
+
+    /// Determine if we're on the Design side or the Build side.
+    if (_con.inBuildScreen) {
+      prefsLabel = 'Build';
+    } else {
+      prefsLabel = 'Design';
+    }
+
+    /// Get the 'initial' index. Display the last viewed tab.
+    var initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
+
+    /// Return a list of 'Picture tabs'
+    _tabs = _subModules();
+
+    if (initIndex < 0 || initIndex > _tabs.length - 1) {
+      initIndex = 0;
+    }
+    _tabController = TabController(
+      // SubTabController(
+//      initialIndex: initIndex,
+      length: _tabs.length,
+      vsync: provider,
+//      state: provider,
+    );
+
+    /// Listener
+    _tabController.addListener(() {
+      Prefs.setInt('${prefsLabel}SubmodulesIndex', _tabController.index);
+
+      tabIndicator.value = _tabController.index + 1;
+
+      // if (_tabs != null && _tabs.isNotEmpty) {
+      //   _con.submodule = _tabs[_tabController.index].submodule;
+      // }
+      // _con.submoduleName = _label(tabs[_tabController.index]);
+    });
+
+    // /// Return the text label specified in the Tab object.
+    // if (_tabs != null && _tabs.isNotEmpty) {
+    //   _con.submodule = _tabs[initIndex].submodule;
+    // }
+    //
+    // _con.submoduleName = _label(_tabs[initIndex]);
+
+    tabIndicator = PageCircleIndicator(itemCount: _tabs.length);
+
+    tabIndicator.value = initIndex + 1;
+  }
+
+  /// Clean up after itself.
+  void dispose() {
+    _tabController.dispose();
+  }
+
+  List<PicTab> get tabs => _tabs;
+  List<PicTab> _tabs;
+
+  List<Widget> get children {
+    if (_children == null) {
+      _children = <Widget>[];
+      for (final tab in _tabs) {
+        _children.add(ScrapbookTasksScreen(tab: tab));
+      }
+    }
+    return _children;
+  }
+
+  List<Widget> _children;
+
+  List<PicTab> _subModules() {
+    //
+    List<Map<String, dynamic>> subs = [];
+
+    final id = _con.module['rowid'];
+
+    subs = _con.model.submodules.items
+        .where((record) => record['module_id'] == id)
+        .toList();
+
+    //
+    final List<PicTab> pics = [];
+
+    for (final sub in subs) {
+      pics.add(PicTab(
+        submodule: sub,
+        name: sub['name'],
+        state: provider,
+      ));
+    }
+    return pics;
+  }
+
+  /// Return the text label specified in the Tab object.
+  String _label(PicTab tab) {
+    String label;
+
+    ///todo To be removed.
+    if (tab.submodule is String) {
+      label = tab.submodule.trim();
+    } else {
+      label = tab.submodule['name'];
+    }
+    return label;
+  }
+}
+
+class PicTab extends StatelessWidget {
+  const PicTab({
+    Key key,
+    @required this.name,
+    @required this.submodule,
+    @required this.state,
+  }) : super(key: key);
+  final String name;
+  final dynamic submodule;
+  final SubmodulesState state;
+
+  @override
+  Widget build(BuildContext context) =>
+      StackImage(file: submodule['key_art_file']);
+}
+
+/// The Image has to be wrapped in a Stateful or Stateless widget
+/// for the Positioned widget to work properly.
+class StackImage extends StatelessWidget {
+  const StackImage({
+    Key key,
+    @required this.file,
+  }) : super(key: key);
+
+  final String file;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget child;
+
+    ///todo To be removed.
+    if (file == null) {
+      //
+      child = Image.asset('assets/images/river_bend02.jpg', fit: BoxFit.cover);
+    } else {
+      //
+      child = Image.asset('assets/images/$file', fit: BoxFit.cover);
+    }
+
+    return Center(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: child,
+      ),
+    );
+  }
+
+  // ///todo: Not used anymore?
+  // void imageSize() {
+  //   final file = File(name);
+  //   final imageSize = ImageSizeGetter.getSize(FileInput(file));
+  //   // size.add(imageSize.width);
+  //   // size.add(imageSize.height);
+  // }
+}

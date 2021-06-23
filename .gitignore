@@ -81,7 +81,7 @@ example/ios/Flutter/flutter_export_environment.sh
 .vscode/
 
 # Flutter/Dart/Pub related
-build/
+/build/
 
 # Web related
 lib/generated_plugin_registrant.dart

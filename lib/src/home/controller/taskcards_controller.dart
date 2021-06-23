@@ -3,41 +3,42 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data' show Uint8List;
+import 'dart:typed_data';
 
+// For rootBundle.loadString();
+import 'package:flutter/services.dart';
+
+import 'package:image/image.dart' as i;
+import 'package:images_picker/images_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:playhouse/src/controller.dart';
 import 'package:playhouse/src/view.dart';
-
 import 'package:state_set/state_set.dart';
-import 'package:path_provider/path_provider.dart';
-
-import 'package:images_picker/images_picker.dart';
-import 'package:image/image.dart' as i;
 import 'package:uuid/uuid.dart';
 
-class TaskCard extends StatefulWidget with StateSetWidget {
+class TaskCard extends StatefulWidget {
   TaskCard({
     Key key,
-    @required this.submodule,
+    @required this.task,
+    @required this.userTask,
     @required this.name,
   })  : con = ScrapBookController(),
         image = PickImage(),
         icon = Image.asset('assets/images/${name.trim()}02.jpg'),
         super(key: key);
 
-  final String submodule;
+  final Map<String, dynamic> task;
+  final Map<String, dynamic> userTask;
   final String name;
 
   final ScrapBookController con;
   final PickImage image;
   final Widget icon;
 
-  @override
-  void dispose() {
-    image._state = null;
-    super.dispose();
-  }
+  bool complete() => true;
 
   /// Override with subclasses.
   void onTap() => con.onTap(this);
@@ -57,15 +58,13 @@ class _TaskCardsState extends State<TaskCard> {
   void initState() {
     super.initState();
     final _parent = widget;
-    _parent.withState(this);
-    _parent.initState();
-    _parent.image._state = this;
+    _parent.image.initState(this, _parent);
     child ??= _parent.icon;
   }
 
   @override
   void dispose() {
-    widget.dispose();
+    widget.image.dispose();
     super.dispose();
   }
 
@@ -85,9 +84,10 @@ class _TaskCardsState extends State<TaskCard> {
   }
 
   Future<Widget> _cardContent(TaskCard card) async {
+    //
     Widget widget;
-    final parent = this.widget;
-    widget = await parent.image.getImage(parent);
+
+    widget = await card.image.getImage();
 
     if (widget != null) {
       //
@@ -155,48 +155,54 @@ class _TaskCardsState extends State<TaskCard> {
 class PickImage {
 //
   TaskCard card;
+  Map<String, dynamic> userTask = {};
   String key;
 
   _TaskCardsState _state;
 
-  Future<Widget> getImage(TaskCard card) async {
-    Widget image;
-
-    this.card = card;
-    final con = card.con;
-
-    ///todo To be removed
-    String name;
-    if (con.database) {
-      name = con.module['name'];
-    } else {
-      name = con.moduleName;
+  void initState(_TaskCardsState state, TaskCard card) {
+    //
+    if (state != null && _state == null) {
+      _state = state;
     }
 
-    key =
-        '${con.moduleType}$name${card.submodule}${card.name}${card.runtimeType.toString()}';
+    if (card != null && this.card == null) {
+      this.card = card;
 
-    final path = Prefs.getString(key);
+      userTask = card?.userTask;
 
-    if (path.isNotEmpty) {
-      //
-      final file = File(path);
-
-      // ignore: avoid_slow_async_io
-      final exists = await file.exists();
-
-      if (exists) {
-        //
-        image = Crop(
-          controller: CropController(),
-          child: Image.file(
-            file,
-          ),
-        );
-
-        _state?.child = image;
+      if (userTask == null || userTask.isEmpty) {
+        userTask = {};
       }
     }
+  }
+
+  void dispose() {
+    card = null;
+    _state = null;
+  }
+
+  Future<Widget> getImage() async {
+    Widget image;
+
+    final code = userTask['key_art'];
+
+    if (code == null || code is! String) {
+      return image;
+    }
+
+    if (code == "''") {
+      return image;
+    }
+
+    //
+    image = Crop(
+      controller: CropController(),
+      child: Image.memory(base64.decode(code)),
+    );
+
+    _state?.child = image;
+
     return image;
   }
 
@@ -207,12 +213,93 @@ class PickImage {
   //   return recordImage(path);
   // }
 
-  // Works with import 'package:images_picker/images_picker.dart';
   Future<void> pickImage() async {
-    final path = await ImagesPicker.pick();
-    if (path != null && path.isNotEmpty) {
-      await recordImage(path[0].path);
+    final pick = await ImagesPicker.pick();
+    if (pick != null && pick.isNotEmpty) {
+      final path = pick[0].path;
+      displayImage(path);
+      await recordImage(path);
     }
+  }
+
+  void displayImage(String path) {
+    // ignore: invalid_use_of_protected_member
+    _state?.setState(() {});
+
+    _state?.child =
+        Crop(controller: CropController(), child: Image.file(File(path)));
+  }
+
+  Future<bool> recordImage(String path) async {
+    //
+    var record = path != null && path.isNotEmpty;
+
+    if (record) {
+      //
+      record = await _saveImage(path);
+    }
+    return record;
+  }
+
+  Future<bool> _saveImage(String path) async {
+    //
+    var save = path != null && path.isNotEmpty;
+
+    if (save) {
+      final model = card.con.model;
+
+      final userId = model.users.items[0]['rowid'];
+
+      final code = await encodeFile(path);
+
+      if (userTask['user_id'] == null) {
+        //
+        userTask['user_id'] = userId;
+
+        userTask['task_id'] = card.task['rowid'];
+      }
+
+      userTask['key_art'] = code;
+
+      save = await model.usersTasks.table.save(userTask);
+
+      if (save) {
+        //
+        final recList = model.tasksUnlocked.items
+            .where((rec) =>
+                rec['user_id'] == userId &&
+                rec['task_id'] == card.task['rowid'])
+            .toList();
+
+        Map<String, dynamic> rec;
+
+        if (recList.isEmpty) {
+          rec = {
+            'user_id': userId,
+            'task_id': card.task['rowid'],
+            'completed': true
+          };
+        } else {
+          //
+          rec = recList[0];
+
+          // Don't bother if already 'completed'
+          if (rec['completed'] == null || rec['completed'] == 0) {
+            //
+            if (rec['user_id'] == null) {
+              //
+              rec['user_id'] = userId;
+
+              rec['task_id'] = card.task['rowid'];
+            }
+            rec['completed'] = 1; // true
+
+            await model.tasksUnlocked.table.save(rec);
+          }
+        }
+      }
+    }
+    return save;
   }
 
   Future<bool> saveJpg(Uint8List image) async {
@@ -265,25 +352,46 @@ class PickImage {
     return save;
   }
 
-  Future<bool> recordImage(String path) async {
+  static Future<String> encodeFile(String path) async {
     //
-    var record = path != null && path.isNotEmpty;
+    String code;
 
-    if (record) {
+    try {
       //
-      var state = card.stateOf<_TaskCardsState>();
-      state ??= _state;
-      record = state != null;
-      if (record) {
-        // ignore: invalid_use_of_protected_member
-        state.setState(() {});
+      final file = File(path);
 
-//      state?.child = Image.file(File(path), fit: BoxFit.fitHeight);
-        state.child =
-            Crop(controller: CropController(), child: Image.file(File(path)));
-        record = await Prefs.setString(key, path);
+      final bytes = await file.readAsBytes();
+
+      code = base64.encode(Uint8List.view(bytes.buffer));
+    } catch (e) {
+      //
+      code = '';
+    }
+    return code;
+  }
+
+  static Future<String> printBytes(String name) async {
+    ByteData bytes;
+    String code;
+
+    try {
+      bytes = await rootBundle.load(name);
+    } catch (ex) {
+      bytes = null;
+    }
+
+    if (bytes == null) {
+      //
+      code = '';
+    } else {
+      //
+      code = base64.encode(Uint8List.view(bytes.buffer));
+
+      if (code.isNotEmpty) {
+        //
+        print(code);
       }
     }
-    return record;
+    return code;
   }
 }

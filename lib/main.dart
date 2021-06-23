@@ -42,6 +42,16 @@ class PlayHouseState extends AppState {
           ],
         );
 
+  /// Change behaviour if running in iOS.
+  @override
+  ScrollBehavior onScrollBehavior() {
+    ScrollBehavior behavior;
+    if (UniversalPlatform.isIOS) {
+      behavior = _GlowScrollBehavior();
+    }
+    return behavior;
+  }
+
   @override
   ThemeData onTheme() {
     //
@@ -164,5 +174,17 @@ class _LoadingScreen extends StatelessWidget {
           ),
           const SizedBox(height: 40),
         ],
+      );
+}
+
+/// Glow overscroll indicator even in iOS.
+class _GlowScrollBehavior extends CupertinoScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+          BuildContext context, Widget child, ScrollableDetails details) =>
+      GlowingOverscrollIndicator(
+        axisDirection: details.direction,
+        color: Theme.of(context).colorScheme.secondary,
+        child: child,
       );
 }

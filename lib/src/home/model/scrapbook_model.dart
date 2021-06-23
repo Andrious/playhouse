@@ -16,6 +16,7 @@ class ScrapBookModel {
         submodules = SubmoduleFields(),
         tasks = TasksFields(),
         usersTasks = UsersTasksFields(),
+        usersScrapbook = UsersScrapbookFields(),
         users = UsersFields(),
         modulesUnlocked = UserModulesUnlockedFields(),
         submodulesUnlocked = UserSubmodulesUnlockedFields(),
@@ -33,6 +34,7 @@ class ScrapBookModel {
   final SubmoduleFields submodules;
   final TasksFields tasks;
   final UsersTasksFields usersTasks;
+  final UsersScrapbookFields usersScrapbook;
   final UsersFields users;
   final UserModulesUnlockedFields modulesUnlocked;
   final UserSubmodulesUnlockedFields submodulesUnlocked;
@@ -62,6 +64,7 @@ class ScrapBookModel {
       await submodules.initAsync();
       await tasks.initAsync();
       await usersTasks.initAsync();
+      await usersScrapbook.initAsync();
       await users.initAsync();
       await modulesUnlocked.initAsync();
       await submodulesUnlocked.initAsync();
@@ -86,6 +89,8 @@ class ScrapBookModel {
 
   static List<Map<String, dynamic>> mapUsers = [];
 
+  static List<Map<String, dynamic>> mapScrapbook = [];
+
   static List<Map<String, dynamic>> mapOrganizations = [];
 
   bool populateModule(Map<String, dynamic> data) => _tryMap(data, _mapModule);
@@ -100,6 +105,11 @@ class ScrapBookModel {
   void _mapSubmodule(Map<String, dynamic> data) => mapSubmodules.add(data);
 
   void _mapTask(Map<String, dynamic> data) => mapTasks.add(data);
+
+  bool populateScrapbook(Map<String, dynamic> data) =>
+      _tryMap(data, _mapScrapbook);
+
+  void _mapScrapbook(Map<String, dynamic> data) => mapScrapbook.add(data);
 
   bool populateUsers(Map<String, dynamic> data) => _tryMap(data, _mapUsers);
 

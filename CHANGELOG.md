@@ -1,4 +1,16 @@
 
+## 0.49.0
+ June 23, 2021
+- Created & imported an extensive 'test' database
+- Introduced a 'new' data table: users_scrapbook
+- Removed all pseudo-code used for prototyping.
+- Introduced data field: key_art_file VARCHAR DEFAULT ''
+- Convert selected files to binary: encodeFile(String path)
+
+## 0.48.0
+ June 16, 2021
+- UsersScrapbookTable, onScrollBehavior()
+
 ## 0.47.0
  June 14, 2021
 - //        automaticallyImplyLeading: false,

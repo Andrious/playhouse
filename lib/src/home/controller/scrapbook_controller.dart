@@ -36,34 +36,101 @@ class ScrapBookController extends ControllerMVC {
     //
     // init = await database.downloadDB();
 
-    database = Prefs.getBool('useDatabase');
-
-    bool init = await model.initAsync();
+    final bool init = await model.initAsync();
 
     return init;
   }
 
-  bool inBuildScreen = false;
+  int get initialIndex => Prefs.getInt('DesignBuildIndex');
 
   String moduleType = '';
 
+  List<Map<String, dynamic>> get modules => _modules;
+  List<Map<String, dynamic>> _modules;
+
+  List<Map<String, dynamic>> initModules(String moduleType) {
+    //
+    final modules = model.modules.items;
+
+    if (moduleType == null || moduleType.trim().isEmpty) {
+      _modules = modules;
+    } else {
+      _modules = modules
+          .where((module) => module['module_type'] == moduleType.trim())
+          .toList(growable: false);
+    }
+    return _modules;
+  }
+
+  void initTasks() {
+    //
+    final id = submodule['rowid'];
+
+    final tasks = model.tasks.items
+        .where((record) => record['submodule_id'] == id)
+        .toList();
+
+    final List<TaskCard> cards = [];
+
+    int counter = -1;
+
+    for (var cnt = 0; cnt < tasks.length; cnt++) {
+      //
+      tasks[cnt]['submodule'] = submodule['name'];
+
+      final savedTask = model.usersTasks.items
+          .where((rec) => rec['task_id'] == tasks[cnt]['rowid'])
+          .toList();
+
+      final card = addCard(tasks[cnt], savedTask.isEmpty ? {} : savedTask[0]);
+
+      if (card != null) {
+        cards.add(card);
+      }
+    }
+    // Populate the getter!
+    _taskCards = cards;
+  }
+
+  TaskCard addCard(Map<String, dynamic> task, Map<String, dynamic> savedTask) {
+    //
+    TaskCard card;
+
+    final String file = task['key_art_file'];
+
+    final index = ['question', 'abc', 'AR', 'picture', 'pencil', 'movie']
+        .indexWhere(file.contains);
+
+    switch (index) {
+      case 0:
+        card = QuestionTask(task, savedTask);
+        break;
+      case 1:
+        card = ABCTask(task, savedTask);
+        break;
+      case 2:
+        card = ARTask(task, savedTask);
+        break;
+      case 3:
+        card = PencilTask(task, savedTask);
+        break;
+      case 4:
+        card = PictureTask(task, savedTask);
+        break;
+      case 5:
+        card = MovieCameraTask(task, savedTask);
+        break;
+      default:
+        card = null;
+    }
+    return card;
+  }
+
+  bool inBuildScreen = false;
+
   Map<String, dynamic> module;
-//  String module = '';
-
-  ///todo To be removed.
-  bool database = false;
-
-  ///todo To be removed.
-  String moduleName = '';
 
   Map<String, dynamic> submodule;
-//  String submodule = '';
-
-  ///todo To be removed.
-  String submoduleName = '';
-
-  ///todo To be removed.
-  int cardNo = 0;
 
   List<Widget> _taskCards;
 
@@ -89,10 +156,7 @@ class ScrapBookController extends ControllerMVC {
 
   /// Merely tapping the Task Card
   Future<void> onTap(TaskCard card) async {
-    ///todo To be removed.
-    final Map<String, dynamic> subTask = Map.from(model.tasks.items[cardNo]);
-    subTask['subName'] = submoduleName;
-    await openFullScreenRoute(TaskScreen(task: card, subTask: subTask));
+    await openFullScreenRoute(TaskScreen(card: card));
     setState(() {});
   }
 
@@ -136,18 +200,5 @@ class ScrapBookController extends ControllerMVC {
     ).show();
   }
 
-  List<Widget> get taskCards => [
-        QuestionTask(submoduleName),
-        ABCTask(submoduleName),
-        ARTask(submoduleName),
-        PencilTask(submoduleName),
-        PictureTask(submoduleName),
-        MovieCameraTask(submoduleName),
-        QuestionTask02(submoduleName),
-        ABCTask02(submoduleName),
-        ARTask02(submoduleName),
-        PencilTask02(submoduleName),
-        PictureTask02(submoduleName),
-        MovieCameraTask02(submoduleName),
-      ];
+  List<Widget> get taskCards => _taskCards;
 }

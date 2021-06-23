@@ -22,6 +22,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
   static const SUBMODULES = 'submodules';
   static const TASKS = 'tasks';
   static const USERS_TASKS = 'users_tasks';
+  static const USERS_SCRAPBOOK = 'users_scrapbook';
   static const USERS = 'users';
 
   static const USERS_MODULES_UNLOCKED = 'user_modules_unlocked';
@@ -146,6 +147,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
+       key_art_file VARCHAR DEFAULT '',
        module_type VARCHAR NOT NULL,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -156,9 +158,8 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
-       image VARCHAR,
+       key_art_file VARCHAR DEFAULT '',
        submodule_type VARCHAR NOT NULL DEFAULT '',
-       key_art BLOB,
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -169,7 +170,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
        task_type VARCHAR NOT NULL DEFAULT '',
-       key_art BLOB,
+       key_art_file VARCHAR DEFAULT '',
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -192,7 +193,18 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
-       key_art BLOB,
+       key_art VARCHAR DEFAULT '',
+       deleted INTEGER DEFAULT 0)
+    ''');
+
+    await db.execute('''
+       CREATE TABLE IF NOT EXISTS $USERS_SCRAPBOOK(
+       user_id INTEGER NOT NULL,
+       task_id INTEGER NOT NULL DEFAULT 0,
+       name VARCHAR NOT NULL,
+       short_description VARCHAR NOT NULL,
+       long_description VARCHAR NOT NULL,
+       key_art VARCHAR DEFAULT '',
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -225,7 +237,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
-       key_art BLOB,
+       key_art VARCHAR DEFAULT '',
        time_stamp INTEGER,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -234,7 +246,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        CREATE TABLE IF NOT EXISTS $ORGANIZATIONS_MODULES(
        organization_id INTEGER NOT NULL,
        module_id INTEGER NOT NULL,
-       lockedFirst INTEGER DEFAULT 0,
+       first_locked INTEGER DEFAULT 0,
        next_module_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -243,7 +255,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        CREATE TABLE IF NOT EXISTS $ORGANIZATIONS_SUBMODULES(
        organization_id INTEGER NOT NULL,
        submodule_id INTEGER NOT NULL,
-       lockedFirst INTEGER DEFAULT 0,
+       first_locked INTEGER DEFAULT 0,
        next_submodule_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -252,7 +264,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        CREATE TABLE IF NOT EXISTS $ORGANIZATIONS_TASKS(
        organization_id INTEGER NOT NULL,
        task_id INTEGER NOT NULL,
-       lockedFirst INTEGER DEFAULT 0,
+       first_locked INTEGER DEFAULT 0,
        next_task_id INTEGER DEFAULT 0,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -273,7 +285,7 @@ class ModulesTable extends SQLiteTable {
     const sqlStmt = '''
     SELECT A.rowid 
     , A.*
-    , B.lockedFirst
+    , B.first_locked
     , B.next_module_id
     FROM ${PlayhouseSQLiteDB.MODULES} A 
     LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS_MODULES} B 
@@ -334,7 +346,7 @@ class SubmodulesTable extends SQLiteTable {
     const sqlStmt = '''
     SELECT A.rowid 
     , A.*
-    , B.lockedFirst
+    , B.first_locked
     , B.next_submodule_id
     FROM ${PlayhouseSQLiteDB.SUBMODULES} A 
     LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES} B 
@@ -395,7 +407,7 @@ class TasksTable extends SQLiteTable {
     const sqlStmt = '''
     SELECT A.rowid 
     , A.*
-    , B.lockedFirst
+    , B.first_locked
     , B.next_task_id
     FROM ${PlayhouseSQLiteDB.TASKS} A 
     LEFT JOIN ${PlayhouseSQLiteDB.ORGANIZATIONS_TASKS} B 
@@ -465,10 +477,38 @@ class UsersTasksTable extends SQLiteTable {
   static UsersTasksTable _this;
 
   @override
+  Future<List<Map<String, dynamic>>> retrieve() async {
+    const sqlStmt = '''
+    SELECT A.rowid 
+    , A.*
+    FROM ${PlayhouseSQLiteDB.USERS_TASKS} A 
+    INNER JOIN ${PlayhouseSQLiteDB.USERS} B 
+    ON A.user_id = B.rowid
+    ''';
+    return primaryList(await db.rawQuery(sqlStmt));
+  }
+
+  @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
     final Map<String, dynamic> newRec =
         await db.saveMap(PlayhouseSQLiteDB.USERS_TASKS, rec);
+    return newRec.isNotEmpty;
+  }
+}
+
+/// The Scrapbook used by a particular User.
+/// Each could be associated with a Task or not.
+class UsersScrapbookTable extends SQLiteTable {
+  factory UsersScrapbookTable() => _this ??= UsersScrapbookTable._();
+  UsersScrapbookTable._() : super(tableName: PlayhouseSQLiteDB.USERS_SCRAPBOOK);
+  static UsersScrapbookTable _this;
+
+  @override
+  Future<bool> save(Map<String, dynamic> rec) async {
+    //
+    final Map<String, dynamic> newRec =
+        await db.saveMap(PlayhouseSQLiteDB.USERS_SCRAPBOOK, rec);
     return newRec.isNotEmpty;
   }
 }
@@ -762,7 +802,7 @@ class SQLiteTable {
 
   /// Simply a list of the records
   List<Map<String, dynamic>> get list => _list;
-  List<Map<String, dynamic>> _list;
+  List<Map<String, dynamic>> _list = [];
 
   Future<List<Map<String, dynamic>>> get listAll => db.getTable(tableName);
 

@@ -25,30 +25,28 @@ class ScrapbookTasksScreen extends StatefulWidget {
 
 class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
   _ScrapbookTasksScreenState() : super(ScrapBookController());
-  // _ScrapbookTasksScreenState() : super(ScrapBookController()) {
-  //   _con = controller;
-  // }
-  SubmodulesState submodule;
-  String submoduleName;
-  // ScrapBookController get con => _con;
-  ScrapBookController _con;
 
+  SubmodulesState submoduleState;
+  ScrapBookController _con;
   TextStyle style;
 
   @override
   void initState() {
     super.initState();
-    submodule = widget.tab.state;
-    _con = submodule.con;
-    var name;
-    if (widget.tab.submodule is String) {
-      name = widget.tab.submodule;
-    } else {
-      name = widget.tab.submodule['name'];
-    }
-    // critical to assign.
-    _con.submoduleName = name;
-    submoduleName = name;
+
+    submoduleState = widget.tab.state;
+
+    _con = submoduleState.con;
+
+    dynamic name;
+
+    name = widget.tab.submodule['name'];
+
+    _con.submodule = widget.tab.submodule;
+
+    // Populate this Submodule's Tasks
+    _con.initTasks();
+
     style = const TextStyle(color: Colors.black);
   }
 
@@ -56,22 +54,29 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
   Widget build(BuildContext context) {
     Icon arrow;
     double maxHeight;
-    if (submodule.isPanelUp) {
+
+    if (submoduleState.isPanelUp) {
+      //
       arrow = const Icon(
         Icons.expand_more, // Icons.view_headline,
         color: Colors.red,
       );
+
       maxHeight = 0.7;
     } else {
+      //
       arrow = const Icon(
         Icons.expand_less, // Icons.view_headline,
         color: Colors.green,
       );
+
       maxHeight = 0.35;
     }
+
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-    if (isLandscape && submodule.isPanelUp) {
+
+    if (isLandscape && submoduleState.isPanelUp) {
       //
       maxHeight = 0.5;
     }
@@ -95,41 +100,36 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
 //           ),
 //         ),
         Flexible(
-          flex: submodule.isPanelUp ? 3 : 30,
+          flex: submoduleState.isPanelUp ? 3 : 30,
           child: Padding(
-            padding: submodule.isPanelUp
+            padding: submoduleState.isPanelUp
                 ? const EdgeInsets.only(top: 20, bottom: 10)
                 : const EdgeInsets.only(top: 10, bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () {
-                    setState(submodule.onPressed);
-                  },
-                  child: Text(
-                    '$submoduleName  |',
+            child: InkWell(
+              onTap: () {
+                setState(submoduleState.onPressed);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    '${_con.submodule['name']}  |',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(submodule.onPressed);
-                  },
-                  child: Text(
-                    'Submodule description',
+                  Text(
+                    _con.submodule['short_description'],
                     style: style,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
         Flexible(
-          flex: submodule.isPanelUp ? 30 : 2,
+          flex: submoduleState.isPanelUp ? 30 : 2,
           child: LimitedBox(
             maxHeight: MediaQuery.of(context).size.height * maxHeight,
             child: GridView.count(
@@ -139,7 +139,6 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
               primary: false,
               addRepaintBoundaries: false,
               children: _con.taskCards,
-//              children: con.taskCards(widget.tab.submodule);
             ),
           ),
         ),
@@ -150,7 +149,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
             children: [
               TextButton(
                 onPressed: () {
-                  setState(submodule.onPressed);
+                  setState(submoduleState.onPressed);
                 },
                 child: Column(
                   children: [

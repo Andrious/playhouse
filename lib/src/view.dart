@@ -20,11 +20,6 @@ export 'package:playhouse/src/app/view/flutter_icons.dart';
 /// Scrapbook main screen
 export 'package:playhouse/src/home/view/scrapbook_main.dart';
 
-/// AppBars
-export 'package:playhouse/src/home/view/appbar/design_build_appbar.dart';
-export 'package:playhouse/src/home/view/appbar/modules_appbar.dart';
-export 'package:playhouse/src/home/view/appbar/submodules_appbar.dart';
-
 /// Scrapbook Drawer
 export 'package:playhouse/src/home/view/drawer/scrapbook_drawer.dart';
 
@@ -33,6 +28,7 @@ export 'package:playhouse/src/home/view/tabview/tabbar/gi_tabbar.dart';
 
 /// Scrapbook Submodules screen
 export 'package:playhouse/src/home/view/tabview/submodule/scrapbook_submodules.dart';
+export 'package:playhouse/src/home/view/tabview/submodule/appbar/submodules_appbar.dart';
 
 /// Scrapbook Modules Design & Build screen
 export 'package:playhouse/src/home/view/tabview/modules/scrapbook_modules_type_screen.dart';

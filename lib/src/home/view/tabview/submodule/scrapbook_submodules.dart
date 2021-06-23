@@ -45,18 +45,11 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     // Set up this appbar's data
     _sbSubTabBar.initState();
 
-    ///todo To be removed
-    String name;
-    if (_con.database) {
-      name = _con.module['name'];
-    } else {
-      name = _con.moduleName;
-    }
-
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 100), value: 1, vsync: this);
 
-    final panelUp = Prefs.getBool('${_con.moduleType}${name}_panelUp');
+    final panelUp =
+        Prefs.getBool('${_con.moduleType}${_con.module['name']}_panelUp');
 
     if (!panelUp) {
       _movePanel();
@@ -126,34 +119,6 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
         );
       });
 
-//   @override
-//   Widget build(BuildContext context) => Column(
-//     children: <Widget>[
-//       Flexible(
-//         flex: 3,
-//         // child: Padding(
-//         //   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-//         child: TabBar(
-//           controller: _sbSubTabBar.controller,
-//           isScrollable: true,
-//           indicatorSize: TabBarIndicatorSize.label,
-//           tabs: _sbSubTabBar.tabs,
-//         ),
-// //            ),
-//       ),
-//       Flexible(
-//         flex: 4,
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-//           child: TabBarView(
-//             controller: _sbSubTabBar.controller,
-//             children: _sbSubTabBar.children,
-//           ),
-//         ),
-//       ),
-//     ],
-//   );
-
   void onPressed() {
     _movePanel();
   }
@@ -168,15 +133,8 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     //
     _animationController.fling(velocity: isPanelUp ? -1.0 : 1.0);
 
-    ///todo To be removed
-    String name;
-    if (_con.database) {
-      name = _con.module['name'];
-    } else {
-      name = _con.moduleName;
-    }
-
-    Prefs.setBool('${_con.moduleType}${name}_panelUp', isPanelUp);
+    Prefs.setBool(
+        '${_con.moduleType}${_con.module['name']}_panelUp', isPanelUp);
   }
 
   Animation<RelativeRect> _getPanelAnimation(BoxConstraints constraints) {

@@ -11,9 +11,8 @@ import 'package:playhouse/src/view.dart';
 import 'package:playhouse/src/controller.dart';
 
 class TaskScreen extends StatefulWidget {
-  const TaskScreen({Key key, this.task, this.subTask}) : super(key: key);
-  final TaskCard task;
-  final Map<String, dynamic> subTask;
+  const TaskScreen({Key key, this.card}) : super(key: key);
+  final TaskCard card;
   @override
   State createState() => _TaskScreenState();
 }
@@ -23,11 +22,15 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
     con = controller;
   }
   ScrapBookController con;
+  Map<String, dynamic> rec;
+  Widget icon;
 
   @override
   void initState() {
     super.initState();
     subState = con.ofState<SubmodulesState>();
+    rec = widget.card.task;
+    icon = widget.card.icon;
   }
 
   final List<Widget> actions = [];
@@ -41,7 +44,6 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
 //        leading: widget.task.icon,
         title: I10n.t('Playhouse'),
         centerTitle: true,
-//        automaticallyImplyLeading: false,
         elevation: 0,
         excludeHeaderSemantics: true,
         actions: actions,
@@ -53,12 +55,10 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
               constraints: const BoxConstraints.expand(),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: MemoryImage(
-                      base64.decode(
-                        con.submodule['image'],
-                      ),
-                    ),
-                    fit: BoxFit.cover,
+                  image: ExactAssetImage(
+                    'assets/images/${con.submodule['key_art_file']}',
+                  ),
+                  fit: BoxFit.cover,
                 ),
               ),
               child: SizedBox(
@@ -79,7 +79,7 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
                         heightFactor: 0,
                         alignment: Alignment.topLeft,
                         child: Text(
-                          '${widget.subTask['subName']}',
+                          '${rec['submodule']}',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -97,7 +97,7 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
                               bottom: 30,
                             ),
                             child: Text(
-                              widget.subTask['name'],
+                              rec['name'],
                               style: const TextStyle(
                                 fontSize: 26,
                                 fontWeight: FontWeight.bold,
@@ -110,14 +110,14 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
                       /// Short Description or Title
                       Flexible(
                         child: Center(
-                          child: Text(widget.subTask['short_description']),
+                          child: Text(rec['short_description']),
                         ),
                       ),
                       Flexible(
                         flex: 4,
                         child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
-                          child: Text(widget.subTask['long_description']),
+                          child: Text(rec['long_description']),
                         ),
                       ),
                     ],
@@ -125,7 +125,6 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
                 ),
               ),
             ),
-
             Positioned(
 //              height: 50,
 //              width: 50,
@@ -140,166 +139,12 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
 //                    borderRadius: BorderRadius.circular(30)
                 ),
 //                padding: const EdgeInsets.all(16),
-                child: widget.task.icon,
+                child: icon,
               ),
             ),
           ],
         ),
       ),
     );
-//     return SafeArea(
-//       child: Stack(
-//         children: <Widget>[
-//           // Crop(
-//           //   padding: const EdgeInsets.only(),
-//           //   interactive: false,
-//           //   backgroundColor: Colors.white,
-//           //   dimColor: Colors.white,
-//           //   controller: CropController(
-//           //     aspectRatio: 0.8,
-//           //   ),
-//           //   child: Image.memory(
-//           //     base64.decode(
-//           //       con.submodule['image'],
-//           //     ),
-//           //   ),
-//           // ),
-//           ClipRRect(
-//             child: Image.memory(
-//               base64.decode(
-//                 con.submodule['image'],
-//               ),
-//             ),
-//           ),
-// //           GreyIvyTabBar(
-// // //            indicatorSize: TabBarIndicatorSize.label,
-// //             controller: TabController(
-// //               length: 1,
-// //               vsync: subState,
-// //             ),
-// //             tabs: [
-// //               ClipRRect(
-// //                 child: Image.memory(
-// //                   base64.decode(
-// //                     con.submodule['image'],
-// //                   ),
-// //                 ),
-// //               ),
-// //             ],
-// //             physics: const BigPageScrollPhysics().applyTo(
-// //                 ScrollConfiguration.of(context).getScrollPhysics(context)),
-// //           ),
-//           SingleChildScrollView(
-//             physics: const BouncingScrollPhysics(),
-//             child: Container(
-//               margin: const EdgeInsets.fromLTRB(16, 200, 16, 16),
-//               decoration: BoxDecoration(
-//                   color: Colors.white, borderRadius: BorderRadius.circular(30)),
-//               padding: const EdgeInsets.all(16),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: <Widget>[
-//                   /// Task Name and Number
-//                   Flexible(
-//                     child: Center(
-//                       child: Padding(
-//                         padding: const EdgeInsets.only(
-//                           top: 30,
-//                           bottom: 30,
-//                         ),
-//                         child: Text(
-//                           widget.subTask['name'],
-//                           style: const TextStyle(
-//                             fontSize: 26,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//
-//                   /// Short Description or Title
-//                   Flexible(
-//                     child: Center(
-//                       child: Text(widget.subTask['short_description']),
-//                     ),
-//                   ),
-//                   const SizedBox(height: 30),
-//                   Flexible(
-//                     child: Text(widget.subTask['long_description']),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
   }
-
-// Stack(
-//       children: <Widget>[
-//         Crop(
-//           padding: const EdgeInsets.only(),
-//           interactive: false,
-//           backgroundColor: Colors.white,
-//           dimColor: Colors.white,
-//           controller: CropController(
-//             aspectRatio: 0.78,
-//           ),
-//           child: Image.memory(
-//             base64.decode(
-//               con.submodule['image'],
-//             ),
-//           ),
-//         ),
-
-  //        SafeArea(
-//           child: Column(
-//             children: <Widget>[
-//               Expanded(
-//                 child: Container(
-//                   decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(30),
-//                       color: Colors.white),
-//                   child: Column(
-//                     children: <Widget>[
-//                       /// Task Name and Number
-//                       Padding(
-//                         padding: const EdgeInsets.only(
-//                           top: 30,
-//                           bottom: 20,
-//                         ),
-//                         child: Text(
-//                           widget.subTask['name'],
-//                           style: const TextStyle(
-//                             fontSize: 26,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ),
-//
-//                       /// Short Description or Title
-//                       Padding(
-//                         padding: const EdgeInsets.only(
-//                           top: 10,
-//                         ),
-//                         child: Text(widget.subTask['short_description']),
-//                       ),
-//                       const SizedBox(height: 30),
-//                       Flexible(
-//                         child: SingleChildScrollView(
-//                           physics: const BouncingScrollPhysics(),
-//                           child: Text(widget.subTask['long_description']),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//         )
-
 }
