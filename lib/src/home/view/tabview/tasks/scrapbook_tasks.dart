@@ -119,9 +119,14 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
                       fontSize: 16,
                     ),
                   ),
-                  Text(
-                    _con.submodule['short_description'],
-                    style: style,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 30),
+                      child: Text(
+                        _con.submodule['short_description'],
+                        style: style,
+                      ),
+                    ),
                   ),
                 ],
               ),

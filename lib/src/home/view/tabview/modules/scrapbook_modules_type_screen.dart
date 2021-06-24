@@ -112,30 +112,11 @@ class ModulesAppBar {
     //
     _con.inBuildScreen = provider.widget is ScrapbookBuildScreen;
 
-    _tabs = [];
-
     _children = [];
-
-    var index = -1;
 
     for (final module in recs) {
       //
       _children.add(const SubmodulesScreen());
-
-      index++;
-
-      _tabs.add(Tab(
-        child: AutoSizeText(
-          I10n.s(module['name']),
-          style: TextStyle(
-            fontWeight: _tabController.index == index
-                ? FontWeight.w700
-                : FontWeight.w400,
-          ),
-          softWrap: false,
-          overflow: TextOverflow.visible,
-        ),
-      ));
     }
   }
 
@@ -147,8 +128,42 @@ class ModulesAppBar {
   TabController get controller => _tabController;
   TabController _tabController;
 
-  List<Tab> get tabs => _tabs;
-  List<Tab> _tabs;
+  List<Tab> get tabs {
+    //
+    final List<Tab> _tabs = [];
+
+    var index = -1;
+
+    for (final module in _con.modules) {
+      //
+      index++;
+
+      // _tabs.add(Tab(
+      //   child: AutoSizeText(
+      //     I10n.s(module['name']),
+      //     style: TextStyle(
+      //       fontWeight: _tabController.index == index
+      //           ? FontWeight.w700
+      //           : FontWeight.w400,
+      //     ),
+      //     softWrap: false,
+      //     overflow: TextOverflow.visible,
+      //   ),
+      // ));
+
+      _tabs.add(Tab(
+        child: I10n.t(
+          module['name'],
+          style: TextStyle(
+            fontWeight: _tabController.index == index
+                ? FontWeight.w700
+                : FontWeight.w400,
+          ),
+        ),
+      ));
+    }
+    return _tabs;
+  }
 
   List<Widget> get children => _children;
   List<Widget> _children;

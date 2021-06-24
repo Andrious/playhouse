@@ -1,4 +1,12 @@
 
+## 0.50.0
+ June 24, 2021
+- Ignore ios/ from Github
+- Explicitly supply module types: ['Design', 'Build'];
+- Programmatically supply the module tabs: List<Tab> get tabs {
+- Expanded() the Short Description field
+- SizedBox(child: icon, in Task Screen
+
 ## 0.49.0
  June 23, 2021
 - Created & imported an extensive 'test' database

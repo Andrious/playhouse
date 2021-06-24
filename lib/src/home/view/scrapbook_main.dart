@@ -74,38 +74,31 @@ class DesignBuildAppBar {
 //      state: _provider,
     );
 
-    _tabs = _onTabs();
-
-    _con.moduleType = _con.tabLabel(tabs[initIndex]);
+    _con.moduleType = _moduleTypes[initIndex];
 
     _tabController.addListener(() {
       Prefs.setInt('DesignBuildIndex', _tabController.index);
       _provider?.setState(() {});
-      _con.moduleType = _con.tabLabel(tabs[_tabController.index]);
+      _con.moduleType = _moduleTypes[_tabController.index];
     });
-
-    _appBar = _onAppBar();
   }
   final ScrapBookState _provider;
   ScrapBookController _con;
 
+  /// The Main Appbar's list of tabs.
+  final List<String> _moduleTypes = ['Design', 'Build'];
+
   /// Clean up after itself.
   void dispose() {
+    _con = null;
     _tabController.dispose();
   }
 
   TabController get controller => _tabController;
   TabController _tabController;
 
-  /// The Main Appbar's list of tabs.
-  List<Tab> get tabs => _tabs;
-  List<Tab> _tabs;
-
   /// The App Tool bar
-  AppBar get appBar => _appBar;
-  AppBar _appBar;
-
-  AppBar _onAppBar() => AppBar(
+  AppBar get appBar => AppBar(
         title: I10n.t('Playhouse'),
         centerTitle: true,
         automaticallyImplyLeading: false,
@@ -113,33 +106,33 @@ class DesignBuildAppBar {
         excludeHeaderSemantics: true,
         toolbarHeight: 100,
         bottom: TabBar(
-          tabs: _onTabs(),
           controller: _tabController,
+          tabs: [
+            Tab(
+              child: I10n.t(
+                _moduleTypes[0],
+                style: TextStyle(
+                  fontWeight: _tabController.index == 0
+                      ? FontWeight.w700
+                      : FontWeight.w400,
+                ),
+                softWrap: false,
+                overflow: TextOverflow.visible,
+              ),
+            ),
+            Tab(
+              child: I10n.t(
+                _moduleTypes[1],
+                style: TextStyle(
+                  fontWeight: _tabController.index == 1
+                      ? FontWeight.w700
+                      : FontWeight.w400,
+                ),
+                softWrap: false,
+                overflow: TextOverflow.visible,
+              ),
+            ),
+          ],
         ),
       );
-
-  List<Tab> _onTabs() => [
-        Tab(
-          child: I10n.t(
-            'Design',
-            style: TextStyle(
-              fontWeight:
-                  _tabController.index == 0 ? FontWeight.w700 : FontWeight.w400,
-            ),
-            softWrap: false,
-            overflow: TextOverflow.visible,
-          ),
-        ),
-        Tab(
-          child: I10n.t(
-            'Build',
-            style: TextStyle(
-              fontWeight:
-                  _tabController.index == 1 ? FontWeight.w700 : FontWeight.w400,
-            ),
-            softWrap: false,
-            overflow: TextOverflow.visible,
-          ),
-        ),
-      ];
 }

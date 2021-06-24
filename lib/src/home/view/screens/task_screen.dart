@@ -75,19 +75,36 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Align(
-                        heightFactor: 0,
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          '${rec['submodule']}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          /// Submodule Name
+                          Flexible(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, bottom: 20),
+                              child: Text(
+                                '${rec['submodule']}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+
+                          /// Task icon
+                          SizedBox(
+                            width: 100,
+                            height: 50,
+                            child: icon,
+                          ),
+                        ],
                       ),
 
-                      /// Task Name and Number
+                      /// Task Name & Number
                       Flexible(
                         flex: 2,
                         child: Center(
@@ -113,6 +130,8 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
                           child: Text(rec['short_description']),
                         ),
                       ),
+
+                      /// Long Description
                       Flexible(
                         flex: 4,
                         child: SingleChildScrollView(
@@ -125,23 +144,23 @@ class _TaskScreenState extends StateMVC<TaskScreen> {
                 ),
               ),
             ),
-            Positioned(
-//              height: 50,
-//              width: 50,
-              left: 330,
-              top: 10,
-              right: 15,
-              bottom: 640,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-//                    borderRadius: BorderRadius.circular(30)
-                ),
-//                padding: const EdgeInsets.all(16),
-                child: icon,
-              ),
-            ),
+//             Positioned(
+// //              height: 50,
+// //              width: 50,
+//               left: 330,
+//               top: 10,
+//               right: 15,
+//               bottom: 640,
+//               child: Container(
+//                 margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+//                 decoration: const BoxDecoration(
+//                   color: Colors.white,
+// //                    borderRadius: BorderRadius.circular(30)
+//                 ),
+// //                padding: const EdgeInsets.all(16),
+//                 child: icon,
+//               ),
+//             ),
           ],
         ),
       ),
