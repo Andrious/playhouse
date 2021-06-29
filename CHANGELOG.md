@@ -1,4 +1,9 @@
 
+## 0.52.0
+ June 29, 2021
+- int get version => 3;
+- Cast an overlay over task cards when locked.
+
 ## 0.51.0
  June 28, 2021
 - Completion Indicator

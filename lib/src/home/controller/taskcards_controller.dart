@@ -123,8 +123,30 @@ class _TaskCardsState extends State<TaskCard> {
           ),
         ),
       ]);
-      // If this task card is locked.
-      if (card.task['first_locked'] == 1) {
+
+      // If all the tasks are locked.
+      if (card.con.submodule['first_locked'] == 1) {
+        //
+        widget = Stack(
+          children: [
+            widget,
+            const Padding(
+              padding: EdgeInsets.all(10),
+              child: Opacity(
+                opacity: 0.6,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Center(),
+                ),
+              ),
+            ),
+          ],
+        );
+        // If this task card is locked.
+      } else if (card.task['first_locked'] == 1) {
+        //
         widget = Stack(
           children: [
             widget,

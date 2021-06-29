@@ -16,7 +16,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
   String get name => 'playhouse_scrapbook';
 
   @override
-  int get version => 2;
+  int get version => 3;
 
   static const MODULES = 'modules';
   static const SUBMODULES = 'submodules';
@@ -86,6 +86,11 @@ class PlayhouseSQLiteDB extends SQLiteDB {
     return _onCreate(db);
   }
 
+  @override
+  Future<void> onDowngrade(Database db, int oldVersion, int newVersion) {
+    return Future.value();
+  }
+
   Future<void> _onDelete(Database db) async {
     //
     await db.execute('''
@@ -106,6 +111,10 @@ class PlayhouseSQLiteDB extends SQLiteDB {
 
     await db.execute('''
     DROP TABLE IF EXISTS `$USERS_TASKS`
+    ''');
+
+    await db.execute('''
+    DROP TABLE IF EXISTS `$USERS_SCRAPBOOK`
     ''');
 
     await db.execute('''
