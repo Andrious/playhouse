@@ -1,6 +1,8 @@
-import 'package:playhouse/src/model.dart';
+// Copyright 2021 Grey & Ivy Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-import 'package:playhouse/src/view.dart';
+import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/controller.dart';
 
@@ -132,5 +134,45 @@ class ScrapBookModel {
       pop = false;
     }
     return pop;
+  }
+
+  Future<bool> saveUserTask(Map<String, dynamic> userTask) async {
+    //
+    final save = await usersTasks.save(userTask);
+
+    if (save) {
+      //
+      final userId = userTask['user_id'];
+
+      final taskId = userTask['rowid'];
+
+      final recList = tasksUnlocked.items
+          .where((rec) => rec['user_id'] == userId && rec['task_id'] == taskId)
+          .toList();
+
+      Map<String, dynamic> rec;
+
+      if (recList.isEmpty) {
+        rec = {'user_id': userId, 'task_id': taskId, 'completed': true};
+      } else {
+        //
+        rec = recList[0];
+
+        // Don't bother if already 'completed'
+        if (rec['completed'] == null || rec['completed'] == 0) {
+          //
+          if (rec['user_id'] == null) {
+            //
+            rec['user_id'] = userId;
+
+            rec['task_id'] = taskId;
+          }
+          rec['completed'] = 1; // true
+
+          await tasksUnlocked.save(rec);
+        }
+      }
+    }
+    return save;
   }
 }

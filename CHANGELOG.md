@@ -1,4 +1,13 @@
 
+## 0.51.0
+ June 28, 2021
+- Completion Indicator
+- Supplied a 'Lock' overlay
+- query(); in save()
+- Load 'organization' test data
+- Further removed pseudo-code used for prototyping.
+- saveUserTask(Map<String, dynamic> userTask)
+
 ## 0.50.0
  June 24, 2021
 - Ignore ios/ from Github

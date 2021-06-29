@@ -50,4 +50,9 @@ Future<void> loadScrapBookDatabase(Database db) async {
   await loadBuildMod04Sub02Tasks(db);
   await loadBuildMod04Sub03Tasks(db);
   await loadBuildMod04Sub04Tasks(db);
+
+  await loadOrganizationsDB(db);
+  await loadOrganizationsModulesDB(db);
+  await loadOrganizationsSubmodulesDB(db);
+  await loadOrganizationsTasksDB(db);
 }

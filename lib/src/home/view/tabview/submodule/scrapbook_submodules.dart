@@ -28,9 +28,10 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     _con = controller;
   }
 
-  SubmodulesTabBar get tabBar => _sbSubTabBar;
+//  SubmodulesTabBar get tabBar => _sbSubTabBar;
   SubmodulesTabBar _sbSubTabBar;
 
+  // The app's controller
   ScrapBookController get con => _con;
   ScrapBookController _con;
 
@@ -48,6 +49,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 100), value: 1, vsync: this);
 
+    // Is the Task panel up or down.
     final panelUp =
         Prefs.getBool('${_con.moduleType}${_con.module['name']}_panelUp');
 
@@ -84,7 +86,8 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
           children: <Widget>[
             _SwipeUpDetector(
               this,
-              child: GreyIvyTabBar(
+//          child: GreyIvyTabBar(
+              child: TabBar(
                 controller: _sbSubTabBar.controller,
                 isScrollable: true,
                 indicatorSize: TabBarIndicatorSize.label,
@@ -95,6 +98,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
                     ScrollConfiguration.of(context).getScrollPhysics(context)),
               ),
             ),
+            overlay(),
             PositionedTransition(
               rect: _getPanelAnimation(constraints),
               child: Material(
@@ -118,6 +122,25 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
           ],
         );
       });
+
+  Widget overlay() {
+    //
+    Widget overlay;
+    if (_con.submodule['first_locked'] == 1) {
+      overlay = Positioned.fill(
+        child: _con.lockImage,
+      );
+    } else {
+      overlay = Positioned(
+        left: 200,
+        top: 80,
+        height: 100,
+        width: 300,
+        child: con.completer,
+      );
+    }
+    return overlay;
+  }
 
   void onPressed() {
     _movePanel();
@@ -149,12 +172,6 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
       curve: Curves.linear,
     ));
   }
-
-  /// Means to 'lock' certain Submodules.
-  bool sub01Locked = false;
-  bool sub02Locked = false;
-  bool sub03Locked = false;
-  bool sub04Locked = false;
 }
 
 /// Scroll physics used by a [SubmodulesScreen].
@@ -284,17 +301,19 @@ class _SwipeUpDetector extends GestureDetector {
           onVerticalDragEnd: (details) {
             //
             final panelUp = state.isPanelUp;
+
+            /// Swiping up.
             if (_end < _start) {
               if (!panelUp) {
-                state.setState(() {
-                  state._movePanel();
-                });
+                state._movePanel();
+                state.con.setState(() {});
               }
+
+              /// Swiping down.
             } else if (_end > _start) {
               if (panelUp) {
-                state.setState(() {
-                  state._movePanel();
-                });
+                state._movePanel();
+                state.con.setState(() {});
               }
             }
           },

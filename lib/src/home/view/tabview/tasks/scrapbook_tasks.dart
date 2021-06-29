@@ -38,14 +38,8 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
 
     _con = submoduleState.con;
 
-    dynamic name;
-
-    name = widget.tab.submodule['name'];
-
-    _con.submodule = widget.tab.submodule;
-
     // Populate this Submodule's Tasks
-    _con.initTasks();
+    _con.initTasks(widget.tab.submodule);
 
     style = const TextStyle(color: Colors.black);
   }

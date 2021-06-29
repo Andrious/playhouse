@@ -74,19 +74,15 @@ class DesignBuildAppBar {
 //      state: _provider,
     );
 
-    _con.moduleType = _moduleTypes[initIndex];
-
     _tabController.addListener(() {
       Prefs.setInt('DesignBuildIndex', _tabController.index);
       _provider?.setState(() {});
-      _con.moduleType = _moduleTypes[_tabController.index];
+      _con.initTypeOfModules(_tabController.index);
+//      _con.moduleType = _con.moduleTypes[_tabController.index];
     });
   }
   final ScrapBookState _provider;
   ScrapBookController _con;
-
-  /// The Main Appbar's list of tabs.
-  final List<String> _moduleTypes = ['Design', 'Build'];
 
   /// Clean up after itself.
   void dispose() {
@@ -110,7 +106,7 @@ class DesignBuildAppBar {
           tabs: [
             Tab(
               child: I10n.t(
-                _moduleTypes[0],
+                _con.moduleTypes[0],
                 style: TextStyle(
                   fontWeight: _tabController.index == 0
                       ? FontWeight.w700
@@ -122,7 +118,7 @@ class DesignBuildAppBar {
             ),
             Tab(
               child: I10n.t(
-                _moduleTypes[1],
+                _con.moduleTypes[1],
                 style: TextStyle(
                   fontWeight: _tabController.index == 1
                       ? FontWeight.w700

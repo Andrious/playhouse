@@ -8,16 +8,60 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
+/// The Controller for the app.
 class ScrapBookController extends ControllerMVC {
   factory ScrapBookController([StateMVC state]) =>
       _this ??= ScrapBookController._(state);
 
   ScrapBookController._([StateMVC state])
       : model = ScrapBookModel(),
-        super(state);
+        lockImage = Opacity(
+          opacity: 0.6,
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Center(child: Image.asset('assets/images/lock.png')),
+          ),
+        ),
+        super(state) {
+    _completer = const CompleteIndicator();
+  }
 
   static ScrapBookController _this;
+
   final ScrapBookModel model;
+
+  final Widget lockImage;
+
+  bool inBuildScreen = false;
+
+  // The current module being viewed.
+  Map<String, dynamic> module;
+
+  // The current submodule being viewed.
+  Map<String, dynamic> submodule;
+
+  // The current tasks being viewed.
+  List<Map<String, dynamic>> tasks;
+
+  // The tasks currently completed.
+  List<Map<String, dynamic>> savedTask;
+
+  double percentComplete = 0;
+
+  List<Widget> _taskCards;
+
+  /// A graphical indication of Task completion.
+  CompleteIndicator _completer;
+
+  int get initialIndex => Prefs.getInt('DesignBuildIndex');
+
+  int get initModuleIndex => Prefs.getInt('${moduleType}ModulesIndex');
+
+  List<String> get moduleTypes => ['Design', 'Build'];
+
+  String moduleType = '';
 
   @override
   Future<bool> initAsync() async {
@@ -36,17 +80,33 @@ class ScrapBookController extends ControllerMVC {
     //
     // init = await database.downloadDB();
 
+    // Open the data tables
     final bool init = await model.initAsync();
+
+    // Align to the right data depending on the 'type' of Modules.
+    initTypeOfModules();
 
     return init;
   }
 
-  int get initialIndex => Prefs.getInt('DesignBuildIndex');
-
-  String moduleType = '';
-
   List<Map<String, dynamic>> get modules => _modules;
   List<Map<String, dynamic>> _modules;
+
+  // Align to the right data depending on the 'type' of Modules.
+  void initTypeOfModules([int index]) {
+    //
+    index ??= initialIndex;
+
+    moduleType = moduleTypes[index];
+
+    initModules(moduleType);
+
+    setModule(initModuleIndex);
+
+    final subs = initSubmodules();
+
+    initTasks(subs[0]);
+  }
 
   List<Map<String, dynamic>> initModules(String moduleType) {
     //
@@ -58,38 +118,127 @@ class ScrapBookController extends ControllerMVC {
       _modules = modules
           .where((module) => module['module_type'] == moduleType.trim())
           .toList(growable: false);
+
+      // Identify the user
+      final userId = model.users.items[0]['rowid'];
+
+      // Determine what may be locked or not.
+      final unlockedModules = model.modulesUnlocked.items
+          .where((rec) => rec['user_id'] == userId)
+          .toList(growable: false);
+
+      if (unlockedModules.isNotEmpty) {
+        for (final module in _modules) {
+          if (unlockedModules.isEmpty) {
+            break;
+          }
+          for (final unlocked in unlockedModules) {
+            if (unlocked['module_id'] == module['rowid']) {
+              module['first_locked'] = 0;
+              unlockedModules.remove(unlocked);
+            }
+          }
+        }
+      }
     }
     return _modules;
   }
 
-  void initTasks() {
+  Map<String, dynamic> setModule(int index) {
     //
+    final recs = modules;
+
+    // _tabController must be defined first.
+    if (recs.isEmpty) {
+      module = null;
+    } else {
+      // Record the 'last' tab visited.
+      Prefs.setInt('${moduleType}ModulesIndex', index);
+      module = recs[index];
+    }
+    return module;
+  }
+
+  List<Map<String, dynamic>> get submodules => _submodules;
+  List<Map<String, dynamic>> _submodules;
+
+  // initModules() must be called first
+  List<Map<String, dynamic>> initSubmodules() {
+    //
+    final id = module['rowid'];
+
+    _submodules =
+        model.submodules.items.where((rec) => rec['module_id'] == id).toList();
+
+    // Propagate the lock if the parent is currently locked.
+    if (module['first_locked'] == 1) {
+      for (final submodule in _submodules) {
+        submodule['first_locked'] = 1;
+      }
+    }
+    return _submodules;
+  }
+
+  // initSubmodules() must be called first
+  List<Map<String, dynamic>> initTasks(Map<String, dynamic> submodule) {
+    //
+    percentComplete = 0;
+
+    savedTask = [];
+
+    // Record the current submodule being viewed.
+    this.submodule = submodule;
+
+    // Important to 'nullify' everything if passed null.
+    if (submodule == null) {
+      return tasks = [];
+    }
+
     final id = submodule['rowid'];
 
-    final tasks = model.tasks.items
+    tasks = model.tasks.items
         .where((record) => record['submodule_id'] == id)
         .toList();
 
     final List<TaskCard> cards = [];
 
-    int counter = -1;
-
     for (var cnt = 0; cnt < tasks.length; cnt++) {
       //
       tasks[cnt]['submodule'] = submodule['name'];
 
-      final savedTask = model.usersTasks.items
+      // Propagate the lock if the parent is currently locked.
+      if (submodule['first_locked'] == 1) {
+        tasks[cnt]['first_locked'] = 1;
+      }
+
+      final task = model.usersTasks.items
           .where((rec) => rec['task_id'] == tasks[cnt]['rowid'])
           .toList();
 
-      final card = addCard(tasks[cnt], savedTask.isEmpty ? {} : savedTask[0]);
+      final card = addCard(tasks[cnt], task.isEmpty ? {} : task[0]);
 
       if (card != null) {
         cards.add(card);
       }
+
+      savedTask.addAll(task);
     }
+
     // Populate the getter!
     _taskCards = cards;
+
+    if (savedTask.isNotEmpty) {
+      percentComplete = savedTask.length / tasks.length;
+    }
+
+    return tasks;
+  }
+
+  /// Update the completion percentage and display it.
+  void calcCompletion() {
+    savedTask = model.usersTasks.items;
+    percentComplete = savedTask.length / tasks.length;
+    completer.setCompletion();
   }
 
   TaskCard addCard(Map<String, dynamic> task, Map<String, dynamic> savedTask) {
@@ -125,14 +274,6 @@ class ScrapBookController extends ControllerMVC {
     }
     return card;
   }
-
-  bool inBuildScreen = false;
-
-  Map<String, dynamic> module;
-
-  Map<String, dynamic> submodule;
-
-  List<Widget> _taskCards;
 
   /// Return the text label specified in the Tab object.
   String tabLabel(Tab tab) {
@@ -201,4 +342,7 @@ class ScrapBookController extends ControllerMVC {
   }
 
   List<Widget> get taskCards => _taskCards;
+
+  /// A graphical indication of Task completion.
+  CompleteIndicator get completer => _completer;
 }

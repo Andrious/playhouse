@@ -26,22 +26,8 @@ class _ScrapBookDrawerState extends State<ScrapBookDrawer> {
 //    final List<Widget> widgets = [LogInLogOut()];
     final List<Widget> widgets = [];
 
-    final dataWidget = ListTile(
-      title: const Text('Use Database'),
-      subtitle: const Text('restart app to take effect'),
-      trailing: CupertinoSwitch(
-        value: Prefs.getBool('useDatabase'),
-        onChanged: (bool value) {
-          final useDatabase = Prefs.getBool('useDatabase');
-          Prefs.setBool('useDatabase', !useDatabase);
-          setState(() {});
-        },
-      ),
-    );
-    // Add to the drawer.
-    widgets.add(dataWidget);
-
     if (App.inDebugger) {
+      //
       widgets.addAll([
         const Divider(),
         _DrawerWidget(

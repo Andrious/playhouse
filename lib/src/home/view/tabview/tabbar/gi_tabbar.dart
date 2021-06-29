@@ -10,6 +10,12 @@ import 'package:state_set/state_set.dart';
 
 const double _kTabHeight = 46;
 const double _kTextAndIconTabHeight = 72;
+/*
+
+
+This is no longer used I think, Greg.
+
+*/
 
 class GreyIvyTabBar extends StatefulWidget implements PreferredSizeWidget {
   /// Creates a material design tab bar.

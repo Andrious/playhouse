@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:auto_size_text/auto_size_text.dart';
-
 /// The database code
 import 'package:playhouse/src/model.dart';
 
@@ -80,9 +78,9 @@ class ModulesAppBar {
   /// Set up the AppBar
   void initState() {
     //
-    final recs = _con.initModules(_con.moduleType);
+    final recs = _con.modules;
 
-    final initIndex = Prefs.getInt('${_con.moduleType}ModulesIndex');
+    final initIndex = _con.initModuleIndex;
 
     _tabController = TabController(
       initialIndex: initIndex,
@@ -97,14 +95,7 @@ class ModulesAppBar {
     }
 
     _tabController.addListener(() {
-      /// Record the 'last' tab visited.
-      Prefs.setInt('${_con.moduleType}ModulesIndex', _tabController.index);
-
-      final items = _con.model.modules.items;
-
-      if (items.isNotEmpty) {
-        _con.module = items[_tabController.index];
-      }
+      _con.setModule(_tabController.index);
 
       provider?.setState(() {});
     });
@@ -114,6 +105,7 @@ class ModulesAppBar {
 
     _children = [];
 
+    // Create the appropriate number of module screens.
     for (final module in recs) {
       //
       _children.add(const SubmodulesScreen());

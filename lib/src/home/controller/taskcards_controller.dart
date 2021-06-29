@@ -8,15 +8,18 @@ import 'dart:io';
 import 'dart:typed_data' show Uint8List;
 import 'dart:typed_data';
 
+import 'package:playhouse/src/view.dart';
+
+import 'package:playhouse/src/controller.dart';
+
 // For rootBundle.loadString();
 import 'package:flutter/services.dart';
 
 import 'package:image/image.dart' as i;
 import 'package:images_picker/images_picker.dart';
+
 import 'package:path_provider/path_provider.dart';
-import 'package:playhouse/src/controller.dart';
-import 'package:playhouse/src/view.dart';
-import 'package:state_set/state_set.dart';
+
 import 'package:uuid/uuid.dart';
 
 class TaskCard extends StatefulWidget {
@@ -120,6 +123,18 @@ class _TaskCardsState extends State<TaskCard> {
           ),
         ),
       ]);
+      // If this task card is locked.
+      if (card.task['first_locked'] == 1) {
+        widget = Stack(
+          children: [
+            widget,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: card.con.lockImage,
+            ),
+          ],
+        );
+      }
     }
     return widget;
   }
@@ -218,7 +233,7 @@ class PickImage {
     if (pick != null && pick.isNotEmpty) {
       final path = pick[0].path;
       displayImage(path);
-      await recordImage(path);
+      await _saveImage(path);
     }
   }
 
@@ -228,78 +243,6 @@ class PickImage {
 
     _state?.child =
         Crop(controller: CropController(), child: Image.file(File(path)));
-  }
-
-  Future<bool> recordImage(String path) async {
-    //
-    var record = path != null && path.isNotEmpty;
-
-    if (record) {
-      //
-      record = await _saveImage(path);
-    }
-    return record;
-  }
-
-  Future<bool> _saveImage(String path) async {
-    //
-    var save = path != null && path.isNotEmpty;
-
-    if (save) {
-      final model = card.con.model;
-
-      final userId = model.users.items[0]['rowid'];
-
-      final code = await encodeFile(path);
-
-      if (userTask['user_id'] == null) {
-        //
-        userTask['user_id'] = userId;
-
-        userTask['task_id'] = card.task['rowid'];
-      }
-
-      userTask['key_art'] = code;
-
-      save = await model.usersTasks.table.save(userTask);
-
-      if (save) {
-        //
-        final recList = model.tasksUnlocked.items
-            .where((rec) =>
-                rec['user_id'] == userId &&
-                rec['task_id'] == card.task['rowid'])
-            .toList();
-
-        Map<String, dynamic> rec;
-
-        if (recList.isEmpty) {
-          rec = {
-            'user_id': userId,
-            'task_id': card.task['rowid'],
-            'completed': true
-          };
-        } else {
-          //
-          rec = recList[0];
-
-          // Don't bother if already 'completed'
-          if (rec['completed'] == null || rec['completed'] == 0) {
-            //
-            if (rec['user_id'] == null) {
-              //
-              rec['user_id'] = userId;
-
-              rec['task_id'] = card.task['rowid'];
-            }
-            rec['completed'] = 1; // true
-
-            await model.tasksUnlocked.table.save(rec);
-          }
-        }
-      }
-    }
-    return save;
   }
 
   Future<bool> saveJpg(Uint8List image) async {
@@ -347,7 +290,7 @@ class PickImage {
         }
         save = await entity?.exists() ?? false;
       }
-      save = await recordImage(path);
+      save = await _saveImage(path);
     }
     return save;
   }
@@ -393,5 +336,32 @@ class PickImage {
       }
     }
     return code;
+  }
+
+  /// Save the specified file to the database as a 'key art' field.
+  Future<bool> _saveImage(String path) async {
+    //
+    bool save = path != null && path.isNotEmpty;
+
+    if (save) {
+      // The app's controller
+      final con = card.con;
+
+      final userId = con.model.users.items[0]['rowid'];
+
+      if (userTask['user_id'] == null) {
+        //
+        userTask['user_id'] = userId;
+
+        userTask['task_id'] = card.task['rowid'];
+      }
+
+      userTask['key_art'] = await encodeFile(path);
+
+      save = await con.model.saveUserTask(userTask);
+
+      con.calcCompletion();
+    }
+    return save;
   }
 }

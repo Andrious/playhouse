@@ -39,7 +39,8 @@ Future<void> loadOrganizationsModulesDB(Database db) async {
   await db.execute('''
   INSERT INTO ${PlayhouseSQLiteDB.ORGANIZATIONS_MODULES} (
        organization_id,
-       module_id) VALUES (
+       module_id,
+       next_module_id) VALUES (
        1,
        3,
        4)
@@ -92,8 +93,9 @@ Future<void> loadOrganizationsModulesDB(Database db) async {
   await db.execute('''
   INSERT INTO ${PlayhouseSQLiteDB.ORGANIZATIONS_MODULES} (
        organization_id,
+       module_id,
        first_locked,
-       module_id) VALUES (
+       next_module_id) VALUES (
        1,
        7,
        1,

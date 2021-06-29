@@ -59,22 +59,13 @@ class SubmodulesTabBar {
 
     /// Listener
     _tabController.addListener(() {
+      //
       Prefs.setInt('${prefsLabel}SubmodulesIndex', _tabController.index);
 
       tabIndicator.value = _tabController.index + 1;
 
-      // if (_tabs != null && _tabs.isNotEmpty) {
-      //   _con.submodule = _tabs[_tabController.index].submodule;
-      // }
-      // _con.submoduleName = _label(tabs[_tabController.index]);
+      _con.completer.setCompletion(_tabController);
     });
-
-    // /// Return the text label specified in the Tab object.
-    // if (_tabs != null && _tabs.isNotEmpty) {
-    //   _con.submodule = _tabs[initIndex].submodule;
-    // }
-    //
-    // _con.submoduleName = _label(_tabs[initIndex]);
 
     tabIndicator = PageCircleIndicator(itemCount: _tabs.length);
 
@@ -101,15 +92,14 @@ class SubmodulesTabBar {
 
   List<Widget> _children;
 
+  // Called in the initState()
+  // Critical
   List<PicTab> _subModules() {
     //
     List<Map<String, dynamic>> subs = [];
 
-    final id = _con.module['rowid'];
-
-    subs = _con.model.submodules.items
-        .where((record) => record['module_id'] == id)
-        .toList();
+    // Retrieve the 'current' submodules being viewed.
+    subs = _con.initSubmodules();
 
     //
     final List<PicTab> pics = [];
@@ -122,19 +112,6 @@ class SubmodulesTabBar {
       ));
     }
     return pics;
-  }
-
-  /// Return the text label specified in the Tab object.
-  String _label(PicTab tab) {
-    String label;
-
-    ///todo To be removed.
-    if (tab.submodule is String) {
-      label = tab.submodule.trim();
-    } else {
-      label = tab.submodule['name'];
-    }
-    return label;
   }
 }
 

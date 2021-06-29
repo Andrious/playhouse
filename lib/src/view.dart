@@ -51,6 +51,9 @@ export 'package:playhouse/src/home/view/screens/scrapbook_screens_widgets.dart';
 export 'package:playhouse/src/home/view/screens/simple_unity_screen.dart';
 export 'package:playhouse/src/home/view/screens/in_app_webiew_example.screen.dart';
 
+/// Complete Indicator
+export 'package:playhouse/src/home/view/screens/addons/complete_indicator.dart';
+
 /// Modules
 export 'package:playhouse/src/home/view/screens/modules_list.dart';
 export 'package:playhouse/src/home/view/screens/android/modules_android.dart';

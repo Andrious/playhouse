@@ -11,12 +11,6 @@ import 'package:playhouse/src/controller.dart' hide User;
 /// SQLite database
 import 'package:playhouse/src/home/model/sqlite_db.dart' as s;
 
-import 'package:sqflite/sqflite.dart';
-
-import 'package:sqflite/sqlite_api.dart';
-
-import 'package:sqflite_common/src/transaction.dart';
-
 /// The Fields consolidated Class
 //export 'package:playhouse/src/home/model/database_class.dart';
 
@@ -208,8 +202,8 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
     bool save = await super.save(rec);
 
     if (save) {
-      save =
-          await table.save(rec.map((key, value) => MapEntry(key, value.value)));
+      save = await table.save(rec.map((key, value) => MapEntry(key, value)));
+      await query();
     }
     return save;
   }
@@ -338,7 +332,12 @@ mixin FormKeyState {
     //
     final formState = _formKey?.currentState;
 
-    bool save = formState != null;
+    /// Not necessarily failed. There's simply no form!
+    if (formState == null) {
+      return true;
+    }
+
+    bool save;
 
     if (save) {
       save = formState.validate();

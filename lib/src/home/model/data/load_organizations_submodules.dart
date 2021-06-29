@@ -108,7 +108,7 @@ Future<void> loadOrganizationsSubmodulesDB(Database db) async {
   await db.execute('''
   INSERT INTO ${PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES} (
   organization_id,
-  submodule_id
+  submodule_id,
   first_locked) VALUES (
   1,
   8,
