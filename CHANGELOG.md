@@ -1,4 +1,8 @@
 
+## 0.52.1
+ June 30, 2021
+- _con.initModule(_tabController.index);
+
 ## 0.52.0
  June 29, 2021
 - int get version => 3;

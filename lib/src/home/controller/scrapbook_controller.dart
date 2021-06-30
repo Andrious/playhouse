@@ -101,11 +101,7 @@ class ScrapBookController extends ControllerMVC {
 
     initModules(moduleType);
 
-    setModule(initModuleIndex);
-
-    final subs = initSubmodules();
-
-    initTasks(subs[0]);
+    initModule(initModuleIndex);
   }
 
   List<Map<String, dynamic>> initModules(String moduleType) {
@@ -142,6 +138,15 @@ class ScrapBookController extends ControllerMVC {
       }
     }
     return _modules;
+  }
+
+  void initModule(int index) {
+    //
+    setModule(index);
+
+    final subs = initSubmodules();
+
+    initTasks(subs[0]);
   }
 
   Map<String, dynamic> setModule(int index) {

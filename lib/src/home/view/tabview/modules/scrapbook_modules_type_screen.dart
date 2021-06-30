@@ -84,7 +84,6 @@ class ModulesAppBar {
 
     _tabController = TabController(
       initialIndex: initIndex,
-//      length: ModuleFields().table.list.length,
       length: recs.length,
       vsync: provider,
     );
@@ -95,9 +94,13 @@ class ModulesAppBar {
     }
 
     _tabController.addListener(() {
-      _con.setModule(_tabController.index);
+      // This fires again when finished 'changing'
+      if (_tabController.indexIsChanging) {
+        //
+        _con.initModule(_tabController.index);
 
-      provider?.setState(() {});
+        provider?.setState(() {});
+      }
     });
 
     //
