@@ -80,6 +80,7 @@ class SubmodulesTabBar {
   List<PicTab> get tabs => _tabs;
   List<PicTab> _tabs;
 
+  /// The Task Cards
   List<Widget> get children {
     if (_children == null) {
       _children = <Widget>[];

@@ -38,6 +38,15 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
 
     _con = submoduleState.con;
 
+    /// Populate the 'first' Submodule State object for each Module
+    final state = _con.subModuleStates[_con.module['name']];
+
+    if (state != null && !state.mounted) {
+      _con.subModuleStates[_con.moduleType + _con.module['name']] = null;
+    }
+
+    _con.subModuleStates[_con.moduleType + _con.module['name']] ??= this;
+
     // Populate this Submodule's Tasks
     _con.initTasks(widget.tab.submodule);
 

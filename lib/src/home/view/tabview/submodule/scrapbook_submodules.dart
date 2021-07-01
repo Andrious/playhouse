@@ -15,6 +15,7 @@ import 'package:playhouse/src/view.dart';
 /// The Event handling code
 import 'package:playhouse/src/controller.dart';
 
+/// The Submodules are the Picture Screens.
 class SubmodulesScreen extends StatefulWidget {
   const SubmodulesScreen({Key key}) : super(key: key);
 
@@ -86,7 +87,6 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
           children: <Widget>[
             _SwipeUpDetector(
               this,
-//          child: GreyIvyTabBar(
               child: TabBar(
                 controller: _sbSubTabBar.controller,
                 isScrollable: true,

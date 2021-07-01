@@ -63,6 +63,8 @@ class ScrapBookController extends ControllerMVC {
 
   String moduleType = '';
 
+  Map<String, State> subModuleStates = {};
+
   @override
   Future<bool> initAsync() async {
     if (App.inDebugger) {
@@ -161,6 +163,10 @@ class ScrapBookController extends ControllerMVC {
       Prefs.setInt('${moduleType}ModulesIndex', index);
       module = recs[index];
     }
+    // Explicitly assign the 'first' Submodule State object to the Controller.
+    // At times, it's necessary as the Tabs don't call State object's setState()
+    addState(subModuleStates[moduleType + module['name']]);
+
     return module;
   }
 
@@ -189,6 +195,7 @@ class ScrapBookController extends ControllerMVC {
     //
     percentComplete = 0;
 
+    /// Current completed tasks
     savedTask = [];
 
     // Record the current submodule being viewed.
@@ -201,6 +208,7 @@ class ScrapBookController extends ControllerMVC {
 
     final id = submodule['rowid'];
 
+    /// Current tasks displayed
     tasks = model.tasks.items
         .where((record) => record['submodule_id'] == id)
         .toList();
