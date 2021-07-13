@@ -16,9 +16,12 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends PanelScreenState<TaskScreen> {
-  _TaskScreenState(TaskCard card) : super(card);
+  _TaskScreenState(TaskCard card) : super(card) {
+    taskCompleted = card.completed();
+  }
   //
   final List<Widget> actions = [];
+  bool taskCompleted;
 
   /// Determine which 'Task' Screen is to be displayed.
   StatefulWidget whichTaskScreen(TaskCard card) {
@@ -54,13 +57,21 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
   }
 
   @override
-  StatefulWidget buildPanel(BuildContext context) => whichTaskScreen(card);
+  Widget buildPanel(BuildContext context) {
+    Widget widget;
+
+    if (taskCompleted) {
+      widget = Padding(
+          padding: const EdgeInsets.all(16), child: _noRow(instructions));
+    } else {
+      widget = whichTaskScreen(card);
+    }
+    return widget;
+  }
 
   @override
   Widget buildBackground(BuildContext context) => Scaffold(
-//        primary: false,
         appBar: AppBar(
-//        leading: widget.task.icon,
           title: I10n.t('Playhouse'),
           centerTitle: true,
           elevation: 0,
@@ -88,79 +99,84 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                        mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        /// Submodule Name
-                        Flexible(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10, bottom: 20),
-                            child: Text(
-                              '${card.task['submodule']}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        /// Task icon
-                        SizedBox(
-                          width: 100,
-                          height: 50,
-                          child: card.icon,
-                        ),
-                      ],
-                    ),
-
-                    /// Task Name & Number
-                    Flexible(
-                      flex: 2,
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 30,
-                            bottom: 30,
-                          ),
-                          child: Text(
-                            card.task['name'],
-                            style: const TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    /// Short Description or Title
-                    Flexible(
-                      child: Center(
-                        child: Text(card.task['short_description']),
-                      ),
-                    ),
-
-                    /// Long Description
-                    Flexible(
-                      flex: 4,
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Text(card.task['long_description']),
-                      ),
-                    ),
-                  ],
-                ),
+                child: taskCompleted ? whichTaskScreen(card) : instructions,
               ),
             ),
           ),
         ),
+      );
+
+  Widget _noRow(Column column) {
+    column.children.removeWhere((widget) => widget is Row);
+    return column;
+  }
+
+  Widget get instructions => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              /// Submodule Name
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, bottom: 20),
+                  child: Text(
+                    '${card.task['submodule']}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+
+              /// Task icon
+              SizedBox(
+                width: 100,
+                height: 50,
+                child: card.icon,
+              ),
+            ],
+          ),
+
+          /// Task Name & Number
+          Flexible(
+            flex: 2,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 30,
+                  bottom: 30,
+                ),
+                child: Text(
+                  card.task['name'],
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          /// Short Description or Title
+          Flexible(
+            child: Center(
+              child: Text(card.task['short_description']),
+            ),
+          ),
+
+          /// Long Description
+          Flexible(
+            flex: 4,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Text(card.task['long_description']),
+            ),
+          ),
+        ],
       );
 }

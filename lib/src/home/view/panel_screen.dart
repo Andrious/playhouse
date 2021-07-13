@@ -24,7 +24,7 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
 
   ScrapBookController con;
 
-  StatefulWidget panelScreen;
+  Widget panelScreen;
 
   AnimationController _animationController;
 
@@ -36,7 +36,7 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
   Widget buildBackground(BuildContext context);
 
   /// Implement widget displayed on the panel.
-  StatefulWidget buildPanel(BuildContext context);
+  Widget buildPanel(BuildContext context);
 
   @override
   void initState() {

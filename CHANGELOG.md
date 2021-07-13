@@ -1,5 +1,9 @@
 
 
+## 0.55.0
+ July 13, 2021
+- Switch out Instructions for Completed Task
+
 ## 0.54.0
  July 13, 2021
 - Tweaks to the UI
