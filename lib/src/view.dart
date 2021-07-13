@@ -66,7 +66,8 @@ export 'package:playhouse/src/home/view/page_circle_indicator.dart';
 /// Screens
 export 'package:playhouse/src/home/view/screens/scrapbook_screens.dart';
 export 'package:playhouse/src/home/view/screens/scrapbook_screens_widgets.dart';
-export 'package:playhouse/src/home/view/screens/simple_unity_screen.dart';
+export 'package:playhouse/src/home/view/screens/tasks/ar/ar_unity.dart';
+export 'package:playhouse/src/home/view/screens/tasks/ar/simple_unity_screen.dart';
 export 'package:playhouse/src/home/view/screens/in_app_webiew_example.screen.dart';
 
 /// Complete Indicator
@@ -91,7 +92,7 @@ export 'package:playhouse/src/home/view/screens/task_screen.dart';
 export 'package:playhouse/src/home/view/panel_screen.dart';
 
 /// Individual Task Screens
-export 'package:playhouse/src/home/view/screens/tasks/three_pictures_task.dart';
+export 'package:playhouse/src/home/view/screens/tasks/picture/three_pictures_task.dart';
 
 /// Organizations
 export 'package:playhouse/src/home/view/screens/organizations_list.dart';

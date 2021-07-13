@@ -37,11 +37,6 @@ class ARTask extends TaskCard {
           userTask: userTask,
           name: 'AR',
         );
-
-  @override
-  Future<void> onTap() async {
-    await con.openFullScreenRoute(const SimpleUnityScreen());
-  }
 }
 
 class PencilTask extends TaskCard {

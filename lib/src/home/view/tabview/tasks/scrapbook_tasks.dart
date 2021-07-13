@@ -107,8 +107,8 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
           flex: submoduleState.isPanelUp ? 3 : 30,
           child: Padding(
             padding: submoduleState.isPanelUp
-                ? const EdgeInsets.only(top: 20, bottom: 10)
-                : const EdgeInsets.only(top: 10, left: 10, bottom: 10),
+                ? const EdgeInsets.only(top: 20, left: 20, bottom: 10)
+                : const EdgeInsets.only(top: 10, left: 20, bottom: 10),
             child: InkWell(
               onTap: () {
                 setState(submoduleState.onPressed);

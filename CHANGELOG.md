@@ -1,4 +1,10 @@
 
+
+## 0.54.0
+ July 13, 2021
+- Tweaks to the UI
+- Removed flutter_unity_widget
+
 ## 0.53.0
  July 12, 2021
 - Supplied a more uniformed panel screen to the app

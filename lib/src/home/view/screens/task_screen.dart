@@ -36,7 +36,7 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
         widget = const EmptyPanel();
         break;
       case 2:
-        widget = ThreePicturesScreen(this);
+        widget = arTaskScreens(this);
         break;
       case 3:
         widget = pictureTaskScreens(this);
@@ -58,7 +58,7 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
 
   @override
   Widget buildBackground(BuildContext context) => Scaffold(
-        primary: false,
+//        primary: false,
         appBar: AppBar(
 //        leading: widget.task.icon,
           title: I10n.t('Playhouse'),

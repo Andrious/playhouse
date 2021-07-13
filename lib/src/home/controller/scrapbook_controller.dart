@@ -301,7 +301,7 @@ class ScrapBookController extends ControllerMVC {
         card = ABCTask(task, savedTask);
         break;
       case 2:
-        card = ARTask(task, savedTask);
+        card = arTasks(task, savedTask);
         break;
       case 3:
         card = PencilTask(task, savedTask);

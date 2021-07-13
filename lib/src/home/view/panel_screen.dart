@@ -128,53 +128,58 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       panelScreen = buildPanel(context);
-      return Stack(
-        children: <Widget>[
-          _SwipeUpDetector(
-            this,
-            child: buildBackground(context),
-          ),
-          PositionedTransition(
-            rect: _getPanelAnimation(constraints),
-            child: Material(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-              elevation: 12,
-              child: Container(
-                height: _panelHeight,
-                child: _SwipeUpDetector(
-                  this,
-                  child: Column(
-                    children: [
-                      Flexible(
-                        flex: panelUp ? 3 : 30,
-                        child: Padding(
-                          padding: panelUp
-                              ? const EdgeInsets.only(top: 20, bottom: 10)
-                              : const EdgeInsets.only(
-                                  top: 10, left: 10, bottom: 10),
-                          child: InkWell(
-                            onTap: () {
-                              _movePanel();
-                              setState(() {});
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: row,
+      return Container(
+        constraints: constraints,
+        child: Stack(
+          children: <Widget>[
+            _SwipeUpDetector(
+              this,
+              child: buildBackground(context),
+            ),
+            PositionedTransition(
+              rect: _getPanelAnimation(constraints),
+              child: Material(
+                clipBehavior: Clip.hardEdge,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+                elevation: 12,
+                child: Container(
+                  height: _panelHeight,
+                  child: _SwipeUpDetector(
+                    this,
+                    child: Column(
+                      children: [
+                        Flexible(
+                          flex: panelUp ? 3 : 30,
+                          child: Padding(
+                            padding: panelUp
+                                ? const EdgeInsets.only(top: 20, bottom: 10)
+                                : const EdgeInsets.only(
+                                    top: 10, left: 10, bottom: 10),
+                            child: InkWell(
+                              onTap: () {
+                                _movePanel();
+                                setState(() {});
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: row,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      panelScreen,
-                    ],
+                        panelScreen,
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     });
   }
