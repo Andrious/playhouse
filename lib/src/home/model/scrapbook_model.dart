@@ -136,43 +136,6 @@ class ScrapBookModel {
     return pop;
   }
 
-  Future<bool> saveUserTask(Map<String, dynamic> userTask) async {
-    //
-    final save = await usersTasks.save(userTask);
-
-    if (save) {
-      //
-      final userId = userTask['user_id'];
-
-      final taskId = userTask['rowid'];
-
-      final recList = tasksUnlocked.items
-          .where((rec) => rec['user_id'] == userId && rec['task_id'] == taskId)
-          .toList();
-
-      Map<String, dynamic> rec;
-
-      if (recList.isEmpty) {
-        rec = {'user_id': userId, 'task_id': taskId, 'completed': true};
-      } else {
-        //
-        rec = recList[0];
-
-        // Don't bother if already 'completed'
-        if (rec['completed'] == null || rec['completed'] == 0) {
-          //
-          if (rec['user_id'] == null) {
-            //
-            rec['user_id'] = userId;
-
-            rec['task_id'] = taskId;
-          }
-          rec['completed'] = 1; // true
-
-          await tasksUnlocked.save(rec);
-        }
-      }
-    }
-    return save;
-  }
+  Future<bool> saveUserTask(Map<String, dynamic> userTask) =>
+      usersTasks.save(userTask);
 }

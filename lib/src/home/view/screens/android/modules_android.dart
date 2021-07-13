@@ -41,7 +41,7 @@ class ModulesListAndroid extends ScrapbookListScreen<ModulesList, ModuleFields>
   ) {
     final type = record['module_type'];
     type.label = 'Type';
-    final locked = record['lockedFirst'];
+    final locked = record['first_locked'];
     locked.label = 'First Locked';
     final next = record['next_module_id'];
     next.label = 'Next Module';

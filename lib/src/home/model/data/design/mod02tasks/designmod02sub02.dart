@@ -65,10 +65,10 @@ Future<void> loadDesignMod02Sub02Tasks(Database db) async {
        long_description,
        key_art_file) VALUES (
        6,
-       'Task 2.2.4',
-       'Your Background',
-       'For this task, please provide a brief description of your families cultural background. There are many different cultures found throughout the world and that is what makes it so wonderful. For your description, please include where your family is from, what their culture means to them, and what their relationship with our planet means to their culture. If you are unable to provide your families cultural background, please research and provide a very brief description about a local culture within your current area/region. Please feel free to use text, sketches and/or images.',
-       'picture02.jpg')
+       'Task. 2.2.5',
+       'Explore Your Family',
+       ' For this task, please begin to explore the unique characteristics that define your families culture. These characteristics can include language, cuisine, music, arts, clothing, architecture, etc. Begin to ask your family what defines their culture and share what you discover using text, sketches, and/or other images. If you researched a local culture, please continue with your selection and provide more insight into the unique characteristics and qualities that encompass your selection.',
+       'pencil02.jpg')
     ''');
 
   await db.execute('''
@@ -79,10 +79,10 @@ Future<void> loadDesignMod02Sub02Tasks(Database db) async {
        long_description,
        key_art_file) VALUES (
        6,
-       'Task. 2.2.5',
-       'Explore Your Family',
-       ' For this task, please begin to explore the unique characteristics that define your families culture. These characteristics can include language, cuisine, music, arts, clothing, architecture, etc. Begin to ask your family what defines their culture and share what you discover using text, sketches, and/or other images. If you researched a local culture, please continue with your selection and provide more insight into the unique characteristics and qualities that encompass your selection.',
-       'pencil02.jpg')
+       'Task 2.2.4',
+       'Your Background',
+       'For this task, please provide a brief description of your families cultural background. There are many different cultures found throughout the world and that is what makes it so wonderful. For your description, please include where your family is from, what their culture means to them, and what their relationship with our planet means to their culture. If you are unable to provide your families cultural background, please research and provide a very brief description about a local culture within your current area/region. Please feel free to use text, sketches and/or images.',
+       'picture02.jpg')
     ''');
 
   await db.execute('''
@@ -149,10 +149,10 @@ Future<void> loadDesignMod02Sub02Tasks(Database db) async {
        long_description,
        key_art_file) VALUES (
        6,
-       'Task 2.2.10',
-       'Your Background',
-       'For this task, please provide a brief description of your families cultural background. There are many different cultures found throughout the world and that is what makes it so wonderful. For your description, please include where your family is from, what their culture means to them, and what their relationship with our planet means to their culture. If you are unable to provide your families cultural background, please research and provide a very brief description about a local culture within your current area/region. Please feel free to use text, sketches and/or images.',
-       'picture02.jpg')
+       'Task. 2.2.11',
+       'Explore Your Family',
+       ' For this task, please begin to explore the unique characteristics that define your families culture. These characteristics can include language, cuisine, music, arts, clothing, architecture, etc. Begin to ask your family what defines their culture and share what you discover using text, sketches, and/or other images. If you researched a local culture, please continue with your selection and provide more insight into the unique characteristics and qualities that encompass your selection.',
+       'pencil02.jpg')
     ''');
 
   await db.execute('''
@@ -163,10 +163,10 @@ Future<void> loadDesignMod02Sub02Tasks(Database db) async {
        long_description,
        key_art_file) VALUES (
        6,
-       'Task. 2.2.11',
-       'Explore Your Family',
-       ' For this task, please begin to explore the unique characteristics that define your families culture. These characteristics can include language, cuisine, music, arts, clothing, architecture, etc. Begin to ask your family what defines their culture and share what you discover using text, sketches, and/or other images. If you researched a local culture, please continue with your selection and provide more insight into the unique characteristics and qualities that encompass your selection.',
-       'pencil02.jpg')
+       'Task 2.2.10',
+       'Your Background',
+       'For this task, please provide a brief description of your families cultural background. There are many different cultures found throughout the world and that is what makes it so wonderful. For your description, please include where your family is from, what their culture means to them, and what their relationship with our planet means to their culture. If you are unable to provide your families cultural background, please research and provide a very brief description about a local culture within your current area/region. Please feel free to use text, sketches and/or images.',
+       'picture02.jpg')
     ''');
 
   await db.execute('''

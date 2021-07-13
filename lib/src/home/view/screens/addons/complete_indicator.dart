@@ -15,19 +15,20 @@ class CompleteIndicator extends StatefulWidget {
   State createState() => _CompleteIndicatorState();
 
   void setCompletion([TabController tab]) {
-    //
     if (tab != null && tab.indexIsChanging) {
       return;
     }
-
-    final _CompleteIndicatorState state =
-        StateSet.to<_CompleteIndicatorState>();
-
-    state?.setState(() {});
+    refresh();
+    // final completer = Completer<bool>();
+    // //
+    // if (tab == null || !tab.indexIsChanging) {
+    //   completer.complete(tab.indexIsChanging);
+    // }
+    // return completer.future.then<bool>((value) => refresh());
   }
 }
 
-class _CompleteIndicatorState extends State<CompleteIndicator> with StateSet {
+class _CompleteIndicatorState extends State<CompleteIndicator> with StateMap {
   @override
   void initState() {
     super.initState();

@@ -31,7 +31,7 @@ class PageCircleIndicator extends StatefulWidget {
 }
 
 class _PageCircleIndicatorState extends State<PageCircleIndicator>
-    with StateSet {
+    with StateMap {
   @override
   void initState() {
     super.initState();

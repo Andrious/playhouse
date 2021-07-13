@@ -8,6 +8,24 @@ export 'package:mvc_application/view.dart' hide AppMenu, runApp;
 /// https://pub.dev/packages/cached_network_image/
 //export 'package:cached_network_image/cached_network_image.dart';
 
+/// SetState routine
+export 'package:state_set/state_set.dart';
+
+/// Responsive Screen size
+/// https://pub.dev/packages/flutter_screenutil/
+//export 'package:flutter_screenutil/flutter_screenutil.dart';
+
+/// Auto size text
+/// https://pub.dev/packages/auto_size_text/
+export 'package:auto_size_text/auto_size_text.dart';
+
+/// Crop images
+export 'package:crop/crop.dart';
+
+/// State Map Mixin
+//export 'package:state_map/state_map.dart';
+export 'package:playhouse/src/app/view/state_map.dart';
+
 /// The App's Menu
 export 'package:playhouse/src/app/view/menu/app_menu.dart';
 
@@ -70,6 +88,11 @@ export 'package:playhouse/src/home/view/screens/android/tasks_android.dart';
 export 'package:playhouse/src/home/view/screens/ios/tasks_ios.dart';
 export 'package:playhouse/src/home/view/screens/task_screen.dart';
 
+export 'package:playhouse/src/home/view/panel_screen.dart';
+
+/// Individual Task Screens
+export 'package:playhouse/src/home/view/screens/tasks/three_pictures_task.dart';
+
 /// Organizations
 export 'package:playhouse/src/home/view/screens/organizations_list.dart';
 export 'package:playhouse/src/home/view/screens/android/organizations_android.dart';
@@ -79,17 +102,3 @@ export 'package:playhouse/src/home/view/screens/ios/organizations_ios.dart';
 export 'package:playhouse/src/home/view/screens/users_list.dart';
 export 'package:playhouse/src/home/view/screens/android/users_android.dart';
 export 'package:playhouse/src/home/view/screens/ios/users_ios.dart';
-
-/// SetState routine
-export 'package:state_set/state_set.dart';
-
-/// Responsive Screen size
-/// https://pub.dev/packages/flutter_screenutil/
-//export 'package:flutter_screenutil/flutter_screenutil.dart';
-
-/// Auto size text
-/// https://pub.dev/packages/auto_size_text/
-export 'package:auto_size_text/auto_size_text.dart';
-
-/// Crop images
-export 'package:crop/crop.dart';

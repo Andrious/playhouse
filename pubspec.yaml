@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.52.1
+version: 0.53.0
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -44,7 +44,10 @@ dependencies:
   # https://pub.dev/packages/crop/
   crop: ^0.5.0
 
-# https://pub.dev/packages/mvc_application/
+#  # https://pub.dev/packages/image_cropper
+#  image_cropper: ^1.0.0
+
+  # https://pub.dev/packages/mvc_application/
   mvc_application: ^7.0.0
 #    path: ../../packages/mvc_application
 
@@ -105,6 +108,9 @@ dependencies:
   state_set: ^3.0.0
 #    path: ../../packages/state_set
 
+#  state_map: #^1.0.0
+#      path: ../../packages/state_map
+
   # https://pub.dev/packages/page_view_indicators
   page_view_indicators: ^2.0.0
 
@@ -115,6 +121,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # https://pub.dev/packages/pedantic
   pedantic: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
@@ -151,8 +158,6 @@ flutter:
      - assets/images/river_bend02.jpg
      - assets/images/construction_site02.jpg
      - assets/images/warehouse02.jpg
-     - assets/images/warehouse_locked02.jpg
-     - assets/images/city_night_locked02.jpg
      - assets/images/city_night02.jpg
 
      - assets/images/church_garbagetruck02.jpg
@@ -164,7 +169,10 @@ flutter:
      - assets/images/country_trail02.jpg
      - assets/images/country_waterfall02.jpg
 
+     - assets/images/spirit_of_place02.jpg
+
      - assets/images/info.jpg
+     - assets/images/check_mark.jpg
      - assets/images/lock.png
 
      - assets/images/abc02.jpg

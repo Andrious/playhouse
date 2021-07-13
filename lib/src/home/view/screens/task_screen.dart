@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 // For base64.decode()
-import 'dart:convert';
-
 import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/view.dart';
@@ -14,156 +12,155 @@ class TaskScreen extends StatefulWidget {
   const TaskScreen({Key key, this.card}) : super(key: key);
   final TaskCard card;
   @override
-  State createState() => _TaskScreenState();
+  State createState() => _TaskScreenState(card);
 }
 
-class _TaskScreenState extends StateMVC<TaskScreen> {
-  _TaskScreenState() : super(ScrapBookController()) {
-    con = controller;
-  }
-  ScrapBookController con;
-  Map<String, dynamic> rec;
-  Widget icon;
-
-  @override
-  void initState() {
-    super.initState();
-    subState = con.ofState<SubmodulesState>();
-    rec = widget.card.task;
-    icon = widget.card.icon;
-  }
-
+class _TaskScreenState extends PanelScreenState<TaskScreen> {
+  _TaskScreenState(TaskCard card) : super(card);
+  //
   final List<Widget> actions = [];
-  SubmodulesState subState;
+
+  /// Determine which 'Task' Screen is to be displayed.
+  StatefulWidget whichTaskScreen(TaskCard card) {
+    //
+    final index = ['question', 'abc', 'AR', 'picture', 'pencil', 'movie']
+        .indexWhere(card.con.task['key_art_file'].contains);
+
+    StatefulWidget widget;
+
+    switch (index) {
+      case 0:
+        widget = const EmptyPanel();
+        break;
+      case 1:
+        widget = const EmptyPanel();
+        break;
+      case 2:
+        widget = ThreePicturesScreen(this);
+        break;
+      case 3:
+        widget = pictureTaskScreens(this);
+        break;
+      case 4:
+        widget = const EmptyPanel();
+        break;
+      case 5:
+        widget = const EmptyPanel();
+        break;
+      default:
+        widget = null;
+    }
+    return widget;
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      primary: false,
-      appBar: AppBar(
+  StatefulWidget buildPanel(BuildContext context) => whichTaskScreen(card);
+
+  @override
+  Widget buildBackground(BuildContext context) => Scaffold(
+        primary: false,
+        appBar: AppBar(
 //        leading: widget.task.icon,
-        title: I10n.t('Playhouse'),
-        centerTitle: true,
-        elevation: 0,
-        excludeHeaderSemantics: true,
-        actions: actions,
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              constraints: const BoxConstraints.expand(),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: ExactAssetImage(
-                    'assets/images/${con.submodule['key_art_file']}',
-                  ),
-                  fit: BoxFit.cover,
+          title: I10n.t('Playhouse'),
+          centerTitle: true,
+          elevation: 0,
+          excludeHeaderSemantics: true,
+          actions: actions,
+        ),
+        body: SafeArea(
+          child: Container(
+            constraints: const BoxConstraints.expand(),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: ExactAssetImage(
+                  'assets/images/${con.submodule['key_art_file']}',
                 ),
+                fit: BoxFit.cover,
               ),
-              child: SizedBox(
-                width: 300,
-                height: 500,
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(16, 100, 16, 16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+            child: SizedBox(
+              width: 300,
+              height: 500,
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(16, 60, 16, 60),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          /// Submodule Name
-                          Flexible(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, bottom: 20),
-                              child: Text(
-                                '${rec['submodule']}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          /// Task icon
-                          SizedBox(
-                            width: 100,
-                            height: 50,
-                            child: icon,
-                          ),
-                        ],
-                      ),
-
-                      /// Task Name & Number
-                      Flexible(
-                        flex: 2,
-                        child: Center(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        /// Submodule Name
+                        Flexible(
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                              top: 30,
-                              bottom: 30,
-                            ),
+                            padding:
+                                const EdgeInsets.only(left: 10, bottom: 20),
                             child: Text(
-                              rec['name'],
+                              '${card.task['submodule']}',
                               style: const TextStyle(
-                                fontSize: 26,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
                             ),
                           ),
                         ),
-                      ),
 
-                      /// Short Description or Title
-                      Flexible(
-                        child: Center(
-                          child: Text(rec['short_description']),
+                        /// Task icon
+                        SizedBox(
+                          width: 100,
+                          height: 50,
+                          child: card.icon,
+                        ),
+                      ],
+                    ),
+
+                    /// Task Name & Number
+                    Flexible(
+                      flex: 2,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 30,
+                            bottom: 30,
+                          ),
+                          child: Text(
+                            card.task['name'],
+                            style: const TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
+                    ),
 
-                      /// Long Description
-                      Flexible(
-                        flex: 4,
-                        child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Text(rec['long_description']),
-                        ),
+                    /// Short Description or Title
+                    Flexible(
+                      child: Center(
+                        child: Text(card.task['short_description']),
                       ),
-                    ],
-                  ),
+                    ),
+
+                    /// Long Description
+                    Flexible(
+                      flex: 4,
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Text(card.task['long_description']),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-//             Positioned(
-// //              height: 50,
-// //              width: 50,
-//               left: 330,
-//               top: 10,
-//               right: 15,
-//               bottom: 640,
-//               child: Container(
-//                 margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-//                 decoration: const BoxDecoration(
-//                   color: Colors.white,
-// //                    borderRadius: BorderRadius.circular(30)
-//                 ),
-// //                padding: const EdgeInsets.all(16),
-//                 child: icon,
-//               ),
-//             ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

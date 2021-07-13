@@ -23,7 +23,8 @@ class ScrapbookTasksScreen extends StatefulWidget {
   State createState() => _ScrapbookTasksScreenState();
 }
 
-class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
+class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
+    with StateMap {
   _ScrapbookTasksScreenState() : super(ScrapBookController());
 
   SubmodulesState submoduleState;
@@ -107,7 +108,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen> {
           child: Padding(
             padding: submoduleState.isPanelUp
                 ? const EdgeInsets.only(top: 20, bottom: 10)
-                : const EdgeInsets.only(top: 10, bottom: 10),
+                : const EdgeInsets.only(top: 10, left: 10, bottom: 10),
             child: InkWell(
               onTap: () {
                 setState(submoduleState.onPressed);

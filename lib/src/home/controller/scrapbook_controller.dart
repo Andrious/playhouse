@@ -36,6 +36,9 @@ class ScrapBookController extends ControllerMVC {
 
   bool inBuildScreen = false;
 
+  // The current user
+  int userId;
+
   // The current module being viewed.
   Map<String, dynamic> module;
 
@@ -45,12 +48,19 @@ class ScrapBookController extends ControllerMVC {
   // The current tasks being viewed.
   List<Map<String, dynamic>> tasks;
 
+  // The current task being viewed.
+  Map<String, dynamic> task;
+
   // The tasks currently completed.
   List<Map<String, dynamic>> savedTask;
 
   double percentComplete = 0;
 
+  // The list of task cards.
   List<Widget> _taskCards;
+
+  // The current task card.
+  TaskCard card;
 
   /// A graphical indication of Task completion.
   CompleteIndicator _completer;
@@ -84,6 +94,9 @@ class ScrapBookController extends ControllerMVC {
 
     // Open the data tables
     final bool init = await model.initAsync();
+
+    //Identify the current user
+    userId = model.users.items[0]['rowid'];
 
     // Align to the right data depending on the 'type' of Modules.
     initTypeOfModules();
@@ -228,7 +241,7 @@ class ScrapBookController extends ControllerMVC {
           .where((rec) => rec['task_id'] == tasks[cnt]['rowid'])
           .toList();
 
-      final card = addCard(tasks[cnt], task.isEmpty ? {} : task[0]);
+      final card = addCard(tasks[cnt], task.isEmpty ? [{}] : task);
 
       if (card != null) {
         cards.add(card);
@@ -254,14 +267,31 @@ class ScrapBookController extends ControllerMVC {
     completer.setCompletion();
   }
 
-  TaskCard addCard(Map<String, dynamic> task, Map<String, dynamic> savedTask) {
+  List<Map<String, dynamic>> unlockedTasks() {
+    final userTask = model.usersTasks.savedRec;
+
+    final userId = userTask['user_id'];
+
+    final taskId = userTask['task_id'];
+
+    return model.tasksUnlocked.items
+        .where((rec) => rec['user_id'] == userId && rec['task_id'] == taskId)
+        .toList();
+  }
+
+  TaskCard addCard(
+      Map<String, dynamic> task, List<Map<String, dynamic>> savedTask) {
     //
     TaskCard card;
 
-    final String file = task['key_art_file'];
-
-    final index = ['question', 'abc', 'AR', 'picture', 'pencil', 'movie']
-        .indexWhere(file.contains);
+    final index = [
+      'question',
+      'abc',
+      'AR',
+      'pencil',
+      'picture',
+      'movie',
+    ].indexWhere(task['key_art_file'].contains);
 
     switch (index) {
       case 0:
@@ -277,7 +307,7 @@ class ScrapBookController extends ControllerMVC {
         card = PencilTask(task, savedTask);
         break;
       case 4:
-        card = PictureTask(task, savedTask);
+        card = pictureTasks(task, savedTask);
         break;
       case 5:
         card = MovieCameraTask(task, savedTask);
@@ -310,7 +340,18 @@ class ScrapBookController extends ControllerMVC {
 
   /// Merely tapping the Task Card
   Future<void> onTap(TaskCard card) async {
-    await openFullScreenRoute(TaskScreen(card: card));
+    if (card.pickImage) {
+      await card.image.pickImage();
+    } else {
+      this.card = card;
+      await openFullScreenRoute(
+        TaskScreen(card: card),
+      );
+      this.card = null;
+    }
+    card.completed();
+    calcCompletion();
+    card.setState(() {});
     setState(() {});
   }
 
@@ -358,4 +399,11 @@ class ScrapBookController extends ControllerMVC {
 
   /// A graphical indication of Task completion.
   CompleteIndicator get completer => _completer;
+
+  @override
+  void dispose() {
+    subModuleStates.clear();
+    subModuleStates = null;
+    super.dispose();
+  }
 }

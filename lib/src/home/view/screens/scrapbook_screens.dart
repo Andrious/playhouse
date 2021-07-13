@@ -199,7 +199,7 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
   }
 }
 
-/// To edit thr data
+/// To edit the data
 class ScrapbookEditScreen extends StatefulWidget {
   const ScrapbookEditScreen({
     this.record,

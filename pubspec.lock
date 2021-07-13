@@ -295,7 +295,7 @@ packages:
       name: flutter_unity_widget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.0"
+    version: "4.2.1"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -384,14 +384,14 @@ packages:
       name: mvc_application
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.6.1"
+    version: "7.7.0"
   mvc_pattern:
     dependency: transitive
     description:
       name: mvc_pattern
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.3"
+    version: "7.4.0"
   package_info:
     dependency: transitive
     description:
@@ -482,7 +482,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   prefs:
     dependency: transitive
     description:
@@ -648,7 +648,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.7"
+    version: "6.0.9"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -669,7 +669,7 @@ packages:
       name: url_launcher_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   url_launcher_web:
     dependency: transitive
     description:
@@ -704,7 +704,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.4"
+    version: "2.2.5"
   xdg_directories:
     dependency: transitive
     description:

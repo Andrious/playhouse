@@ -63,12 +63,12 @@ Future<void> loadDesignMod02Sub01Tasks(Database db) async {
        name,
        short_description,
        long_description,
-       'key_art_file') VALUES (
+       key_art_file) VALUES (
        5,
-       'Task 2.1.4',
-       'Those Closest To You',
-       'For this task, please list and describe your closest family members or anyone that you feel is (or was) closest to you. Please include a fun sketch of them, their name, their relationship to you, and what traits/qualities you think best describes them.',
-       'picture02.jpg')
+       'Task 2.1.5',
+       'Your Family History',
+       'For this task, you will now dive a bit deeper into your family history and coordinate a fun interview with each family member or person you included in your previous list. Please ask three questions about their personal history. These questions can be whatever you want and can change from person to person. An example question can be, what was your favorite place to visit as a child? Please use either text to document their answers and submit them into the app.',
+       'pencil02.jpg')
     ''');
 
   await db.execute('''
@@ -77,12 +77,12 @@ Future<void> loadDesignMod02Sub01Tasks(Database db) async {
        name,
        short_description,
        long_description,
-       key_art_file) VALUES (
+       'key_art_file') VALUES (
        5,
-       'Task 2.1.5',
-       'Your Family History',
-       'For this task, you will now dive a bit deeper into your family history and coordinate a fun interview with each family member or person you included in your previous list. Please ask three questions about their personal history. These questions can be whatever you want and can change from person to person. An example question can be, what was your favorite place to visit as a child? Please use either text to document their answers and submit them into the app.',
-       'pencil02.jpg')
+       'Task 2.1.4',
+       'Those Closest To You',
+       'For this task, please list and describe your closest family members or anyone that you feel is (or was) closest to you. Please include a fun sketch of them, their name, their relationship to you, and what traits/qualities you think best describes them.',
+       'picture02.jpg')
     ''');
 
   await db.execute('''
@@ -147,12 +147,12 @@ Future<void> loadDesignMod02Sub01Tasks(Database db) async {
        name,
        short_description,
        long_description,
-       'key_art_file') VALUES (
+       key_art_file) VALUES (
        5,
-       'Task 2.1.10',
-       'Those Closest To You',
-       'For this task, please list and describe your closest family members or anyone that you feel is (or was) closest to you. Please include a fun sketch of them, their name, their relationship to you, and what traits/qualities you think best describes them.',
-       'picture02.jpg')
+       'Task 2.1.11',
+       'Your Family History',
+       'For this task, you will now dive a bit deeper into your family history and coordinate a fun interview with each family member or person you included in your previous list. Please ask three questions about their personal history. These questions can be whatever you want and can change from person to person. An example question can be, what was your favorite place to visit as a child? Please use either text to document their answers and submit them into the app.',
+       'pencil02.jpg')
     ''');
 
   await db.execute('''
@@ -161,12 +161,12 @@ Future<void> loadDesignMod02Sub01Tasks(Database db) async {
        name,
        short_description,
        long_description,
-       key_art_file) VALUES (
+       'key_art_file') VALUES (
        5,
-       'Task 2.1.11',
-       'Your Family History',
-       'For this task, you will now dive a bit deeper into your family history and coordinate a fun interview with each family member or person you included in your previous list. Please ask three questions about their personal history. These questions can be whatever you want and can change from person to person. An example question can be, what was your favorite place to visit as a child? Please use either text to document their answers and submit them into the app.',
-       'pencil02.jpg')
+       'Task 2.1.10',
+       'Those Closest To You',
+       'For this task, please list and describe your closest family members or anyone that you feel is (or was) closest to you. Please include a fun sketch of them, their name, their relationship to you, and what traits/qualities you think best describes them.',
+       'picture02.jpg')
     ''');
 
   await db.execute('''

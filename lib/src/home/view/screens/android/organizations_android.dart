@@ -87,7 +87,7 @@ class OrganizationsModuleAndroid extends ScrapbookListScreen<
     organization.label = 'Organization Id';
     final module = record['module_id'];
     module.label = 'Module Id';
-    final locked = record['lockedFirst'];
+    final locked = record['first_locked'];
     locked.label = 'First Locked';
     final next = record['next_module_id'];
     next.label = 'Next Module';

@@ -1,4 +1,11 @@
 
+## 0.53.0
+ July 12, 2021
+- Supplied a more uniformed panel screen to the app
+- Introduced a specific 'three picture' task
+- Corrected the test data
+- Check mark a completed task
+
 ## 0.52.1
  June 30, 2021
 - _con.initModule(_tabController.index);

@@ -65,10 +65,10 @@ Future<void> loadDesignMod04Sub01Tasks(Database db) async {
        long_description,
        key_art_file) VALUES (
        13,
-       'Task 4.1.4',
-       'Identify five of each',
-       'For this first task, we will get you to identify five local plant species, five local shrub species, and five local tree species found within your local region. Please use either online or printed sources to help with your research. Once you’ve identified your local vegetation species, please list the name of that species (Bur Oak), the vegetation type (Tree), and include a photograph or sketch of the species.',
-       'picture02.jpg')
+       'Task 4.1.5',
+       'Provide now more detail',
+       'Once you have completed your initial list of 15 local vegetation species, you will now begin to provide a bit more detail. Please provide the following information for each species you’ve identified: Hardiness Zone, Mature Size, Sun Preference, and Soil Preference. Please use either online or printed sources for your research. This information will help you understand why certain species grow in certain areas and what factors influence their growth.',
+       'pencil02.jpg')
        ''');
 
   await db.execute('''
@@ -79,10 +79,10 @@ Future<void> loadDesignMod04Sub01Tasks(Database db) async {
        long_description,
        key_art_file) VALUES (
        13,
-       'Task 4.1.5',
-       'Provide now more detail',
-       'Once you have completed your initial list of 15 local vegetation species, you will now begin to provide a bit more detail. Please provide the following information for each species you’ve identified: Hardiness Zone, Mature Size, Sun Preference, and Soil Preference. Please use either online or printed sources for your research. This information will help you understand why certain species grow in certain areas and what factors influence their growth.',
-       'pencil02.jpg')
+       'Task 4.1.4',
+       'Identify five of each',
+       'For this first task, we will get you to identify five local plant species, five local shrub species, and five local tree species found within your local region. Please use either online or printed sources to help with your research. Once you’ve identified your local vegetation species, please list the name of that species (Bur Oak), the vegetation type (Tree), and include a photograph or sketch of the species.',
+       'picture02.jpg')
        ''');
 
   await db.execute('''
@@ -149,10 +149,10 @@ Future<void> loadDesignMod04Sub01Tasks(Database db) async {
        long_description,
        key_art_file) VALUES (
        13,
-       'Task 4.1.10',
-       'Identify five of each',
-       'For this first task, we will get you to identify five local plant species, five local shrub species, and five local tree species found within your local region. Please use either online or printed sources to help with your research. Once you’ve identified your local vegetation species, please list the name of that species (Bur Oak), the vegetation type (Tree), and include a photograph or sketch of the species.',
-       'picture02.jpg')
+       'Task 4.1.11',
+       'Provide now more detail',
+       'Once you have completed your initial list of 15 local vegetation species, you will now begin to provide a bit more detail. Please provide the following information for each species you’ve identified: Hardiness Zone, Mature Size, Sun Preference, and Soil Preference. Please use either online or printed sources for your research. This information will help you understand why certain species grow in certain areas and what factors influence their growth.',
+       'pencil02.jpg')
        ''');
 
   await db.execute('''
@@ -163,10 +163,10 @@ Future<void> loadDesignMod04Sub01Tasks(Database db) async {
        long_description,
        key_art_file) VALUES (
        13,
-       'Task 4.1.11',
-       'Provide now more detail',
-       'Once you have completed your initial list of 15 local vegetation species, you will now begin to provide a bit more detail. Please provide the following information for each species you’ve identified: Hardiness Zone, Mature Size, Sun Preference, and Soil Preference. Please use either online or printed sources for your research. This information will help you understand why certain species grow in certain areas and what factors influence their growth.',
-       'pencil02.jpg')
+       'Task 4.1.10',
+       'Identify five of each',
+       'For this first task, we will get you to identify five local plant species, five local shrub species, and five local tree species found within your local region. Please use either online or printed sources to help with your research. Once you’ve identified your local vegetation species, please list the name of that species (Bur Oak), the vegetation type (Tree), and include a photograph or sketch of the species.',
+       'picture02.jpg')
        ''');
 
   await db.execute('''

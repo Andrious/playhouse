@@ -29,7 +29,7 @@ Future<void> loadDesignSubmodulesDB(Database db) async {
        'Sub-module 1.1',
        'Feeling of things',
        'Through this sub-module users dig into how their outer environment affects their inner feelings.',
-       'river_bend02.jpg')
+       'spirit_of_place02.jpg')
     ''');
 
   /*

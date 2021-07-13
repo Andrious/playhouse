@@ -193,6 +193,9 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
   @override
   Future<List<Map<String, dynamic>>> retrieve() => table.retrieve();
 
+  /// Returns the last added/saved record
+  Map<String, dynamic> get savedRec => table.savedRec;
+
   @override
   Future<bool> add(Map<String, dynamic> rec) async => false;
 
@@ -230,7 +233,7 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
             widget.label = 'Time Stamp';
             widget.keyboardType = TextInputType.number;
             break;
-          case 'key_art':
+          case 'key_art_file':
             widget.label = 'Key Art';
             break;
           case 'email_address':
@@ -270,6 +273,11 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
           case 'module_type':
             widget.label = 'Module Type';
             widget.keyboardType = TextInputType.name;
+            widget.validator = notEmpty;
+            break;
+          case 'next_module_id':
+            widget.label = 'Next Module';
+            widget.keyboardType = TextInputType.number;
             widget.validator = notEmpty;
             break;
           case 'task_id':

@@ -191,7 +191,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        email_address VARCHAR NOT NULL,
        phone_number VARCHAR NOT NULL,
        organization_id INTEGER DEFAULT 0,
-       key_art BLOB,
+       key_art_file VARCHAR DEFAULT '',
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -202,7 +202,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
-       key_art VARCHAR DEFAULT '',
+       key_art_file VARCHAR DEFAULT '',
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -213,7 +213,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
-       key_art VARCHAR DEFAULT '',
+       key_art_file VARCHAR DEFAULT '',
        deleted INTEGER DEFAULT 0)
     ''');
 
@@ -246,7 +246,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
        name VARCHAR NOT NULL,
        short_description VARCHAR NOT NULL,
        long_description VARCHAR NOT NULL,
-       key_art VARCHAR DEFAULT '',
+       key_art_file VARCHAR DEFAULT '',
        time_stamp INTEGER,
        deleted INTEGER DEFAULT 0)
     ''');
@@ -500,9 +500,8 @@ class UsersTasksTable extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
-        await db.saveMap(PlayhouseSQLiteDB.USERS_TASKS, rec);
-    return newRec.isNotEmpty;
+    savedRec = await db.saveMap(PlayhouseSQLiteDB.USERS_TASKS, rec);
+    return savedRec.isNotEmpty;
   }
 }
 
@@ -516,9 +515,8 @@ class UsersScrapbookTable extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
-        await db.saveMap(PlayhouseSQLiteDB.USERS_SCRAPBOOK, rec);
-    return newRec.isNotEmpty;
+    savedRec = await db.saveMap(PlayhouseSQLiteDB.USERS_SCRAPBOOK, rec);
+    return savedRec.isNotEmpty;
   }
 }
 
@@ -547,9 +545,8 @@ class UsersTable extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
-        await db.saveMap(PlayhouseSQLiteDB.USERS, rec);
-    return newRec.isNotEmpty;
+    savedRec = await db.saveMap(PlayhouseSQLiteDB.USERS, rec);
+    return savedRec.isNotEmpty;
   }
 
   @override
@@ -608,9 +605,8 @@ class UserModulesUnlocked extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
-        await db.saveMap(PlayhouseSQLiteDB.USERS_MODULES_UNLOCKED, rec);
-    return newRec.isNotEmpty;
+    savedRec = await db.saveMap(PlayhouseSQLiteDB.USERS_MODULES_UNLOCKED, rec);
+    return savedRec.isNotEmpty;
   }
 }
 
@@ -625,9 +621,9 @@ class UserSubmodulesUnlocked extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
+    savedRec =
         await db.saveMap(PlayhouseSQLiteDB.USERS_SUBMODULES_UNLOCKED, rec);
-    return newRec.isNotEmpty;
+    return savedRec.isNotEmpty;
   }
 }
 
@@ -642,9 +638,8 @@ class UserTasksUnlocked extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
-        await db.saveMap(PlayhouseSQLiteDB.USERS_TASKS_UNLOCKED, rec);
-    return newRec.isNotEmpty;
+    savedRec = await db.saveMap(PlayhouseSQLiteDB.USERS_TASKS_UNLOCKED, rec);
+    return savedRec.isNotEmpty;
   }
 }
 
@@ -658,9 +653,8 @@ class OrganizationsTable extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
-        await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS, rec);
-    return newRec.isNotEmpty;
+    savedRec = await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS, rec);
+    return savedRec.isNotEmpty;
   }
 
   @override
@@ -736,9 +730,8 @@ class OrganizationsModules extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
-        await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS_MODULES, rec);
-    return newRec.isNotEmpty;
+    savedRec = await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS_MODULES, rec);
+    return savedRec.isNotEmpty;
   }
 }
 
@@ -753,9 +746,9 @@ class OrganizationsSubmodules extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
+    savedRec =
         await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES, rec);
-    return newRec.isNotEmpty;
+    return savedRec.isNotEmpty;
   }
 }
 
@@ -770,9 +763,8 @@ class OrganizationsTasks extends SQLiteTable {
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final Map<String, dynamic> newRec =
-        await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS_TASKS, rec);
-    return newRec.isNotEmpty;
+    savedRec = await db.saveMap(PlayhouseSQLiteDB.ORGANIZATIONS_TASKS, rec);
+    return savedRec.isNotEmpty;
   }
 }
 
@@ -854,6 +846,9 @@ class SQLiteTable {
     }
     return _list = list;
   }
+
+  /// Returns a 'saved' record if any. Implement it in add() and save().
+  Map<String, dynamic> savedRec;
 
   Future<bool> add(Map<String, dynamic> rec) async => false;
 

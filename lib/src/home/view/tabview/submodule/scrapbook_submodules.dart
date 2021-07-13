@@ -66,7 +66,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
     if (isPortrait) {
-      _panelHeight = MediaQuery.of(context).size.height * 0.05;
+      _panelHeight = MediaQuery.of(context).size.height * 0.065;
     } else {
       _panelHeight = 0.0;
     }
@@ -294,26 +294,30 @@ class BigPageScrollPhysics extends ScrollPhysics {
 /// Swipe the Task Card panel up and down.
 class _SwipeUpDetector extends GestureDetector {
   //
-  _SwipeUpDetector(SubmodulesState state, {@required Widget child})
+  _SwipeUpDetector(SubmodulesState state, {Key key, @required Widget child})
       : super(
+          key: key,
           onVerticalDragStart: (details) => _start = details.localPosition.dy,
           onVerticalDragUpdate: (details) => _end = details.localPosition.dy,
           onVerticalDragEnd: (details) {
             //
             final panelUp = state.isPanelUp;
 
+            final StatefulWidget screen = state
+                ._sbSubTabBar.children[state._sbSubTabBar.controller.index];
+
             /// Swiping up.
             if (_end < _start) {
               if (!panelUp) {
                 state._movePanel();
-                state.con.setState(() {});
+                screen?.setState(() {});
               }
 
               /// Swiping down.
             } else if (_end > _start) {
               if (panelUp) {
                 state._movePanel();
-                state.con.setState(() {});
+                screen?.setState(() {});
               }
             }
           },

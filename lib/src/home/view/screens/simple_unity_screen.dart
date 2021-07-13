@@ -57,6 +57,7 @@ class _SimpleUnityScreen extends StateMVC<SimpleUnityScreen> {
               onUnityCreated: (controller) {
                 _unityWidgetController = controller;
               },
+              fullscreen: true,
               onUnityMessage: (message) {
                 // ignore: avoid_print
                 print('Received message from unity: ${message.toString()}');

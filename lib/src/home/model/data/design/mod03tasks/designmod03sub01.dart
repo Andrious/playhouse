@@ -63,7 +63,7 @@ AR: Users can begin to populate the terrain with some of their findings and add 
        long_description,
        key_art_file) VALUES (
        9,
-       '3.1.4',
+       '3.1.5',
        'Assessing Materials',
        'Users are asked to think about what types of material can be used to construct their structures. This can tie back to the earlier discussions about sustainability and life-cycle thinking, and we can offer some examples of unique and easy-to-manage materials such as cork, so that users do not default to wood without thinking. They will also assess their own capabilities in terms of technical knowhow and equipment. (for example, construction experience, design/art background, 3D modeling, etc). I think this can encourage and empower users to create unique and interesting structures from their unique personal background and skills.
 Pen-and-paper: We can provide them with some examples of materials and have them write down some of their findings regarding material availability, sustainability as well as their own capacities.
@@ -71,7 +71,7 @@ Pen-and-paper: We can provide them with some examples of materials and have them
 App: This would be similar to the pen-and-paper process but the user will type in their thoughts into the app at specific inputs prompts
 AR: This is more of a reflective process and I do not think AR is needed. I think some type of input prompts would work well to record the user’s thoughts
 ',
-       'picture02.jpg')
+       'pencil02.jpg')
     ''');
 
   await db.execute('''
@@ -82,7 +82,7 @@ AR: This is more of a reflective process and I do not think AR is needed. I thin
        long_description,
        key_art_file) VALUES (
        9,
-       '3.1.5',
+       '3.1.4',
        'Assessing Materials',
        'Users are asked to think about what types of material can be used to construct their structures. This can tie back to the earlier discussions about sustainability and life-cycle thinking, and we can offer some examples of unique and easy-to-manage materials such as cork, so that users do not default to wood without thinking. They will also assess their own capabilities in terms of technical knowhow and equipment. (for example, construction experience, design/art background, 3D modeling, etc). I think this can encourage and empower users to create unique and interesting structures from their unique personal background and skills.
 Pen-and-paper: We can provide them with some examples of materials and have them write down some of their findings regarding material availability, sustainability as well as their own capacities.
@@ -90,7 +90,7 @@ Pen-and-paper: We can provide them with some examples of materials and have them
 App: This would be similar to the pen-and-paper process but the user will type in their thoughts into the app at specific inputs prompts
 AR: This is more of a reflective process and I do not think AR is needed. I think some type of input prompts would work well to record the user’s thoughts
 ',
-       'pencil02.jpg')
+       'picture02.jpg')
     ''');
 
   await db.execute('''
@@ -177,7 +177,7 @@ AR: This is more of a reflective process and I do not think AR is needed. I thin
        long_description,
        key_art_file) VALUES (
        9,
-       '3.1.10',
+       '3.1.11',
        'Assessing Materials',
        'Users are asked to think about what types of material can be used to construct their structures. This can tie back to the earlier discussions about sustainability and life-cycle thinking, and we can offer some examples of unique and easy-to-manage materials such as cork, so that users do not default to wood without thinking. They will also assess their own capabilities in terms of technical knowhow and equipment. (for example, construction experience, design/art background, 3D modeling, etc). I think this can encourage and empower users to create unique and interesting structures from their unique personal background and skills.
 Pen-and-paper: We can provide them with some examples of materials and have them write down some of their findings regarding material availability, sustainability as well as their own capacities.
@@ -185,7 +185,7 @@ Pen-and-paper: We can provide them with some examples of materials and have them
 App: This would be similar to the pen-and-paper process but the user will type in their thoughts into the app at specific inputs prompts
 AR: This is more of a reflective process and I do not think AR is needed. I think some type of input prompts would work well to record the user’s thoughts
 ',
-       'picture02.jpg')
+       'pencil02.jpg')
     ''');
 
   await db.execute('''
@@ -196,7 +196,7 @@ AR: This is more of a reflective process and I do not think AR is needed. I thin
        long_description,
        key_art_file) VALUES (
        9,
-       '3.1.11',
+       '3.1.10',
        'Assessing Materials',
        'Users are asked to think about what types of material can be used to construct their structures. This can tie back to the earlier discussions about sustainability and life-cycle thinking, and we can offer some examples of unique and easy-to-manage materials such as cork, so that users do not default to wood without thinking. They will also assess their own capabilities in terms of technical knowhow and equipment. (for example, construction experience, design/art background, 3D modeling, etc). I think this can encourage and empower users to create unique and interesting structures from their unique personal background and skills.
 Pen-and-paper: We can provide them with some examples of materials and have them write down some of their findings regarding material availability, sustainability as well as their own capacities.
@@ -204,7 +204,7 @@ Pen-and-paper: We can provide them with some examples of materials and have them
 App: This would be similar to the pen-and-paper process but the user will type in their thoughts into the app at specific inputs prompts
 AR: This is more of a reflective process and I do not think AR is needed. I think some type of input prompts would work well to record the user’s thoughts
 ',
-       'pencil02.jpg')
+       'picture02.jpg')
     ''');
 
   await db.execute('''

@@ -29,6 +29,22 @@ class SubmodulesTabBar {
 
   PageCircleIndicator tabIndicator;
 
+  List<PicTab> get tabs => _tabs;
+  List<PicTab> _tabs;
+
+  /// The Task Cards
+  List<Widget> get children {
+    if (_children == null) {
+      _children = <Widget>[];
+      for (final tab in _tabs) {
+        _children.add(ScrapbookTasksScreen(tab: tab));
+      }
+    }
+    return _children;
+  }
+
+  List<Widget> _children;
+
   void initState() {
     //
     String prefsLabel;
@@ -76,22 +92,6 @@ class SubmodulesTabBar {
   void dispose() {
     _tabController.dispose();
   }
-
-  List<PicTab> get tabs => _tabs;
-  List<PicTab> _tabs;
-
-  /// The Task Cards
-  List<Widget> get children {
-    if (_children == null) {
-      _children = <Widget>[];
-      for (final tab in _tabs) {
-        _children.add(ScrapbookTasksScreen(tab: tab));
-      }
-    }
-    return _children;
-  }
-
-  List<Widget> _children;
 
   // Called in the initState()
   // Critical

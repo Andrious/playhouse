@@ -167,13 +167,13 @@ App/AR: Using the cut-out function, I thought it might be interesting to have us
        long_description,
        key_art_file) VALUES (
        12,
-       'Task 3.4.10',
+       'Task 3.4.11',
        'Collage',
        'I think collages are quick, fun and allow people to work roughly, these quick creations are very open-ended and can accidentally reveal and inspire someone subconsciously.
 Pen-and-paper: We can provide some magazines for people to flip through and cut-out and make collages along with the images that they printed out.
 App/AR: Using the cut-out function, I thought it might be interesting to have users cut out parts of images of buildings, structures, or anything really and collage to create something new. Here, maybe we can also provide a modest collection of cut-outs or backgrounds for people to use. 
 ',
-       'picture02.jpg')
+       'pencil02.jpg')
     ''');
 
   await db.execute('''
@@ -184,13 +184,13 @@ App/AR: Using the cut-out function, I thought it might be interesting to have us
        long_description,
        key_art_file) VALUES (
        12,
-       'Task 3.4.11',
+       'Task 3.4.10',
        'Collage',
        'I think collages are quick, fun and allow people to work roughly, these quick creations are very open-ended and can accidentally reveal and inspire someone subconsciously.
 Pen-and-paper: We can provide some magazines for people to flip through and cut-out and make collages along with the images that they printed out.
 App/AR: Using the cut-out function, I thought it might be interesting to have users cut out parts of images of buildings, structures, or anything really and collage to create something new. Here, maybe we can also provide a modest collection of cut-outs or backgrounds for people to use. 
 ',
-       'pencil02.jpg')
+       'picture02.jpg')
     ''');
 
   await db.execute('''

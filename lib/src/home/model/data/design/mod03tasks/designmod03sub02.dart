@@ -64,7 +64,7 @@ AR: Similar to the app, their ideas can be inputted into the 3d terrain with the
        long_description,
        key_art_file) VALUES (
        10,
-       'Task 3.2.4',
+       'Task 3.2.5',
        'What do you imagine the space to feel like?',
        'This part would get users to think about and discuss the experiential quality of the spaces.
 // this is a really great connector thread with the two-eyed seeing excercises as one space for one person may feel totally different to another.
@@ -72,7 +72,7 @@ Pen-and-paper: users can write down/sketch some keywords or notes about how they
 App: Have users type in their ideas in input prompts on each program
 AR: Similar to the app, their ideas can be inputted into the 3d terrain with the bubble diagram.
 ',
-       'picture02.jpg')
+       'pencil02.jpg')
     ''');
 
   await db.execute('''
@@ -83,7 +83,7 @@ AR: Similar to the app, their ideas can be inputted into the 3d terrain with the
        long_description,
        key_art_file) VALUES (
        10,
-       'Task 3.2.5',
+       'Task 3.2.4',
        'What do you imagine the space to feel like?',
        'This part would get users to think about and discuss the experiential quality of the spaces.
 // this is a really great connector thread with the two-eyed seeing excercises as one space for one person may feel totally different to another.
@@ -91,7 +91,7 @@ Pen-and-paper: users can write down/sketch some keywords or notes about how they
 App: Have users type in their ideas in input prompts on each program
 AR: Similar to the app, their ideas can be inputted into the 3d terrain with the bubble diagram.
 ',
-       'pencil02.jpg')
+       'picture02.jpg')
     ''');
 
   await db.execute('''
@@ -178,7 +178,7 @@ AR: Similar to the app, their ideas can be inputted into the 3d terrain with the
        long_description,
        key_art_file) VALUES (
        10,
-       'Task 3.2.10',
+       'Task 3.2.11',
        'What do you imagine the space to feel like?',
        'This part would get users to think about and discuss the experiential quality of the spaces.
 // this is a really great connector thread with the two-eyed seeing excercises as one space for one person may feel totally different to another.
@@ -186,7 +186,7 @@ Pen-and-paper: users can write down/sketch some keywords or notes about how they
 App: Have users type in their ideas in input prompts on each program
 AR: Similar to the app, their ideas can be inputted into the 3d terrain with the bubble diagram.
 ',
-       'picture02.jpg')
+       'pencil02.jpg')
     ''');
 
   await db.execute('''
@@ -197,7 +197,7 @@ AR: Similar to the app, their ideas can be inputted into the 3d terrain with the
        long_description,
        key_art_file) VALUES (
        10,
-       'Task 3.2.11',
+       'Task 3.2.10',
        'What do you imagine the space to feel like?',
        'This part would get users to think about and discuss the experiential quality of the spaces.
 // this is a really great connector thread with the two-eyed seeing excercises as one space for one person may feel totally different to another.
@@ -205,7 +205,7 @@ Pen-and-paper: users can write down/sketch some keywords or notes about how they
 App: Have users type in their ideas in input prompts on each program
 AR: Similar to the app, their ideas can be inputted into the 3d terrain with the bubble diagram.
 ',
-       'pencil02.jpg')
+       'picture02.jpg')
     ''');
 
   await db.execute('''
