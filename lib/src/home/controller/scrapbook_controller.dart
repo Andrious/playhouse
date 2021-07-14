@@ -34,7 +34,7 @@ class ScrapBookController extends ControllerMVC {
 
   final Widget lockImage;
 
-  bool inBuildScreen = false;
+  String _inModuleTypeScreen;
 
   // The current user
   int userId;
@@ -65,11 +65,12 @@ class ScrapBookController extends ControllerMVC {
   /// A graphical indication of Task completion.
   CompleteIndicator _completer;
 
-  int get initialIndex => Prefs.getInt('DesignBuildIndex');
+  int get initialIndex => Prefs.getInt('ModuleTypeIndex');
+  set initialIndex(int index) => Prefs.setInt('ModuleTypeIndex', index);
 
   int get initModuleIndex => Prefs.getInt('${moduleType}ModulesIndex');
 
-  List<String> get moduleTypes => ['Design', 'Build'];
+  List<String> get moduleTypes => ['Discover', 'Design', 'Build'];
 
   String moduleType = '';
 

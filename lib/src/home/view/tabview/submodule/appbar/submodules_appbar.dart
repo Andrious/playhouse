@@ -47,17 +47,8 @@ class SubmodulesTabBar {
 
   void initState() {
     //
-    String prefsLabel;
-
-    /// Determine if we're on the Design side or the Build side.
-    if (_con.inBuildScreen) {
-      prefsLabel = 'Build';
-    } else {
-      prefsLabel = 'Design';
-    }
-
     /// Get the 'initial' index. Display the last viewed tab.
-    var initIndex = Prefs.getInt('${prefsLabel}SubmodulesIndex');
+    var initIndex = Prefs.getInt('${_con.moduleType}SubmodulesIndex');
 
     /// Return a list of 'Picture tabs'
     _tabs = _subModules();
@@ -65,18 +56,16 @@ class SubmodulesTabBar {
     if (initIndex < 0 || initIndex > _tabs.length - 1) {
       initIndex = 0;
     }
+
     _tabController = TabController(
-      // SubTabController(
-//      initialIndex: initIndex,
       length: _tabs.length,
       vsync: provider,
-//      state: provider,
     );
 
     /// Listener
     _tabController.addListener(() {
       //
-      Prefs.setInt('${prefsLabel}SubmodulesIndex', _tabController.index);
+      Prefs.setInt('${_con.moduleType}SubmodulesIndex', _tabController.index);
 
       tabIndicator.value = _tabController.index + 1;
 

@@ -11,12 +11,16 @@ import 'package:playhouse/src/view.dart';
 /// The event handling code
 import 'package:playhouse/src/controller.dart';
 
-class ScrapbookDesignScreen extends ModuleTypeScreen {
-  const ScrapbookDesignScreen({Key key}) : super(key: key);
+class DiscoverModulesScreen extends ModuleTypeScreen {
+  const DiscoverModulesScreen({Key key}) : super(key: key);
 }
 
-class ScrapbookBuildScreen extends ModuleTypeScreen {
-  const ScrapbookBuildScreen({Key key}) : super(key: key);
+class DesignModulesScreen extends ModuleTypeScreen {
+  const DesignModulesScreen({Key key}) : super(key: key);
+}
+
+class BuildModulesScreen extends ModuleTypeScreen {
+  const BuildModulesScreen({Key key}) : super(key: key);
 }
 
 /// List of Modules
@@ -41,7 +45,6 @@ class ModuleTypeScreenState extends StateMVC<ModuleTypeScreen>
   @override
   void initState() {
     super.initState();
-    con.inBuildScreen = widget is ScrapbookBuildScreen;
     _sbModAppBar = ModulesAppBar(this);
     // Set up this appbar's data
     _sbModAppBar.initState();
@@ -104,8 +107,6 @@ class ModulesAppBar {
     });
 
     //
-    _con.inBuildScreen = provider.widget is ScrapbookBuildScreen;
-
     _children = [];
 
     // Create the appropriate number of module screens.

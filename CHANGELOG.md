@@ -1,4 +1,8 @@
 
+## 0.56.0
+ July 14, 2021
+- Introduced a third Module Type: Discover
+- Removed _con.inBuildScreen
 
 ## 0.55.0
  July 13, 2021

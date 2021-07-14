@@ -87,22 +87,6 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
 
     return Column(
       children: [
-//         InkWell(
-//           onTap: () {
-//             setState(submodule.onPressed);
-//           },
-//           child: Padding(
-//             padding: const EdgeInsets.only(top: 10),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 arrow,
-//                 arrow,
-//                 arrow,
-//               ],
-//             ),
-//           ),
-//         ),
         Flexible(
           flex: submoduleState.isPanelUp ? 3 : 30,
           child: Padding(

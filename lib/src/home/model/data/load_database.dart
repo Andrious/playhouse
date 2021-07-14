@@ -2,9 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:playhouse/src/model.dart';
+import 'package:playhouse/src/model.dart' show Database;
+import 'package:playhouse/src/home/model/data/model.dart';
 
 Future<void> loadScrapBookDatabase(Database db) async {
+  // The order of these method calls is very important!
   await loadDesignModulesDB(db);
   await loadDesignSubmodulesDB(db);
 
@@ -50,6 +52,29 @@ Future<void> loadScrapBookDatabase(Database db) async {
   await loadBuildMod04Sub02Tasks(db);
   await loadBuildMod04Sub03Tasks(db);
   await loadBuildMod04Sub04Tasks(db);
+
+  await loadDiscoverModulesDB(db);
+  await loadDiscoverSubmodulesDB(db);
+
+  await loadDiscoverMod01Sub01Tasks(db);
+  await loadDiscoverMod01Sub02Tasks(db);
+  await loadDiscoverMod01Sub03Tasks(db);
+  await loadDiscoverMod01Sub04Tasks(db);
+
+  await loadDiscoverMod02Sub01Tasks(db);
+  await loadDiscoverMod02Sub02Tasks(db);
+  await loadDiscoverMod02Sub03Tasks(db);
+  await loadDiscoverMod02Sub04Tasks(db);
+
+  await loadDiscoverMod03Sub01Tasks(db);
+  await loadDiscoverMod03Sub02Tasks(db);
+  await loadDiscoverMod03Sub03Tasks(db);
+  await loadDiscoverMod03Sub04Tasks(db);
+
+  await loadDiscoverMod04Sub01Tasks(db);
+  await loadDiscoverMod04Sub02Tasks(db);
+  await loadDiscoverMod04Sub03Tasks(db);
+  await loadDiscoverMod04Sub04Tasks(db);
 
   await loadOrganizationsDB(db);
   await loadOrganizationsModulesDB(db);
