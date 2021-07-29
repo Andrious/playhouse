@@ -8,7 +8,8 @@ import 'package:playhouse/src/controller.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-void main() => runApp(MyApp());
+// Enable FirebaseCrashlytics when in production.
+void main() => runApp(MyApp()); //, firebaseCrashlytics: !App.inDebugger);
 
 class MyApp extends AppStatefulWidget {
   MyApp({Key key})

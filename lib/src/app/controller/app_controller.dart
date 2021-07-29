@@ -194,6 +194,7 @@ void runApp(
   ErrorWidgetBuilder builder,
   ReportErrorHandler report,
   bool allowNewHandlers = false,
+  bool firebaseCrashlytics = true,
 }) async {
   /// If nothing is specified, turn to Firebase Crashlytics
   if (handler == null && report == null) {
@@ -211,7 +212,7 @@ void runApp(
     report = crash.recordError;
 
     // If true, then crash reporting data is sent to Firebase.
-    await crash.setCrashlyticsCollectionEnabled(!App.inDebugger);
+    await crash.setCrashlyticsCollectionEnabled(firebaseCrashlytics);
   }
 
   /// Assign the appropriate error handler.

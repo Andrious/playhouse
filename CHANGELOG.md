@@ -1,4 +1,9 @@
 
+## 0.56.1
+ July 28, 2021
+- version 4 database for Module type, Discover
+- bool firebaseCrashlytics = true
+
 ## 0.56.0
  July 28, 2021
 - Introduced a third Module Type: Discover
