@@ -9,16 +9,73 @@ import 'package:playhouse/src/controller.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class InAppWebViewExampleScreen extends StatefulWidget {
   const InAppWebViewExampleScreen({this.image, Key key}) : super(key: key);
   final PickImage image;
+
   @override
   _InAppWebViewExampleScreenState createState() =>
       _InAppWebViewExampleScreenState();
+
+  Uri get initialUrl {
+    final state = stateAs<_InAppWebViewExampleScreenState>();
+    return state?.initialUrl;
+  }
+
+  set initialUrl(Uri url) {
+    final state = stateAs<_InAppWebViewExampleScreenState>();
+    state?.initialUrl = url;
+  }
+
+  // Static function for the required permissions.
+  static Future<bool> getPermission() async {
+    bool permission = false;
+
+    PermissionStatus status;
+
+    status = await Permission.camera.request();
+
+    if (status == PermissionStatus.granted) {
+      status = await Permission.microphone.request();
+    }
+
+    if (status == PermissionStatus.granted) {
+      status = await Permission.storage.request();
+    }
+
+    permission = status == PermissionStatus.granted;
+
+    if (permission && UniversalPlatform.isAndroid) {
+      //
+      await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+
+      final swAvailable = await AndroidWebViewFeature.isFeatureSupported(
+          AndroidWebViewFeature.SERVICE_WORKER_BASIC_USAGE);
+      final swInterceptAvailable =
+          await AndroidWebViewFeature.isFeatureSupported(
+              AndroidWebViewFeature.SERVICE_WORKER_SHOULD_INTERCEPT_REQUEST);
+
+      if (swAvailable && swInterceptAvailable) {
+        final AndroidServiceWorkerController serviceWorkerController =
+            AndroidServiceWorkerController.instance();
+
+        serviceWorkerController.serviceWorkerClient =
+            AndroidServiceWorkerClient(
+          shouldInterceptRequest: (request) async {
+            return null;
+          },
+        );
+      }
+    }
+    return permission;
+  }
 }
 
-class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen> {
+class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen>
+    with StateSet {
+  //
   final GlobalKey webViewKey = GlobalKey();
 
   InAppWebViewController webViewController;
@@ -30,21 +87,22 @@ class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen> {
     ),
     android: AndroidInAppWebViewOptions(
 //      useHybridComposition: true,
-      useHybridComposition: false,
-    ),
+        ),
     ios: IOSInAppWebViewOptions(
       allowsInlineMediaPlayback: true,
     ),
   );
 
   PullToRefreshController pullToRefreshController;
+
   ContextMenu contextMenu;
 
-  final Uri initialUrl = Uri.parse('https://app.sketchup.com/app');
+  Uri initialUrl = Uri.parse('https://app.sketchup.com/app');
 
   String url = '';
 
   double progress = 0;
+
   final urlController = TextEditingController();
 
   @override
@@ -68,11 +126,9 @@ class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen> {
         )
       ],
       options: ContextMenuOptions(
-        hideDefaultSystemContextMenuItems: false,
-      ),
+          //  hideDefaultSystemContextMenuItems: true,
+          ),
       onCreateContextMenu: (hitTestResult) async {
-        // ignore: avoid_print
-        print('onCreateContextMenu');
         // ignore: avoid_print
         print(hitTestResult.extra);
         // ignore: avoid_print
@@ -102,14 +158,47 @@ class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Internl Browser Example')),
+  Widget build(BuildContext context) => FutureBuilder<bool>(
+        future: InAppWebViewExampleScreen.getPermission(),
+        initialData: false,
+        builder: (_, snapshot) => _futureBuilder(snapshot),
+      );
+
+  Widget _futureBuilder(AsyncSnapshot<bool> snapshot) {
+    //
+    if (snapshot.hasError) {
+      final dynamic exception = snapshot.error;
+      final details = FlutterErrorDetails(
+        exception: exception,
+        stack: exception is Error ? exception.stackTrace : null,
+        library: 'in_app_webview_screen',
+        context: ErrorDescription('While getting ready in FutureBuilder Async'),
+      );
+      return App.errorHandler.displayError(details);
+    } else if (snapshot.connectionState == ConnectionState.done) {
+      if (snapshot.hasData && snapshot.data) {
+        return webView;
+      } else {
+        return const EmptyPanel();
+      }
+    } else {
+      Widget widget;
+      if (UniversalPlatform.isAndroid) {
+        widget = const Center(child: CircularProgressIndicator());
+      } else {
+        widget = const Center(child: CupertinoActivityIndicator());
+      }
+      return widget;
+    }
+  }
+
+  // Display the internal browser.
+  Widget get webView => Scaffold(
+        appBar: AppBar(title: const Text('Internal Browser')),
         body: SafeArea(
           child: Column(children: <Widget>[
-            Theme(
-              data: ThemeData(
-                primaryColor: Colors.blue,
-              ),
+            Flexible(
+              flex: 1,
               child: TextField(
                 decoration:
                     const InputDecoration(prefixIcon: Icon(Icons.search)),
@@ -124,10 +213,14 @@ class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen> {
                 },
               ),
             ),
-            const Text(
-              'For a Google search, replace the url above with text.',
+            const Flexible(
+              flex: 1,
+              child: Text(
+                'For a Google search, replace the url above with text.',
+              ),
             ),
-            Expanded(
+            Flexible(
+              flex: 30,
               child: Stack(
                 children: [
                   InAppWebView(
@@ -206,61 +299,64 @@ class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen> {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Tooltip(
-                  message: I10n.s('Home'),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      webViewController?.loadUrl(
-                          urlRequest: URLRequest(url: initialUrl));
-                      _setUrl(initialUrl);
-                    },
-                    child: const Icon(Icons.home_filled),
+            Flexible(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Tooltip(
+                    message: I10n.s('Home'),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        webViewController?.loadUrl(
+                            urlRequest: URLRequest(url: initialUrl));
+                        _setUrl(initialUrl);
+                      },
+                      child: const Icon(Icons.home_filled),
+                    ),
                   ),
-                ),
-                ButtonBar(
-                  //                   alignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Tooltip(
-                      message: I10n.s('Back'),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          webViewController?.goBack();
-                        },
-                        child: const Icon(Icons.arrow_back),
+                  ButtonBar(
+                    //                   alignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Tooltip(
+                        message: I10n.s('Back'),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            webViewController?.goBack();
+                          },
+                          child: const Icon(Icons.arrow_back),
+                        ),
                       ),
-                    ),
-                    Tooltip(
-                      message: I10n.s('Forward'),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          webViewController?.goForward();
-                        },
-                        child: const Icon(Icons.arrow_forward),
+                      Tooltip(
+                        message: I10n.s('Forward'),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            webViewController?.goForward();
+                          },
+                          child: const Icon(Icons.arrow_forward),
+                        ),
                       ),
-                    ),
-                    Tooltip(
-                      message: I10n.s('Refresh'),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          webViewController?.reload();
-                        },
-                        child: const Icon(Icons.refresh),
+                      Tooltip(
+                        message: I10n.s('Refresh'),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            webViewController?.reload();
+                          },
+                          child: const Icon(Icons.refresh),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Tooltip(
-                  message: I10n.s('Screenshot'),
-                  child: ElevatedButton(
-                    // Function listed below
-                    onPressed: _screenShot,
-                    child: const Icon(Icons.camera_alt_outlined),
+                    ],
                   ),
-                ),
-              ],
+                  Tooltip(
+                    message: I10n.s('Screenshot'),
+                    child: ElevatedButton(
+                      // Function listed below
+                      onPressed: _screenShot,
+                      child: const Icon(Icons.camera_alt_outlined),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ]),
         ),

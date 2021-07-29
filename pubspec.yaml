@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.55.0
+version: 0.56.0
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -24,12 +24,17 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # https://pub.dev/packages/flutter_svg/
+  flutter_svg: ^0.22.0
 
   # https://pub.dartlang.org/packages/uuid
   uuid: ^3.0.0
 
   # https://pub.dev/packages/image/
   image: ^3.0.0
+
+  # https://pub.dev/packages/flutter_sound/
+  flutter_sound: ^8.0.0
 
   # https://pub.dev/packages/flutter_inappwebview/
   # https://inappwebview.dev/docs/
@@ -62,7 +67,6 @@ dependencies:
 # https://pub.dev/packages/dbutils
   dbutils: ^3.0.0
 #    path: ../../packages/dbutils
-
 
 # https://pub.dev/packages/auto_size_text/
   auto_size_text: ^2.0.0
@@ -105,17 +109,17 @@ dependencies:
 #  image_size_getter: ^1.0.0
 
   # https://pub.dev/packages/state_set/
-  state_set: ^3.0.0
-#    path: ../../packages/state_set
-
-#  state_map: #^1.0.0
-#      path: ../../packages/state_map
+  state_set: # ^3.0.0
+    path: ../../packages/state_set
 
   # https://pub.dev/packages/page_view_indicators
   page_view_indicators: ^2.0.0
 
   # https://pub.dev/packages/percent_indicator
   percent_indicator: ^3.0.0
+
+  # https://pub.dev/packages/permission_handler/
+  permission_handler: ^8.0.0
 
 dev_dependencies:
   flutter_test:
@@ -139,27 +143,64 @@ flutter:
      - assets/
      - assets/i10n/i10n.csv
 
-#     - assets/images/river_bend.jpg
-#     - assets/images/construction_site.jpg
-#     - assets/images/warehouse.jpg
-#     - assets/images/warehouse_locked.jpg
-#     - assets/images/city_night_locked.jpg
-#     - assets/images/city_night.jpg
-#
-#     - assets/images/church_garbagetruck.jpg
-#     - assets/images/riverbrook_pinktree.jpg
-#     - assets/images/street_intersection.jpg
-#     - assets/images/desert_housing.jpg
-#     - assets/images/winter_cabin.jpg
-#     - assets/images/city_park.jpg
-#     - assets/images/country_trail.jpg
-#     - assets/images/country_waterfall.jpg
+     - assets/images/submodules/river_bend02.jpg
+
+     - assets/images/submodules/lock.png
+     - assets/images/submodules/spirit_of_place02.jpg
+
+     - assets/images/submodules/Build_Final Budget_Exterior Design 01.jpg
+     - assets/images/submodules/Build_Final Budget_Exterior Design 02.jpg
+     - assets/images/submodules/Build_Final Budget_Exterior Design 03.jpg
+     - assets/images/submodules/Build_Final Budget_Exterior Design 04.jpg
+     - assets/images/submodules/Build_Final Budget_Interior Design 01.jpg
+     - assets/images/submodules/Build_Final Budget_Interior Design 02.jpg
+     - assets/images/submodules/Build_Final Budget_Interior Design 03.jpg
+     - assets/images/submodules/Build_Final Budget_Interior Design 04.jpg
+     - assets/images/submodules/Build_Final Budget_Landscape Design 01.jpg
+     - assets/images/submodules/Build_Final Budget_Landscape Design 02.jpg
+     - assets/images/submodules/Build_Final Budget_Landscape Design 03.jpg
+     - assets/images/submodules/Build_Final Budget_Landscape Design 04.jpg
+
+     - assets/images/submodules/Design_Conceptual Sketching_ Preliminary Sketch 01.jpg
+     - assets/images/submodules/Design_Conceptual Sketching_ Preliminary Sketch 02.jpg
+     - assets/images/submodules/Design_Conceptual Sketching_Bubble Diagram 01.jpg
+     - assets/images/submodules/Design_Conceptual Sketching_Bubble Diagram 02.jpg
+     - assets/images/submodules/Design_Conceptual Sketching_Sun, Light, Wind _ Sound 01.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Elevation 01.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Elevation 02.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Elevation 03.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Elevation 04.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Plan 01.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Plan 02.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Plan 03.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Plan 04.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Section 01.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Section 02.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Section 03.jpg
+     - assets/images/submodules/Design_Plan, Section _ Elevation_Section 04.jpg
+
+     - assets/images/submodules/Discover_Drawing _ Drafting_Advanced Techniques 01.jpg
+     - assets/images/submodules/Discover_Drawing _ Drafting_Advanced Techniques 02.jpg
+     - assets/images/submodules/Discover_Drawing _ Drafting_Intro to Drawing 01.jpg
+     - assets/images/submodules/Discover_Drawing _ Drafting_Intro to Drawing 02.jpg
+     - assets/images/submodules/Discover_Drawing _ Drafting_Intro to SketchUp 01.jpg
+     - assets/images/submodules/Discover_Drawing _ Drafting_Intro to SketchUp 02.jpg
+     - assets/images/submodules/Discover_Drawing _ Drafting_Intro to SketchUp 03.jpg
+     - assets/images/submodules/Discover_Drawing _ Drafting_Intro to SketchUp 04.jpg
+     - assets/images/submodules/Discover_Site Selection_Soil, Slope _ Drainage 01.jpg
+     - assets/images/submodules/Discover_Site Selection_Soil, Slope _ Drainage 02.jpg
+     - assets/images/submodules/Discover_Site Selection_Spirit of Place 01.jpg
+     - assets/images/submodules/Discover_Site Selection_Spirit of Place 02.jpg
+     - assets/images/submodules/Discover_Site Selection_Spirit of Place 03.jpg
+     - assets/images/submodules/Discover_Site Selection_Sun 01.jpg
+     - assets/images/submodules/Discover_Site Selection_Sun 02.jpg
+     - assets/images/submodules/Discover_Site Selection_Wind _ Weather 01.jpg
+     - assets/images/submodules/Discover_Site Selection_Wind _ Weather 02.jpg
 
      - assets/images/river_bend02.jpg
      - assets/images/construction_site02.jpg
      - assets/images/warehouse02.jpg
      - assets/images/city_night02.jpg
-
      - assets/images/church_garbagetruck02.jpg
      - assets/images/riverbrook_pinktree02.jpg
      - assets/images/street_intersection02.jpg
@@ -169,21 +210,18 @@ flutter:
      - assets/images/country_trail02.jpg
      - assets/images/country_waterfall02.jpg
 
-     - assets/images/spirit_of_place02.jpg
+     - assets/images/tasks/info.jpg
+     - assets/images/tasks/check_mark.jpg
 
-     - assets/images/info.jpg
-     - assets/images/check_mark.jpg
-     - assets/images/lock.png
+     - assets/images/tasks/search_image.jpg
+     - assets/images/tasks/search_internet.jpg
 
-     - assets/images/search_image.jpg
-     - assets/images/search_internet.jpg
-
-     - assets/images/abc02.jpg
-     - assets/images/AR02.jpg
-     - assets/images/movieCamera02.jpg
-     - assets/images/pencil02.jpg
-     - assets/images/picture02.jpg
-     - assets/images/questionMark02.jpg
+     - assets/images/tasks/abc02.jpg
+     - assets/images/tasks/AR02.jpg
+     - assets/images/tasks/movieCamera02.jpg
+     - assets/images/tasks/pencil02.jpg
+     - assets/images/tasks/picture02.jpg
+     - assets/images/tasks/questionMark02.jpg
 
      - assets/google_fonts/
 

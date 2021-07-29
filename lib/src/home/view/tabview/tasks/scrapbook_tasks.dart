@@ -24,7 +24,7 @@ class ScrapbookTasksScreen extends StatefulWidget {
 }
 
 class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
-    with StateMap {
+    with StateSet {
   _ScrapbookTasksScreenState() : super(ScrapBookController());
 
   SubmodulesState submoduleState;

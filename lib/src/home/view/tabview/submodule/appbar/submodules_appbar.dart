@@ -11,6 +11,10 @@ import 'package:playhouse/src/model.dart';
 /// The UI code
 import 'package:playhouse/src/view.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:path/path.dart' as p;
+
 /// Tabs for the Submodules
 ///
 class SubmodulesTabBar {
@@ -24,19 +28,19 @@ class SubmodulesTabBar {
 
   // SubTabController get controller => _tabController;
   // SubTabController _tabController;
-  TabController get controller => _tabController;
-  TabController _tabController;
+  TabController get subTabController => _subTabController;
+  TabController _subTabController;
 
   PageCircleIndicator tabIndicator;
 
-  List<PicTab> get tabs => _tabs;
-  List<PicTab> _tabs;
+  List<PicTab> get picTabs => _picTabs;
+  List<PicTab> _picTabs;
 
   /// The Task Cards
   List<Widget> get children {
     if (_children == null) {
       _children = <Widget>[];
-      for (final tab in _tabs) {
+      for (final tab in _picTabs) {
         _children.add(ScrapbookTasksScreen(tab: tab));
       }
     }
@@ -51,35 +55,41 @@ class SubmodulesTabBar {
     var initIndex = Prefs.getInt('${_con.moduleType}SubmodulesIndex');
 
     /// Return a list of 'Picture tabs'
-    _tabs = _subModules();
+    _picTabs = _subModules();
 
-    if (initIndex < 0 || initIndex > _tabs.length - 1) {
+    if (initIndex < 0 || initIndex > _picTabs.length - 1) {
       initIndex = 0;
     }
 
-    _tabController = TabController(
-      length: _tabs.length,
+    _subTabController = TabController(
+      length: _picTabs.length,
       vsync: provider,
     );
 
     /// Listener
-    _tabController.addListener(() {
+    _subTabController.addListener(() {
       //
-      Prefs.setInt('${_con.moduleType}SubmodulesIndex', _tabController.index);
+      if (!_subTabController.indexIsChanging) {
+        //
+        Prefs.setInt(
+            '${_con.moduleType}SubmodulesIndex', _subTabController.index);
 
-      tabIndicator.value = _tabController.index + 1;
+        tabIndicator.value = _subTabController.index + 1;
 
-      _con.completer.setCompletion(_tabController);
+        _con.completer.setCompletion(_subTabController);
+
+        const SubmodulesScreen().setStateOf(() {});
+      }
     });
 
-    tabIndicator = PageCircleIndicator(itemCount: _tabs.length);
+    tabIndicator = PageCircleIndicator(itemCount: _picTabs.length);
 
     tabIndicator.value = initIndex + 1;
   }
 
   /// Clean up after itself.
   void dispose() {
-    _tabController.dispose();
+    _subTabController.dispose();
   }
 
   // Called in the initState()
@@ -108,8 +118,8 @@ class SubmodulesTabBar {
 class PicTab extends StatelessWidget {
   const PicTab({
     Key key,
-    @required this.name,
     @required this.submodule,
+    @required this.name,
     @required this.state,
   }) : super(key: key);
   final String name;
@@ -117,46 +127,92 @@ class PicTab extends StatelessWidget {
   final SubmodulesState state;
 
   @override
-  Widget build(BuildContext context) =>
-      StackImage(file: submodule['key_art_file']);
-}
-
-/// The Image has to be wrapped in a Stateful or Stateless widget
-/// for the Positioned widget to work properly.
-class StackImage extends StatelessWidget {
-  const StackImage({
-    Key key,
-    @required this.file,
-  }) : super(key: key);
-
-  final String file;
-
-  @override
   Widget build(BuildContext context) {
-    Widget child;
+    Widget image;
+    String file;
 
-    ///todo To be removed.
+    file = submodule['key_art_file'];
+
     if (file == null) {
       //
-      child = Image.asset('assets/images/river_bend02.jpg', fit: BoxFit.cover);
+      file = 'assets/images/submodules/river_bend02.jpg';
     } else {
       //
-      child = Image.asset('assets/images/$file', fit: BoxFit.cover);
+      file = 'assets/images/submodules/$file';
     }
 
+    // final extension = p.extension(file);
+    //
+    // if (extension == '.svg') {
+    //   image = SvgPicture.asset(file, fit: BoxFit.cover);
+    // } else {
+    image = Image.asset(file, fit: BoxFit.cover);
+    // }
+
+    image = ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: image,
+    );
+
+    // image = Container(
+    //   width: 960,
+    //   height: 540,
+    //   foregroundDecoration: BoxDecoration(
+    //     image: DecorationImage(image: ExactAssetImage(file), fit: BoxFit.fill),
+    //   ),
+    // );
+
+    if (submodule['first_locked'] == 1) {
+      //
+      image = Opacity(
+        opacity: 0.5,
+        child: image,
+      );
+    }
     return Center(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: child,
-      ),
+      child: image,
     );
   }
-
-  // ///todo: Not used anymore?
-  // void imageSize() {
-  //   final file = File(name);
-  //   final imageSize = ImageSizeGetter.getSize(FileInput(file));
-  //   // size.add(imageSize.width);
-  //   // size.add(imageSize.height);
-  // }
 }
+
+// /// The Image has to be wrapped in a Stateful or Stateless widget
+// /// for the Positioned widget to work properly.
+// class StackImage extends StatelessWidget {
+//   const StackImage({
+//     Key key,
+//     @required this.file,
+//   }) : super(key: key);
+//
+//   final String file;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     Widget child;
+//
+//     ///todo To be removed.
+//     if (file == null) {
+//       //
+//       child = Image.asset('assets/images/submodules/river_bend02.jpg', fit: BoxFit.cover);
+//     } else {
+//       //
+//       child = Image.asset('assets/images/submodules/$file', fit: BoxFit.cover);
+//     }
+//
+//     return Center(
+//       child: ClipRRect(
+//         borderRadius: BorderRadius.circular(30),
+//         child: Container(
+//           child: child,
+//         ),
+//       ),
+//     );
+//   }
+//
+//   // ///todo: Not used anymore?
+//   // void imageSize() {
+//   //   final file = File(name);
+//   //   final imageSize = ImageSizeGetter.getSize(FileInput(file));
+//   //   // size.add(imageSize.width);
+//   //   // size.add(imageSize.height);
+//   // }
+// }

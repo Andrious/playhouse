@@ -10,11 +10,15 @@ import 'package:playhouse/src/controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
-    with TickerProviderStateMixin, StateMap {
+    with TickerProviderStateMixin, StateSet {
   PanelScreenState(this.card) : super(card.con) {
-    // Ensure the Controller has the 'current' task record.
-    card.con.task = card.task;
+    // Assign the Controller right away.
     con = card.con;
+    // Ensure the Controller is provided the 'current' card.
+    con.card = card;
+    // Ensure the Controller has the 'current' task record.
+    con.task = card.task;
+
     panelKey =
         '${con.moduleType}${con.module['name']}${con.task['name']}_panel';
   }
@@ -24,7 +28,7 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
 
   ScrapBookController con;
 
-  Widget panelScreen;
+//  Widget panelScreen;
 
   AnimationController _animationController;
 
@@ -32,11 +36,14 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
 
   var _panelHeight = 0.0;
 
+  /// The layout constraints set on the panel;
+  BoxConstraints constraints;
+
   /// Implement widget behind the panel
   Widget buildBackground(BuildContext context);
 
   /// Implement widget displayed on the panel.
-  Widget buildPanel(BuildContext context);
+  Widget buildPanel(BuildContext context, BoxConstraints constraints);
 
   @override
   void initState() {
@@ -57,6 +64,7 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
   void dispose() {
     // Always remove the 'current' task record.
     con.task = null;
+    con.card = null;
     _animationController.dispose();
     super.dispose();
   }
@@ -127,7 +135,8 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
 
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      panelScreen = buildPanel(context);
+      // The buildPanel() function now has access to the constraints
+      this.constraints = constraints;
       return Container(
         constraints: constraints,
         child: Stack(
@@ -171,7 +180,10 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
                             ),
                           ),
                         ),
-                        panelScreen,
+                        Flexible(
+                          flex: panelUp ? 30 : 3,
+                          child: buildPanel(context, constraints),
+                        ),
                       ],
                     ),
                   ),

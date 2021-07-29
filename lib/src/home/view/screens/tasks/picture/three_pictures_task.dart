@@ -20,7 +20,7 @@ class ThreePicturesScreen extends StatefulWidget {
 }
 
 class _ThreePicturesScreenState extends StateMVC<ThreePicturesScreen>
-    with StateMap {
+    with StateSet {
   _ThreePicturesScreenState() : super(ScrapBookController()) {
     con = controller;
   }

@@ -45,8 +45,7 @@ StatefulWidget pictureTaskScreens(PanelScreenState penal) {
     case 'Task 1.1.10':
       widget = ThreePicturesScreen(penal);
       break;
-    default:
-      widget = const EmptyPanel();
   }
-  return widget;
+
+  return widget ??= const EmptyPanel();
 }

@@ -166,7 +166,7 @@ class TaskCard extends StatefulWidget {
   State createState() => _TaskCardsState();
 }
 
-class _TaskCardsState extends State<TaskCard> with StateMap {
+class _TaskCardsState extends State<TaskCard> with StateSet {
   //
   TaskCard card;
   Widget icon;
@@ -176,7 +176,7 @@ class _TaskCardsState extends State<TaskCard> with StateMap {
     super.initState();
     card = widget;
     card.image.initState(card);
-    icon ??= Image.asset('assets/images/${card.name.trim()}02.jpg');
+    icon ??= Image.asset('assets/images/tasks/${card.name.trim()}02.jpg');
   }
 
   @override
@@ -231,7 +231,7 @@ class _TaskCardsState extends State<TaskCard> with StateMap {
                   highlightColor: const Color(0xffbb86fc),
                   child: Padding(
                       padding: const EdgeInsets.all(10),
-                      child: Image.asset('assets/images/check_mark.jpg')),
+                      child: Image.asset('assets/images/tasks/check_mark.jpg')),
                 ),
               ),
             ),
@@ -244,7 +244,7 @@ class _TaskCardsState extends State<TaskCard> with StateMap {
                 child: InkWell(
                   onTap: card.onTapInfo,
                   highlightColor: const Color(0xffbb86fc),
-                  child: Image.asset('assets/images/info.jpg'),
+                  child: Image.asset('assets/images/tasks/info.jpg'),
                 ),
               ),
             ),

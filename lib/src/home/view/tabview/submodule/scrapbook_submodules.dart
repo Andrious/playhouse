@@ -88,12 +88,12 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
             _SwipeUpDetector(
               this,
               child: TabBar(
-                controller: _sbSubTabBar.controller,
+                controller: _sbSubTabBar.subTabController,
                 isScrollable: true,
                 indicatorSize: TabBarIndicatorSize.label,
-                tabs: _sbSubTabBar.tabs,
+                tabs: _sbSubTabBar.picTabs,
                 physics: BigPageScrollPhysics(
-                  controller: _sbSubTabBar.controller,
+                  controller: _sbSubTabBar.subTabController,
                 ).applyTo(
                     ScrollConfiguration.of(context).getScrollPhysics(context)),
               ),
@@ -112,7 +112,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
                   child: _SwipeUpDetector(
                     this,
                     child: TabBarView(
-                      controller: _sbSubTabBar.controller,
+                      controller: _sbSubTabBar.subTabController,
                       children: _sbSubTabBar.children,
                     ),
                   ),
@@ -126,11 +126,20 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
   Widget overlay() {
     //
     Widget overlay;
+
     if (_con.submodule['first_locked'] == 1) {
-      overlay = Positioned.fill(
-        child: _con.lockImage,
+      // overlay = Positioned.fill(
+      //   child: _con.lockImage,
+      // );
+      overlay = Positioned(
+        left: 330,
+        top: 50,
+        height: 100,
+        width: 90,
+        child: con.lockImage,
       );
     } else {
+      //
       overlay = Positioned(
         left: 200,
         top: 80,
@@ -261,12 +270,12 @@ class BigPageScrollPhysics extends ScrollPhysics {
             : position.pixels
                 .clamp(position.minScrollExtent, position.maxScrollExtent),
         position);
-    return position.pixels / position.viewportDimension;
+//    return position.pixels / position.viewportDimension;
   }
 
   double _getPixels(ScrollMetrics position, double page) {
     return _getPixelsFromPage(position, page);
-    return page * position.viewportDimension;
+//    return page * position.viewportDimension;
   }
 
   double _getPixelsFromPage(ScrollMetrics position, double page) {
@@ -303,8 +312,8 @@ class _SwipeUpDetector extends GestureDetector {
             //
             final panelUp = state.isPanelUp;
 
-            final StatefulWidget screen = state
-                ._sbSubTabBar.children[state._sbSubTabBar.controller.index];
+            final StatefulWidget screen = state._sbSubTabBar
+                .children[state._sbSubTabBar.subTabController.index];
 
             /// Swiping up.
             if (_end < _start) {

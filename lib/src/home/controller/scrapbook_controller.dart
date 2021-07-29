@@ -18,10 +18,23 @@ class ScrapBookController extends ControllerMVC {
         lockImage = Opacity(
           opacity: 0.6,
           child: DecoratedBox(
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
+                  BoxShadow(
+                      color: Colors.black38,
+                      offset: Offset(5, 5),
+                      blurRadius: 5)
+                ]),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Image.asset('assets/images/submodules/lock.png'),
+              ),
             ),
-            child: Center(child: Image.asset('assets/images/lock.png')),
+            //           child: Center(child: Image.asset('assets/images/submodules/lock.png')),
           ),
         ),
         super(state) {
@@ -296,22 +309,22 @@ class ScrapBookController extends ControllerMVC {
 
     switch (index) {
       case 0:
-        card = QuestionTask(task, savedTask);
+        card = questionTasks(task, savedTask);
         break;
       case 1:
-        card = ABCTask(task, savedTask);
+        card = abcTasks(task, savedTask);
         break;
       case 2:
         card = arTasks(task, savedTask);
         break;
       case 3:
-        card = PencilTask(task, savedTask);
+        card = pencilTasks(task, savedTask);
         break;
       case 4:
         card = pictureTasks(task, savedTask);
         break;
       case 5:
-        card = MovieCameraTask(task, savedTask);
+        card = movieTasks(task, savedTask);
         break;
       default:
         card = null;
@@ -344,11 +357,9 @@ class ScrapBookController extends ControllerMVC {
     if (card.pickImage) {
       await card.image.pickImage();
     } else {
-      this.card = card;
       await openFullScreenRoute(
         TaskScreen(card: card),
       );
-      this.card = null;
     }
     card.completed();
     calcCompletion();

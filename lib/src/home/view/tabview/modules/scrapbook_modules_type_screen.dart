@@ -62,8 +62,8 @@ class ModuleTypeScreenState extends StateMVC<ModuleTypeScreen>
       appBar: _sbModAppBar.appBar,
       body: SafeArea(
         child: TabBarView(
-          controller: _sbModAppBar.controller,
-          children: _sbModAppBar.children,
+          controller: _sbModAppBar.modTabController,
+          children: _sbModAppBar.modTabChildren,
         ),
       ));
 }
@@ -85,7 +85,7 @@ class ModulesAppBar {
 
     final initIndex = _con.initModuleIndex;
 
-    _tabController = TabController(
+    _modTabController = TabController(
       initialIndex: initIndex,
       length: recs.length,
       vsync: provider,
@@ -96,35 +96,35 @@ class ModulesAppBar {
       _con.module = recs[initIndex];
     }
 
-    _tabController.addListener(() {
+    _modTabController.addListener(() {
       // This fires again when finished 'changing'
-      if (_tabController.indexIsChanging) {
+      if (_modTabController.indexIsChanging) {
         //
-        _con.initModule(_tabController.index);
+        _con.initModule(_modTabController.index);
 
         provider?.setState(() {});
       }
     });
 
     //
-    _children = [];
+    _modTabChildren = [];
 
     // Create the appropriate number of module screens.
     for (final module in recs) {
       //
-      _children.add(const SubmodulesScreen());
+      _modTabChildren.add(const SubmodulesScreen());
     }
   }
 
   /// Clean up after itself.
   void dispose() {
-    _tabController.dispose();
+    _modTabController.dispose();
   }
 
-  TabController get controller => _tabController;
-  TabController _tabController;
+  TabController get modTabController => _modTabController;
+  TabController _modTabController;
 
-  List<Tab> get tabs {
+  List<Tab> get modTabs {
     //
     final List<Tab> _tabs = [];
 
@@ -134,24 +134,11 @@ class ModulesAppBar {
       //
       index++;
 
-      // _tabs.add(Tab(
-      //   child: AutoSizeText(
-      //     I10n.s(module['name']),
-      //     style: TextStyle(
-      //       fontWeight: _tabController.index == index
-      //           ? FontWeight.w700
-      //           : FontWeight.w400,
-      //     ),
-      //     softWrap: false,
-      //     overflow: TextOverflow.visible,
-      //   ),
-      // ));
-
       _tabs.add(Tab(
         child: I10n.t(
           module['name'],
           style: TextStyle(
-            fontWeight: _tabController.index == index
+            fontWeight: _modTabController.index == index
                 ? FontWeight.w700
                 : FontWeight.w400,
           ),
@@ -161,8 +148,8 @@ class ModulesAppBar {
     return _tabs;
   }
 
-  List<Widget> get children => _children;
-  List<Widget> _children;
+  List<Widget> get modTabChildren => _modTabChildren;
+  List<Widget> _modTabChildren;
 
   /// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
   AppBar get appBar => AppBar(
@@ -173,8 +160,8 @@ class ModulesAppBar {
 //        primary: false,
         bottom: TabBar(
           isScrollable: true,
-          tabs: tabs,
-          controller: _tabController,
+          tabs: modTabs,
+          controller: _modTabController,
           indicatorSize: TabBarIndicatorSize.label,
         ),
       );

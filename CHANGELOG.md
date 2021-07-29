@@ -1,8 +1,10 @@
 
 ## 0.56.0
- July 14, 2021
+ July 28, 2021
 - Introduced a third Module Type: Discover
 - Removed _con.inBuildScreen
+- Develop a lock image as an 'overlay' of parts of the app.
+- Inserted the latest Submodule graphics as tabs
 
 ## 0.55.0
  July 13, 2021

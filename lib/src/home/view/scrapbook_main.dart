@@ -23,28 +23,28 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
     con = controller;
   }
   ScrapBookController con;
-  TabController _tabController;
+  TabController _mobTypeTabController;
 
   @override
   void initState() {
     super.initState();
 
-    _tabController = TabController(
+    _mobTypeTabController = TabController(
       initialIndex: con.initialIndex,
       length: con.moduleTypes.length,
       vsync: this,
     );
 
-    _tabController.addListener(() {
-      con.initialIndex = _tabController.index;
+    _mobTypeTabController.addListener(() {
+      con.initialIndex = _mobTypeTabController.index;
       setState(() {});
-      con.initTypeOfModules(_tabController.index);
+      con.initTypeOfModules(_mobTypeTabController.index);
     });
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _mobTypeTabController.dispose();
     super.dispose();
   }
 
@@ -55,7 +55,7 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
         endDrawer: const ScrapBookDrawer(),
         primary: false,
         body: TabBarView(
-          controller: _tabController,
+          controller: _mobTypeTabController,
           children: const <Widget>[
             DiscoverModulesScreen(),
             DesignModulesScreen(),
@@ -73,13 +73,13 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
         excludeHeaderSemantics: true,
         toolbarHeight: 100,
         bottom: TabBar(
-          controller: _tabController,
+          controller: _mobTypeTabController,
           tabs: [
             Tab(
               child: I10n.t(
                 con.moduleTypes[0],
                 style: TextStyle(
-                  fontWeight: _tabController.index == 0
+                  fontWeight: _mobTypeTabController.index == 0
                       ? FontWeight.w700
                       : FontWeight.w400,
                 ),
@@ -91,7 +91,7 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
               child: I10n.t(
                 con.moduleTypes[1],
                 style: TextStyle(
-                  fontWeight: _tabController.index == 1
+                  fontWeight: _mobTypeTabController.index == 1
                       ? FontWeight.w700
                       : FontWeight.w400,
                 ),
@@ -103,7 +103,7 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
               child: I10n.t(
                 con.moduleTypes[2],
                 style: TextStyle(
-                  fontWeight: _tabController.index == 1
+                  fontWeight: _mobTypeTabController.index == 1
                       ? FontWeight.w700
                       : FontWeight.w400,
                 ),

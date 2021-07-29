@@ -24,7 +24,7 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
   bool taskCompleted;
 
   /// Determine which 'Task' Screen is to be displayed.
-  StatefulWidget whichTaskScreen(TaskCard card) {
+  StatefulWidget whichTaskPanel(TaskCard card) {
     //
     final index = ['question', 'abc', 'AR', 'picture', 'pencil', 'movie']
         .indexWhere(card.con.task['key_art_file'].contains);
@@ -33,10 +33,10 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
 
     switch (index) {
       case 0:
-        widget = const EmptyPanel();
+        widget = questionTaskScreens(this);
         break;
       case 1:
-        widget = const EmptyPanel();
+        widget = abcTaskScreens(this);
         break;
       case 2:
         widget = arTaskScreens(this);
@@ -45,10 +45,10 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
         widget = pictureTaskScreens(this);
         break;
       case 4:
-        widget = const EmptyPanel();
+        widget = pencilTaskScreens(this);
         break;
       case 5:
-        widget = const EmptyPanel();
+        widget = movieTaskScreens(this);
         break;
       default:
         widget = null;
@@ -57,14 +57,14 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
   }
 
   @override
-  Widget buildPanel(BuildContext context) {
+  Widget buildPanel(BuildContext context, BoxConstraints constraints) {
     Widget widget;
 
     if (taskCompleted) {
       widget = Padding(
           padding: const EdgeInsets.all(16), child: _noRow(instructions));
     } else {
-      widget = whichTaskScreen(card);
+      widget = whichTaskPanel(card);
     }
     return widget;
   }
@@ -84,7 +84,7 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: ExactAssetImage(
-                  'assets/images/${con.submodule['key_art_file']}',
+                  'assets/images/submodules/${con.submodule['key_art_file']}',
                 ),
                 fit: BoxFit.cover,
               ),
@@ -99,7 +99,7 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 padding: const EdgeInsets.all(16),
-                child: taskCompleted ? whichTaskScreen(card) : instructions,
+                child: taskCompleted ? whichTaskPanel(card) : instructions,
               ),
             ),
           ),

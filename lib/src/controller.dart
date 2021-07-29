@@ -13,8 +13,15 @@ export 'package:playhouse/src/app/controller/app_controller.dart';
 
 /// The Controller for this Home screen
 export 'package:playhouse/src/home/controller/scrapbook_controller.dart';
-export 'package:playhouse/src/home/controller/picture_tasks.dart';
-export 'package:playhouse/src/home/controller/ar_tasks.dart';
+
+/// Different Tasks grouped by category
+export 'package:playhouse/src/home/controller/tasks/question_tasks.dart';
+export 'package:playhouse/src/home/controller/tasks/picture_tasks.dart';
+export 'package:playhouse/src/home/controller/tasks/abc_tasks.dart';
+export 'package:playhouse/src/home/controller/tasks/ar_tasks.dart';
+export 'package:playhouse/src/home/controller/tasks/pencil_tasks.dart';
+export 'package:playhouse/src/home/controller/tasks/picture_tasks.dart';
+export 'package:playhouse/src/home/controller/tasks/movie_tasks.dart';
 
 /// The Tasks for the Home screen
 export 'package:playhouse/src/home/controller/pick_image.dart';
