@@ -9,7 +9,7 @@ import 'package:playhouse/src/view.dart';
 import 'package:playhouse/src/controller.dart';
 
 class TaskScreen extends StatefulWidget {
-  const TaskScreen({Key key, this.card}) : super(key: key);
+  const TaskScreen({Key? key, required this.card}) : super(key: key);
   final TaskCard card;
   @override
   State createState() => _TaskScreenState(card);
@@ -21,15 +21,15 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
   }
   //
   final List<Widget> actions = [];
-  bool taskCompleted;
+  late bool taskCompleted;
 
   /// Determine which 'Task' Screen is to be displayed.
-  StatefulWidget whichTaskPanel(TaskCard card) {
+  StatefulWidget? whichTaskPanel(TaskCard card) {
     //
     final index = ['question', 'abc', 'AR', 'picture', 'pencil', 'movie']
-        .indexWhere(card.con.task['key_art_file'].contains);
+        .indexWhere(card.con.task!['key_art_file'].contains);
 
-    StatefulWidget widget;
+    StatefulWidget? widget;
 
     switch (index) {
       case 0:
@@ -64,7 +64,7 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
       widget = Padding(
           padding: const EdgeInsets.all(16), child: _noRow(instructions));
     } else {
-      widget = whichTaskPanel(card);
+      widget = whichTaskPanel(card) as Widget;
     }
     return widget;
   }
@@ -72,7 +72,7 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
   @override
   Widget buildBackground(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: I10n.t('Playhouse'),
+          title: L10n.t('Playhouse'),
           centerTitle: true,
           elevation: 0,
           excludeHeaderSemantics: true,
@@ -84,7 +84,7 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: ExactAssetImage(
-                  'assets/images/submodules/${con.submodule['key_art_file']}',
+                  'assets/images/submodules/${con.submodule!['key_art_file']}',
                 ),
                 fit: BoxFit.cover,
               ),
@@ -111,7 +111,7 @@ class _TaskScreenState extends PanelScreenState<TaskScreen> {
     return column;
   }
 
-  Widget get instructions => Column(
+  Column get instructions => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

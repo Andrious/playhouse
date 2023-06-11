@@ -20,8 +20,8 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
     con = ScrapBookController();
   }
 
-  final String title;
-  ScrapBookController con;
+  final String? title;
+  late ScrapBookController con;
 
   U get fields;
 
@@ -95,11 +95,11 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
   /// Optionally add any additional widgets from the record list.
   List<Widget> addedWidgets(Map<String, FieldWidgets<PlayHouseFields>> record,
           VoidCallback onTap) =>
-      null;
+      [];
 
   /// Optionally add any additional widgets from the record list.
   List<Widget> editWidgets(Map<String, FieldWidgets<PlayHouseFields>> record) =>
-      null;
+      [];
 
   List<Widget> columnWidgets(
       Map<String, FieldWidgets<PlayHouseFields>> fldWidget);
@@ -114,7 +114,7 @@ class ScrapbookDetailsScreen extends StatefulWidget {
     this.record,
     this.addedWidgets,
     this.widgetEdit, {
-    Key key,
+    Key? key,
   }) : super(key: key);
   final Map<String, FieldWidgets<PlayHouseFields>> record;
   final WidgetListFunc addedWidgets;
@@ -134,14 +134,14 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
       widgets = [];
     } else {
       widgets = <Widget>[
-        record['rowid'].onListTile(enabled: false, tap: onTap),
-        record['name'].onListTile(tap: onTap),
-        record['short_description'].onListTile(tap: onTap),
-        record['long_description'].onListTile(tap: onTap),
+        record['rowid']!.onListTile(enabled: false, tap: onTap),
+        record['name']!.onListTile(tap: onTap),
+        record['short_description']!.onListTile(tap: onTap),
+        record['long_description']!.onListTile(tap: onTap),
       ];
     }
-    final func = widget.addedWidgets;
-    final List<Widget> list = func == null ? null : func(record, onTap);
+    final Function? func = widget.addedWidgets;
+    final List<Widget>? list = func == null ? null : func(record, onTap);
     if (list != null) {
       widgets.addAll(list);
     }
@@ -152,9 +152,9 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
     }
   }
 
-  List<Widget> widgets;
-  VoidCallback onTap;
-  Map<String, FieldWidgets<PlayHouseFields>> record;
+  late List<Widget> widgets;
+  late VoidCallback onTap;
+  late Map<String, FieldWidgets<PlayHouseFields>> record;
 
   @override
   Widget build(BuildContext context) {
@@ -205,23 +205,24 @@ class ScrapbookEditScreen extends StatefulWidget {
     this.record,
     this.widgetEdit,
     this.title,
-    Key key,
+    Key? key,
   }) : super(key: key);
-  final Map<String, FieldWidgets<PlayHouseFields>> record;
-  final WidgetEditFunc widgetEdit;
-  final String title;
+  final Map<String, FieldWidgets<PlayHouseFields>>? record;
+  final WidgetEditFunc? widgetEdit;
+  final String? title;
   @override
+  //ignore: no_logic_in_create_state
   State createState() => _ScrapbookEditScreenState(ScrapBookController());
 }
 
-class _ScrapbookEditScreenState extends StateMVC<ScrapbookEditScreen> {
-  _ScrapbookEditScreenState([ControllerMVC controller]) : super(controller);
+class _ScrapbookEditScreenState extends StateX<ScrapbookEditScreen> {
+  _ScrapbookEditScreenState([StateXController? controller]) : super(controller: controller);
 
   @override
   void initState() {
     super.initState();
-    record = widget.record;
-    fieldsObj = record.values.first.object;
+    record = widget.record!;
+    fieldsObj = record.values.first.object!;
     // final func = widget.widgetEdit;
     // widgets = func == null ? null : func(record);
     // if (widgets == null) {
@@ -232,13 +233,13 @@ class _ScrapbookEditScreenState extends StateMVC<ScrapbookEditScreen> {
     // }
   }
 
-  PlayHouseFields fieldsObj;
-  Map<String, FieldWidgets<PlayHouseFields>> record;
-  List<Widget> widgets;
+  late PlayHouseFields fieldsObj;
+  late Map<String, FieldWidgets<PlayHouseFields>> record;
+  late List<Widget> widgets;
 
   @override
-  Widget build(BuildContext context) {
-    widgets = _widgets(widget.widgetEdit);
+  Widget buildAndroid(BuildContext context) {
+    widgets = _widgets(widget.widgetEdit!);
     return Theme(
       data: ThemeData.light(),
       child: Scaffold(
@@ -274,16 +275,17 @@ class _ScrapbookEditScreenState extends StateMVC<ScrapbookEditScreen> {
     );
   }
 
-  List<Widget> _widgets(WidgetEditFunc func) {
+  List<Widget> _widgets(WidgetEditFunc? func) {
     var widgets = func == null ? null : func(record);
     if (widgets == null) {
       widgets = [];
       record.forEach((key, value) {
-        widgets.add(value.textFormField);
+        widgets!.add(value.textFormField);
       });
     }
     return widgets;
   }
 }
 
-String notEmpty(String v) => v.isEmpty ? 'Cannot be empty' : null;
+String? notEmpty(String? v) =>
+    v == null || v.isEmpty ? 'Cannot be empty' : null;

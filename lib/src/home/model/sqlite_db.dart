@@ -9,7 +9,7 @@ import 'package:playhouse/src/view.dart';
 class PlayhouseSQLiteDB extends SQLiteDB {
   factory PlayhouseSQLiteDB() => _this ??= PlayhouseSQLiteDB._();
   PlayhouseSQLiteDB._();
-  static PlayhouseSQLiteDB _this;
+  static PlayhouseSQLiteDB? _this;
 
   /// Name of the whole Database
   @override
@@ -294,7 +294,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
 class ModulesTable extends SQLiteTable {
   factory ModulesTable() => _this ??= ModulesTable._();
   ModulesTable._() : super(tableName: PlayhouseSQLiteDB.MODULES);
-  static ModulesTable _this;
+  static ModulesTable? _this;
 
   @override
   Future<List<Map<String, dynamic>>> retrieve() async {
@@ -321,7 +321,7 @@ class ModulesTable extends SQLiteTable {
   @override
   Future<bool> delete(Map<String, dynamic> rec) async {
     bool delete;
-    final Database _db = db.db;
+    final Database _db = db.db!;
     try {
       //
       delete = await _db.transaction<bool>((Transaction txn) async {
@@ -355,7 +355,7 @@ class ModulesTable extends SQLiteTable {
 class SubmodulesTable extends SQLiteTable {
   factory SubmodulesTable() => _this ??= SubmodulesTable._();
   SubmodulesTable._() : super(tableName: PlayhouseSQLiteDB.SUBMODULES);
-  static SubmodulesTable _this;
+  static SubmodulesTable? _this;
 
   @override
   Future<List<Map<String, dynamic>>> retrieve() async {
@@ -382,7 +382,7 @@ class SubmodulesTable extends SQLiteTable {
   @override
   Future<bool> delete(Map<String, dynamic> rec) async {
     bool delete;
-    final Database _db = db.db;
+    final Database _db = db.db!;
     try {
       //
       delete = await _db.transaction<bool>((Transaction txn) async {
@@ -416,7 +416,7 @@ class SubmodulesTable extends SQLiteTable {
 class TasksTable extends SQLiteTable {
   factory TasksTable() => _this ??= TasksTable._();
   TasksTable._() : super(tableName: PlayhouseSQLiteDB.TASKS);
-  static TasksTable _this;
+  static TasksTable? _this;
 
   @override
   Future<List<Map<String, dynamic>>> retrieve() async {
@@ -443,7 +443,7 @@ class TasksTable extends SQLiteTable {
   @override
   Future<bool> delete(Map<String, dynamic> rec) async {
     bool delete;
-    final Database _db = db.db;
+    final Database _db = db.db!;
     try {
       //
       delete = await _db.transaction<bool>((Transaction txn) async {
@@ -490,7 +490,7 @@ class TasksTable extends SQLiteTable {
 class UsersTasksTable extends SQLiteTable {
   factory UsersTasksTable() => _this ??= UsersTasksTable._();
   UsersTasksTable._() : super(tableName: PlayhouseSQLiteDB.USERS_TASKS);
-  static UsersTasksTable _this;
+  static UsersTasksTable? _this;
 
   @override
   Future<List<Map<String, dynamic>>> retrieve() async {
@@ -517,7 +517,7 @@ class UsersTasksTable extends SQLiteTable {
 class UsersScrapbookTable extends SQLiteTable {
   factory UsersScrapbookTable() => _this ??= UsersScrapbookTable._();
   UsersScrapbookTable._() : super(tableName: PlayhouseSQLiteDB.USERS_SCRAPBOOK);
-  static UsersScrapbookTable _this;
+  static UsersScrapbookTable? _this;
 
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
@@ -532,7 +532,7 @@ class UsersScrapbookTable extends SQLiteTable {
 class UsersTable extends SQLiteTable {
   factory UsersTable() => _this ??= UsersTable._();
   UsersTable._() : super(tableName: PlayhouseSQLiteDB.USERS);
-  static UsersTable _this;
+  static UsersTable? _this;
 
   @override
   Future<List<Map<String, dynamic>>> retrieve() async {
@@ -559,7 +559,7 @@ class UsersTable extends SQLiteTable {
   @override
   Future<bool> delete(Map<String, dynamic> rec) async {
     bool delete;
-    final Database _db = db.db;
+    final Database _db = db.db!;
     try {
       //
       delete = await _db.transaction<bool>((Transaction txn) async {
@@ -607,7 +607,7 @@ class UserModulesUnlocked extends SQLiteTable {
   factory UserModulesUnlocked() => _this ??= UserModulesUnlocked._();
   UserModulesUnlocked._()
       : super(tableName: PlayhouseSQLiteDB.USERS_MODULES_UNLOCKED);
-  static UserModulesUnlocked _this;
+  static UserModulesUnlocked? _this;
 
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
@@ -623,7 +623,7 @@ class UserSubmodulesUnlocked extends SQLiteTable {
   factory UserSubmodulesUnlocked() => _this ??= UserSubmodulesUnlocked._();
   UserSubmodulesUnlocked._()
       : super(tableName: PlayhouseSQLiteDB.USERS_SUBMODULES_UNLOCKED);
-  static UserSubmodulesUnlocked _this;
+  static UserSubmodulesUnlocked? _this;
 
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
@@ -640,7 +640,7 @@ class UserTasksUnlocked extends SQLiteTable {
   factory UserTasksUnlocked() => _this ??= UserTasksUnlocked._();
   UserTasksUnlocked._()
       : super(tableName: PlayhouseSQLiteDB.USERS_TASKS_UNLOCKED);
-  static UserTasksUnlocked _this;
+  static UserTasksUnlocked? _this;
 
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
@@ -655,7 +655,7 @@ class UserTasksUnlocked extends SQLiteTable {
 class OrganizationsTable extends SQLiteTable {
   factory OrganizationsTable() => _this ??= OrganizationsTable._();
   OrganizationsTable._() : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS);
-  static OrganizationsTable _this;
+  static OrganizationsTable? _this;
 
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
@@ -667,7 +667,7 @@ class OrganizationsTable extends SQLiteTable {
   @override
   Future<bool> delete(Map<String, dynamic> rec) async {
     bool delete = false;
-    final Database _db = db.db;
+    final Database _db = db.db!;
     try {
       //
       delete = await _db.transaction<bool>((Transaction txn) async {
@@ -732,7 +732,7 @@ class OrganizationsModules extends SQLiteTable {
   factory OrganizationsModules() => _this ??= OrganizationsModules._();
   OrganizationsModules._()
       : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_MODULES);
-  static OrganizationsModules _this;
+  static OrganizationsModules? _this;
 
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
@@ -748,7 +748,7 @@ class OrganizationsSubmodules extends SQLiteTable {
   factory OrganizationsSubmodules() => _this ??= OrganizationsSubmodules._();
   OrganizationsSubmodules._()
       : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES);
-  static OrganizationsSubmodules _this;
+  static OrganizationsSubmodules? _this;
 
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
@@ -765,7 +765,7 @@ class OrganizationsTasks extends SQLiteTable {
   factory OrganizationsTasks() => _this ??= OrganizationsTasks._();
   OrganizationsTasks._()
       : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_TASKS);
-  static OrganizationsTasks _this;
+  static OrganizationsTasks? _this;
 
   @override
   Future<bool> save(Map<String, dynamic> rec) async {
@@ -777,18 +777,18 @@ class OrganizationsTasks extends SQLiteTable {
 
 class SQLiteTable {
   // extends DataFields<Map<String, dynamic>> {
-  SQLiteTable({@required this.tableName}) : db = PlayhouseSQLiteDB();
+  SQLiteTable({required this.tableName}) : db = PlayhouseSQLiteDB();
 
   final PlayhouseSQLiteDB db;
 //  final List<Map<String, dynamic>> data = [];
 
-  TextEditingController controller;
+  TextEditingController? controller;
 
   Future<bool> initAsync() async {
     //
     _keyFld = await db.keyField(tableName);
 
-    final init = _keyFld != null && _keyFld.isNotEmpty;
+    final init = _keyFld != null && _keyFld!.isNotEmpty;
 
     if (!init) {
       _keyFld = 'rowid';
@@ -831,7 +831,7 @@ class SQLiteTable {
   }
 
   String tableName = '';
-  String _keyFld = '';
+  String? _keyFld = '';
 
   String get selectAll => _selectAll;
   String _selectAll = '';
@@ -855,7 +855,7 @@ class SQLiteTable {
   }
 
   /// Returns a 'saved' record if any. Implement it in add() and save().
-  Map<String, dynamic> savedRec;
+  late Map<String, dynamic> savedRec;
 
   Future<bool> add(Map<String, dynamic> rec) async => false;
 
@@ -866,7 +866,7 @@ class SQLiteTable {
   Future<bool> undo(Map<String, dynamic> rec) async => false;
 
   /// Gets the exception if any.
-  Exception get exception => db.error;
+  Exception? get exception => db.error;
 
   /// Get the error message
   String get message => db.message;

@@ -12,19 +12,19 @@ import 'package:playhouse/src/view.dart';
 import 'package:playhouse/src/controller.dart';
 
 class ModuleScreen extends StatefulWidget {
-  const ModuleScreen({Key key, @required this.tab}) : super(key: key);
+  const ModuleScreen({Key? key, required this.tab}) : super(key: key);
   final Tab tab;
 
   @override
   State createState() => _ModuleScreenState();
 }
 
-class _ModuleScreenState extends StateMVC<ModuleScreen> {
-  _ModuleScreenState() : super(ScrapBookController()) {
-    _con = controller;
+class _ModuleScreenState extends StateX<ModuleScreen> {
+  _ModuleScreenState() : super(controller: ScrapBookController()) {
+    _con = controller as ScrapBookController;
   }
-  ScrapBookController _con;
+  late ScrapBookController _con;
 
   @override
-  Widget build(BuildContext context) => const SubmodulesScreen();
+  Widget buildAndroid(BuildContext context) => const SubmodulesScreen();
 }

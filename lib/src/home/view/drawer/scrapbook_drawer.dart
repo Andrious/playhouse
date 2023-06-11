@@ -12,9 +12,9 @@ import 'package:playhouse/src/view.dart';
 import 'package:playhouse/src/controller.dart';
 
 class ScrapBookDrawer extends StatefulWidget {
-  const ScrapBookDrawer({Key key, this.state}) : super(key: key);
+  const ScrapBookDrawer({Key? key, this.state}) : super(key: key);
 
-  final StateMVC state;
+  final StateX? state;
 
   @override
   State createState() => _ScrapBookDrawerState();
@@ -33,59 +33,59 @@ class _ScrapBookDrawerState extends State<ScrapBookDrawer> {
         _DrawerWidget(
           const ModulesList(),
           icon: const Icon(Icons.view_agenda),
-          title: I10n.t('Modules'),
+          title: Text('Modules'.tr),
         ),
         _DrawerWidget(
           const SubmodulesList(),
           icon: const Icon(Icons.view_compact),
-          title: I10n.t('Submodules'),
+          title: Text('Submodules'.tr),
         ),
         _DrawerWidget(
           const TasksList(),
           icon: const Icon(Icons.handyman),
-          title: I10n.t('Tasks'),
+          title: Text('Tasks'.tr),
         ),
         const Divider(),
         _DrawerWidget(
           const UsersList(),
           icon: const Icon(Icons.group),
-          title: I10n.t('Users'),
+          title: Text('Users'.tr),
         ),
         _DrawerWidget(
           const UsersModulesUnlocked(),
           icon: const Icon(Icons.group),
-          title: I10n.t('Users Modules Unlocked'),
+          title: Text('Users Modules Unlocked'.tr),
         ),
         _DrawerWidget(
           const UsersSubmodulesUnlocked(),
           icon: const Icon(Icons.group),
-          title: I10n.t('Users Submodules Unlocked'),
+          title: Text('Users Submodules Unlocked'.tr),
         ),
         _DrawerWidget(
           const UsersTasksUnlocked(),
           icon: const Icon(Icons.group),
-          title: I10n.t('Users Tasks Unlocked'),
+          title: Text('Users Tasks Unlocked'.tr),
         ),
         const Divider(),
         _DrawerWidget(
           const OrganizationsList(),
           icon: const Icon(Icons.business),
-          title: I10n.t('Organizations'),
+          title: Text('Organizations'.tr),
         ),
         _DrawerWidget(
           const OrganizationsModuleList(),
           icon: const Icon(Icons.business_outlined),
-          title: I10n.t('Organizations Module'),
+          title: Text('Organizations Module'.tr),
         ),
         _DrawerWidget(
           const OrganizationsSubmoduleList(),
           icon: const Icon(Icons.business_rounded),
-          title: I10n.t('Organizations Submodule'),
+          title: Text('Organizations Submodule'.tr),
         ),
         _DrawerWidget(
           const OrganizationsTaskList(),
           icon: const Icon(Icons.business_sharp),
-          title: I10n.t('Organizations Task'),
+          title: Text('Organizations Task'.tr),
         ),
         const Divider(),
       ]);
@@ -99,7 +99,7 @@ class _ScrapBookDrawerState extends State<ScrapBookDrawer> {
 }
 
 class LogInLogOut extends StatelessWidget {
-  LogInLogOut({Key key})
+  LogInLogOut({Key? key})
       : _appCon = AppController(),
         //       _auth = SignIn(),
         super(key: key);
@@ -123,7 +123,7 @@ class LogInLogOut extends StatelessWidget {
       leading: Icon(
         icon,
       ),
-      title: I10n.t(title),
+      title: L10n.t(title),
       onTap: () {
         if (signedIn) {
           // _auth.signOut().then((value) {
@@ -145,13 +145,13 @@ class LogInLogOut extends StatelessWidget {
 class _DrawerWidget extends StatelessWidget {
   const _DrawerWidget(
     this.widget, {
-    Key key,
+    Key? key,
     this.icon,
     this.title,
   }) : super(key: key);
 
-  final Icon icon;
-  final Text title;
+  final Icon? icon;
+  final Text? title;
   final Widget widget;
 
   @override
@@ -167,6 +167,6 @@ class _DrawerWidget extends StatelessWidget {
       builder: (BuildContext context) => widget,
       fullscreenDialog: true,
     );
-    await Navigator.of(App.context).push(route);
+    await Navigator.of(App.context!).push(route);
   }
 }

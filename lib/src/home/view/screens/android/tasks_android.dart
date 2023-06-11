@@ -9,7 +9,7 @@ import 'package:playhouse/src/view.dart';
 /// Look to the mixin ScrapbookFields for the actual listing.
 class TasksListAndroid extends ScrapbookListScreen<TasksList, TasksFields>
     with ScrapbookFields {
-  TasksListAndroid() : super(I10n.s('Task'));
+  TasksListAndroid() : super('Task'.tr);
 
   @override
   TasksFields get fields => TasksFields();
@@ -41,11 +41,11 @@ class TasksListAndroid extends ScrapbookListScreen<TasksList, TasksFields>
     VoidCallback onTap,
   ) {
     final module = record['submodule_id'];
-    module.label = 'Submodule Id';
+    module!.label = 'Submodule Id';
     final locked = record['lockedFirst'];
-    locked.label = 'First Locked';
+    locked!.label = 'First Locked';
     final next = record['next_task_id'];
-    next.label = 'Next Task';
+    next!.label = 'Next Task';
     return [
       module.onListTile(tap: onTap),
       locked.onListTile(tap: onTap),
@@ -59,24 +59,24 @@ class TasksListAndroid extends ScrapbookListScreen<TasksList, TasksFields>
     Map<String, FieldWidgets<PlayHouseFields>> record,
   ) {
     final moduleId = record['submodule_id'];
-    moduleId.label = 'Submodule Id';
+    moduleId!.label = 'Submodule Id';
     final next = record['next_task_id'];
     return [
-      record['rowid'].onListTile(enabled: false),
+      record['rowid']!.onListTile(enabled: false),
       moduleId.onListItems(
-          onChanged: (String v) {
+          onChanged: (String? v) {
             con.setState(() {
-              moduleId.value = int.parse(v);
+              moduleId.value = int.parse(v!);
             });
           },
           dropItems: _parentModule(moduleId)),
-      record['name'].textFormField,
-      record['short_description'].textFormField,
-      record['long_description'].textFormField,
-      next.onListItems(
-          onChanged: (String v) {
+      record['name']!.textFormField,
+      record['short_description']!.textFormField,
+      record['long_description']!.textFormField,
+      next!.onListItems(
+          onChanged: (String? v) {
             con.setState(() {
-              moduleId.value = int.parse(v);
+              moduleId.value = int.parse(v!);
             });
           },
           dropItems: _moduleItems(record)),
@@ -89,7 +89,7 @@ class TasksListAndroid extends ScrapbookListScreen<TasksList, TasksFields>
 
   /// List the next task
   List<String> _moduleItems(Map<String, FieldWidgets<PlayHouseFields>> record) {
-    final rowid = record['rowid'].value.toString();
+    final rowid = record['rowid']!.value.toString();
     return fields.table.idList.where((id) => id != rowid).toList();
   }
 

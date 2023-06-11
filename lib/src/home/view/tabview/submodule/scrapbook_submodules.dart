@@ -17,26 +17,26 @@ import 'package:playhouse/src/controller.dart';
 
 /// The Submodules are the Picture Screens.
 class SubmodulesScreen extends StatefulWidget {
-  const SubmodulesScreen({Key key}) : super(key: key);
+  const SubmodulesScreen({Key? key}) : super(key: key);
 
   @override
   State createState() => SubmodulesState();
 }
 
-class SubmodulesState extends StateMVC<SubmodulesScreen>
+class SubmodulesState extends StateX<SubmodulesScreen>
     with TickerProviderStateMixin, StateSet {
-  SubmodulesState() : super(ScrapBookController()) {
-    _con = controller;
+  SubmodulesState() : super(controller:ScrapBookController()) {
+    _con = controller as ScrapBookController;
   }
 
 //  SubmodulesTabBar get tabBar => _sbSubTabBar;
-  SubmodulesTabBar _sbSubTabBar;
+  late SubmodulesTabBar _sbSubTabBar;
 
   // The app's controller
   ScrapBookController get con => _con;
-  ScrapBookController _con;
+  late ScrapBookController _con;
 
-  AnimationController _animationController;
+  late AnimationController _animationController;
   var _panelHeight = 0.0;
 
   @override
@@ -52,7 +52,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
 
     // Is the Task panel up or down.
     final panelUp =
-        Prefs.getBool('${_con.moduleType}${_con.module['name']}_panelUp');
+        Prefs.getBool('${_con.moduleType}${_con.module!['name']}_panelUp');
 
     if (!panelUp) {
       _movePanel();
@@ -81,7 +81,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
   }
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
+  Widget buildAndroid(BuildContext context) => LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         return Stack(
           children: <Widget>[
@@ -107,13 +107,13 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
                   topRight: Radius.circular(30),
                 ),
                 elevation: 12,
-                child: Container(
+                child: SizedBox(
                   height: _panelHeight,
                   child: _SwipeUpDetector(
                     this,
                     child: TabBarView(
                       controller: _sbSubTabBar.subTabController,
-                      children: _sbSubTabBar.children,
+                      children: _sbSubTabBar.children!,
                     ),
                   ),
                 ),
@@ -127,7 +127,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     //
     Widget overlay;
 
-    if (_con.submodule['first_locked'] == 1) {
+    if (_con.submodule!['first_locked'] == 1) {
       // overlay = Positioned.fill(
       //   child: _con.lockImage,
       // );
@@ -166,7 +166,7 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
     _animationController.fling(velocity: isPanelUp ? -1.0 : 1.0);
 
     Prefs.setBool(
-        '${_con.moduleType}${_con.module['name']}_panelUp', isPanelUp);
+        '${_con.moduleType}${_con.module!['name']}_panelUp', isPanelUp);
   }
 
   Animation<RelativeRect> _getPanelAnimation(BoxConstraints constraints) {
@@ -191,10 +191,10 @@ class SubmodulesState extends StateMVC<SubmodulesScreen>
 ///
 ///  * [ScrollPhysics], the base class which defines the API for scrolling
 ///    physics.
-///  * [PageView.physics], which can override the physics used by a page view.
+///  * 'PageView.physics', which can override the physics used by a page view.
 class BigPageScrollPhysics extends ScrollPhysics {
   /// Creates physics for a [PageView].
-  const BigPageScrollPhysics({ScrollPhysics parent, this.controller})
+  const BigPageScrollPhysics({ScrollPhysics? parent, required this.controller})
       : super(parent: parent);
 
 //  final GITabController controller;
@@ -203,7 +203,7 @@ class BigPageScrollPhysics extends ScrollPhysics {
   double get viewportFraction => 2;
 
   @override
-  BigPageScrollPhysics applyTo(ScrollPhysics ancestor) {
+  BigPageScrollPhysics applyTo(ScrollPhysics? ancestor) {
     return BigPageScrollPhysics(
         parent: buildParent(ancestor), controller: controller);
   }
@@ -213,11 +213,11 @@ class BigPageScrollPhysics extends ScrollPhysics {
     if (parent == null) {
       return offset;
     }
-    return parent.applyPhysicsToUserOffset(position, offset);
+    return parent!.applyPhysicsToUserOffset(position, offset);
   }
 
   @override
-  Simulation createBallisticSimulation(
+  Simulation? createBallisticSimulation(
       ScrollMetrics position, double velocity) {
     // If we're out of range and not headed back in range, defer to the parent
     // ballistics, which should put us back in range at a page boundary.
@@ -231,7 +231,7 @@ class BigPageScrollPhysics extends ScrollPhysics {
       final simulation = ScrollSpringSimulation(
           spring, position.pixels, target, velocity,
           tolerance: tolerance);
-      int nextPage;
+      int? nextPage;
       if (velocity < -tolerance.velocity) {
         nextPage = controller.index - 1;
       } else if (velocity > tolerance.velocity) {
@@ -286,8 +286,8 @@ class BigPageScrollPhysics extends ScrollPhysics {
   double _initialPageOffset(ScrollMetrics position) =>
       math.max(0, position.viewportDimension * (viewportFraction - 1) / 2);
 
-  double _getPageFromPixels(double pixels, ScrollMetrics position) {
-    final double actual = math.max(0, pixels - _initialPageOffset(position)) /
+  double _getPageFromPixels(double? pixels, ScrollMetrics position) {
+    final double actual = math.max(0, pixels! - _initialPageOffset(position)) /
         math.max(1.0, position.viewportDimension * viewportFraction);
     final double round = actual.roundToDouble();
     if ((actual - round).abs() < precisionErrorTolerance) {
@@ -303,7 +303,7 @@ class BigPageScrollPhysics extends ScrollPhysics {
 /// Swipe the Task Card panel up and down.
 class _SwipeUpDetector extends GestureDetector {
   //
-  _SwipeUpDetector(SubmodulesState state, {Key key, @required Widget child})
+  _SwipeUpDetector(SubmodulesState state, {Key? key, required Widget child})
       : super(
           key: key,
           onVerticalDragStart: (details) => _start = details.localPosition.dy,
@@ -313,20 +313,21 @@ class _SwipeUpDetector extends GestureDetector {
             final panelUp = state.isPanelUp;
 
             final StatefulWidget screen = state._sbSubTabBar
-                .children[state._sbSubTabBar.subTabController.index];
+                    .children![state._sbSubTabBar.subTabController.index]
+                as StatefulWidget;
 
             /// Swiping up.
             if (_end < _start) {
               if (!panelUp) {
                 state._movePanel();
-                screen?.setState(() {});
+                screen.setState(() {});
               }
 
               /// Swiping down.
             } else if (_end > _start) {
               if (panelUp) {
                 state._movePanel();
-                screen?.setState(() {});
+                screen.setState(() {});
               }
             }
           },

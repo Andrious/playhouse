@@ -28,7 +28,7 @@ class ScrapBookModel {
         organizationsTasks = OrganizationsTaskFields(),
         organizations = OrganizationsFields();
 
-  static ScrapBookModel _this;
+  static ScrapBookModel? _this;
 
   final AppController app;
   final PlayhouseSQLiteDB sqlDB;

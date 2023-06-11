@@ -8,7 +8,7 @@ import 'package:playhouse/src/controller.dart';
 
 class QuestionTask extends TaskCard {
   QuestionTask(Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
-      {Key key})
+      {Key? key})
       : super(
           key: key,
           task: task,
@@ -19,7 +19,7 @@ class QuestionTask extends TaskCard {
 
 class ABCTask extends TaskCard {
   ABCTask(Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
-      {Key key})
+      {Key? key})
       : super(
           key: key,
           task: task,
@@ -30,7 +30,7 @@ class ABCTask extends TaskCard {
 
 class ARTask extends TaskCard {
   ARTask(Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
-      {Key key})
+      {Key? key})
       : super(
           key: key,
           task: task,
@@ -41,7 +41,7 @@ class ARTask extends TaskCard {
 
 class PencilTask extends TaskCard {
   PencilTask(Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
-      {Key key})
+      {Key? key})
       : super(
           key: key,
           task: task,
@@ -54,7 +54,7 @@ class PictureTask extends TaskCard {
   PictureTask(
     Map<String, dynamic> task,
     List<Map<String, dynamic>> userTask, {
-    Key key,
+    Key? key,
     bool pickImage = false,
     bool infoIcon = true,
   }) : super(
@@ -70,7 +70,7 @@ class PictureTask extends TaskCard {
 class MovieCameraTask extends TaskCard {
   MovieCameraTask(
       Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
-      {Key key})
+      {Key? key})
       : super(
           key: key,
           task: task,
@@ -83,8 +83,8 @@ class PickPicture extends PictureTask {
   PickPicture(
     Map<String, dynamic> task,
     List<Map<String, dynamic>> userTask, {
-    @required this.isCompleted,
-    Key key,
+    required this.isCompleted,
+    Key? key,
   }) : super(
           task,
           userTask,
@@ -109,10 +109,10 @@ class PickPicture extends PictureTask {
 
 class TaskCard extends StatefulWidget {
   TaskCard({
-    Key key,
-    @required this.task,
-    @required this.userTask,
-    @required this.name,
+    Key? key,
+    required this.task,
+    required this.userTask,
+    required this.name,
     this.pickImage = false,
     this.infoIcon = true,
   })  : con = ScrapBookController(),
@@ -129,14 +129,14 @@ class TaskCard extends StatefulWidget {
   final PickImage image;
 
   Widget get icon {
-    final _TaskCardsState cardState = state;
-    return cardState?.icon;
+    final _TaskCardsState cardState = state! as _TaskCardsState;
+    return cardState.icon!;
   }
 
-  set icon(Widget image) {
+  set icon(Widget? image) {
     if (image != null) {
-      final _TaskCardsState cardState = state;
-      cardState?.icon = image;
+      final _TaskCardsState cardState = state! as _TaskCardsState;
+      cardState.icon = image;
     }
   }
 
@@ -168,8 +168,8 @@ class TaskCard extends StatefulWidget {
 
 class _TaskCardsState extends State<TaskCard> with StateSet {
   //
-  TaskCard card;
-  Widget icon;
+  late TaskCard card;
+  Widget? icon;
 
   @override
   void initState() {
@@ -201,7 +201,7 @@ class _TaskCardsState extends State<TaskCard> with StateSet {
 
   Future<Widget> _cardContent() async {
     //
-    Widget widget;
+    Widget? widget;
 
     if (card.pickImage) {
       widget = await card.image.getImage();
@@ -273,7 +273,7 @@ class _TaskCardsState extends State<TaskCard> with StateSet {
       widget = Column(children: widgets);
 
       // If all the tasks are locked.
-      if (card.con.submodule['first_locked'] == 1) {
+      if (card.con.submodule!['first_locked'] == 1) {
         //
         widget = Stack(
           children: [
@@ -318,12 +318,12 @@ class _TaskCardsState extends State<TaskCard> with StateSet {
         library: 'app_statefulwidget',
         context: ErrorDescription('While getting ready in FutureBuilder Async'),
       );
-      return App.errorHandler.displayError(details);
+      return App.errorHandler!.displayError(details);
     } else if (snapshot.connectionState == ConnectionState.done) {
       if (snapshot.hasData) {
-        return snapshot.data;
+        return snapshot.data!;
       } else {
-        return icon;
+        return icon!;
       }
     } else {
       Widget widget;

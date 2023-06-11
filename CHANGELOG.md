@@ -1,4 +1,12 @@
 
+## 0.58.0
+June 06, 2023
+ - Update SDK & dependencies
+
+## 0.57.0
+ June 22, 2022
+- Update SDK
+
 ## 0.56.1
  July 28, 2021
 - version 4 database for Module type, Discover

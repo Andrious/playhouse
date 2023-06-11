@@ -9,9 +9,9 @@ import 'package:playhouse/src/controller.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
+abstract class PanelScreenState<T extends StatefulWidget> extends StateX<T>
     with TickerProviderStateMixin, StateSet {
-  PanelScreenState(this.card) : super(card.con) {
+  PanelScreenState(this.card) : super(controller: card.con) {
     // Assign the Controller right away.
     con = card.con;
     // Ensure the Controller is provided the 'current' card.
@@ -20,24 +20,24 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
     con.task = card.task;
 
     panelKey =
-        '${con.moduleType}${con.module['name']}${con.task['name']}_panel';
+        '${con.moduleType}${con.module!['name']}${con.task!['name']}_panel';
   }
   final TaskCard card;
   // A Preference Panel Key
-  String panelKey;
+  late String panelKey;
 
-  ScrapBookController con;
+  late ScrapBookController con;
 
 //  Widget panelScreen;
 
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
-  double maxHeight;
+  late double maxHeight;
 
   var _panelHeight = 0.0;
 
   /// The layout constraints set on the panel;
-  BoxConstraints constraints;
+  late BoxConstraints constraints;
 
   /// Implement widget behind the panel
   Widget buildBackground(BuildContext context);
@@ -82,7 +82,7 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildAndroid(BuildContext context) {
     final panelUp = isPanelUp;
 
     if (panelUp) {
@@ -114,7 +114,7 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
       row = [
         /// Submodule Name
         Text(
-          '${con.task['submodule']}',
+          '${con.task!['submodule']}',
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -154,7 +154,7 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
                   topRight: Radius.circular(30),
                 ),
                 elevation: 12,
-                child: Container(
+                child: SizedBox(
                   height: _panelHeight,
                   child: _SwipeUpDetector(
                     this,
@@ -226,7 +226,7 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateMVC<T>
 /// Swipe the Task Card panel up and down.
 class _SwipeUpDetector extends GestureDetector {
   //
-  _SwipeUpDetector(PanelScreenState state, {Key key, @required Widget child})
+  _SwipeUpDetector(PanelScreenState state, {Key? key, required Widget child})
       : super(
           key: key,
           onVerticalDragStart: (details) => _start = details.localPosition.dy,
@@ -259,7 +259,7 @@ class _SwipeUpDetector extends GestureDetector {
 }
 
 class EmptyPanel extends StatefulWidget {
-  const EmptyPanel({Key key}) : super(key: key);
+  const EmptyPanel({Key? key}) : super(key: key);
   @override
   State createState() => _EmptyPanelState();
 }

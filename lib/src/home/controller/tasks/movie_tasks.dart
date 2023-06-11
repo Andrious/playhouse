@@ -8,7 +8,7 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
-StatefulWidget movieTasks(
+TaskCard movieTasks(
   Map<String, dynamic> task,
   List<Map<String, dynamic>> userTask,
 ) {
@@ -32,7 +32,7 @@ StatefulWidget movieTaskScreens(PanelScreenState penal) {
 
   final con = ScrapBookController();
 
-  final name = con.card.task['name'];
+  final name = con.card!.task['name'];
 
   switch (name) {
     default:

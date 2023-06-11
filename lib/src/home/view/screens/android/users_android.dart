@@ -11,7 +11,7 @@ import 'package:playhouse/src/controller.dart';
 /// Look to the mixin ScrapbookFields for the actual listing.
 class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
     with ScrapbookFields {
-  UsersListAndroid() : super(I10n.s('User'));
+  UsersListAndroid() : super('User'.tr);
 
   @override
   UsersFields get fields => UsersFields();
@@ -43,11 +43,11 @@ class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
     VoidCallback onTap,
   ) {
     final name = record['organization_name'];
-    name.label = 'Organization';
+    name!.label = 'Organization';
     final short = record['organization_short'];
-    short.label = 'Summary';
+    short!.label = 'Summary';
     final long = record['organization_long'];
-    long.label = 'Description';
+    long!.label = 'Description';
     return [
       name.onListTile(tap: onTap),
       short.onListTile(tap: onTap),
@@ -62,16 +62,16 @@ class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
   ) {
     final org = record['organization_id'];
     final widgets = [
-      record['rowid'].onListTile(enabled: false),
-      record['name'].textFormField,
-      record['short_description'].textFormField,
-      record['long_description'].textFormField,
-      record['email_address'].textFormField,
-      record['phone_number'].textFormField,
-      org.onListItems(
-        onChanged: (String v) {
+      record['rowid']!.onListTile(enabled: false),
+      record['name']!.textFormField,
+      record['short_description']!.textFormField,
+      record['long_description']!.textFormField,
+      record['email_address']!.textFormField,
+      record['phone_number']!.textFormField,
+      org!.onListItems(
+        onChanged: (String? v) {
           con.setState(() {
-            org.value = int.parse(v);
+            org.value = int.parse(v!);
           });
         },
         dropItems: _organizations(org),
@@ -81,9 +81,9 @@ class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
     /// There may be additional 'organization' fields.
     if (record['organization_name'] != null) {
       widgets.addAll([
-        record['organization_name'].onListTile(enabled: false),
-        record['organization_short'].onListTile(enabled: false),
-        record['organization_long'].onListTile(enabled: false),
+        record['organization_name']!.onListTile(enabled: false),
+        record['organization_short']!.onListTile(enabled: false),
+        record['organization_long']!.onListTile(enabled: false),
       ]);
     }
     return widgets;
@@ -126,9 +126,9 @@ class TasksUnlocked extends Unlocked<UsersTasksUnlocked> {
   PlayHouseFields get fields => UserTasksUnlockedFields();
 }
 
-abstract class Unlocked<T extends StatefulWidget> extends StateMVC<T> {
-  Unlocked({this.title = 'Unlocked', this.con}) : super(con);
-  ControllerMVC con;
+abstract class Unlocked<T extends StatefulWidget> extends StateX<T> {
+  Unlocked({this.title = 'Unlocked', this.con}) : super(controller: con);
+  StateXController? con;
   String title;
 
   PlayHouseFields get fields;
@@ -136,17 +136,17 @@ abstract class Unlocked<T extends StatefulWidget> extends StateMVC<T> {
   @override
   void initState() {
     super.initState();
-    _list = fields.items.map((e) => null).toList();
+    _list = fields.items.map((e) => null).cast<Widget>().toList();
     if (_list.first == null) {
       _list = [Container()];
     }
   }
 
   /// List of widgets displayed.
-  List<Widget> _list;
+  late List<Widget> _list;
 
   @override
-  Widget build(BuildContext context) => Theme(
+  Widget buildAndroid(BuildContext context) => Theme(
         data: ThemeData.light(),
         child: Scaffold(
           appBar: AppBar(

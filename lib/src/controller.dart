@@ -3,10 +3,7 @@
 // found in the LICENSE file.
 
 ///
-export 'package:mvc_application/controller.dart' hide AppController, runApp;
-
-/// The Controller to 'set up' the app at start up.
-export 'package:playhouse/src/app/controller/setup_app_controller.dart';
+export 'package:fluttery_framework/controller.dart' hide AppController, runApp;
 
 /// The Controller for the App itself
 export 'package:playhouse/src/app/controller/app_controller.dart';

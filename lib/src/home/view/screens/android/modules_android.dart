@@ -9,7 +9,7 @@ import 'package:playhouse/src/view.dart';
 /// Look to the mixin ScrapbookFields for the actual listing.
 class ModulesListAndroid extends ScrapbookListScreen<ModulesList, ModuleFields>
     with ScrapbookFields {
-  ModulesListAndroid() : super(I10n.s('Module'));
+  ModulesListAndroid() : super(L10n.s('Module'));
 
   @override
   ModuleFields get fields => ModuleFields();
@@ -40,11 +40,11 @@ class ModulesListAndroid extends ScrapbookListScreen<ModulesList, ModuleFields>
     VoidCallback onTap,
   ) {
     final type = record['module_type'];
-    type.label = 'Type';
+    type!.label = 'Type';
     final locked = record['first_locked'];
-    locked.label = 'First Locked';
+    locked!.label = 'First Locked';
     final next = record['next_module_id'];
-    next.label = 'Next Module';
+    next!.label = 'Next Module';
     return [
       type.onListTile(tap: onTap),
       locked.onListTile(tap: onTap),
@@ -58,17 +58,17 @@ class ModulesListAndroid extends ScrapbookListScreen<ModulesList, ModuleFields>
     Map<String, FieldWidgets<PlayHouseFields>> record,
   ) {
     return [
-      record['rowid'].onListTile(enabled: false),
-      record['module_type'].onListItems(dropItems: ['Design', 'Build']),
-      record['name'].textFormField,
-      record['short_description'].textFormField,
-      record['long_description'].textFormField,
-      record['next_module_id'].onListItems(dropItems: _moduleItems(record))
+      record['rowid']!.onListTile(enabled: false),
+      record['module_type']!.onListItems(dropItems: ['Design', 'Build']),
+      record['name']!.textFormField,
+      record['short_description']!.textFormField,
+      record['long_description']!.textFormField,
+      record['next_module_id']!.onListItems(dropItems: _moduleItems(record))
     ];
   }
 
   List<String> _moduleItems(Map<String, FieldWidgets<PlayHouseFields>> record) {
-    final rowid = record['rowid'].value.toString();
+    final rowid = record['rowid']!.value.toString();
     return fields.table.idList.where((id) => id != rowid).toList();
   }
 

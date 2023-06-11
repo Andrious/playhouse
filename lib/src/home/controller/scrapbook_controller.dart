@@ -8,12 +8,14 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
+import 'package:fluttery_framework/controller.dart' as c;
+
 /// The Controller for the app.
-class ScrapBookController extends ControllerMVC {
-  factory ScrapBookController([StateMVC state]) =>
+class ScrapBookController extends c.AppController {
+  factory ScrapBookController([StateX? state]) =>
       _this ??= ScrapBookController._(state);
 
-  ScrapBookController._([StateMVC state])
+  ScrapBookController._([StateX? state])
       : model = ScrapBookModel(),
         lockImage = Opacity(
           opacity: 0.6,
@@ -41,42 +43,42 @@ class ScrapBookController extends ControllerMVC {
     _completer = const CompleteIndicator();
   }
 
-  static ScrapBookController _this;
+  static ScrapBookController? _this;
 
   final ScrapBookModel model;
 
   final Widget lockImage;
 
-  String _inModuleTypeScreen;
+  late String _inModuleTypeScreen;
 
   // The current user
-  int userId;
+  late int userId;
 
   // The current module being viewed.
-  Map<String, dynamic> module;
+  Map<String, dynamic>? module;
 
   // The current submodule being viewed.
-  Map<String, dynamic> submodule;
+  late Map<String, dynamic>? submodule;
 
   // The current tasks being viewed.
-  List<Map<String, dynamic>> tasks;
+  late List<Map<String, dynamic>> tasks;
 
   // The current task being viewed.
-  Map<String, dynamic> task;
+  late Map<String, dynamic>? task;
 
   // The tasks currently completed.
-  List<Map<String, dynamic>> savedTask;
+  late List<Map<String, dynamic>> savedTask;
 
   double percentComplete = 0;
 
   // The list of task cards.
-  List<Widget> _taskCards;
+  late List<Widget> _taskCards;
 
   // The current task card.
-  TaskCard card;
+  late TaskCard? card;
 
   /// A graphical indication of Task completion.
-  CompleteIndicator _completer;
+  late CompleteIndicator _completer;
 
   int get initialIndex => Prefs.getInt('ModuleTypeIndex');
   set initialIndex(int index) => Prefs.setInt('ModuleTypeIndex', index);
@@ -87,11 +89,11 @@ class ScrapBookController extends ControllerMVC {
 
   String moduleType = '';
 
-  Map<String, State> subModuleStates = {};
+  Map<String, State>? subModuleStates = {};
 
   @override
   Future<bool> initAsync() async {
-    if (App.inDebugger) {
+    if (App.inDebugMode) {
       final test = DatabaseTest();
       //
       // if (!test.createDB()) {}
@@ -119,10 +121,10 @@ class ScrapBookController extends ControllerMVC {
   }
 
   List<Map<String, dynamic>> get modules => _modules;
-  List<Map<String, dynamic>> _modules;
+  late List<Map<String, dynamic>> _modules;
 
   // Align to the right data depending on the 'type' of Modules.
-  void initTypeOfModules([int index]) {
+  void initTypeOfModules([int? index]) {
     //
     index ??= initialIndex;
 
@@ -133,7 +135,7 @@ class ScrapBookController extends ControllerMVC {
     initModule(initModuleIndex);
   }
 
-  List<Map<String, dynamic>> initModules(String moduleType) {
+  List<Map<String, dynamic>> initModules(String? moduleType) {
     //
     final modules = model.modules.items;
 
@@ -178,7 +180,7 @@ class ScrapBookController extends ControllerMVC {
     initTasks(subs[0]);
   }
 
-  Map<String, dynamic> setModule(int index) {
+  Map<String, dynamic>? setModule(int index) {
     //
     final recs = modules;
 
@@ -192,24 +194,34 @@ class ScrapBookController extends ControllerMVC {
     }
     // Explicitly assign the 'first' Submodule State object to the Controller.
     // At times, it's necessary as the Tabs don't call State object's setState()
-    addState(subModuleStates[moduleType + module['name']]);
+//      addState(subModuleStates![moduleType + module!['name']] as StateMVC);
+    State? state;
+    if (subModuleStates == null) {
+      state = null;
+    } else {
+      state = subModuleStates![moduleType + module!['name']];
+    }
+
+    if (state != null) {
+      addState(state as StateX);
+    }
 
     return module;
   }
 
   List<Map<String, dynamic>> get submodules => _submodules;
-  List<Map<String, dynamic>> _submodules;
+  late List<Map<String, dynamic>> _submodules;
 
   // initModules() must be called first
   List<Map<String, dynamic>> initSubmodules() {
     //
-    final id = module['rowid'];
+    final id = module!['rowid'];
 
     _submodules =
         model.submodules.items.where((rec) => rec['module_id'] == id).toList();
 
     // Propagate the lock if the parent is currently locked.
-    if (module['first_locked'] == 1) {
+    if (module!['first_locked'] == 1) {
       for (final submodule in _submodules) {
         submodule['first_locked'] = 1;
       }
@@ -218,7 +230,7 @@ class ScrapBookController extends ControllerMVC {
   }
 
   // initSubmodules() must be called first
-  List<Map<String, dynamic>> initTasks(Map<String, dynamic> submodule) {
+  List<Map<String, dynamic>> initTasks(Map<String, dynamic>? submodule) {
     //
     percentComplete = 0;
 
@@ -293,10 +305,10 @@ class ScrapBookController extends ControllerMVC {
         .toList();
   }
 
-  TaskCard addCard(
+  TaskCard? addCard(
       Map<String, dynamic> task, List<Map<String, dynamic>> savedTask) {
     //
-    TaskCard card;
+    TaskCard? card;
 
     final index = [
       'question',
@@ -338,7 +350,7 @@ class ScrapBookController extends ControllerMVC {
     // If not a Text widget
     if (tab.text == null) {
       if (tab.child is Text) {
-        label = (tab.child as Text).data;
+        label = (tab.child as Text).data!;
       } else {
         try {
           label = (tab.child as dynamic).data;
@@ -347,7 +359,7 @@ class ScrapBookController extends ControllerMVC {
         }
       }
     } else {
-      label = tab.text;
+      label = tab.text!;
     }
     return label;
   }
@@ -378,7 +390,7 @@ class ScrapBookController extends ControllerMVC {
       builder: (BuildContext context) => Material(child: widget),
       fullscreenDialog: true,
     );
-    await Navigator.of(App.context).push(route);
+    await Navigator.of(App.context!).push(route);
   }
 
   Future<void> infoDialogue() async {
@@ -398,12 +410,12 @@ class ScrapBookController extends ControllerMVC {
       actions: [
         SimpleDialogOption(
           onPressed: () {
-            Navigator.pop(App.context);
+            Navigator.pop(App.context!);
           },
           child: const Text('Continue'),
         )
       ],
-      context: App.context,
+      // context: App.context,
     ).show();
   }
 
@@ -414,7 +426,7 @@ class ScrapBookController extends ControllerMVC {
 
   @override
   void dispose() {
-    subModuleStates.clear();
+    subModuleStates?.clear();
     subModuleStates = null;
     super.dispose();
   }

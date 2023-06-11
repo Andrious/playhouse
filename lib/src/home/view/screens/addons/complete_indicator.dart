@@ -9,12 +9,12 @@ import 'package:playhouse/src/controller.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class CompleteIndicator extends StatefulWidget {
-  const CompleteIndicator({Key key}) : super(key: key);
+  const CompleteIndicator({Key? key}) : super(key: key);
 
   @override
   State createState() => _CompleteIndicatorState();
 
-  void setCompletion([TabController tab]) {
+  void setCompletion([TabController? tab]) {
     if (tab != null && tab.indexIsChanging) {
       return;
     }
@@ -30,7 +30,7 @@ class _CompleteIndicatorState extends State<CompleteIndicator> with StateSet {
   }
 
   // The app's controller
-  ScrapBookController con;
+  late ScrapBookController con;
 
   @override
   Widget build(BuildContext context) {

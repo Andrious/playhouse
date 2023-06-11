@@ -15,61 +15,96 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.56.1
+version: 0.58.0
 
 environment:
-  sdk: ">=2.10.0 <3.0.0"
+  sdk: '>=2.19.0 <4.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
 
-  # https://pub.dev/packages/flutter_svg/
-  flutter_svg: ^0.22.0
-
-  # https://pub.dartlang.org/packages/uuid
-  uuid: ^3.0.0
-
-  # https://pub.dev/packages/image/
-  image: ^3.0.0
-
-  # https://pub.dev/packages/flutter_sound/
-  flutter_sound: ^8.0.0
-
-  # https://pub.dev/packages/flutter_inappwebview/
-  # https://inappwebview.dev/docs/
-  flutter_inappwebview: ^5.0.0
-
-  # https://pub.dev/packages/font_awesome_flutter/
-  font_awesome_flutter: ^9.0.0
-
-##  # https://pub.dev/packages/flutter_unity_widget/
-##  flutter_unity_widget: ^4.0.0
+  # https://pub.dev/packages/auto_size_text/
+  auto_size_text: ^3.0.0
 
   # https://pub.dev/packages/crop/
   crop: ^0.5.0
 
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.0
+
+  # https://pub.dev/packages/dbutils
+  dbutils: ^6.0.0
+  #    path: ../../packages/dbutils
+
+  # https://pub.dev/packages/dio/
+  dio: ^4.0.0
+
+  # https://pub.dev/packages/firebase_crashlytics/
+  firebase_crashlytics: ^3.3.0
+
+  flutter:
+    sdk: flutter
+
+  # https://pub.dev/packages/font_awesome_flutter/
+  font_awesome_flutter: ^10.4.0
+
+  # https://pub.dev/packages/flutter_svg/
+  flutter_svg: ^2.0.0 #^0.22.0
+
+  # https://pub.dev/packages/flutter_sound/
+  flutter_sound: ^9.2.0 #^8.0.0
+
+  # https://pub.dev/packages/flutter_unity_widget/
+  flutter_unity_widget: ^2022.2.0
+
+  # https://pub.dev/packages/fluttery_framework/
+  fluttery_framework: #^2.0.0 # 1.9.0
+    path: ../../packages/fluttery_framework
+
+  # https://pub.dev/packages/google_fonts/
+  google_fonts: ^4.0.0
+
+  # https://pub.dev/packages/images_picker/
+  images_picker: ^1.2.0
+
+  # https://pub.dev/packages/image/
+  image: ^4.0.0
+
+  # https://pub.dev/packages/page_view_indicators
+  page_view_indicators: ^2.0.0
+
+  # https://pub.dev/packages/percent_indicator
+  percent_indicator: ^4.2.0
+
+  # https://pub.dev/packages/permission_handler/
+  permission_handler: 10.3.0 #8.1.6
+
+  # https://pub.dev/packages/state_set/
+  state_set: ^3.6.0
+  #    path: ../../packages/state_set
+
+  # https://pub.dartlang.org/packages/uuid
+  uuid: ^3.0.0
+
+#  # https://pub.dev/packages/flutter_inappwebview/
+#  # https://inappwebview.dev/docs/
+#  flutter_inappwebview: #^5.0.0
+
+  # https://pub:dev/packages/webview_flutter_plus/
+#  webview_flutter_plus: 0.3.0+2
+
 #  # https://pub.dev/packages/image_cropper
 #  image_cropper: ^1.0.0
 
-  # https://pub.dev/packages/mvc_application/
-  mvc_application: ^7.0.0
-#    path: ../../packages/mvc_application
-
-# https://pub.dev/packages/firebase_crashlytics/
-  firebase_crashlytics: ^2.0.0
+#  # https://pub.dev/packages/mvc_application/
+#  mvc_application: ^8.0.0
+##    path: ../../packages/mvc_application
 
 # https://pub.dev/packages/firebase_auth/
 #  firebase_auth: ^1.0.0
 #  flutter_signin_button: ^2.0.0
 #  google_sign_in: ^5.0.0
 
-# https://pub.dev/packages/dbutils
-  dbutils: ^3.0.0
-#    path: ../../packages/dbutils
-
-# https://pub.dev/packages/auto_size_text/
-  auto_size_text: ^2.0.0
 
 # https://pub.dev/packages/cached_network_image/
 #  cached_network_image: ^3.0.0
@@ -86,15 +121,8 @@ dependencies:
 
 #  video_player: ^2.0.0
 
-#
-#  dio: ^2.0.0
 
-# https://pub.dev/packages/google_fonts/
-  google_fonts: ^2.0.0
 
-#  # The following adds the Cupertino Icons font to your application.
-#  # Use with the CupertinoIcons class for iOS style icons.
-#  cupertino_icons: ^1.0.0
 
   # https://pub.dev/packages/remote_config
 #  remote_config: ^1.0.0
@@ -102,31 +130,23 @@ dependencies:
 # https://pub.dev/packages/image_picker/
 #  image_picker: ^0.8.0
 
-# https://pub.dev/packages/images_picker/
-  images_picker: ^1.0.0
 
   # https://pub.flutter-io.cn/packages/image_size_getter/
 #  image_size_getter: ^1.0.0
 
-  # https://pub.dev/packages/state_set/
-  state_set: ^3.0.0
-#    path: ../../packages/state_set
-
-  # https://pub.dev/packages/page_view_indicators
-  page_view_indicators: ^2.0.0
-
-  # https://pub.dev/packages/percent_indicator
-  percent_indicator: ^3.0.0
-
-  # https://pub.dev/packages/permission_handler/
-  permission_handler: ^8.0.0
+dependency_overrides:
+  connectivity_plus: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # https://pub.dev/packages/pedantic
-  pedantic: ^1.0.0
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: #^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -144,6 +164,17 @@ flutter:
      - assets/i10n/i10n.csv
 
      - assets/images/submodules/river_bend02.jpg
+     - assets/images/submodules/construction_site02.jpg
+     - assets/images/submodules/warehouse02.jpg
+     - assets/images/submodules/city_night02.jpg
+     - assets/images/submodules/church_garbagetruck02.jpg
+     - assets/images/submodules/riverbrook_pinktree02.jpg
+     - assets/images/submodules/street_intersection02.jpg
+     - assets/images/submodules/desert_housing02.jpg
+     - assets/images/submodules/winter_cabin02.jpg
+     - assets/images/submodules/city_park02.jpg
+     - assets/images/submodules/country_trail02.jpg
+     - assets/images/submodules/country_waterfall02.jpg
 
      - assets/images/submodules/lock.png
      - assets/images/submodules/spirit_of_place02.jpg
@@ -197,18 +228,18 @@ flutter:
      - assets/images/submodules/Discover_Site Selection_Wind _ Weather 01.jpg
      - assets/images/submodules/Discover_Site Selection_Wind _ Weather 02.jpg
 
-     - assets/images/river_bend02.jpg
-     - assets/images/construction_site02.jpg
-     - assets/images/warehouse02.jpg
-     - assets/images/city_night02.jpg
-     - assets/images/church_garbagetruck02.jpg
-     - assets/images/riverbrook_pinktree02.jpg
-     - assets/images/street_intersection02.jpg
-     - assets/images/desert_housing02.jpg
-     - assets/images/winter_cabin02.jpg
-     - assets/images/city_park02.jpg
-     - assets/images/country_trail02.jpg
-     - assets/images/country_waterfall02.jpg
+#     - assets/images/river_bend02.jpg
+#     - assets/images/construction_site02.jpg
+#     - assets/images/warehouse02.jpg
+#     - assets/images/city_night02.jpg
+#     - assets/images/church_garbagetruck02.jpg
+#     - assets/images/riverbrook_pinktree02.jpg
+#     - assets/images/street_intersection02.jpg
+#     - assets/images/desert_housing02.jpg
+#     - assets/images/winter_cabin02.jpg
+#     - assets/images/city_park02.jpg
+#     - assets/images/country_trail02.jpg
+#     - assets/images/country_waterfall02.jpg
 
      - assets/images/tasks/info.jpg
      - assets/images/tasks/check_mark.jpg

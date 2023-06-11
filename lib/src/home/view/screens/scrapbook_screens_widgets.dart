@@ -6,8 +6,6 @@ import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/view.dart';
 
-import 'package:playhouse/src/controller.dart';
-
 mixin ScrapbookFields implements UseWhichWidgets {
   //
   List<Widget> columnWidgets(
@@ -15,8 +13,8 @@ mixin ScrapbookFields implements UseWhichWidgets {
     //
     final List<Widget> _fieldWidgets = [];
 
-    if (fldWidget['rowid'] != null && fldWidget['rowid'].value != null) {
-      final value = fldWidget['rowid'].value;
+    if (fldWidget['rowid'] != null && fldWidget['rowid']!.value != null) {
+      final value = fldWidget['rowid']!.value;
       String text;
       if (value == null) {
         text = '';
@@ -27,7 +25,7 @@ mixin ScrapbookFields implements UseWhichWidgets {
       } else {
         text = value.toString().trim();
       }
-      _fieldWidgets.add(_title(fldWidget['rowid'].label));
+      _fieldWidgets.add(_title(fldWidget['rowid']!.label!));
       _fieldWidgets.add(
         Flexible(
           child: Text(text, style: const TextStyle(fontSize: 14)),
@@ -35,107 +33,107 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
     }
 
-    if (fldWidget['name'] != null && fldWidget['name'].value != null) {
-      _fieldWidgets.add(_title(fldWidget['name'].label));
+    if (fldWidget['name'] != null && fldWidget['name']!.value != null) {
+      _fieldWidgets.add(_title(fldWidget['name']!.label!));
       _fieldWidgets.add(
         Flexible(
           flex: 2,
-          child: Text(fldWidget['name'].value,
+          child: Text(fldWidget['name']!.value,
               style: const TextStyle(fontSize: 14)),
         ),
       );
     }
 
     if (fldWidget['short_description'] != null &&
-        fldWidget['short_description'].value != null) {
-      _fieldWidgets.add(_title(fldWidget['short_description'].label));
+        fldWidget['short_description']!.value != null) {
+      _fieldWidgets.add(_title(fldWidget['short_description']!.label!));
       _fieldWidgets.add(
         Flexible(
           flex: 3,
-          child: Text(fldWidget['short_description'].value,
+          child: Text(fldWidget['short_description']!.value,
               style: const TextStyle(fontSize: 14)),
         ),
       );
-      _fieldWidgets.add(_title(fldWidget['long_description'].label));
+      _fieldWidgets.add(_title(fldWidget['long_description']!.label!));
       _fieldWidgets.add(Flexible(
         flex: 4,
-        child: Text(fldWidget['long_description'].value,
+        child: Text(fldWidget['long_description']!.value,
             style: const TextStyle(fontSize: 14)),
       ));
     }
 
     if (useKeyArt &&
         fldWidget['key_art'] != null &&
-        fldWidget['key_art'].value != null) {
+        fldWidget['key_art']!.value != null) {
       _fieldWidgets.add(
         Flexible(
-          child: Text(fldWidget['key_art'].value,
+          child: Text(fldWidget['key_art']!.value,
               style: const TextStyle(fontSize: 14)),
         ),
       );
     }
 
     if (fldWidget['time_stamp'] != null &&
-        fldWidget['time_stamp'].value != null) {
-      _fieldWidgets.add(_title(fldWidget['time_stamp'].label));
+        fldWidget['time_stamp']!.value != null) {
+      _fieldWidgets.add(_title(fldWidget['time_stamp']!.label!));
       _fieldWidgets.add(
         Flexible(
-          child: Text(fldWidget['time_stamp'].value.toString(),
+          child: Text(fldWidget['time_stamp']!.value.toString(),
               style: const TextStyle(fontSize: 14)),
         ),
       );
     }
 
     if (fldWidget['email_address'] != null &&
-        fldWidget['email_address'].value != null) {
-      _fieldWidgets.add(_title(fldWidget['email_address'].label));
+        fldWidget['email_address']!.value != null) {
+      _fieldWidgets.add(_title(fldWidget['email_address']!.label!));
       _fieldWidgets.add(
         Flexible(
-          child: Text(fldWidget['email_address'].value.toString(),
+          child: Text(fldWidget['email_address']!.value.toString(),
               style: const TextStyle(fontSize: 14)),
         ),
       );
     }
 
     if (fldWidget['phone_number'] != null &&
-        fldWidget['phone_number'].value != null) {
-      _fieldWidgets.add(_title(fldWidget['phone_number'].label));
+        fldWidget['phone_number']!.value != null) {
+      _fieldWidgets.add(_title(fldWidget['phone_number']!.label!));
       _fieldWidgets.add(
         Flexible(
-          child: Text(fldWidget['phone_number'].value.toString(),
+          child: Text(fldWidget['phone_number']!.value.toString(),
               style: const TextStyle(fontSize: 14)),
         ),
       );
     }
 
     if (fldWidget['organization_id'] != null &&
-        fldWidget['organization_id'].value != null) {
-      _fieldWidgets.add(_title(fldWidget['organization_id'].label));
+        fldWidget['organization_id']!.value != null) {
+      _fieldWidgets.add(_title(fldWidget['organization_id']!.label!));
       _fieldWidgets.add(
         Flexible(
-          child: Text(fldWidget['organization_id'].value.toString(),
+          child: Text(fldWidget['organization_id']!.value.toString(),
               style: const TextStyle(fontSize: 14)),
         ),
       );
     }
 
     if (fldWidget['module_id'] != null &&
-        fldWidget['module_id'].value != null) {
-      _fieldWidgets.add(_title(fldWidget['module_id'].label));
+        fldWidget['module_id']!.value != null) {
+      _fieldWidgets.add(_title(fldWidget['module_id']!.label!));
       _fieldWidgets.add(
         Flexible(
-          child: Text(fldWidget['module_id'].value.toString(),
+          child: Text(fldWidget['module_id']!.value.toString(),
               style: const TextStyle(fontSize: 14)),
         ),
       );
     }
 
     if (fldWidget['next_module_id'] != null &&
-        fldWidget['next_module_id'].value != null) {
-      _fieldWidgets.add(_title(fldWidget['next_module_id'].label));
+        fldWidget['next_module_id']!.value != null) {
+      _fieldWidgets.add(_title(fldWidget['next_module_id']!.label!));
       _fieldWidgets.add(
         Flexible(
-          child: Text(fldWidget['next_module_id'].value.toString(),
+          child: Text(fldWidget['next_module_id']!.value.toString(),
               style: const TextStyle(fontSize: 14)),
         ),
       );
@@ -155,14 +153,14 @@ mixin ScrapbookFields implements UseWhichWidgets {
 }
 
 class UseWhichWidgets {
-  bool useModuleType;
-  bool useLocked;
+  late bool useModuleType;
+  late bool useLocked;
 
-  bool useKeyArt;
+  late bool useKeyArt;
 
-  bool useCompleted;
-  bool useDeleted;
+  late bool useCompleted;
+  late bool useDeleted;
 
-  bool useLockedFirst;
-  bool useNextId;
+  late bool useLockedFirst;
+  late bool useNextId;
 }

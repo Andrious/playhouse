@@ -17,7 +17,7 @@ class FirebaseUser with FirebaseOperations {
   FirebaseUser._() {
     _table = FireStoreCollection('users');
   }
-  static FirebaseUser _this;
+  static FirebaseUser? _this;
 
   @override
   Future<bool> initAsync() async {
@@ -28,9 +28,9 @@ class FirebaseUser with FirebaseOperations {
     return init;
   }
 
-  CollectionReference _anonymousUser;
+  CollectionReference? _anonymousUser;
   DocumentReference get devices => UserDevices()._reference;
-  CollectionReference _anonymousDeviceRef;
+  CollectionReference? _anonymousDeviceRef;
 
   void removeAnonymous() {
     // if (_anonymousUser == null) {
@@ -82,7 +82,7 @@ class UserDevices with FirebaseOperations {
   UserDevices._() {
     _table = FireStoreCollection('devices');
   }
-  static UserDevices _this;
+  static UserDevices? _this;
 
   // Map<String, dynamic> _addUserData() {
   //   //
@@ -97,10 +97,10 @@ class UserDevices with FirebaseOperations {
 
 mixin FirebaseOperations {
   //
-  FireStoreCollection _table;
+  late FireStoreCollection _table;
   final appCon = AppController();
-  DocumentReference _reference;
-  Map<String, dynamic> _data;
+  late DocumentReference _reference;
+  late Map<String, dynamic> _data;
 
   Future<bool> initAsync() async {
     bool init;
@@ -151,7 +151,7 @@ mixin FirebaseOperations {
   /// Update or insert data by the specified reference.
   Future<bool> updateRef(DocumentReference ref, Map<String, dynamic> data,
       {bool insert = false}) async {
-    bool update;
+    bool update = false;
 
     final DocumentSnapshot snapshot = await ref.get();
 

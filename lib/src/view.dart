@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 /// MVC framework
-export 'package:mvc_application/view.dart' hide AppMenu, runApp;
+export 'package:fluttery_framework/view.dart' hide AppMenu; //, runApp;
 
 /// https://pub.dev/packages/cached_network_image/
 //export 'package:cached_network_image/cached_network_image.dart';
@@ -36,9 +36,6 @@ export 'package:playhouse/src/home/view/scrapbook_main.dart';
 
 /// Scrapbook Drawer
 export 'package:playhouse/src/home/view/drawer/scrapbook_drawer.dart';
-
-/// Grey & Ivy TabBar
-export 'package:playhouse/src/home/view/tabview/tabbar/gi_tabbar.dart';
 
 /// Scrapbook Submodules screen
 export 'package:playhouse/src/home/view/tabview/submodule/scrapbook_submodules.dart';

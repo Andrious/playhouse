@@ -12,7 +12,7 @@ import 'package:playhouse/src/view.dart'
         BuildContext,
         EdgeInsets,
         FlutterLogo,
-        I10n,
+        L10n,
         Icon,
         Icons,
         Padding,
@@ -31,14 +31,14 @@ import 'package:playhouse/src/view.dart'
 
 class Settings {
   //
-  static bool get(String setting) {
+  static bool get(String? setting) {
     if (setting == null || setting.trim().isEmpty) {
       return false;
     }
     return Prefs.getBool(setting, false);
   }
 
-  static Future<bool> set(String setting, {bool on}) {
+  static Future<bool> set(String? setting, {bool? on}) {
     if (setting == null || setting.trim().isEmpty) {
       return Future.value(false);
     }
@@ -49,7 +49,7 @@ class Settings {
     return Prefs.getBool('order_of_items', false);
   }
 
-  static Future<bool> setOrder({bool on}) {
+  static Future<bool> setOrder({bool? on}) {
     return Prefs.setBool('order_of_items', on);
   }
 
@@ -57,12 +57,12 @@ class Settings {
     return Prefs.getBool('left_handed', false);
   }
 
-  static Future<bool> setLeftHanded({bool on}) {
+  static Future<bool> setLeftHanded({bool? on}) {
     return Prefs.setBool('left_handed', on);
   }
 
   static StatelessWidget tapText(String text, VoidCallback onTap,
-      {TextStyle style}) {
+      {TextStyle? style}) {
     return AppSettings.tapText(text, onTap, style: style);
   }
 
@@ -84,9 +84,9 @@ class Settings {
   static void showAboutDialog(BuildContext context) {
     //
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.bodyText1;
+    final TextStyle aboutTextStyle = themeData.textTheme.bodyText1!;
     final TextStyle linkStyle =
-        themeData.textTheme.bodyText1.copyWith(color: themeData.accentColor);
+        aboutTextStyle.copyWith(color: themeData.colorScheme.secondary);
 
     AppSettings.showAbout(
       context: context,
@@ -101,12 +101,12 @@ class Settings {
               children: <TextSpan>[
                 TextSpan(
                     style: aboutTextStyle,
-                    text: I10n.s(
+                    text: L10n.s(
                         '''This project is at its early-stage demonstrating the use of Augmented Reality (AR) technologies to teach, facilitate, and assist in Architectural pursuits.                         All on multiple platforms from a single codebase.''')),
                 TextSpan(
                   style: aboutTextStyle,
                   text:
-                      '\n\n${I10n.s('The source code is available on Github:')}',
+                      '\n\n${L10n.s('The source code is available on Github:')}',
                 ),
                 AppSettings.linkTextSpan(
                   style: linkStyle,
@@ -123,9 +123,9 @@ class Settings {
 
   static List<Widget> aboutBoxChildren(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.bodyText1;
+    final TextStyle aboutTextStyle = themeData.textTheme.bodyText1!;
     final TextStyle linkStyle =
-        themeData.textTheme.bodyText1.copyWith(color: themeData.accentColor);
+        aboutTextStyle.copyWith(color: themeData.colorScheme.secondary);
     return [
       Padding(
         padding: const EdgeInsets.only(top: 24),

@@ -3,9 +3,18 @@
 // found in the LICENSE file.
 
 import 'package:flutter/foundation.dart' show FlutterExceptionHandler;
+
 import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
+
 import 'package:firebase_core/firebase_core.dart' as f;
+
+import 'package:flutter/foundation.dart'
+    show LicenseEntryWithLineBreaks, LicenseRegistry;
+
+import 'package:flutter/services.dart' show rootBundle;
+
 //import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
+
 import 'package:firebase_crashlytics/firebase_crashlytics.dart'
     show FirebaseCrashlytics;
 
@@ -13,7 +22,7 @@ import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/view.dart';
 
-import 'package:mvc_application/controller.dart' as c;
+import 'package:fluttery_framework/controller.dart' as c;
 
 import 'package:playhouse/src/controller.dart' show SignIn;
 
@@ -21,12 +30,12 @@ class AppController extends c.AppController {
   factory AppController() => _this ??= AppController._();
   AppController._();
 //  : _auth = SignIn();
-  static AppController _this;
+  static AppController? _this;
 
 //  final SignIn _auth;
 
   @override
-  Future<bool> initAsync([BuildContext context]) async {
+  Future<bool> initAsync([BuildContext? context]) async {
     // c.WidgetsFlutterBinding.ensureInitialized();
     // //todo: Comment this out to test the error handling.
     // await f.Firebase.initializeApp();
@@ -37,12 +46,44 @@ class AppController extends c.AppController {
 
 //    final bool init = await _auth.signIn();
 
-    const bool init = true;
+    final init = await _setErrorHandler();
     return init;
   }
 
+  /// Define the error handling
+  Future<bool> _setErrorHandler() async {
+    /// Incorporate FirebaseCrashlytics into the app.
+    // Allow for FirebaseCrashlytics.instance
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Allow for FirebaseCrashlytics.instance
+    await f.Firebase.initializeApp();
+
+    // Supply Firebase Crashlytics
+    final crash = FirebaseCrashlytics.instance;
+
+    final set = AppErrorHandler.set(
+        handler: crash.recordFlutterError, report: crash.recordError);
+
+    // If true, then crash reporting data is sent to Firebase.
+    await crash.setCrashlyticsCollectionEnabled(!App.inDebugger);
+
+    return true;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    LicenseRegistry.addLicense(() async* {
+      var licence = await rootBundle.loadString('assets/google_fonts/OFL.txt');
+      yield LicenseEntryWithLineBreaks(['google_fonts'], licence);
+      licence = await rootBundle.loadString('assets/google_fonts/UFL.txt');
+      yield LicenseEntryWithLineBreaks(['google_fonts'], licence);
+    });
+  }
+
   /// Return the 'last' context used in this app.
-  BuildContext get context => App.context;
+  BuildContext get context => App.context!;
 
   // Future<void> signIn() async {
   //   await Navigator.push(App.context,
@@ -147,7 +188,7 @@ class AppController extends c.AppController {
   // logout and refresh
   void logOut() {
     // signOut();
-    rebuild();
+    setState(() {});
   }
 
   // // 'disconnect' from Firebase
@@ -184,46 +225,64 @@ class AppController extends c.AppController {
   //
   // /// Is the user 'logged in' through a third-party (ex. Google or Facebook)
   // bool get loggedIn => _auth.loggedIn;
-}
 
-/// Incorporate FirebaseCrashlytics into the app.
-// ignore: avoid_void_async
-void runApp(
-  Widget app, {
-  FlutterExceptionHandler handler,
-  ErrorWidgetBuilder builder,
-  ReportErrorHandler report,
-  bool allowNewHandlers = false,
-  bool firebaseCrashlytics = true,
-}) async {
-  /// If nothing is specified, turn to Firebase Crashlytics
-  if (handler == null && report == null) {
-    // Allow for FirebaseCrashlytics.instance
-    WidgetsFlutterBinding.ensureInitialized();
-
-    // Allow for FirebaseCrashlytics.instance
-    await f.Firebase.initializeApp();
-
-    // Supply Firebase Crashlytics
-    final crash = FirebaseCrashlytics.instance;
-
-    handler = crash.recordFlutterError;
-
-    report = crash.recordError;
-
-    // If true, then crash reporting data is sent to Firebase.
-    await crash.setCrashlyticsCollectionEnabled(firebaseCrashlytics);
+  Object? getError([Object? error]) {
+    if (error == null) {
+      error = _error;
+      _error = null;
+    } else {
+      _error = error;
+    }
+    return error;
   }
 
-  /// Assign the appropriate error handler.
-  // Than we setup preferred orientations,
-  // and only after it finished we run our app
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) => c.runApp(
-            app,
-            errorHandler: handler,
-            errorScreen: builder,
-            errorReport: report,
-            allowNewHandlers: allowNewHandlers,
-          ));
+  bool get inError {
+    final error = _error;
+    _error = null;
+    return error != null;
+  }
+
+  Object? _error;
 }
+
+// /// Incorporate FirebaseCrashlytics into the app.
+// // ignore: avoid_void_async
+// void runApp(
+//   Widget app, {
+//   FlutterExceptionHandler handler,
+//   ErrorWidgetBuilder builder,
+//   ReportErrorHandler report,
+//   bool allowNewHandlers = false,
+//   bool firebaseCrashlytics = true,
+// }) async {
+//   /// If nothing is specified, turn to Firebase Crashlytics
+//   if (handler == null && report == null) {
+//     // Allow for FirebaseCrashlytics.instance
+//     WidgetsFlutterBinding.ensureInitialized();
+//
+//     // Allow for FirebaseCrashlytics.instance
+//     await f.Firebase.initializeApp();
+//
+//     // Supply Firebase Crashlytics
+//     final crash = FirebaseCrashlytics.instance;
+//
+//     handler = crash.recordFlutterError;
+//
+//     report = crash.recordError;
+//
+//     // If true, then crash reporting data is sent to Firebase.
+//     await crash.setCrashlyticsCollectionEnabled(firebaseCrashlytics);
+//   }
+//
+//   /// Assign the appropriate error handler.
+//   // Than we setup preferred orientations,
+//   // and only after it finished we run our app
+//   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+//       .then((value) => c.runApp(
+//             app,
+//             errorHandler: handler,
+//             errorScreen: builder,
+//             errorReport: report,
+//             allowNewHandlers: allowNewHandlers,
+//           ));
+// }

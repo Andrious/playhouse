@@ -16,20 +16,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// State of the Task:  Favorite, Incomplete, etc.
 class ScrapbookTasksScreen extends StatefulWidget {
-  const ScrapbookTasksScreen({Key key, @required this.tab}) : super(key: key);
+  const ScrapbookTasksScreen({Key? key, required this.tab}) : super(key: key);
   final PicTab tab;
 
   @override
   State createState() => _ScrapbookTasksScreenState();
 }
 
-class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
+class _ScrapbookTasksScreenState extends StateX<ScrapbookTasksScreen>
     with StateSet {
-  _ScrapbookTasksScreenState() : super(ScrapBookController());
+  _ScrapbookTasksScreenState() : super(controller: ScrapBookController());
 
-  SubmodulesState submoduleState;
-  ScrapBookController _con;
-  TextStyle style;
+  SubmodulesState? submoduleState;
+  late ScrapBookController _con;
+  late TextStyle style;
 
   @override
   void initState() {
@@ -37,16 +37,16 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
 
     submoduleState = widget.tab.state;
 
-    _con = submoduleState.con;
+    _con = submoduleState!.con;
 
-    /// Populate the 'first' Submodule State object for each Module
-    final state = _con.subModuleStates[_con.module['name']];
+    State? state;
 
-    if (state != null && !state.mounted) {
-      _con.subModuleStates[_con.moduleType + _con.module['name']] = null;
+    if (_con.subModuleStates == null) {
+      state = null;
+    } else {
+      // Add this State as a subModule of this type and name.
+      _con.subModuleStates![_con.moduleType + _con.module!['name']] ??= this;
     }
-
-    _con.subModuleStates[_con.moduleType + _con.module['name']] ??= this;
 
     // Populate this Submodule's Tasks
     _con.initTasks(widget.tab.submodule);
@@ -55,11 +55,11 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildAndroid(BuildContext context) {
     Icon arrow;
     double maxHeight;
 
-    if (submoduleState.isPanelUp) {
+    if (submoduleState!.isPanelUp) {
       //
       arrow = const Icon(
         Icons.expand_more, // Icons.view_headline,
@@ -80,28 +80,32 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    if (isLandscape && submoduleState.isPanelUp) {
+    if (isLandscape && submoduleState!.isPanelUp) {
       //
       maxHeight = 0.5;
     }
 
+    const btnStyle = ButtonStyle(
+      backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),
+    );
+
     return Column(
       children: [
         Flexible(
-          flex: submoduleState.isPanelUp ? 3 : 30,
+          flex: submoduleState!.isPanelUp ? 3 : 30,
           child: Padding(
-            padding: submoduleState.isPanelUp
+            padding: submoduleState!.isPanelUp
                 ? const EdgeInsets.only(top: 20, left: 20, bottom: 10)
                 : const EdgeInsets.only(top: 10, left: 20, bottom: 10),
             child: InkWell(
               onTap: () {
-                setState(submoduleState.onPressed);
+                setState(submoduleState!.onPressed);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    '${_con.submodule['name']}  |',
+                    '${_con.submodule!['name']}  |',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -111,7 +115,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
                     child: Padding(
                       padding: const EdgeInsets.only(left: 30),
                       child: Text(
-                        _con.submodule['short_description'],
+                        _con.submodule!['short_description'],
                         style: style,
                       ),
                     ),
@@ -122,7 +126,7 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
           ),
         ),
         Flexible(
-          flex: submoduleState.isPanelUp ? 30 : 2,
+          flex: submoduleState!.isPanelUp ? 30 : 2,
           child: LimitedBox(
             maxHeight: MediaQuery.of(context).size.height * maxHeight,
             child: GridView.count(
@@ -140,76 +144,40 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TextButton(
-                onPressed: () {
-                  setState(submoduleState.onPressed);
-                },
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'View All',
-                        style: style,
-                      ),
-                    ),
-                    const Expanded(
-                      child: FaIcon(FontAwesomeIcons.angleUp),
-                    ),
-                  ],
+              Tooltip(
+                message: 'View All'.tr,
+                child: IconButton(
+                  onPressed: () => setState(submoduleState!.onPressed),
+                  icon: const Icon(FontAwesomeIcons.angleUp),
+                  style: btnStyle,
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: I10n.t(
-                        'To Do',
-                        style: style,
-                      ),
-                    ),
-                    const Expanded(
-                      child: FaIcon(
-                        FlutterIcons.reminder,
-                      ),
-                    ),
-                  ],
+              Tooltip(
+                message: 'To Do'.tr,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    FlutterIcons.reminder,
+                  ),
+                  style: btnStyle,
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: I10n.t(
-                        'Done',
-                        style: style,
-                      ),
-                    ),
-                    const Expanded(
-                      child: FaIcon(
-                        Icons.done,
-                      ),
-                    ),
-                  ],
+              Tooltip(
+                message: 'Done'.tr,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.done),
+                  style: btnStyle,
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: I10n.t(
-                        'Favourites',
-                        style: style,
-                      ),
-                    ),
-                    const Expanded(
-                      child: FaIcon(
-                        Icons.star,
-                      ),
-                    ),
-                  ],
+              Tooltip(
+                message: 'Favourites'.tr,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.star,
+                  ),
+                  style: btnStyle,
                 ),
               ),
             ],
@@ -220,8 +188,10 @@ class _ScrapbookTasksScreenState extends StateMVC<ScrapbookTasksScreen>
   }
 }
 
+///
 class EmptyTaskStateScreen extends StatelessWidget {
-  const EmptyTaskStateScreen({Key key}) : super(key: key);
+  ///
+  const EmptyTaskStateScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => const Center();
 }

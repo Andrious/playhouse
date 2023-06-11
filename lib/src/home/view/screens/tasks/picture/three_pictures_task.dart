@@ -13,19 +13,19 @@ import 'package:playhouse/src/controller.dart';
 
 /// State of the Task:  Favorite, Incomplete, etc.
 class ThreePicturesScreen extends StatefulWidget {
-  const ThreePicturesScreen(this.parent, {Key key}) : super(key: key);
+  const ThreePicturesScreen(this.parent, {Key? key}) : super(key: key);
   final PanelScreenState parent;
   @override
   State createState() => _ThreePicturesScreenState();
 }
 
-class _ThreePicturesScreenState extends StateMVC<ThreePicturesScreen>
+class _ThreePicturesScreenState extends StateX<ThreePicturesScreen>
     with StateSet {
-  _ThreePicturesScreenState() : super(ScrapBookController()) {
-    con = controller;
+  _ThreePicturesScreenState() : super(controller: ScrapBookController()) {
+    con = controller as ScrapBookController;
   }
-  ScrapBookController con;
-  PanelScreenState parent;
+  late ScrapBookController con;
+  late PanelScreenState parent;
 
   List<Widget> threePics = [];
 
@@ -37,7 +37,7 @@ class _ThreePicturesScreenState extends StateMVC<ThreePicturesScreen>
   }
 
   @override
-  Widget build(BuildContext context) => Flexible(
+  Widget buildAndroid(BuildContext context) => Flexible(
         flex: parent.isPanelUp ? 30 : 2,
         child: LimitedBox(
           maxHeight: MediaQuery.of(context).size.height * parent.maxHeight,
@@ -54,18 +54,18 @@ class _ThreePicturesScreenState extends StateMVC<ThreePicturesScreen>
 
   void initPics() {
     //
-    final length = con.card.userTask.length;
+    final length = con.card!.userTask.length;
 
     for (int cnt = 0; cnt <= 2; cnt++) {
       if (cnt < length) {
         threePics.add(PickPicture(
-          con.card.task,
-          [con.card.userTask[cnt]],
+          con.card!.task,
+          [con.card!.userTask[cnt]],
           isCompleted: completed,
         ));
       } else {
         threePics.add(PickPicture(
-          con.card.task,
+          con.card!.task,
           const [{}],
           isCompleted: completed,
         ));

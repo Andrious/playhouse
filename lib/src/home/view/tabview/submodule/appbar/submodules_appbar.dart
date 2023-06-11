@@ -6,7 +6,6 @@
 // For base64.decode()
 /// The Event Handler code
 import 'package:playhouse/src/controller.dart';
-import 'package:playhouse/src/model.dart';
 
 /// The UI code
 import 'package:playhouse/src/view.dart';
@@ -24,30 +23,30 @@ class SubmodulesTabBar {
     _con = provider.con;
   }
   final SubmodulesState provider;
-  ScrapBookController _con;
+  late ScrapBookController _con;
 
   // SubTabController get controller => _tabController;
   // SubTabController _tabController;
   TabController get subTabController => _subTabController;
-  TabController _subTabController;
+  late TabController _subTabController;
 
-  PageCircleIndicator tabIndicator;
+  late PageCircleIndicator tabIndicator;
 
   List<PicTab> get picTabs => _picTabs;
-  List<PicTab> _picTabs;
+  late List<PicTab> _picTabs;
 
   /// The Task Cards
-  List<Widget> get children {
+  List<Widget>? get children {
     if (_children == null) {
       _children = <Widget>[];
       for (final tab in _picTabs) {
-        _children.add(ScrapbookTasksScreen(tab: tab));
+        _children!.add(ScrapbookTasksScreen(tab: tab));
       }
     }
     return _children;
   }
 
-  List<Widget> _children;
+  List<Widget>? _children;
 
   void initState() {
     //
@@ -117,10 +116,10 @@ class SubmodulesTabBar {
 
 class PicTab extends StatelessWidget {
   const PicTab({
-    Key key,
-    @required this.submodule,
-    @required this.name,
-    @required this.state,
+    Key? key,
+    required this.submodule,
+    required this.name,
+    required this.state,
   }) : super(key: key);
   final String name;
   final dynamic submodule;

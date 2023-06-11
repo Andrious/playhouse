@@ -10,7 +10,7 @@ import 'package:playhouse/src/view.dart';
 class OrganizationsAndroid
     extends ScrapbookListScreen<OrganizationsList, OrganizationsFields>
     with ScrapbookFields {
-  OrganizationsAndroid() : super(I10n.s('Organizations'));
+  OrganizationsAndroid() : super('Organizations'.tr);
 
   @override
   OrganizationsFields get fields => OrganizationsFields();
@@ -46,7 +46,7 @@ class OrganizationsAndroid
 
 class OrganizationsModuleAndroid extends ScrapbookListScreen<
     OrganizationsModuleList, OrganizationsModuleFields> with ScrapbookFields {
-  OrganizationsModuleAndroid() : super(I10n.s('Organizations Module'));
+  OrganizationsModuleAndroid() : super(L10n.s('Organizations Module'));
 
   @override
   OrganizationsModuleFields get fields => OrganizationsModuleFields();
@@ -82,15 +82,15 @@ class OrganizationsModuleAndroid extends ScrapbookListScreen<
   List<Widget> addedWidgets(
       Map<String, FieldWidgets<PlayHouseFields>> record, VoidCallback onTap) {
     final rowid = record['rowid'];
-    rowid.label = 'Id';
+    rowid!.label = 'Id';
     final organization = record['organization_id'];
-    organization.label = 'Organization Id';
+    organization!.label = 'Organization Id';
     final module = record['module_id'];
-    module.label = 'Module Id';
+    module!.label = 'Module Id';
     final locked = record['first_locked'];
-    locked.label = 'First Locked';
+    locked!.label = 'First Locked';
     final next = record['next_module_id'];
-    next.label = 'Next Module';
+    next!.label = 'Next Module';
     return [
       rowid.onListTile(enabled: false, tap: onTap),
       organization.onListTile(enabled: false, tap: onTap),
@@ -104,7 +104,7 @@ class OrganizationsModuleAndroid extends ScrapbookListScreen<
 class OrganizationsSubmoduleAndroid extends ScrapbookListScreen<
     OrganizationsSubmoduleList,
     OrganizationsSubmoduleFields> with ScrapbookFields {
-  OrganizationsSubmoduleAndroid() : super(I10n.s('Organizations Submodule'));
+  OrganizationsSubmoduleAndroid() : super(L10n.s('Organizations Submodule'));
 
   @override
   OrganizationsSubmoduleFields get fields => OrganizationsSubmoduleFields();
@@ -140,7 +140,7 @@ class OrganizationsSubmoduleAndroid extends ScrapbookListScreen<
 class OrganizationsTaskAndroid
     extends ScrapbookListScreen<OrganizationsTaskList, OrganizationsTaskFields>
     with ScrapbookFields {
-  OrganizationsTaskAndroid() : super(I10n.s('Organizations Task'));
+  OrganizationsTaskAndroid() : super('Organizations Task'.tr);
 
   @override
   OrganizationsTaskFields get fields => OrganizationsTaskFields();

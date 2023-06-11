@@ -19,7 +19,7 @@ class ModuleFields extends PlayHouseFields<ModulesTable> {
   ModuleFields._() {
     table = s.ModulesTable();
   }
-  static ModuleFields _this;
+  static ModuleFields? _this;
 }
 
 class SubmoduleFields extends PlayHouseFields<SubmodulesTable> {
@@ -27,7 +27,7 @@ class SubmoduleFields extends PlayHouseFields<SubmodulesTable> {
   SubmoduleFields._() {
     table = s.SubmodulesTable();
   }
-  static SubmoduleFields _this;
+  static SubmoduleFields? _this;
 }
 
 class TasksFields extends PlayHouseFields<TasksTable> {
@@ -35,7 +35,7 @@ class TasksFields extends PlayHouseFields<TasksTable> {
   TasksFields._() {
     table = s.TasksTable();
   }
-  static TasksFields _this;
+  static TasksFields? _this;
 }
 
 class UsersTasksFields extends PlayHouseFields<UsersTasksTable> {
@@ -43,7 +43,7 @@ class UsersTasksFields extends PlayHouseFields<UsersTasksTable> {
   UsersTasksFields._() {
     table = s.UsersTasksTable();
   }
-  static UsersTasksFields _this;
+  static UsersTasksFields? _this;
 }
 
 class UsersScrapbookFields extends PlayHouseFields<UsersScrapbookTable> {
@@ -51,7 +51,7 @@ class UsersScrapbookFields extends PlayHouseFields<UsersScrapbookTable> {
   UsersScrapbookFields._() {
     table = s.UsersScrapbookTable();
   }
-  static UsersScrapbookFields _this;
+  static UsersScrapbookFields? _this;
 }
 
 class UsersFields extends PlayHouseFields<UsersTable> {
@@ -59,7 +59,7 @@ class UsersFields extends PlayHouseFields<UsersTable> {
   UsersFields._() {
     table = s.UsersTable();
   }
-  static UsersFields _this;
+  static UsersFields? _this;
 
   @override
   Future<bool> initAsync() async {
@@ -83,7 +83,7 @@ class UserModulesUnlockedFields extends PlayHouseFields<UserModulesUnlocked> {
   UserModulesUnlockedFields._() {
     table = s.UserModulesUnlocked();
   }
-  static UserModulesUnlockedFields _this;
+  static UserModulesUnlockedFields? _this;
 }
 
 class UserSubmodulesUnlockedFields
@@ -93,7 +93,7 @@ class UserSubmodulesUnlockedFields
   UserSubmodulesUnlockedFields._() {
     table = s.UserSubmodulesUnlocked();
   }
-  static UserSubmodulesUnlockedFields _this;
+  static UserSubmodulesUnlockedFields? _this;
 }
 
 class UserTasksUnlockedFields extends PlayHouseFields<UserTasksUnlocked> {
@@ -101,7 +101,7 @@ class UserTasksUnlockedFields extends PlayHouseFields<UserTasksUnlocked> {
   UserTasksUnlockedFields._() {
     table = s.UserTasksUnlocked();
   }
-  static UserTasksUnlockedFields _this;
+  static UserTasksUnlockedFields? _this;
 }
 
 class OrganizationsFields extends PlayHouseFields<OrganizationsTable> {
@@ -109,7 +109,7 @@ class OrganizationsFields extends PlayHouseFields<OrganizationsTable> {
   OrganizationsFields._() {
     table = s.OrganizationsTable();
   }
-  static OrganizationsFields _this;
+  static OrganizationsFields? _this;
 
   @override
   Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
@@ -121,7 +121,7 @@ class OrganizationsModuleFields extends PlayHouseFields<OrganizationsModules> {
   OrganizationsModuleFields._() {
     table = s.OrganizationsModules();
   }
-  static OrganizationsModuleFields _this;
+  static OrganizationsModuleFields? _this;
 
   @override
   Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
@@ -134,7 +134,7 @@ class OrganizationsSubmoduleFields
   OrganizationsSubmoduleFields._() {
     table = s.OrganizationsSubmodules();
   }
-  static OrganizationsSubmoduleFields _this;
+  static OrganizationsSubmoduleFields? _this;
 
   @override
   Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
@@ -145,7 +145,7 @@ class OrganizationsTaskFields extends PlayHouseFields<OrganizationsTasks> {
   OrganizationsTaskFields._() {
     table = s.OrganizationsTasks();
   }
-  static OrganizationsTaskFields _this;
+  static OrganizationsTaskFields? _this;
 
   @override
   Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
@@ -154,17 +154,17 @@ class OrganizationsTaskFields extends PlayHouseFields<OrganizationsTasks> {
 @mustCallSuper
 class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
     with FormKeyState {
-  T table;
+  late T table;
 
   Future<bool> initAsync() async {
     bool init = true;
     try {
-      //
+      // creates FieldWidgets'
       await query();
 
       // Throw any exceptions that may result from the query.
       if (table.hasError) {
-        throw table.exception;
+        throw table.exception!;
       }
 
       // Populate the field variables properly.
@@ -184,7 +184,7 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
   }
 
   /// Get a new record
-  Map<String, dynamic> getNewRecord() {
+  Map<String, FieldWidgets<PlayHouseFields>> getNewRecord() {
     fillRecords([table.newRecord]);
     // Populate the field variables properly.
     return populateFieldWidgets();
@@ -338,14 +338,14 @@ mixin FormKeyState {
   @mustCallSuper
   Future<bool> save(Map<String, dynamic> rec) async {
     //
-    final formState = _formKey?.currentState;
+    final formState = _formKey.currentState;
 
     /// Not necessarily failed. There's simply no form!
     if (formState == null) {
       return true;
     }
 
-    bool save;
+    bool save = false;
 
     if (save) {
       save = formState.validate();

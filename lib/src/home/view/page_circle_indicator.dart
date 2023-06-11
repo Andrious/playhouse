@@ -8,17 +8,17 @@ import 'package:page_view_indicators/circle_page_indicator.dart';
 
 class PageCircleIndicator extends StatefulWidget {
   const PageCircleIndicator({
-    Key key,
-    this.itemCount,
+    Key? key,
+    required this.itemCount,
     this.dotSize = 12,
   }) : super(key: key);
 
   final int itemCount;
-  final double dotSize;
+  final double? dotSize;
 
   int get value {
     final state = StateSet.to<_PageCircleIndicatorState>();
-    return state?.value;
+    return state!.value;
   }
 
   set value(int value) {
@@ -39,8 +39,8 @@ class _PageCircleIndicatorState extends State<PageCircleIndicator>
     currentPageNotifier = ValueNotifier<int>(value);
   }
 
-  ValueNotifier<int> currentPageNotifier;
-  double _dotSize;
+  late ValueNotifier<int> currentPageNotifier;
+  late double _dotSize;
   int value = 0;
 
   @override

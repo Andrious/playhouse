@@ -24,18 +24,18 @@ import 'package:uuid/uuid.dart';
 
 class PickImage {
 //
-  TaskCard card;
-  Map<String, dynamic> userTask = {};
-  String key;
+  TaskCard? card;
+  Map<String, dynamic>? userTask = {};
+  String? key;
 
-  void initState(TaskCard card) {
+  void initState(TaskCard? card) {
     //
     if (card != null && this.card == null) {
       this.card = card;
 
-      userTask = card?.userTask[0];
+      userTask = card.userTask[0];
 
-      if (userTask == null || userTask.isEmpty) {
+      if (userTask == null || userTask!.isEmpty) {
         userTask = {};
       }
     }
@@ -45,10 +45,10 @@ class PickImage {
     card = null;
   }
 
-  Future<Widget> getImage() async {
-    Widget image;
+  Future<Widget?> getImage() async {
+    Widget? image;
 
-    final code = userTask['key_art_file'];
+    final code = userTask!['key_art_file'];
 
     if (code == null || code is! String) {
       return image;
@@ -105,7 +105,7 @@ class PickImage {
 
   Future<bool> saveJpg(Uint8List image) async {
     //
-    Directory directory;
+    Directory? directory;
 
     try {
       directory = await getApplicationDocumentsDirectory();
@@ -121,12 +121,12 @@ class PickImage {
 
     final unique = uuid.v4().replaceAll(RegExp('-'), '');
 
-    final fileName = '${card.name}_${unique.substring(0, 7)}';
+    final fileName = '${card!.name}_${unique.substring(0, 7)}';
 
     var file = await File('${directory.path}/$fileName.jpg').create();
 
-    file =
-        await file.writeAsBytes(i.encodeJpg(i.decodeImage(image)), flush: true);
+    file = await file.writeAsBytes(i.encodeJpg(i.decodeImage(image)!),
+        flush: true);
 
     final path = file.path;
 
@@ -140,7 +140,7 @@ class PickImage {
         //
         final oldFile = File(old);
 
-        FileSystemEntity entity;
+        FileSystemEntity? entity;
         try {
           entity = await oldFile.delete();
         } catch (e) {
@@ -172,7 +172,7 @@ class PickImage {
   }
 
   static Future<String> printBytes(String name) async {
-    ByteData bytes;
+    ByteData? bytes;
     String code;
 
     try {
@@ -197,11 +197,11 @@ class PickImage {
   }
 
   /// Save the specified file to the database as a 'key art' field.
-  Future<bool> _saveImage(String path) async {
+  Future<bool> _saveImage(String? path) async {
     //
     bool save = path != null && path.isNotEmpty;
 
-    String file;
+    String? file;
 
     if (save) {
       file = await _saveFileLocal(path);
@@ -210,24 +210,24 @@ class PickImage {
 
     if (save) {
       // The app's controller
-      final con = card.con;
+      final con = card!.con;
 
-      if (userTask['user_id'] == null) {
+      if (userTask!['user_id'] == null) {
         //
-        userTask['user_id'] = con.userId;
+        userTask!['user_id'] = con.userId;
 
-        userTask['task_id'] = card.task['rowid'];
+        userTask!['task_id'] = card!.task['rowid'];
       }
 
-      final String oldFile = userTask['key_art_file'];
+      final String? oldFile = userTask!['key_art_file'];
 
       if (oldFile != null && oldFile.isNotEmpty && oldFile != file) {
         _deleteLocalFile(oldFile);
       }
 
-      userTask['key_art_file'] = file; //encodeFile(path);
+      userTask!['key_art_file'] = file; //encodeFile(path);
 
-      save = await con.model.saveUserTask(userTask);
+      save = await con.model.saveUserTask(userTask!);
 
       userTask = con.model.usersTasks.savedRec;
     }

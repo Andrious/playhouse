@@ -1,15 +1,12 @@
 # Article: https://medium.com/podiihq/setting-up-lint-rules-in-dart-flutter-1ebbed0418a6
 
-# include: package:pedantic/analysis_options.1.11.0.yaml
-# include: package:pedantic/analysis_options.yaml
+#include: package:flutter_lints/flutter.yaml
 
 #          OR
 
 # Strict Flutter lint Rules
 # List of all rules: https://dart-lang.github.io/linter/lints/ for lint rules documentation
 # Update from http://dart-lang.github.io/linter/lints/options/options.html
-
-
 analyzer:
   errors:
     missing_required_param: error
@@ -28,7 +25,7 @@ linter:
     # - always_specify_types # we use type inference
     - annotate_overrides
     # - avoid_annotating_with_dynamic # we want to be explicit with dynamic
-    # - avoid_as # 2.12.0 involves casting.
+    #- avoid_as  # casting is too common.
     - avoid_bool_literals_in_conditional_expressions
     # - avoid_catches_without_on_clauses # we catch both Exceptions and Errors
     - avoid_catching_errors
@@ -68,7 +65,7 @@ linter:
     - camel_case_extensions
     - camel_case_types
     - cancel_subscriptions
-    #- cascade_invocations
+    # - cascade_invocations
     - close_sinks
     - comment_references
     # - constant_identifier_names # we are using those all around
@@ -83,7 +80,7 @@ linter:
     # - flutter_style_todos # don't need those for now
     - hash_and_equals
     - implementation_imports
-    - invariant_booleans
+    #- invariant_booleans # No longer to be used.
     - iterable_contains_unrelated_type
     - join_return_with_assignment
     - leading_newlines_in_multiline_strings
@@ -95,7 +92,7 @@ linter:
     - missing_whitespace_between_adjacent_strings
     - no_adjacent_strings_in_list
     - no_duplicate_case_values
-    # - no_logic_in_create_state  # Established logic for Android & iOS screens.
+    - no_logic_in_create_state
     - no_runtimeType_toString
     - non_constant_identifier_names
     - null_closures
@@ -146,12 +143,12 @@ linter:
     - prefer_typing_uninitialized_variables
     - prefer_void_to_null
     - provide_deprecation_message
-    # - public_member_api_docs # do not use for an application, only a library
+    - public_member_api_docs # do not use for an application, only a library
     - recursive_getters
     - slash_for_doc_comments
     - sort_child_properties_last
     - sort_constructors_first
-    # - sort_pub_dependencies # Annoying!
+    #- sort_pub_dependencies
     - sort_unnamed_constructors_first
     - test_types_in_equals
     - throw_in_finally

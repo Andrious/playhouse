@@ -17,24 +17,24 @@ class PlayhouseFireStoreDB {
 
   PlayhouseFireStoreDB._() : model = ScrapBookModel();
 //      : _auth = Auth(),
-  static PlayhouseFireStoreDB _this;
+  static PlayhouseFireStoreDB? _this;
 
   //
-  FireStoreCollection db;
+  late FireStoreCollection db;
   final ScrapBookModel model;
 //  final Auth _auth;
 
   Future<bool> downloadDB() {
     final table = FireStoreCollection('Modules');
-    return _populateData(table.collection, 'Modules, Submodules, Tasks', null);
+    return _populateData(table.collection!, 'Modules, Submodules, Tasks', null);
   }
 
   /// Go through the String of Collections names and populate
   /// the appropriate Map objects.
   Future<bool> _populateData(
     CollectionReference collectionRef,
-    String collections,
-    bool get,
+    String? collections,
+    bool? get,
   ) async {
     //
     bool populated = true;
@@ -79,7 +79,7 @@ class PlayhouseFireStoreDB {
     //
     for (final doc in querySnapshot.docs) {
       //
-      final Map<String, dynamic> data = doc.data();
+      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
       // // It may not have a userId yet.
       // if (data['userId'] == null) {
@@ -98,7 +98,7 @@ class PlayhouseFireStoreDB {
 
         case 'Submodules':
           // Note the parent's primary key
-          data['moduleId'] = collectionRef.parent.id;
+          data['moduleId'] = collectionRef.parent!.id;
 
           model.populateSubmodule(data);
 
@@ -106,7 +106,7 @@ class PlayhouseFireStoreDB {
 
         case 'Tasks':
           // Note the parent's primary key
-          data['submoduleId'] = collectionRef.parent.id;
+          data['submoduleId'] = collectionRef.parent!.id;
 
           model.populateTask(data);
 

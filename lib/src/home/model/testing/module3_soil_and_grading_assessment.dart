@@ -13,7 +13,7 @@ final _db = DatabaseTest();
 void module2SoilAndGradingAssessment() {
   //
   final DocumentReference modRef =
-      FireStoreCollection('Modules').collection.doc();
+      FireStoreCollection('Modules').collection!.doc();
 
   _db.createModule(
     modRef,
@@ -28,7 +28,7 @@ void module2SoilAndGradingAssessment() {
 void surfaceAndSoilIdentification(DocumentReference modRef) {
   //
   final DocumentReference doc =
-      FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+      FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
   _db.createSubmodule(
     doc,
@@ -46,7 +46,7 @@ void surfaceAndSoilIdentification(DocumentReference modRef) {
   final table = FireStoreCollection('${doc.path}/Tasks').collection;
 
   _db.createTask(
-    table.doc(),
+    table!.doc(),
     name: 'Task 3.1.1',
     short: 'Locate five different ground surfaces.',
     long:
@@ -82,7 +82,7 @@ void surfaceAndSoilIdentification(DocumentReference modRef) {
 void grading(DocumentReference modRef) {
   //
   final DocumentReference doc =
-      FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+      FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
   _db.createSubmodule(
     doc,
@@ -99,7 +99,7 @@ void grading(DocumentReference modRef) {
   final table = FireStoreCollection('${doc.path}/Tasks').collection;
 
   _db.createTask(
-    table.doc(),
+    table!.doc(),
     name: 'Task 3.2.1',
     short: "Identify a site's grading",
     long:

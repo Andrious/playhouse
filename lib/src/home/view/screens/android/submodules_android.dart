@@ -10,7 +10,7 @@ import 'package:playhouse/src/view.dart';
 class SubmodulesListAndroid
     extends ScrapbookListScreen<SubmodulesList, SubmoduleFields>
     with ScrapbookFields {
-  SubmodulesListAndroid() : super(I10n.s('Submodule'));
+  SubmodulesListAndroid() : super('Submodule'.tr);
 
   @override
   SubmoduleFields get fields => SubmoduleFields();
@@ -42,11 +42,11 @@ class SubmodulesListAndroid
     VoidCallback onTap,
   ) {
     final module = record['module_id'];
-    module.label = 'Module Id';
+    module!.label = 'Module Id';
     final locked = record['lockedFirst'];
-    locked.label = 'First Locked';
+    locked!.label = 'First Locked';
     final next = record['next_submodule_id'];
-    next.label = 'Next Submodule';
+    next!.label = 'Next Submodule';
     return [
       module.onListTile(tap: onTap),
       locked.onListTile(tap: onTap),
@@ -60,24 +60,24 @@ class SubmodulesListAndroid
     Map<String, FieldWidgets<PlayHouseFields>> record,
   ) {
     final moduleId = record['module_id'];
-    moduleId.label = 'Module Id';
+    moduleId!.label = 'Module Id';
     final next = record['next_submodule_id'];
     return [
-      record['rowid'].onListTile(enabled: false),
+      record['rowid']!.onListTile(enabled: false),
       moduleId.onListItems(
-          onChanged: (String v) {
+          onChanged: (String? v) {
             con.setState(() {
-              moduleId.value = int.parse(v);
+              moduleId.value = int.parse(v!);
             });
           },
           dropItems: _parentModule(moduleId)),
-      record['name'].textFormField,
-      record['short_description'].textFormField,
-      record['long_description'].textFormField,
-      next.onListItems(
-          onChanged: (String v) {
+      record['name']!.textFormField,
+      record['short_description']!.textFormField,
+      record['long_description']!.textFormField,
+      next!.onListItems(
+          onChanged: (String? v) {
             con.setState(() {
-              next.value = int.parse(v);
+              next.value = int.parse(v!);
             });
           },
           dropItems: _moduleItems(record)),
@@ -90,7 +90,7 @@ class SubmodulesListAndroid
 
   /// List the next submodules
   List<String> _moduleItems(Map<String, FieldWidgets<PlayHouseFields>> record) {
-    final rowid = record['rowid'].value.toString();
+    final rowid = record['rowid']!.value.toString();
     return fields.table.idList.where((id) => id != rowid).toList();
   }
 

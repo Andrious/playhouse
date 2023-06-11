@@ -13,7 +13,7 @@ final _db = DatabaseTest();
 void module2VegetationAndMaterialsAssessment() {
 //
   final DocumentReference modRef =
-      FireStoreCollection('Modules').collection.doc();
+      FireStoreCollection('Modules').collection!.doc();
 
   _db.createModule(
     modRef,
@@ -28,7 +28,7 @@ void module2VegetationAndMaterialsAssessment() {
 void identifyingVegetation(DocumentReference modRef) {
   //
   final DocumentReference doc =
-      FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+      FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
   _db.createSubmodule(
     doc,
@@ -45,7 +45,7 @@ void identifyingVegetation(DocumentReference modRef) {
   final table = FireStoreCollection('${doc.path}/Tasks').collection;
 
   _db.createTask(
-    table.doc(),
+    table!.doc(),
     name: 'Task 2.1.1',
     short: 'Identify five plants, five shrubs, and five trees.',
     long:
@@ -81,7 +81,7 @@ void identifyingVegetation(DocumentReference modRef) {
 void materialSelection(DocumentReference modRef) {
   //
   final DocumentReference doc =
-      FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+      FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
   _db.createSubmodule(
     doc,
@@ -98,7 +98,7 @@ void materialSelection(DocumentReference modRef) {
   final table = FireStoreCollection('${doc.path}/Tasks').collection;
 
   _db.createTask(
-    table.doc(),
+    table!.doc(),
     name: 'Task 2.2.1',
     short: 'Explore a single site',
     long:

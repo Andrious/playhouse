@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 /// MVC framework
-export 'package:mvc_application/model.dart';
+export 'package:fluttery_framework/model.dart';
 
 /// DB package
 export 'package:dbutils/sqlite_db.dart' show SQLiteDB, Transaction;

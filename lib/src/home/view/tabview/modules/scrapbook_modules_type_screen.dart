@@ -11,36 +11,45 @@ import 'package:playhouse/src/view.dart';
 /// The event handling code
 import 'package:playhouse/src/controller.dart';
 
+///
 class DiscoverModulesScreen extends ModuleTypeScreen {
-  const DiscoverModulesScreen({Key key}) : super(key: key);
+  ///
+  const DiscoverModulesScreen({super.key});
 }
 
+///
 class DesignModulesScreen extends ModuleTypeScreen {
-  const DesignModulesScreen({Key key}) : super(key: key);
+  ///
+  const DesignModulesScreen({super.key});
 }
 
+///
 class BuildModulesScreen extends ModuleTypeScreen {
-  const BuildModulesScreen({Key key}) : super(key: key);
+  ///
+  const BuildModulesScreen({super.key});
 }
 
 /// List of Modules
 /// e.g. 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
 class ModuleTypeScreen extends StatefulWidget {
-  const ModuleTypeScreen({Key key}) : super(key: key);
+  ///
+  const ModuleTypeScreen({super.key});
 
   @override
   State createState() => ModuleTypeScreenState();
 }
 
-class ModuleTypeScreenState extends StateMVC<ModuleTypeScreen>
+///
+class ModuleTypeScreenState extends StateX<ModuleTypeScreen>
     with SingleTickerProviderStateMixin {
-  ModuleTypeScreenState() : super(ScrapBookController()) {
-    _con = controller;
+  ///
+  ModuleTypeScreenState() : super(controller: ScrapBookController()) {
+    _con = controller as ScrapBookController;
   }
 
-  ModulesAppBar _sbModAppBar;
+  late ModulesAppBar _sbModAppBar;
   ScrapBookController get con => _con;
-  ScrapBookController _con;
+  late ScrapBookController _con;
 
   @override
   void initState() {
@@ -58,7 +67,7 @@ class ModuleTypeScreenState extends StateMVC<ModuleTypeScreen>
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget buildAndroid(BuildContext context) => Scaffold(
       appBar: _sbModAppBar.appBar,
       body: SafeArea(
         child: TabBarView(
@@ -70,13 +79,13 @@ class ModuleTypeScreenState extends StateMVC<ModuleTypeScreen>
 
 /// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
 class ModulesAppBar {
-  //
+  ///
   ModulesAppBar(this.provider) {
     // Supply the Controller.
     _con = provider.con;
   }
   final ModuleTypeScreenState provider;
-  ScrapBookController _con;
+  late ScrapBookController _con;
 
   /// Set up the AppBar
   void initState() {
@@ -102,7 +111,7 @@ class ModulesAppBar {
         //
         _con.initModule(_modTabController.index);
 
-        provider?.setState(() {});
+        provider.setState(() {});
       }
     });
 
@@ -121,9 +130,11 @@ class ModulesAppBar {
     _modTabController.dispose();
   }
 
+  ///
   TabController get modTabController => _modTabController;
-  TabController _modTabController;
+  late TabController _modTabController;
 
+  ///
   List<Tab> get modTabs {
     //
     final List<Tab> _tabs = [];
@@ -135,7 +146,7 @@ class ModulesAppBar {
       index++;
 
       _tabs.add(Tab(
-        child: I10n.t(
+        child: L10n.t(
           module['name'],
           style: TextStyle(
             fontWeight: _modTabController.index == index
@@ -148,8 +159,9 @@ class ModulesAppBar {
     return _tabs;
   }
 
+  ///
   List<Widget> get modTabChildren => _modTabChildren;
-  List<Widget> _modTabChildren;
+  late List<Widget> _modTabChildren;
 
   /// 'Inspiration' 'Site assessment' 'Floor Plan' 'Evaluation'
   AppBar get appBar => AppBar(

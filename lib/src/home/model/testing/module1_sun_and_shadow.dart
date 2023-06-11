@@ -13,7 +13,7 @@ final _db = DatabaseTest();
 void module1SunAndShadow() {
   //
   final DocumentReference modRef =
-      FireStoreCollection('Modules').collection.doc();
+      FireStoreCollection('Modules').collection!.doc();
 
   _db.createModule(
     modRef,
@@ -28,7 +28,7 @@ void module1SunAndShadow() {
 
 void sunExposure(DocumentReference modRef) {
   final DocumentReference doc =
-      FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+      FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
   _db.createSubmodule(
     doc,
@@ -45,7 +45,7 @@ void sunExposure(DocumentReference modRef) {
   final table = FireStoreCollection('${doc.path}/Tasks').collection;
 
   _db.createTask(
-    table.doc(),
+    table!.doc(),
     name: 'Task 1.1.1',
     short: 'Visit a site three times a day.',
     long:
@@ -80,7 +80,7 @@ void sunExposure(DocumentReference modRef) {
 
 void shadowStudies(DocumentReference modRef) {
   final DocumentReference doc =
-      FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+      FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
   _db.createSubmodule(
     doc,
@@ -97,7 +97,7 @@ void shadowStudies(DocumentReference modRef) {
   final table = FireStoreCollection('${doc.path}/Tasks').collection;
 
   _db.createTask(
-    table.doc(),
+    table!.doc(),
     name: 'Task 1.2.1',
     short: 'Make Shadows',
     long:
@@ -132,7 +132,7 @@ void shadowStudies(DocumentReference modRef) {
 
 void solarPathTasks(DocumentReference modRef) {
   final DocumentReference doc =
-      FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+      FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
   _db.createSubmodule(
     doc,
@@ -149,7 +149,7 @@ void solarPathTasks(DocumentReference modRef) {
   final table = FireStoreCollection('${doc.path}/Tasks').collection;
 
   _db.createTask(
-    table.doc(),
+    table!.doc(),
     name: 'Task 1.3.1',
     short: 'Understanding the solar path',
     long:

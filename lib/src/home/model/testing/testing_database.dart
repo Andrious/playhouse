@@ -26,10 +26,10 @@ class DatabaseTest {
     _timeStamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 //    userId = _auth.uid;
   }
-  static DatabaseTest _this;
+  static DatabaseTest? _this;
   //
-  FireStoreCollection _table;
-  int _timeStamp;
+  late FireStoreCollection _table;
+  late int _timeStamp;
 //  final Auth _auth;
 //  String userId;
 
@@ -43,7 +43,7 @@ class DatabaseTest {
     bool createDB = true;
 
     final DocumentReference modRef =
-        FireStoreCollection('Modules').collection.doc();
+        FireStoreCollection('Modules').collection!.doc();
 
     createDB = createModule(
       modRef,
@@ -58,7 +58,7 @@ class DatabaseTest {
     /// ==========================================================================
 
     final DocumentReference sub01Ref =
-        FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+        FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
     final String sub01Id = sub01Ref.id;
 
@@ -77,7 +77,7 @@ class DatabaseTest {
     /// ==========================================================================
 
     final DocumentReference sub02Ref =
-        FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+        FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
     final String sub02Id = sub02Ref.id;
 
@@ -92,7 +92,7 @@ class DatabaseTest {
     /// ==========================================================================
 
     final DocumentReference sub03Ref =
-        FireStoreCollection('${modRef.path}/Submodules').collection.doc();
+        FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
 
     final String sub03Id = sub03Ref.id;
 
@@ -121,11 +121,11 @@ class DatabaseTest {
     DocumentReference doc, {
     String type = 'Design',
     String nextModId = '',
-    @required String name,
+    required String name,
     String short = 'A short description.',
     String long = 'A much longer description with more detail.',
     bool complete = false,
-    @required dynamic timestamp,
+    required dynamic timestamp,
   }) {
     //
     final data = <String, dynamic>{};
@@ -145,14 +145,14 @@ class DatabaseTest {
   /// Create a 'Submodule' record.
   bool createSubmodule(
     DocumentReference doc, {
-    @required String nextSubId,
-    @required String name,
+    required String nextSubId,
+    required String name,
     String short = 'A short description.',
     String long = 'A much longer description with more detail.',
     bool locked = false,
     bool complete = false,
-    @required String keyArt,
-    @required dynamic timestamp,
+    required String keyArt,
+    required dynamic timestamp,
   }) {
     //
     final data = <String, dynamic>{};
@@ -170,20 +170,20 @@ class DatabaseTest {
   }
 
   bool createNTasks({
-    DocumentReference doc,
-    String id,
+    DocumentReference? doc,
+    String? id,
     int count = 3,
   }) {
     //
     bool created = true;
 
-    final table = FireStoreCollection('${doc.path}/Tasks').collection;
+    final table = FireStoreCollection('${doc!.path}/Tasks').collection;
 
     for (int cnt = 0; cnt < count; cnt++) {
       //
       created = createTask(
-        table.doc(),
-        submoduleId: id,
+        table!.doc(),
+        submoduleId: id!,
         name: 'Task0${cnt + 1}',
         type: 'DeviceImage',
         keyArt: rocket,
@@ -200,15 +200,15 @@ class DatabaseTest {
   /// Create a 'Task' record.
   bool createTask(
     DocumentReference doc, {
-    String submoduleId,
-    @required String name,
+    String? submoduleId,
+    required String name,
     String short = 'A short description.',
     String long = 'A much longer description with more detail.',
-    @required String type, // NetworkedImage|NetworkedVideo|DeviceImage|Question
+    required String type, // NetworkedImage|NetworkedVideo|DeviceImage|Question
     bool locked = false,
     bool complete = false,
-    @required String keyArt,
-    @required dynamic timestamp,
+    required String keyArt,
+    required dynamic timestamp,
   }) {
     //
     final data = <String, dynamic>{};

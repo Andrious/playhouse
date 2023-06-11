@@ -8,7 +8,7 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
-StatefulWidget questionTasks(
+TaskCard questionTasks(
   Map<String, dynamic> task,
   List<Map<String, dynamic>> userTask,
 ) {
@@ -28,11 +28,11 @@ StatefulWidget questionTasks(
 
 StatefulWidget questionTaskScreens(PanelScreenState penal) {
   //
-  StatefulWidget widget;
+  StatefulWidget? widget;
 
   final con = ScrapBookController();
 
-  final name = con.card.task['name'];
+  final name = con.card!.task['name'];
 
   switch (name) {
     case 'Task 1.1.1':

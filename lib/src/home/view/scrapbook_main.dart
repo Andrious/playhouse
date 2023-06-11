@@ -11,19 +11,21 @@ import 'package:playhouse/src/controller.dart';
 /// The UI code
 import 'package:playhouse/src/view.dart';
 
+///
 class ScrapBookApp extends StatefulWidget {
-  const ScrapBookApp({Key key}) : super(key: key);
+  ///
+  const ScrapBookApp({Key? key}) : super(key: key);
   @override
   State createState() => ScrapBookState();
 }
 
-class ScrapBookState extends StateMVC<ScrapBookApp>
+class ScrapBookState extends StateX<ScrapBookApp>
     with SingleTickerProviderStateMixin {
-  ScrapBookState() : super(ScrapBookController()) {
-    con = controller;
+  ScrapBookState() : super(controller: ScrapBookController()) {
+    con = controller as ScrapBookController;
   }
-  ScrapBookController con;
-  TabController _mobTypeTabController;
+  late ScrapBookController con;
+  late TabController _mobTypeTabController;
 
   @override
   void initState() {
@@ -49,24 +51,28 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildAndroid(BuildContext context) {
     return Scaffold(
-        appBar: _appBar,
-        endDrawer: const ScrapBookDrawer(),
-        primary: false,
-        body: TabBarView(
-          controller: _mobTypeTabController,
-          children: const <Widget>[
-            DiscoverModulesScreen(),
-            DesignModulesScreen(),
-            BuildModulesScreen(),
-          ],
-        ));
+      appBar: _appBar,
+      endDrawer: const ScrapBookDrawer(),
+      primary: false,
+      body: TabBarView(
+        controller: _mobTypeTabController,
+        children: const <Widget>[
+          DiscoverModulesScreen(),
+          DesignModulesScreen(),
+          BuildModulesScreen(),
+        ],
+      ),
+    );
   }
 
   /// The App Tool bar
   AppBar get _appBar => AppBar(
-        title: I10n.t('Playhouse'),
+        title: L10n.t('''
+        creativeSTORM
+        by Grey & Ivy
+        '''),
         centerTitle: true,
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -76,7 +82,7 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
           controller: _mobTypeTabController,
           tabs: [
             Tab(
-              child: I10n.t(
+              child: L10n.t(
                 con.moduleTypes[0],
                 style: TextStyle(
                   fontWeight: _mobTypeTabController.index == 0
@@ -88,7 +94,7 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
               ),
             ),
             Tab(
-              child: I10n.t(
+              child: L10n.t(
                 con.moduleTypes[1],
                 style: TextStyle(
                   fontWeight: _mobTypeTabController.index == 1
@@ -100,7 +106,7 @@ class ScrapBookState extends StateMVC<ScrapBookApp>
               ),
             ),
             Tab(
-              child: I10n.t(
+              child: L10n.t(
                 con.moduleTypes[2],
                 style: TextStyle(
                   fontWeight: _mobTypeTabController.index == 1
