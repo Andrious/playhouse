@@ -11,8 +11,12 @@ import 'package:playhouse/src/view.dart';
 /// The Event handling code
 import 'package:playhouse/src/controller.dart';
 
+///
 class ModuleScreen extends StatefulWidget {
+  ///
   const ModuleScreen({Key? key, required this.tab}) : super(key: key);
+
+  ///
   final Tab tab;
 
   @override

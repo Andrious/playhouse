@@ -6,8 +6,9 @@ import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/view.dart';
 
+///
 mixin ScrapbookFields implements UseWhichWidgets {
-  //
+  ///
   List<Widget> columnWidgets(
       Map<String, FieldWidgets<PlayHouseFields>> fldWidget) {
     //
@@ -152,15 +153,26 @@ mixin ScrapbookFields implements UseWhichWidgets {
       );
 }
 
+///
 class UseWhichWidgets {
+  ///
   late bool useModuleType;
+
+  ///
   late bool useLocked;
 
+  ///
   late bool useKeyArt;
 
+  ///
   late bool useCompleted;
+
+  ///
   late bool useDeleted;
 
+  ///
   late bool useLockedFirst;
+
+  ///
   late bool useNextId;
 }

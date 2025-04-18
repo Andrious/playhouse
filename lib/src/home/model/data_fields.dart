@@ -13,8 +13,9 @@ import 'package:playhouse/src/home/model/sqlite_db.dart' as s;
 
 /// The Fields consolidated Class
 //export 'package:playhouse/src/home/model/database_class.dart';
-
+///
 class ModuleFields extends PlayHouseFields<ModulesTable> {
+  ///
   factory ModuleFields() => _this ??= ModuleFields._();
   ModuleFields._() {
     table = s.ModulesTable();
@@ -22,7 +23,9 @@ class ModuleFields extends PlayHouseFields<ModulesTable> {
   static ModuleFields? _this;
 }
 
+///
 class SubmoduleFields extends PlayHouseFields<SubmodulesTable> {
+  ///
   factory SubmoduleFields() => _this ??= SubmoduleFields._();
   SubmoduleFields._() {
     table = s.SubmodulesTable();
@@ -30,7 +33,9 @@ class SubmoduleFields extends PlayHouseFields<SubmodulesTable> {
   static SubmoduleFields? _this;
 }
 
+///
 class TasksFields extends PlayHouseFields<TasksTable> {
+  ///
   factory TasksFields() => _this ??= TasksFields._();
   TasksFields._() {
     table = s.TasksTable();
@@ -38,7 +43,9 @@ class TasksFields extends PlayHouseFields<TasksTable> {
   static TasksFields? _this;
 }
 
+///
 class UsersTasksFields extends PlayHouseFields<UsersTasksTable> {
+  ///
   factory UsersTasksFields() => _this ??= UsersTasksFields._();
   UsersTasksFields._() {
     table = s.UsersTasksTable();
@@ -46,7 +53,9 @@ class UsersTasksFields extends PlayHouseFields<UsersTasksTable> {
   static UsersTasksFields? _this;
 }
 
+///
 class UsersScrapbookFields extends PlayHouseFields<UsersScrapbookTable> {
+  ///
   factory UsersScrapbookFields() => _this ??= UsersScrapbookFields._();
   UsersScrapbookFields._() {
     table = s.UsersScrapbookTable();
@@ -54,7 +63,9 @@ class UsersScrapbookFields extends PlayHouseFields<UsersScrapbookTable> {
   static UsersScrapbookFields? _this;
 }
 
+///
 class UsersFields extends PlayHouseFields<UsersTable> {
+  ///
   factory UsersFields() => _this ??= UsersFields._();
   UsersFields._() {
     table = s.UsersTable();
@@ -77,7 +88,9 @@ class UsersFields extends PlayHouseFields<UsersTable> {
   }
 }
 
+///
 class UserModulesUnlockedFields extends PlayHouseFields<UserModulesUnlocked> {
+  ///
   factory UserModulesUnlockedFields() =>
       _this ??= UserModulesUnlockedFields._();
   UserModulesUnlockedFields._() {
@@ -86,8 +99,10 @@ class UserModulesUnlockedFields extends PlayHouseFields<UserModulesUnlocked> {
   static UserModulesUnlockedFields? _this;
 }
 
+///
 class UserSubmodulesUnlockedFields
     extends PlayHouseFields<UserSubmodulesUnlocked> {
+  ///
   factory UserSubmodulesUnlockedFields() =>
       _this ??= UserSubmodulesUnlockedFields._();
   UserSubmodulesUnlockedFields._() {
@@ -96,7 +111,9 @@ class UserSubmodulesUnlockedFields
   static UserSubmodulesUnlockedFields? _this;
 }
 
+///
 class UserTasksUnlockedFields extends PlayHouseFields<UserTasksUnlocked> {
+  ///
   factory UserTasksUnlockedFields() => _this ??= UserTasksUnlockedFields._();
   UserTasksUnlockedFields._() {
     table = s.UserTasksUnlocked();
@@ -104,7 +121,9 @@ class UserTasksUnlockedFields extends PlayHouseFields<UserTasksUnlocked> {
   static UserTasksUnlockedFields? _this;
 }
 
+///
 class OrganizationsFields extends PlayHouseFields<OrganizationsTable> {
+  ///
   factory OrganizationsFields() => _this ??= OrganizationsFields._();
   OrganizationsFields._() {
     table = s.OrganizationsTable();
@@ -115,7 +134,9 @@ class OrganizationsFields extends PlayHouseFields<OrganizationsTable> {
   Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
 }
 
+///
 class OrganizationsModuleFields extends PlayHouseFields<OrganizationsModules> {
+  ///
   factory OrganizationsModuleFields() =>
       _this ??= OrganizationsModuleFields._();
   OrganizationsModuleFields._() {
@@ -127,8 +148,10 @@ class OrganizationsModuleFields extends PlayHouseFields<OrganizationsModules> {
   Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
 }
 
+///
 class OrganizationsSubmoduleFields
     extends PlayHouseFields<OrganizationsSubmodules> {
+  ///
   factory OrganizationsSubmoduleFields() =>
       _this ??= OrganizationsSubmoduleFields._();
   OrganizationsSubmoduleFields._() {
@@ -140,7 +163,9 @@ class OrganizationsSubmoduleFields
   Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
 }
 
+///
 class OrganizationsTaskFields extends PlayHouseFields<OrganizationsTasks> {
+  ///
   factory OrganizationsTaskFields() => _this ??= OrganizationsTaskFields._();
   OrganizationsTaskFields._() {
     table = s.OrganizationsTasks();
@@ -151,11 +176,14 @@ class OrganizationsTaskFields extends PlayHouseFields<OrganizationsTasks> {
   Future<bool> delete(Map<String, dynamic> rec) => table.delete(rec);
 }
 
+///
 @mustCallSuper
 class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
     with FormKeyState {
+  ///
   late T table;
 
+  ///
   Future<bool> initAsync() async {
     bool init = true;
     try {
@@ -205,7 +233,7 @@ class PlayHouseFields<T extends SQLiteTable> extends DataFields<PlayHouseFields>
     bool save = await super.save(rec);
 
     if (save) {
-      save = await table.save(rec.map((key, value) => MapEntry(key, value)));
+      save = await table.save(rec.map(MapEntry.new));
       await query();
     }
     return save;
@@ -325,6 +353,7 @@ mixin FormKeyState {
   //
   bool _inForm = false;
 
+  ///
   GlobalKey<FormState> get formKey {
     if (!_inForm) {
       _inForm = true;
@@ -334,6 +363,7 @@ mixin FormKeyState {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  ///
   @override
   @mustCallSuper
   Future<bool> save(Map<String, dynamic> rec) async {

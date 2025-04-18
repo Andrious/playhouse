@@ -6,6 +6,7 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
+///
 TaskCard arTasks(
   Map<String, dynamic> task,
   List<Map<String, dynamic>> userTask,
@@ -27,6 +28,7 @@ TaskCard arTasks(
   return card;
 }
 
+///
 StatefulWidget arTaskScreens(PanelScreenState penal) {
   //
   StatefulWidget widget;

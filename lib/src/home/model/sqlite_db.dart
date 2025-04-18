@@ -6,7 +6,9 @@ import 'package:playhouse/src/model.dart';
 
 import 'package:playhouse/src/view.dart';
 
+///
 class PlayhouseSQLiteDB extends SQLiteDB {
+  ///
   factory PlayhouseSQLiteDB() => _this ??= PlayhouseSQLiteDB._();
   PlayhouseSQLiteDB._();
   static PlayhouseSQLiteDB? _this;
@@ -25,20 +27,43 @@ class PlayhouseSQLiteDB extends SQLiteDB {
   @override
   int get version => 4;
 
+  ///
   static const MODULES = 'modules';
+
+  ///
   static const SUBMODULES = 'submodules';
+
+  ///
   static const TASKS = 'tasks';
+
+  ///
   static const USERS_TASKS = 'users_tasks';
+
+  ///
   static const USERS_SCRAPBOOK = 'users_scrapbook';
+
+  ///
   static const USERS = 'users';
 
+  ///
   static const USERS_MODULES_UNLOCKED = 'user_modules_unlocked';
+
+  ///
   static const USERS_SUBMODULES_UNLOCKED = 'user_submodules_unlocked';
+
+  ///
   static const USERS_TASKS_UNLOCKED = 'user_tasks_unlocked';
 
+  ///
   static const ORGANIZATIONS = 'organizations';
+
+  ///
   static const ORGANIZATIONS_MODULES = 'organizations_modules';
+
+  ///
   static const ORGANIZATIONS_SUBMODULES = 'organizations_submodules';
+
+  ///
   static const ORGANIZATIONS_TASKS = 'organizations_tasks';
 
   bool _callInitAsync = false;
@@ -292,6 +317,7 @@ class PlayhouseSQLiteDB extends SQLiteDB {
 /// The Modules of this app.
 /// A particular Module will have one or more Submodules.
 class ModulesTable extends SQLiteTable {
+  ///
   factory ModulesTable() => _this ??= ModulesTable._();
   ModulesTable._() : super(tableName: PlayhouseSQLiteDB.MODULES);
   static ModulesTable? _this;
@@ -353,6 +379,7 @@ class ModulesTable extends SQLiteTable {
 /// The Submodules of this app.
 /// A particular Submodule will have one or more Tasks.
 class SubmodulesTable extends SQLiteTable {
+  ///
   factory SubmodulesTable() => _this ??= SubmodulesTable._();
   SubmodulesTable._() : super(tableName: PlayhouseSQLiteDB.SUBMODULES);
   static SubmodulesTable? _this;
@@ -414,6 +441,7 @@ class SubmodulesTable extends SQLiteTable {
 /// The Tasks contained in this app.
 /// Each task is assigned to a particular Submodule.
 class TasksTable extends SQLiteTable {
+  ///
   factory TasksTable() => _this ??= TasksTable._();
   TasksTable._() : super(tableName: PlayhouseSQLiteDB.TASKS);
   static TasksTable? _this;
@@ -488,6 +516,7 @@ class TasksTable extends SQLiteTable {
 /// The Task worked on by a particular User.
 /// A particular task can be worked on by more than one user.
 class UsersTasksTable extends SQLiteTable {
+  ///
   factory UsersTasksTable() => _this ??= UsersTasksTable._();
   UsersTasksTable._() : super(tableName: PlayhouseSQLiteDB.USERS_TASKS);
   static UsersTasksTable? _this;
@@ -515,6 +544,7 @@ class UsersTasksTable extends SQLiteTable {
 /// The Scrapbook used by a particular User.
 /// Each could be associated with a Task or not.
 class UsersScrapbookTable extends SQLiteTable {
+  ///
   factory UsersScrapbookTable() => _this ??= UsersScrapbookTable._();
   UsersScrapbookTable._() : super(tableName: PlayhouseSQLiteDB.USERS_SCRAPBOOK);
   static UsersScrapbookTable? _this;
@@ -530,6 +560,7 @@ class UsersScrapbookTable extends SQLiteTable {
 /// A user of this app.
 /// More than one user can be on this app.
 class UsersTable extends SQLiteTable {
+  ///
   factory UsersTable() => _this ??= UsersTable._();
   UsersTable._() : super(tableName: PlayhouseSQLiteDB.USERS);
   static UsersTable? _this;
@@ -604,6 +635,7 @@ class UsersTable extends SQLiteTable {
 /// Modules unlocked for and or completed by a particular user.
 /// A particular module can be unlocked and or completed by more than one user.
 class UserModulesUnlocked extends SQLiteTable {
+  ///
   factory UserModulesUnlocked() => _this ??= UserModulesUnlocked._();
   UserModulesUnlocked._()
       : super(tableName: PlayhouseSQLiteDB.USERS_MODULES_UNLOCKED);
@@ -620,6 +652,7 @@ class UserModulesUnlocked extends SQLiteTable {
 /// Submodules unlocked for and or completed by a particular user.
 /// A particular submodule can be unlocked and or completed by more than one user.
 class UserSubmodulesUnlocked extends SQLiteTable {
+  ///
   factory UserSubmodulesUnlocked() => _this ??= UserSubmodulesUnlocked._();
   UserSubmodulesUnlocked._()
       : super(tableName: PlayhouseSQLiteDB.USERS_SUBMODULES_UNLOCKED);
@@ -637,6 +670,7 @@ class UserSubmodulesUnlocked extends SQLiteTable {
 /// Tasks unlocked for and or completed by a particular user.
 /// A particular task can be unlocked and or completed by more than one user.
 class UserTasksUnlocked extends SQLiteTable {
+  ///
   factory UserTasksUnlocked() => _this ??= UserTasksUnlocked._();
   UserTasksUnlocked._()
       : super(tableName: PlayhouseSQLiteDB.USERS_TASKS_UNLOCKED);
@@ -653,6 +687,7 @@ class UserTasksUnlocked extends SQLiteTable {
 /// The Organization associated to a particular user.
 ///
 class OrganizationsTable extends SQLiteTable {
+  ///
   factory OrganizationsTable() => _this ??= OrganizationsTable._();
   OrganizationsTable._() : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS);
   static OrganizationsTable? _this;
@@ -729,6 +764,7 @@ class OrganizationsTable extends SQLiteTable {
 /// The Modules associated with a particular Organization
 /// A particular Module can be assigned to more than one Organization.
 class OrganizationsModules extends SQLiteTable {
+  ///
   factory OrganizationsModules() => _this ??= OrganizationsModules._();
   OrganizationsModules._()
       : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_MODULES);
@@ -745,6 +781,7 @@ class OrganizationsModules extends SQLiteTable {
 /// The Submodule associated with a particular Organization
 /// A particular Submodule can be assigned to more than one Organization.
 class OrganizationsSubmodules extends SQLiteTable {
+  ///
   factory OrganizationsSubmodules() => _this ??= OrganizationsSubmodules._();
   OrganizationsSubmodules._()
       : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_SUBMODULES);
@@ -762,6 +799,7 @@ class OrganizationsSubmodules extends SQLiteTable {
 /// The Tasks associated with a particular Organization
 /// A particular Task can be assigned to more than one Organization.
 class OrganizationsTasks extends SQLiteTable {
+  ///
   factory OrganizationsTasks() => _this ??= OrganizationsTasks._();
   OrganizationsTasks._()
       : super(tableName: PlayhouseSQLiteDB.ORGANIZATIONS_TASKS);
@@ -775,15 +813,18 @@ class OrganizationsTasks extends SQLiteTable {
   }
 }
 
+///
 class SQLiteTable {
-  // extends DataFields<Map<String, dynamic>> {
+  /// extends DataFields<Map<String, dynamic>> {
   SQLiteTable({required this.tableName}) : db = PlayhouseSQLiteDB();
 
+  ///
   final PlayhouseSQLiteDB db;
 //  final List<Map<String, dynamic>> data = [];
-
+  ///
   TextEditingController? controller;
 
+  ///
   Future<bool> initAsync() async {
     //
     _keyFld = await db.keyField(tableName);
@@ -812,6 +853,7 @@ class SQLiteTable {
   List<Map<String, dynamic>> get list => _list;
   List<Map<String, dynamic>> _list = [];
 
+  ///
   Future<List<Map<String, dynamic>>> get listAll => db.getTable(tableName);
 
   /// The list of primary keys from the table.
@@ -830,18 +872,23 @@ class SQLiteTable {
     return records;
   }
 
+  ///
   String tableName = '';
   String? _keyFld = '';
 
+  ///
   String get selectAll => _selectAll;
   String _selectAll = '';
 
+  ///
   String get selectNotDeleted => _selectNotDeleted;
   String _selectNotDeleted = '';
 
+  ///
   String get selectDeleted => _selectDeleted;
   String _selectDeleted = '';
 
+  ///
   Future<List<Map<String, dynamic>>> retrieve() async {
     List<Map<String, dynamic>> list =
         await db.getTable(tableName, where: 'deleted = ?', whereArgs: [0]);
@@ -857,12 +904,16 @@ class SQLiteTable {
   /// Returns a 'saved' record if any. Implement it in add() and save().
   late Map<String, dynamic> savedRec;
 
+  ///
   Future<bool> add(Map<String, dynamic> rec) async => false;
 
+  ///
   Future<bool> save(Map<String, dynamic> rec) async => false;
 
+  ///
   Future<bool> delete(Map<String, dynamic> rec) async => false;
 
+  ///
   Future<bool> undo(Map<String, dynamic> rec) async => false;
 
   /// Gets the exception if any.

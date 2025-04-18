@@ -8,17 +8,20 @@ import 'package:playhouse/src/controller.dart';
 
 import 'package:percent_indicator/percent_indicator.dart';
 
+///
 class CompleteIndicator extends StatefulWidget {
-  const CompleteIndicator({Key? key}) : super(key: key);
+  ///
+  const CompleteIndicator({super.key});
 
   @override
   State createState() => _CompleteIndicatorState();
 
+  ///
   void setCompletion([TabController? tab]) {
     if (tab != null && tab.indexIsChanging) {
       return;
     }
-    refresh();
+    setState(() {});
   }
 }
 

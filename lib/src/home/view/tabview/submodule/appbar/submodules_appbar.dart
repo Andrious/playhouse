@@ -17,21 +17,25 @@ import 'package:path/path.dart' as p;
 /// Tabs for the Submodules
 ///
 class SubmodulesTabBar {
-  //
+  ///
   SubmodulesTabBar(this.provider) {
     // Supply the Controller.
     _con = provider.con;
   }
+
+  ///
   final SubmodulesState provider;
   late ScrapBookController _con;
 
   // SubTabController get controller => _tabController;
-  // SubTabController _tabController;
+  /// SubTabController _tabController;
   TabController get subTabController => _subTabController;
   late TabController _subTabController;
 
+  ///
   late PageCircleIndicator tabIndicator;
 
+  ///
   List<PicTab> get picTabs => _picTabs;
   late List<PicTab> _picTabs;
 
@@ -48,6 +52,7 @@ class SubmodulesTabBar {
 
   List<Widget>? _children;
 
+  ///
   void initState() {
     //
     /// Get the 'initial' index. Display the last viewed tab.
@@ -114,15 +119,23 @@ class SubmodulesTabBar {
   }
 }
 
+///
 class PicTab extends StatelessWidget {
+  ///
   const PicTab({
     Key? key,
     required this.submodule,
     required this.name,
     required this.state,
   }) : super(key: key);
+
+  ///
   final String name;
+
+  ///
   final dynamic submodule;
+
+  ///
   final SubmodulesState state;
 
   @override

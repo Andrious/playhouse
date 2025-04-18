@@ -1,4 +1,9 @@
 
+
+## 0.59.0
+April 11, 2025
+- Push latest version.
+
 ## 0.58.0
 June 06, 2023
  - Update SDK & dependencies

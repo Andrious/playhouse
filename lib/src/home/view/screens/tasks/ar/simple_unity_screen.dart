@@ -4,8 +4,12 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
+///
 class SimpleUnityScreen extends StatefulWidget {
+  ///
   const SimpleUnityScreen({Key? key, this.inScreen = false}) : super(key: key);
+
+  ///
   final bool inScreen;
   @override
   State createState() => _SimpleUnityScreen();

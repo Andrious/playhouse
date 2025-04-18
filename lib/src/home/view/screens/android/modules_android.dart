@@ -9,6 +9,7 @@ import 'package:playhouse/src/view.dart';
 /// Look to the mixin ScrapbookFields for the actual listing.
 class ModulesListAndroid extends ScrapbookListScreen<ModulesList, ModuleFields>
     with ScrapbookFields {
+  ///
   ModulesListAndroid() : super(L10n.s('Module'));
 
   @override

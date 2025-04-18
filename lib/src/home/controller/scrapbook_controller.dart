@@ -2,16 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:playhouse/src/model.dart';
-
-import 'package:playhouse/src/view.dart';
-
-import 'package:playhouse/src/controller.dart';
-
 import 'package:fluttery_framework/controller.dart' as c;
+import 'package:playhouse/src/controller.dart';
+import 'package:playhouse/src/model.dart';
+import 'package:playhouse/src/view.dart';
 
 /// The Controller for the app.
 class ScrapBookController extends c.AppController {
+  ///
   factory ScrapBookController([StateX? state]) =>
       _this ??= ScrapBookController._(state);
 
@@ -45,50 +43,60 @@ class ScrapBookController extends c.AppController {
 
   static ScrapBookController? _this;
 
+  ///
   final ScrapBookModel model;
 
+  ///
   final Widget lockImage;
 
   late String _inModuleTypeScreen;
 
-  // The current user
+  /// The current user
   late int userId;
 
-  // The current module being viewed.
+  /// The current module being viewed.
   Map<String, dynamic>? module;
 
-  // The current submodule being viewed.
+  /// The current submodule being viewed.
   late Map<String, dynamic>? submodule;
 
-  // The current tasks being viewed.
+  /// The current tasks being viewed.
   late List<Map<String, dynamic>> tasks;
 
-  // The current task being viewed.
+  /// The current task being viewed.
   late Map<String, dynamic>? task;
 
-  // The tasks currently completed.
+  /// The tasks currently completed.
   late List<Map<String, dynamic>> savedTask;
 
+  ///
   double percentComplete = 0;
 
-  // The list of task cards.
+  /// The list of task cards.
   late List<Widget> _taskCards;
 
-  // The current task card.
+  /// The current task card.
   late TaskCard? card;
 
   /// A graphical indication of Task completion.
   late CompleteIndicator _completer;
 
+  ///
   int get initialIndex => Prefs.getInt('ModuleTypeIndex');
+
+  ///
   set initialIndex(int index) => Prefs.setInt('ModuleTypeIndex', index);
 
+  ///
   int get initModuleIndex => Prefs.getInt('${moduleType}ModulesIndex');
 
+  ///
   List<String> get moduleTypes => ['Discover', 'Design', 'Build'];
 
+  ///
   String moduleType = '';
 
+  ///
   Map<String, State>? subModuleStates = {};
 
   @override
@@ -120,10 +128,11 @@ class ScrapBookController extends c.AppController {
     return init;
   }
 
+  ///
   List<Map<String, dynamic>> get modules => _modules;
   late List<Map<String, dynamic>> _modules;
 
-  // Align to the right data depending on the 'type' of Modules.
+  /// Align to the right data depending on the 'type' of Modules.
   void initTypeOfModules([int? index]) {
     //
     index ??= initialIndex;
@@ -135,6 +144,7 @@ class ScrapBookController extends c.AppController {
     initModule(initModuleIndex);
   }
 
+  ///
   List<Map<String, dynamic>> initModules(String? moduleType) {
     //
     final modules = model.modules.items;
@@ -171,6 +181,7 @@ class ScrapBookController extends c.AppController {
     return _modules;
   }
 
+  ///
   void initModule(int index) {
     //
     setModule(index);
@@ -180,6 +191,7 @@ class ScrapBookController extends c.AppController {
     initTasks(subs[0]);
   }
 
+  ///
   Map<String, dynamic>? setModule(int index) {
     //
     final recs = modules;
@@ -209,10 +221,11 @@ class ScrapBookController extends c.AppController {
     return module;
   }
 
+  ///
   List<Map<String, dynamic>> get submodules => _submodules;
   late List<Map<String, dynamic>> _submodules;
 
-  // initModules() must be called first
+  /// initModules() must be called first
   List<Map<String, dynamic>> initSubmodules() {
     //
     final id = module!['rowid'];
@@ -229,7 +242,7 @@ class ScrapBookController extends c.AppController {
     return _submodules;
   }
 
-  // initSubmodules() must be called first
+  /// initSubmodules() must be called first
   List<Map<String, dynamic>> initTasks(Map<String, dynamic>? submodule) {
     //
     percentComplete = 0;
@@ -293,6 +306,7 @@ class ScrapBookController extends c.AppController {
     completer.setCompletion();
   }
 
+  ///
   List<Map<String, dynamic>> unlockedTasks() {
     final userTask = model.usersTasks.savedRec;
 
@@ -305,6 +319,7 @@ class ScrapBookController extends c.AppController {
         .toList();
   }
 
+  ///
   TaskCard? addCard(
       Map<String, dynamic> task, List<Map<String, dynamic>> savedTask) {
     //
@@ -393,6 +408,7 @@ class ScrapBookController extends c.AppController {
     await Navigator.of(App.context!).push(route);
   }
 
+  ///
   Future<void> infoDialogue() async {
     const List<Widget> body = [
       SizedBox(height: 20),
@@ -419,6 +435,7 @@ class ScrapBookController extends c.AppController {
     ).show();
   }
 
+  ///
   List<Widget> get taskCards => _taskCards;
 
   /// A graphical indication of Task completion.

@@ -4,8 +4,10 @@
 
 import 'package:playhouse/src/view.dart';
 
+///
 class OrganizationsList extends StatefulWidget {
-  const OrganizationsList({Key? key}) : super(key: key);
+  ///
+  const OrganizationsList({super.key});
 
   @override
   State createState() =>
@@ -13,8 +15,10 @@ class OrganizationsList extends StatefulWidget {
       App.useMaterial ? OrganizationsAndroid() : OrganizationsiOS();
 }
 
+///
 class OrganizationsModuleList extends StatefulWidget {
-  const OrganizationsModuleList({Key? key}) : super(key: key);
+  ///
+  const OrganizationsModuleList({super.key});
 
   @override
   State createState() =>
@@ -22,8 +26,10 @@ class OrganizationsModuleList extends StatefulWidget {
       App.useMaterial ? OrganizationsModuleAndroid() : OrganizationsModuleiOS();
 }
 
+///
 class OrganizationsSubmoduleList extends StatefulWidget {
-  const OrganizationsSubmoduleList({Key? key}) : super(key: key);
+  ///
+  const OrganizationsSubmoduleList({super.key});
 
   @override
   // ignore: no_logic_in_create_state
@@ -32,8 +38,10 @@ class OrganizationsSubmoduleList extends StatefulWidget {
       : OrganizationsSubmoduleiOS();
 }
 
+///
 class OrganizationsTaskList extends StatefulWidget {
-  const OrganizationsTaskList({Key? key}) : super(key: key);
+  ///
+  const OrganizationsTaskList({super.key});
 
   @override
   State createState() =>

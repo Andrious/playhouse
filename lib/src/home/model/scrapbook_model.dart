@@ -2,14 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:playhouse/src/controller.dart';
 import 'package:playhouse/src/model.dart';
 
-import 'package:playhouse/src/controller.dart';
-
-/// Scrapbook SQLite Database
-import 'package:playhouse/src/home/model/sqlite_db.dart';
-
+///
 class ScrapBookModel {
+  ///
   factory ScrapBookModel() => _this ??= ScrapBookModel._();
   ScrapBookModel._()
       : app = AppController(),
@@ -30,22 +28,52 @@ class ScrapBookModel {
 
   static ScrapBookModel? _this;
 
+  ///
   final AppController app;
+
+  ///
   final PlayhouseSQLiteDB sqlDB;
+
+  ///
   final ModuleFields modules;
+
+  ///
   final SubmoduleFields submodules;
+
+  ///
   final TasksFields tasks;
+
+  ///
   final UsersTasksFields usersTasks;
+
+  ///
   final UsersScrapbookFields usersScrapbook;
+
+  ///
   final UsersFields users;
+
+  ///
   final UserModulesUnlockedFields modulesUnlocked;
+
+  ///
   final UserSubmodulesUnlockedFields submodulesUnlocked;
+
+  ///
   final UserTasksUnlockedFields tasksUnlocked;
+
+  ///
   final OrganizationsModuleFields organizationsModules;
+
+  ///
   final OrganizationsSubmoduleFields organizationsSubmodules;
+
+  ///
   final OrganizationsTaskFields organizationsTasks;
+
+  ///
   final OrganizationsFields organizations;
 
+  ///
   Future<bool> initAsync() async {
     //
     bool init = true;
@@ -59,6 +87,7 @@ class ScrapBookModel {
     return init;
   }
 
+  ///
   Future<bool> fetchData() async {
     bool fetch;
     try {
@@ -83,23 +112,32 @@ class ScrapBookModel {
     return fetch;
   }
 
+  ///
   static List<Map<String, dynamic>> mapModules = [];
 
+  ///
   static List<Map<String, dynamic>> mapSubmodules = [];
 
+  ///
   static List<Map<String, dynamic>> mapTasks = [];
 
+  ///
   static List<Map<String, dynamic>> mapUsers = [];
 
+  ///
   static List<Map<String, dynamic>> mapScrapbook = [];
 
+  ///
   static List<Map<String, dynamic>> mapOrganizations = [];
 
+  ///
   bool populateModule(Map<String, dynamic> data) => _tryMap(data, _mapModule);
 
+  ///
   bool populateSubmodule(Map<String, dynamic> data) =>
       _tryMap(data, _mapSubmodule);
 
+  ///
   bool populateTask(Map<String, dynamic> data) => _tryMap(data, _mapTask);
 
   void _mapModule(Map<String, dynamic> data) => mapModules.add(data);
@@ -108,15 +146,18 @@ class ScrapBookModel {
 
   void _mapTask(Map<String, dynamic> data) => mapTasks.add(data);
 
+  ///
   bool populateScrapbook(Map<String, dynamic> data) =>
       _tryMap(data, _mapScrapbook);
 
   void _mapScrapbook(Map<String, dynamic> data) => mapScrapbook.add(data);
 
+  ///
   bool populateUsers(Map<String, dynamic> data) => _tryMap(data, _mapUsers);
 
   void _mapUsers(Map<String, dynamic> data) => mapUsers.add(data);
 
+  ///
   bool populateOrganizations(Map<String, dynamic> data) =>
       _tryMap(data, _mapOrganizations);
 
@@ -136,6 +177,7 @@ class ScrapBookModel {
     return pop;
   }
 
+  ///
   Future<bool> saveUserTask(Map<String, dynamic> userTask) =>
       usersTasks.save(userTask);
 }

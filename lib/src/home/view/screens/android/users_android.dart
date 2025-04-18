@@ -11,6 +11,7 @@ import 'package:playhouse/src/controller.dart';
 /// Look to the mixin ScrapbookFields for the actual listing.
 class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
     with ScrapbookFields {
+  ///
   UsersListAndroid() : super('User'.tr);
 
   @override
@@ -102,7 +103,9 @@ class UsersListAndroid extends ScrapbookListScreen<UsersList, UsersFields>
       fields.getNewRecord();
 }
 
+///
 class ModulesUnlocked extends Unlocked<UsersModulesUnlocked> {
+  ///
   ModulesUnlocked()
       : super(title: 'User Modules Unlocked', con: ScrapBookController());
 
@@ -110,7 +113,9 @@ class ModulesUnlocked extends Unlocked<UsersModulesUnlocked> {
   PlayHouseFields get fields => UserModulesUnlockedFields();
 }
 
+///
 class SubmodulesUnlocked extends Unlocked<UsersSubmodulesUnlocked> {
+  ///
   SubmodulesUnlocked()
       : super(title: 'User Submodules Unlocked', con: ScrapBookController());
 
@@ -118,7 +123,9 @@ class SubmodulesUnlocked extends Unlocked<UsersSubmodulesUnlocked> {
   PlayHouseFields get fields => UserSubmodulesUnlockedFields();
 }
 
+///
 class TasksUnlocked extends Unlocked<UsersTasksUnlocked> {
+  ///
   TasksUnlocked()
       : super(title: 'User Tasks Unlocked', con: ScrapBookController());
 
@@ -126,11 +133,18 @@ class TasksUnlocked extends Unlocked<UsersTasksUnlocked> {
   PlayHouseFields get fields => UserTasksUnlockedFields();
 }
 
+///
 abstract class Unlocked<T extends StatefulWidget> extends StateX<T> {
+  ///
   Unlocked({this.title = 'Unlocked', this.con}) : super(controller: con);
+
+  ///
   StateXController? con;
+
+  ///
   String title;
 
+  ///
   PlayHouseFields get fields;
 
   @override

@@ -2,17 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:dbutils/firebase_db.dart' as f;
-import 'package:flutter/widgets.dart' show AppLifecycleState;
-
+import 'package:playhouse/src/controller.dart' show AppController;
 import 'package:playhouse/src/model.dart';
-import 'package:playhouse/src/controller.dart' show App, AppController;
 
+///
 class FirebaseUser with FirebaseOperations {
+  ///
   factory FirebaseUser() => _this ??= FirebaseUser._();
   FirebaseUser._() {
     _table = FireStoreCollection('users');
@@ -29,9 +25,12 @@ class FirebaseUser with FirebaseOperations {
   }
 
   CollectionReference? _anonymousUser;
+
+  ///
   DocumentReference get devices => UserDevices()._reference;
   CollectionReference? _anonymousDeviceRef;
 
+  ///
   void removeAnonymous() {
     // if (_anonymousUser == null) {
     //   //     _anonymousUser = userRef;
@@ -42,7 +41,9 @@ class FirebaseUser with FirebaseOperations {
     // }
   }
 
+  ///
   Future<bool> deleteRef(CollectionReference ref) async {
+    ///
     bool delete = false;
     // if (ref != null) {
     //   try {
@@ -55,6 +56,7 @@ class FirebaseUser with FirebaseOperations {
     return delete;
   }
 
+  ///
   Future<bool> userStamp() => Future.value(true);
 //      updateRef(_table.collection.doc(appCon.uid), {'timestamp': timeStamp});
 
@@ -77,7 +79,9 @@ class FirebaseUser with FirebaseOperations {
   }
 }
 
+///
 class UserDevices with FirebaseOperations {
+  ///
   factory UserDevices() => _this ??= UserDevices._();
   UserDevices._() {
     _table = FireStoreCollection('devices');
@@ -95,13 +99,17 @@ class UserDevices with FirebaseOperations {
   // }
 }
 
+///
 mixin FirebaseOperations {
   //
   late FireStoreCollection _table;
+
+  ///
   final appCon = AppController();
   late DocumentReference _reference;
   late Map<String, dynamic> _data;
 
+  ///
   Future<bool> initAsync() async {
     bool init;
     try {
@@ -137,7 +145,7 @@ mixin FirebaseOperations {
     // }
   }
 
-  // Set the timeStamp this program was last run.
+  /// Set the timeStamp this program was last run.
   int get timeStamp => DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
   /// Update an existing record or create a new one if indicated.

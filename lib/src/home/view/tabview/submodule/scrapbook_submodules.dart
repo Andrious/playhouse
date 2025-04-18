@@ -5,34 +5,34 @@
 /// The database code
 
 import 'dart:math' as math;
-import 'package:flutter/foundation.dart' show precisionErrorTolerance;
-
-import 'package:playhouse/src/model.dart';
-
-/// The UI code
-import 'package:playhouse/src/view.dart';
 
 /// The Event handling code
 import 'package:playhouse/src/controller.dart';
 
+/// The UI code
+import 'package:playhouse/src/view.dart';
+
 /// The Submodules are the Picture Screens.
 class SubmodulesScreen extends StatefulWidget {
+  ///
   const SubmodulesScreen({Key? key}) : super(key: key);
 
   @override
   State createState() => SubmodulesState();
 }
 
+///
 class SubmodulesState extends StateX<SubmodulesScreen>
     with TickerProviderStateMixin, StateSet {
-  SubmodulesState() : super(controller:ScrapBookController()) {
+  ///
+  SubmodulesState() : super(controller: ScrapBookController()) {
     _con = controller as ScrapBookController;
   }
 
 //  SubmodulesTabBar get tabBar => _sbSubTabBar;
   late SubmodulesTabBar _sbSubTabBar;
 
-  // The app's controller
+  /// The app's controller
   ScrapBookController get con => _con;
   late ScrapBookController _con;
 
@@ -123,6 +123,7 @@ class SubmodulesState extends StateX<SubmodulesScreen>
         );
       });
 
+  ///
   Widget overlay() {
     //
     Widget overlay;
@@ -151,10 +152,12 @@ class SubmodulesState extends StateX<SubmodulesScreen>
     return overlay;
   }
 
+  ///
   void onPressed() {
     _movePanel();
   }
 
+  ///
   bool get isPanelUp {
     final AnimationStatus status = _animationController.status;
     return status == AnimationStatus.completed ||
@@ -197,9 +200,10 @@ class BigPageScrollPhysics extends ScrollPhysics {
   const BigPageScrollPhysics({ScrollPhysics? parent, required this.controller})
       : super(parent: parent);
 
-//  final GITabController controller;
+  ///  final GITabController controller;
   final TabController controller;
 
+  ///
   double get viewportFraction => 2;
 
   @override
@@ -210,10 +214,10 @@ class BigPageScrollPhysics extends ScrollPhysics {
 
   @override
   double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
-    if (parent == null) {
-      return offset;
+    if (parent != null) {
+      offset = parent!.applyPhysicsToUserOffset(position, offset);
     }
-    return parent!.applyPhysicsToUserOffset(position, offset);
+    return offset;
   }
 
   @override
@@ -225,7 +229,17 @@ class BigPageScrollPhysics extends ScrollPhysics {
         (velocity >= 0.0 && position.pixels >= position.maxScrollExtent)) {
       return super.createBallisticSimulation(position, velocity);
     }
-    final Tolerance tolerance = this.tolerance;
+
+    final Tolerance tolerance = toleranceFor(FixedScrollMetrics(
+      minScrollExtent: null,
+      maxScrollExtent: null,
+      pixels: null,
+      viewportDimension: null,
+      axisDirection: AxisDirection.down,
+      devicePixelRatio:
+          PlatformDispatcher.instance.views.first.devicePixelRatio,
+    ));
+
     final double target = _getTargetPixels(position, tolerance, velocity);
     if (target != position.pixels) {
       final simulation = ScrollSpringSimulation(

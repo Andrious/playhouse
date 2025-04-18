@@ -4,6 +4,7 @@
 
 import 'package:playhouse/src/model.dart';
 
+///
 Future<void> loadDiscoverMod03Sub01Tasks(Database db) async {
   await db.execute('''
        INSERT INTO ${PlayhouseSQLiteDB.TASKS} (

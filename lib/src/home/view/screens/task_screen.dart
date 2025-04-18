@@ -8,9 +8,15 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
+///
 class TaskScreen extends StatefulWidget {
+  ///
   const TaskScreen({Key? key, required this.card}) : super(key: key);
+
+  ///
   final TaskCard card;
+
+  ///
   @override
   State createState() => _TaskScreenState(card);
 }

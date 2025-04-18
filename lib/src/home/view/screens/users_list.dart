@@ -4,7 +4,9 @@
 
 import 'package:playhouse/src/view.dart';
 
+///
 class UsersList extends StatefulWidget {
+  ///
   const UsersList({Key? key}) : super(key: key);
 
   @override
@@ -12,21 +14,27 @@ class UsersList extends StatefulWidget {
   State createState() => App.useMaterial ? UsersListAndroid() : UsersListiOS();
 }
 
+///
 class UsersModulesUnlocked extends StatefulWidget {
+  ///
   const UsersModulesUnlocked({Key? key}) : super(key: key);
 
   @override
   State createState() => ModulesUnlocked();
 }
 
+///
 class UsersSubmodulesUnlocked extends StatefulWidget {
+  ///
   const UsersSubmodulesUnlocked({Key? key}) : super(key: key);
 
   @override
   State createState() => SubmodulesUnlocked();
 }
 
+///
 class UsersTasksUnlocked extends StatefulWidget {
+  ///
   const UsersTasksUnlocked({Key? key}) : super(key: key);
 
   @override

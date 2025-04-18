@@ -6,16 +6,22 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:page_view_indicators/circle_page_indicator.dart';
 
+///
 class PageCircleIndicator extends StatefulWidget {
+  ///
   const PageCircleIndicator({
     Key? key,
     required this.itemCount,
     this.dotSize = 12,
   }) : super(key: key);
 
+  ///
   final int itemCount;
+
+  ///
   final double? dotSize;
 
+  ///
   int get value {
     final state = StateSet.to<_PageCircleIndicatorState>();
     return state!.value;

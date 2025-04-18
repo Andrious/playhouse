@@ -9,6 +9,7 @@ import 'package:playhouse/src/view.dart';
 /// Look to the mixin ScrapbookFields for the actual listing.
 class TasksListAndroid extends ScrapbookListScreen<TasksList, TasksFields>
     with ScrapbookFields {
+  ///
   TasksListAndroid() : super('Task'.tr);
 
   @override

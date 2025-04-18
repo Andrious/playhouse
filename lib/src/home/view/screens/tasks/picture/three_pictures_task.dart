@@ -13,7 +13,10 @@ import 'package:playhouse/src/controller.dart';
 
 /// State of the Task:  Favorite, Incomplete, etc.
 class ThreePicturesScreen extends StatefulWidget {
-  const ThreePicturesScreen(this.parent, {Key? key}) : super(key: key);
+  ///
+  const ThreePicturesScreen(this.parent, {super.key});
+
+  ///
   final PanelScreenState parent;
   @override
   State createState() => _ThreePicturesScreenState();

@@ -9,8 +9,10 @@ import 'package:playhouse/src/controller.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+///
 abstract class PanelScreenState<T extends StatefulWidget> extends StateX<T>
     with TickerProviderStateMixin, StateSet {
+  ///
   PanelScreenState(this.card) : super(controller: card.con) {
     // Assign the Controller right away.
     con = card.con;
@@ -22,16 +24,21 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateX<T>
     panelKey =
         '${con.moduleType}${con.module!['name']}${con.task!['name']}_panel';
   }
+
+  ///
   final TaskCard card;
-  // A Preference Panel Key
+
+  /// A Preference Panel Key
   late String panelKey;
 
+  ///
   late ScrapBookController con;
 
 //  Widget panelScreen;
 
   late AnimationController _animationController;
 
+  ///
   late double maxHeight;
 
   var _panelHeight = 0.0;
@@ -196,6 +203,7 @@ abstract class PanelScreenState<T extends StatefulWidget> extends StateX<T>
     });
   }
 
+  ///
   bool get isPanelUp {
     final AnimationStatus status = _animationController.status;
     return status == AnimationStatus.completed ||
@@ -258,8 +266,10 @@ class _SwipeUpDetector extends GestureDetector {
   static double _end = double.infinity;
 }
 
+///
 class EmptyPanel extends StatefulWidget {
-  const EmptyPanel({Key? key}) : super(key: key);
+  ///
+  const EmptyPanel({super.key});
   @override
   State createState() => _EmptyPanelState();
 }

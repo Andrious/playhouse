@@ -12,18 +12,22 @@ import 'package:playhouse/src/model.dart'
 
 import 'package:playhouse/src/controller.dart' show Auth;
 
+///
 class PlayhouseFireStoreDB {
+  ///
   factory PlayhouseFireStoreDB() => _this ??= PlayhouseFireStoreDB._();
 
   PlayhouseFireStoreDB._() : model = ScrapBookModel();
 //      : _auth = Auth(),
   static PlayhouseFireStoreDB? _this;
 
-  //
+  ///
   late FireStoreCollection db;
+
+  ///
   final ScrapBookModel model;
 //  final Auth _auth;
-
+  ///
   Future<bool> downloadDB() {
     final table = FireStoreCollection('Modules');
     return _populateData(table.collection!, 'Modules, Submodules, Tasks', null);

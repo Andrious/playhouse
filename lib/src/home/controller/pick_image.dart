@@ -22,12 +22,18 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:uuid/uuid.dart';
 
+///
 class PickImage {
-//
+  ///
   TaskCard? card;
+
+  ///
   Map<String, dynamic>? userTask = {};
+
+  ///
   String? key;
 
+  ///
   void initState(TaskCard? card) {
     //
     if (card != null && this.card == null) {
@@ -41,10 +47,12 @@ class PickImage {
     }
   }
 
+  ///
   void dispose() {
     card = null;
   }
 
+  ///
   Future<Widget?> getImage() async {
     Widget? image;
 
@@ -86,6 +94,7 @@ class PickImage {
   //   return recordImage(path);
   // }
 
+  ///
   Future<void> pickImage() async {
     final pick = await ImagesPicker.pick();
     if (pick != null && pick.isNotEmpty) {
@@ -95,6 +104,7 @@ class PickImage {
     }
   }
 
+  ///
   void displayImage(String path) {
     // ignore: invalid_use_of_protected_member
     card?.setState(() {});
@@ -103,6 +113,7 @@ class PickImage {
         Crop(controller: CropController(), child: Image.file(File(path)));
   }
 
+  ///
   Future<bool> saveJpg(Uint8List image) async {
     //
     Directory? directory;
@@ -153,6 +164,7 @@ class PickImage {
     return save;
   }
 
+  ///
   static Future<String> encodeFile(String path) async {
     //
     String code;
@@ -171,6 +183,7 @@ class PickImage {
     return code;
   }
 
+  ///
   static Future<String> printBytes(String name) async {
     ByteData? bytes;
     String code;
@@ -267,6 +280,7 @@ class PickImage {
     return newFilePath;
   }
 
+  ///
   Future<String> localDirectory(String directory) async {
     //
     if (directory == null || directory.isEmpty) {

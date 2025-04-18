@@ -17,7 +17,6 @@ export 'package:playhouse/src/home/controller/tasks/picture_tasks.dart';
 export 'package:playhouse/src/home/controller/tasks/abc_tasks.dart';
 export 'package:playhouse/src/home/controller/tasks/ar_tasks.dart';
 export 'package:playhouse/src/home/controller/tasks/pencil_tasks.dart';
-export 'package:playhouse/src/home/controller/tasks/picture_tasks.dart';
 export 'package:playhouse/src/home/controller/tasks/movie_tasks.dart';
 
 /// The Tasks for the Home screen

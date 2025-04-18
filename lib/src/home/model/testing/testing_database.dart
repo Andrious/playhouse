@@ -17,7 +17,9 @@ import 'module2_vegetation_material_assessment.dart';
 
 import 'module3_soil_and_grading_assessment.dart';
 
+///
 class DatabaseTest {
+  ///
   factory DatabaseTest() => _this ??= DatabaseTest._();
   DatabaseTest._()
 //      : _auth = Auth() {
@@ -169,6 +171,7 @@ class DatabaseTest {
     return createRecord(doc, data);
   }
 
+  ///
   bool createNTasks({
     DocumentReference? doc,
     String? id,
@@ -250,10 +253,11 @@ class DatabaseTest {
 
   /// Create an individual 'user' Firestore record.
   bool createUserRecord(DocumentReference doc, Map<String, dynamic> data) {
-    var create = true;
+    final create = true;
     return create;
   }
 
+  ///
   void insertShadow() {
     module1SunAndShadow();
     module2VegetationAndMaterialsAssessment();

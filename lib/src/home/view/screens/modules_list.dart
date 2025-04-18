@@ -4,8 +4,10 @@
 
 import 'package:playhouse/src/view.dart';
 
+///
 class ModulesList extends StatefulWidget {
-  const ModulesList({Key? key}) : super(key: key);
+  ///
+  const ModulesList({super.key});
 
   @override
   State createState() =>

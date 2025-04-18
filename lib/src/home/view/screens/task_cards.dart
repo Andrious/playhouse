@@ -2,11 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:playhouse/src/controller.dart';
 import 'package:playhouse/src/view.dart';
 
-import 'package:playhouse/src/controller.dart';
-
+///
 class QuestionTask extends TaskCard {
+  ///
   QuestionTask(Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
       {Key? key})
       : super(
@@ -17,7 +18,9 @@ class QuestionTask extends TaskCard {
         );
 }
 
+///
 class ABCTask extends TaskCard {
+  ///
   ABCTask(Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
       {Key? key})
       : super(
@@ -28,7 +31,9 @@ class ABCTask extends TaskCard {
         );
 }
 
+///
 class ARTask extends TaskCard {
+  ///
   ARTask(Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
       {Key? key})
       : super(
@@ -39,7 +44,9 @@ class ARTask extends TaskCard {
         );
 }
 
+///
 class PencilTask extends TaskCard {
+  ///
   PencilTask(Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
       {Key? key})
       : super(
@@ -50,7 +57,9 @@ class PencilTask extends TaskCard {
         );
 }
 
+///
 class PictureTask extends TaskCard {
+  ///
   PictureTask(
     Map<String, dynamic> task,
     List<Map<String, dynamic>> userTask, {
@@ -67,7 +76,9 @@ class PictureTask extends TaskCard {
         );
 }
 
+///
 class MovieCameraTask extends TaskCard {
+  ///
   MovieCameraTask(
       Map<String, dynamic> task, List<Map<String, dynamic>> userTask,
       {Key? key})
@@ -79,7 +90,9 @@ class MovieCameraTask extends TaskCard {
         );
 }
 
+///
 class PickPicture extends PictureTask {
+  ///
   PickPicture(
     Map<String, dynamic> task,
     List<Map<String, dynamic>> userTask, {
@@ -92,6 +105,8 @@ class PickPicture extends PictureTask {
           infoIcon: false,
           key: key,
         );
+
+  ///
   final bool Function() isCompleted;
 
   @override
@@ -107,7 +122,9 @@ class PickPicture extends PictureTask {
   }
 }
 
+///
 class TaskCard extends StatefulWidget {
+  ///
   TaskCard({
     Key? key,
     required this.task,
@@ -119,15 +136,28 @@ class TaskCard extends StatefulWidget {
         image = PickImage(),
         super(key: key);
 
+  ///
   final Map<String, dynamic> task;
+
+  ///
   final List<Map<String, dynamic>> userTask;
+
+  ///
   final String name;
+
+  ///
   final bool pickImage;
+
+  ///
   final bool infoIcon;
 
+  ///
   final ScrapBookController con;
+
+  ///
   final PickImage image;
 
+  ///
   Widget get icon {
     final _TaskCardsState cardState = state! as _TaskCardsState;
     return cardState.icon!;

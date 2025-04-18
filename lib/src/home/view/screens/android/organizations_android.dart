@@ -10,6 +10,7 @@ import 'package:playhouse/src/view.dart';
 class OrganizationsAndroid
     extends ScrapbookListScreen<OrganizationsList, OrganizationsFields>
     with ScrapbookFields {
+  ///
   OrganizationsAndroid() : super('Organizations'.tr);
 
   @override
@@ -44,8 +45,10 @@ class OrganizationsAndroid
       fields.getNewRecord();
 }
 
+///
 class OrganizationsModuleAndroid extends ScrapbookListScreen<
     OrganizationsModuleList, OrganizationsModuleFields> with ScrapbookFields {
+  ///
   OrganizationsModuleAndroid() : super(L10n.s('Organizations Module'));
 
   @override
@@ -101,9 +104,11 @@ class OrganizationsModuleAndroid extends ScrapbookListScreen<
   }
 }
 
+///
 class OrganizationsSubmoduleAndroid extends ScrapbookListScreen<
     OrganizationsSubmoduleList,
     OrganizationsSubmoduleFields> with ScrapbookFields {
+  ///
   OrganizationsSubmoduleAndroid() : super(L10n.s('Organizations Submodule'));
 
   @override
@@ -137,9 +142,11 @@ class OrganizationsSubmoduleAndroid extends ScrapbookListScreen<
       fields.getNewRecord();
 }
 
+///
 class OrganizationsTaskAndroid
     extends ScrapbookListScreen<OrganizationsTaskList, OrganizationsTaskFields>
     with ScrapbookFields {
+  ///
   OrganizationsTaskAndroid() : super('Organizations Task'.tr);
 
   @override

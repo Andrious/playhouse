@@ -19,11 +19,15 @@ class ScrapBookApp extends StatefulWidget {
   State createState() => ScrapBookState();
 }
 
+///
 class ScrapBookState extends StateX<ScrapBookApp>
     with SingleTickerProviderStateMixin {
+  ///
   ScrapBookState() : super(controller: ScrapBookController()) {
     con = controller as ScrapBookController;
   }
+
+  ///
   late ScrapBookController con;
   late TabController _mobTypeTabController;
 

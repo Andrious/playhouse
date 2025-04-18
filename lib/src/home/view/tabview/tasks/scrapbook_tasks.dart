@@ -3,20 +3,21 @@
 // found in the LICENSE file.
 
 /// The database code
-import 'package:playhouse/src/model.dart';
-
-/// The UI code
-import 'package:playhouse/src/view.dart';
+/// Special icons used
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// The Event handling code
 import 'package:playhouse/src/controller.dart';
 
-/// Special icons used
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+/// The UI code
+import 'package:playhouse/src/view.dart';
 
 /// State of the Task:  Favorite, Incomplete, etc.
 class ScrapbookTasksScreen extends StatefulWidget {
+  ///
   const ScrapbookTasksScreen({Key? key, required this.tab}) : super(key: key);
+
+  ///
   final PicTab tab;
 
   @override
@@ -95,7 +96,7 @@ class _ScrapbookTasksScreenState extends StateX<ScrapbookTasksScreen>
           flex: submoduleState!.isPanelUp ? 3 : 30,
           child: Padding(
             padding: submoduleState!.isPanelUp
-                ? const EdgeInsets.only(top: 20, left: 20, bottom: 10)
+                ? const EdgeInsets.only(top: 20, left: 20, bottom: 2)
                 : const EdgeInsets.only(top: 10, left: 20, bottom: 10),
             child: InkWell(
               onTap: () {
@@ -139,49 +140,46 @@ class _ScrapbookTasksScreenState extends StateX<ScrapbookTasksScreen>
             ),
           ),
         ),
-        Flexible(
-          flex: 3,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Tooltip(
-                message: 'View All'.tr,
-                child: IconButton(
-                  onPressed: () => setState(submoduleState!.onPressed),
-                  icon: const Icon(FontAwesomeIcons.angleUp),
-                  style: btnStyle,
-                ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Tooltip(
+              message: 'View All'.tr,
+              child: IconButton(
+                onPressed: () => setState(submoduleState!.onPressed),
+                icon: const Icon(FontAwesomeIcons.angleUp),
+                style: btnStyle,
               ),
-              Tooltip(
-                message: 'To Do'.tr,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    FlutterIcons.reminder,
-                  ),
-                  style: btnStyle,
+            ),
+            Tooltip(
+              message: 'To Do'.tr,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  FlutterIcons.reminder,
                 ),
+                style: btnStyle,
               ),
-              Tooltip(
-                message: 'Done'.tr,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.done),
-                  style: btnStyle,
+            ),
+            Tooltip(
+              message: 'Done'.tr,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.done),
+                style: btnStyle,
+              ),
+            ),
+            Tooltip(
+              message: 'Favourites'.tr,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.star,
                 ),
+                style: btnStyle,
               ),
-              Tooltip(
-                message: 'Favourites'.tr,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.star,
-                  ),
-                  style: btnStyle,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

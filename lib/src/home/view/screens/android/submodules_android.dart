@@ -10,6 +10,7 @@ import 'package:playhouse/src/view.dart';
 class SubmodulesListAndroid
     extends ScrapbookListScreen<SubmodulesList, SubmoduleFields>
     with ScrapbookFields {
+  ///
   SubmodulesListAndroid() : super('Submodule'.tr);
 
   @override

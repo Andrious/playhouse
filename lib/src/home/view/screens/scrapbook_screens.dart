@@ -8,21 +8,29 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
+///
 typedef WidgetListFunc = List<Widget> Function(
     Map<String, FieldWidgets<PlayHouseFields>> record, VoidCallback onTap);
 
+///
 typedef WidgetEditFunc = List<Widget> Function(
     Map<String, FieldWidgets<PlayHouseFields>> record);
 
+///
 abstract class ScrapbookListScreen<T extends StatefulWidget,
     U extends PlayHouseFields> extends State<T> {
+  ///
   ScrapbookListScreen([this.title]) {
     con = ScrapBookController();
   }
 
+  ///
   final String? title;
+
+  ///
   late ScrapBookController con;
 
+  ///
   U get fields;
 
   @override
@@ -101,23 +109,34 @@ abstract class ScrapbookListScreen<T extends StatefulWidget,
   List<Widget> editWidgets(Map<String, FieldWidgets<PlayHouseFields>> record) =>
       [];
 
+  ///
   List<Widget> columnWidgets(
       Map<String, FieldWidgets<PlayHouseFields>> fldWidget);
 
+  ///
   List<Map<String, FieldWidgets<PlayHouseFields>>> fetchData();
 
+  ///
   Map<String, FieldWidgets<PlayHouseFields>> newRecord();
 }
 
+///
 class ScrapbookDetailsScreen extends StatefulWidget {
+  ///
   const ScrapbookDetailsScreen(
     this.record,
     this.addedWidgets,
     this.widgetEdit, {
     Key? key,
   }) : super(key: key);
+
+  ///
   final Map<String, FieldWidgets<PlayHouseFields>> record;
+
+  ///
   final WidgetListFunc addedWidgets;
+
+  ///
   final WidgetEditFunc widgetEdit;
   @override
   State createState() => _ScrapbookDetailsScreenState();
@@ -201,14 +220,21 @@ class _ScrapbookDetailsScreenState extends State<ScrapbookDetailsScreen> {
 
 /// To edit the data
 class ScrapbookEditScreen extends StatefulWidget {
+  ///
   const ScrapbookEditScreen({
     this.record,
     this.widgetEdit,
     this.title,
     Key? key,
   }) : super(key: key);
+
+  ///
   final Map<String, FieldWidgets<PlayHouseFields>>? record;
+
+  ///
   final WidgetEditFunc? widgetEdit;
+
+  ///
   final String? title;
   @override
   //ignore: no_logic_in_create_state
@@ -216,7 +242,8 @@ class ScrapbookEditScreen extends StatefulWidget {
 }
 
 class _ScrapbookEditScreenState extends StateX<ScrapbookEditScreen> {
-  _ScrapbookEditScreenState([StateXController? controller]) : super(controller: controller);
+  _ScrapbookEditScreenState([StateXController? controller])
+      : super(controller: controller);
 
   @override
   void initState() {
@@ -287,5 +314,6 @@ class _ScrapbookEditScreenState extends StateX<ScrapbookEditScreen> {
   }
 }
 
+///
 String? notEmpty(String? v) =>
     v == null || v.isEmpty ? 'Cannot be empty' : null;

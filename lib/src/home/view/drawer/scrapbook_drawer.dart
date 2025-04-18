@@ -11,9 +11,12 @@ import 'package:playhouse/src/view.dart';
 /// The Event handling code
 import 'package:playhouse/src/controller.dart';
 
+///
 class ScrapBookDrawer extends StatefulWidget {
-  const ScrapBookDrawer({Key? key, this.state}) : super(key: key);
+  ///
+  const ScrapBookDrawer({super.key, this.state});
 
+  ///
   final StateX? state;
 
   @override
@@ -26,7 +29,7 @@ class _ScrapBookDrawerState extends State<ScrapBookDrawer> {
 //    final List<Widget> widgets = [LogInLogOut()];
     final List<Widget> widgets = [];
 
-    if (App.inDebugger) {
+    if (App.inDebugMode) {
       //
       widgets.addAll([
         const Divider(),
@@ -98,7 +101,9 @@ class _ScrapBookDrawerState extends State<ScrapBookDrawer> {
   }
 }
 
+///
 class LogInLogOut extends StatelessWidget {
+  ///
   LogInLogOut({Key? key})
       : _appCon = AppController(),
         //       _auth = SignIn(),

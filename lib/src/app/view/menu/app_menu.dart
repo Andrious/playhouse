@@ -20,6 +20,7 @@ import 'package:playhouse/src/view.dart'
 
 import 'package:playhouse/src/controller.dart';
 
+///
 class AppMenu {
   /// Only one instance of the class
   factory AppMenu() => _this ??= AppMenu._();
@@ -114,6 +115,6 @@ class AppMenu {
     return App.menu.popupMenuButton;
   }
 
-  // Supply what the interface
+  /// Supply what the interface
   String get interface => App.useMaterial ? 'Material' : 'Cupertino';
 }

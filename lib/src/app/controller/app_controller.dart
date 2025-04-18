@@ -26,7 +26,9 @@ import 'package:fluttery_framework/controller.dart' as c;
 
 import 'package:playhouse/src/controller.dart' show SignIn;
 
+///
 class AppController extends c.AppController {
+  ///
   factory AppController() => _this ??= AppController._();
   AppController._();
 //  : _auth = SignIn();
@@ -66,7 +68,7 @@ class AppController extends c.AppController {
         handler: crash.recordFlutterError, report: crash.recordError);
 
     // If true, then crash reporting data is sent to Firebase.
-    await crash.setCrashlyticsCollectionEnabled(!App.inDebugger);
+    await crash.setCrashlyticsCollectionEnabled(!App.inDebugMode);
 
     return true;
   }
@@ -107,6 +109,7 @@ class AppController extends c.AppController {
   //   }
   // }
 
+  ///
   Future<bool> signInWithTwitter() async {
     await MsgBox(
             title: 'Playhouse Under Development',
@@ -145,6 +148,7 @@ class AppController extends c.AppController {
     // return signIn;
   }
 
+  ///
   Future<bool> signInEmailPassword(BuildContext context) async {
     await MsgBox(
             title: 'Playhouse Under Development',
@@ -185,7 +189,7 @@ class AppController extends c.AppController {
 //     return signIn;
 //  }
 
-  // logout and refresh
+  /// logout and refresh
   void logOut() {
     // signOut();
     setState(() {});
@@ -202,7 +206,7 @@ class AppController extends c.AppController {
   // FirebaseCrashlytics.instance.setUserIdentifier(_auth.name);
 //  }
 
-  // Stamp the user information to the firebase database.
+  /// Stamp the user information to the firebase database.
   void userStamp() => FirebaseUser().userStamp();
 
   // String get uid => _auth.uid;
@@ -226,6 +230,7 @@ class AppController extends c.AppController {
   // /// Is the user 'logged in' through a third-party (ex. Google or Facebook)
   // bool get loggedIn => _auth.loggedIn;
 
+  ///
   Object? getError([Object? error]) {
     if (error == null) {
       error = _error;
@@ -236,6 +241,7 @@ class AppController extends c.AppController {
     return error;
   }
 
+  ///
   bool get inError {
     final error = _error;
     _error = null;

@@ -29,8 +29,10 @@ import 'package:playhouse/src/view.dart'
         VoidCallback,
         Widget;
 
+// ignore: avoid_classes_with_only_static_members
+///
 class Settings {
-  //
+  ///
   static bool get(String? setting) {
     if (setting == null || setting.trim().isEmpty) {
       return false;
@@ -38,6 +40,7 @@ class Settings {
     return Prefs.getBool(setting, false);
   }
 
+  ///
   static Future<bool> set(String? setting, {bool? on}) {
     if (setting == null || setting.trim().isEmpty) {
       return Future.value(false);
@@ -45,27 +48,33 @@ class Settings {
     return Prefs.setBool(setting, on);
   }
 
+  ///
   static bool getOrder() {
     return Prefs.getBool('order_of_items', false);
   }
 
+  ///
   static Future<bool> setOrder({bool? on}) {
     return Prefs.setBool('order_of_items', on);
   }
 
+  ///
   static bool getLeftHanded() {
     return Prefs.getBool('left_handed', false);
   }
 
+  ///
   static Future<bool> setLeftHanded({bool? on}) {
     return Prefs.setBool('left_handed', on);
   }
 
+  ///
   static StatelessWidget tapText(String text, VoidCallback onTap,
       {TextStyle? style}) {
     return AppSettings.tapText(text, onTap, style: style);
   }
 
+  ///
   static Widget aboutTile(BuildContext context) {
     return SingleChildScrollView(
       child: SafeArea(
@@ -81,10 +90,11 @@ class Settings {
     );
   }
 
+  ///
   static void showAboutDialog(BuildContext context) {
     //
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.bodyText1!;
+    final TextStyle aboutTextStyle = themeData.textTheme.bodyLarge!;
     final TextStyle linkStyle =
         aboutTextStyle.copyWith(color: themeData.colorScheme.secondary);
 
@@ -121,9 +131,10 @@ class Settings {
     );
   }
 
+  ///
   static List<Widget> aboutBoxChildren(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.bodyText1!;
+    final TextStyle aboutTextStyle = themeData.textTheme.bodyLarge!;
     final TextStyle linkStyle =
         aboutTextStyle.copyWith(color: themeData.colorScheme.secondary);
     return [

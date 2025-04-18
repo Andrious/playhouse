@@ -48,6 +48,8 @@ class ModuleTypeScreenState extends StateX<ModuleTypeScreen>
   }
 
   late ModulesAppBar _sbModAppBar;
+
+  ///
   ScrapBookController get con => _con;
   late ScrapBookController _con;
 
@@ -84,6 +86,8 @@ class ModulesAppBar {
     // Supply the Controller.
     _con = provider.con;
   }
+
+  ///
   final ModuleTypeScreenState provider;
   late ScrapBookController _con;
 

@@ -8,4 +8,5 @@ import 'package:playhouse/src/view.dart';
 
 import 'package:playhouse/src/controller.dart';
 
+///
 class SubmodulesListiOS extends SubmodulesListAndroid {}

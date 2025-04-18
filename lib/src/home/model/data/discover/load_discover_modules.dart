@@ -4,6 +4,7 @@
 
 import 'package:playhouse/src/model.dart';
 
+///
 Future<void> loadDiscoverModulesDB(Database db) async {
 /*
 * 9

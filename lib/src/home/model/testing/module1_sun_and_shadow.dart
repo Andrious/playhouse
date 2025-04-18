@@ -10,6 +10,7 @@ import 'testing_database.dart';
 
 final _db = DatabaseTest();
 
+///
 void module1SunAndShadow() {
   //
   final DocumentReference modRef =
@@ -26,6 +27,7 @@ void module1SunAndShadow() {
   solarPathTasks(modRef);
 }
 
+///
 void sunExposure(DocumentReference modRef) {
   final DocumentReference doc =
       FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
@@ -78,6 +80,7 @@ void sunExposure(DocumentReference modRef) {
   );
 }
 
+///
 void shadowStudies(DocumentReference modRef) {
   final DocumentReference doc =
       FireStoreCollection('${modRef.path}/Submodules').collection!.doc();
@@ -130,6 +133,7 @@ void shadowStudies(DocumentReference modRef) {
   );
 }
 
+///
 void solarPathTasks(DocumentReference modRef) {
   final DocumentReference doc =
       FireStoreCollection('${modRef.path}/Submodules').collection!.doc();

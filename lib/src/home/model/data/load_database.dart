@@ -5,6 +5,7 @@
 import 'package:playhouse/src/model.dart' show Database;
 import 'package:playhouse/src/home/model/data/model.dart';
 
+///
 Future<void> loadScrapBookDatabase(Database db) async {
   // The order of these method calls is very important!
   await loadDesignModulesDB(db);
